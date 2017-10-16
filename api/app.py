@@ -1,44 +1,72 @@
 #!/usr/bin/env python
-from flask import Flask, jsonify,url_for
-import platform
+from flask import Flask, jsonify,url_for,request,abort
+import pymysql.cursors
 
 app = Flask(__name__)
 
-content={
-    'languange':'python',
-    'version':platform.python_version(),
-    'system':platform.system(),
-    'aa':{}
-}
+# Connect to the database
+connection = pymysql.connect(user='pms',
+                             password='pms',
+                             db='pms',
+                             cursorclass=pymysql.cursors.DictCursor)
 
 @app.route("/api/hi", methods=['GET'])
 def index():
-    return jsonify(content)
+    try:
+        with connection.cursor() as cursor:
+            # Read a single record
+            sql = "SELECT * FROM user"
+            cursor.execute(sql)
+            result = cursor.fetchall()
+            print(result)
+    finally:
+        return jsonify(result)
 
-@app.route("/api/hi/<param>", methods=['GET'])
-def query(param):
-    return jsonify(content[param])
+@app.route("/api/hi/<id>", methods=['GET'])
+def query(id):
+    try:
+        with connection.cursor() as cursor:
+            # Read a single record
+            sql = "SELECT id,username,email FROM user WHERE id=%s"
+            cursor.execute(sql, (id))
+            result = cursor.fetchone()
+            print(result)
+    finally:
+        return jsonify(result)
 
 @app.route("/api/hi", methods=['POST'])
 def add():
-    if not request.json or not 'id' in request.json:
+    if not request.json or not 'username' in request.json or not 'password' in request.json or not 'email' in request.json:
+        print(request.json)
         abort(400)
-    content[request.json['id']]=request.json
-    return jsonify(content)
+    try:
+        with connection.cursor() as cursor:
+            # Create a new record
+            sql = "INSERT INTO user (username,email,password) VALUES (%s, %s, %s)"
+            cursor.execute(sql, (request.json['username'],request.json['email'],request.json['password']))
+
+        # connection is not autocommit by default. So you must commit to save
+        # your changes.
+        connection.commit()
+
+        with connection.cursor() as cursor:
+            # Read a single record
+            sql = "SELECT * FROM user WHERE email=%s"
+            cursor.execute(sql, (request.json['email']))
+            result = cursor.fetchone()
+            print(result)
+    finally:
+        return jsonify(result)
 
 @app.route("/api/hi", methods=['PUT'])
 def update():
     if not request.json or not 'id' in request.json:
         abort(400)
-    if not content[request.json['id']]:
-        abort(404)
-    content[request.json['id']]=request.json
-    return jsonify(content)
+    return 'deveping...'
 
 @app.route("/api/hi/<int:id>", methods=['DELETE'])
 def delete(id):
-    del content[id]
-    return jsonify(content)
+    return 'deveping...'
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host="0.0.0.0")
