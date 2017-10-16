@@ -1,48 +1,33 @@
 # pms v0.1
-
 ## 前后端分离架构
-
 ### 前端(MVC)
-
-MVC:[angular v4](https://angular.io/) [angular cn](https://angular.cn/)
-
-UI:[Material](https://material.angular.io/),
+* MVC:[angular v4](https://angular.io/) [angular cn](https://angular.cn/)
+* UI:[Material](https://material.angular.io/),
    [Bootstrap](https://getbootstrap.com/)
-
-前端打包:[Node.js](https://nodejs.org),
+* 前端打包:[Node.js](https://nodejs.org),
     推荐[nvm](https://github.com/coreybutler/nvm-windows/releases/download/1.1.6/nvm-setup.zip),
     [文档](https://github.com/coreybutler/nvm-windows)
-
-包管理:推荐[yarn](https://yarnpkg.com/latest.msi),
+* 包管理:推荐[yarn](https://yarnpkg.com/latest.msi),
     [文档](https://yarnpkg.com/docs/cli/)
-
 ### 后端(Restful)
-
-开发语言:Python v3.6.3
+* 开发语言:Python v3.6.3
 [下载](https://www.python.org/ftp/python/3.6.3/python-3.6.3-amd64.exe) 
 [文档](http://www.runoob.com/python3/python3-tutorial.html)
-
-Restful框架:flask 
+* Restful框架:flask 
 [文档1](http://flask.pocoo.org/docs/dev/)
 [文档2](http://www.pythondoc.com/)
-
-代理服务器:[nginx](https://nginx.org/),推荐phpstudy
+* 代理服务器:[nginx](https://nginx.org/),推荐phpstudy
 [下载](http://www.phpstudy.net/phpstudy/phpStudy2017.zip)
 [文档](http://www.phpstudy.net/download.html)
-
-接口测试:Postman,开发完成的接口使用Postman进行功能测试
+* 接口测试:Postman,开发完成的接口使用Postman进行功能测试
 [下载](https://dl.pstmn.io/download/latest/win64)
 [文档](http://www.cnblogs.com/s380774061/p/4624326.html)
-
 ### 数据库
-
-MariaDB 
+* MariaDB 
 [下载](https://mirrors.tuna.tsinghua.edu.cn/mariadb//mariadb-10.2.9/winx64-packages/mariadb-10.2.9-winx64.msi) 
 [文档](http://www.runoob.com/mysql/mysql-tutorial.html)
 [驱动](https://pymysql.readthedocs.io/en/latest/modules/index.html)
-
 ### 开发部署
-
 #### Windows开发环境搭建
 0. 安装 [git](https://git-scm.com/download/win),
     [Python](https://www.python.org/ftp/python/3.6.3/python-3.6.3-amd64.exe),
@@ -51,15 +36,18 @@ MariaDB
     [Nginx](http://www.phpstudy.net/phpstudy/phpStudy2017.zip),
     [MariaDB](https://mirrors.tuna.tsinghua.edu.cn/mariadb//mariadb-10.2.9/winx64-packages/mariadb-10.2.9-winx64.msi),
     [Postman](https://dl.pstmn.io/download/latest/win64)
-1. 克隆仓库:
-
-    ```
+1. 数据库配置
+    * 创建pms用户
+    * 初始化pms数据库
+2. 克隆仓库
+    ```shell
     git clone https://github.com/DXCChina/pms.git
     cd pms
     ```
-3. 启动:```run```
-    * 前端:```app\run```
-    * 后端:```api\run```
+3. 启动
+    * 一键启动:`run`
+    * 启动前端:`app\run`
+    * 启动后端:`api\run`
 4. nginx配置
     ```
     #负载均衡服务器列表
@@ -80,39 +68,36 @@ MariaDB
             proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         }
         location / {
-            root   /mnt/pms/app;
-            index  index.html editor.html;
+            proxy_pass http://localhost:4200;
         }
-    ...
+    }
     ```
-5. 异常解决
-    * pip install报编码错误:```chcp 65001```
+5. 测试地址
+    * 代理:[http://localhost:81](http://localhost:81),
+    [http://localhost:81/api](http://localhost:81/api)
+    * APP:[http://localhost:4200](http://localhost:4200)
+    * API:[http://localhost:5000/api](http://localhost:5000/api)
+6. 问题解决
+    * pip install报编码错误:`chcp 65001`
     * 安装依赖:
-        * 前端:```cd app&&yarn&&cd ..||cd ..```
-        * 后端:```pip install -r api/requirements.txt```
-
+        * 前端:`cd app&&yarn&&cd ..||cd ..`
+        * 后端:`pip install -r api/requirements.txt`
 #### Linux生产环境部署
-
 0. easy_install supervisor
 1. 安装pyenv
 
-    ```curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash```
+    `curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash`
 
-    更新:
-    
-    ```pyenv update```
-    
-    ```vi ~/.bashrc``` 添加:
+    更新:`pyenv update`
 
-    ```
+    `vi ~/.bashrc`添加:
+    ```shell
     export PATH="/root/.pyenv/bin:$PATH"
     eval "$(pyenv init -)"
     eval "$(pyenv virtualenv-init -)"
-    ```
-
+    ``````
 2. 安装python
-
-    ```bash
+    ```shell
     yum groupinstall "Development Tools" -y
     yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel -y
     pyenv install --list
@@ -122,26 +107,24 @@ MariaDB
     pyenv versions
     python --version
     ```
-
     ```
     pyenv deactivate # 切换回系统环境
     rm -rf ~/.pyenv/versions/pms/ # 删除虚拟环境
     ```
-
 3. 部署项目
-    ```bash
+    ```shell
     pip install flask
     git clone https://github.com/DXCChina/pms.git
     cd pms/api
     chmod u+x app.py
     ./app.py # 脚本方式启动
     ```
-
 4. Gunicorn 部署
-    ```bash
+    ```shell
     pip install gunicorn
     vi /etc/init/gunicorn.conf
     ```
+    添加:
     ```
     description "The myflask service"
     start on runlevel [2345]
@@ -153,7 +136,6 @@ MariaDB
     chdir /root/pms/api
     exec gunicorn app:app -w 4 -b 0.0.0.0:8000
     ```
-
 5. echo_supervisord_conf > /etc/supervisord.conf
 
     [inet_http_server]         
