@@ -2,7 +2,7 @@
 
 ## 前后端分离架构
 
-### 前端
+### 前端(MVC)
 
 MVC:[angular v4](https://angular.io/) [angular cn](https://angular.cn/)
 
@@ -16,7 +16,7 @@ UI:[Material](https://material.angular.io/),
 包管理:推荐[yarn](https://yarnpkg.com/latest.msi),
     [文档](https://yarnpkg.com/docs/cli/)
 
-### 后端
+### 后端(Restful)
 
 开发语言:Python v3.6.3
 [下载](https://www.python.org/ftp/python/3.6.3/python-3.6.3-amd64.exe) 
