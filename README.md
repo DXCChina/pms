@@ -1,5 +1,4 @@
-# pms v0.1
-## 前后端分离架构
+# pms 前后端分离架构 v0.1
 ### 前端(MVC)
 * MVC:[angular v4](https://angular.io/) [angular cn](https://angular.cn/)
 * UI:[Material](https://material.angular.io/),
@@ -84,5 +83,6 @@
     * 安装依赖:
         * 前端:`cd app&&yarn&&cd ..||cd ..`
         * 后端:`pip install -r api/requirements.txt`
+#### [CentOS7生产环境部署](https://github.com/canfeit/pms/blob/master/docs/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2.md)
 ## TODO
 2. 接口整理
