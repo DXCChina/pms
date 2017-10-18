@@ -78,81 +78,12 @@
     * APP:[http://localhost:4200](http://localhost:4200)
     * API:[http://localhost:5000/api](http://localhost:5000/api)
 6. 问题解决
-    * pip install报编码错误:`chcp 65001`
+    * pip install报编码错误:
+        * 修改字符编码为utf-8:`chcp 65001`
+        * 修改字符编码为gbk:`chcp 936`
     * 安装依赖:
         * 前端:`cd app&&yarn&&cd ..||cd ..`
         * 后端:`pip install -r api/requirements.txt`
-#### Linux生产环境部署
-0. easy_install supervisor
-1. 安装pyenv
-
-    `curl -L https://raw.githubusercontent.com/pyenv/pyenv-installer/master/bin/pyenv-installer | bash`
-
-    更新:`pyenv update`
-
-    `vi ~/.bashrc`添加:
-    ```shell
-    export PATH="/root/.pyenv/bin:$PATH"
-    eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
-    ``````
-2. 安装python
-    ```shell
-    yum groupinstall "Development Tools" -y
-    yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel -y
-    pyenv install --list
-    pyenv install 3.6.3
-    pyenv virtualenv 3.6.3 pms # 创建虚拟环境(为项目创建独立的依赖空间)
-    pyenv activate pms # 切换到新的虚拟环境
-    pyenv versions
-    python --version
-    ```
-    ```
-    pyenv deactivate # 切换回系统环境
-    rm -rf ~/.pyenv/versions/pms/ # 删除虚拟环境
-    ```
-3. 部署项目
-    ```shell
-    pip install flask
-    git clone https://github.com/DXCChina/pms.git
-    cd pms/api
-    chmod u+x app.py
-    ./app.py # 脚本方式启动
-    ```
-4. Gunicorn 部署
-    ```shell
-    pip install gunicorn
-    vi /etc/init/gunicorn.conf
-    ```
-    添加:
-    ```
-    description "The myflask service"
-    start on runlevel [2345]
-    stop on runlevel [!2345]
-    respawn
-    setuid root
-    setgid www-data
-    env PATH=/root/.pyenv/versions/pms/bin
-    chdir /root/pms/api
-    exec gunicorn app:app -w 4 -b 0.0.0.0:8000
-    ```
-5. echo_supervisord_conf > /etc/supervisord.conf
-
-    [inet_http_server]         
-    port=127.0.0.1:9001
-    username=user
-    password=123
-    [supervisorctl]
-    serverurl=unix:///tmp/supervisor.sock
-    serverurl=http://127.0.0.1:9001
-    username=chris
-    password=123
-    [program:gunicorn]
-    command=/root/.pyenv/versions/pms/bin/gunicorn app:app -w 4 -b 0.0.0.0:8000
-    directory=/root/pms/api
-    autostart=true
-    autorestart=true
-    startsecs=3
-
-5. Nginx 部署
-
+## TODO
+2. 接口整理
+3. linux搭建
