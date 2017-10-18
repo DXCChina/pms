@@ -86,4 +86,3 @@
         * 后端:`pip install -r api/requirements.txt`
 ## TODO
 2. 接口整理
-3. linux搭建
