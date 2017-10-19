@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 '''
-user
+用户管理接口 by 
 '''
+
 import re
 from flask import jsonify, request, abort, Blueprint
 from model import user
