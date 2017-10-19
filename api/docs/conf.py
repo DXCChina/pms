@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 #
 # PMS documentation build configuration file, created by
-# sphinx-quickstart on Thu Oct 19 11:32:41 2017.
+# sphinx-quickstart on Thu Oct 19 11:56:38 2017.
 #
 # This file is execfile()d with the current directory set to its
 # containing dir.
@@ -77,7 +77,7 @@ language = 'zh_CN'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path .
-exclude_patterns = []
+exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 # The name of the Pygments (syntax highlighting) style to use.
 pygments_style = 'sphinx'
