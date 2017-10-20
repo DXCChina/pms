@@ -1,0 +1,88 @@
+
+button {
+  font-weight: normal;
+}
+
+.wa-detail .container {
+  font-size: 18px;
+  font-family:"宋体";
+  float: left;
+  margin-left: 22px;
+}
+
+.col-5 {
+  padding-right: 0;
+  min-width: 150px;
+}
+
+.col-6 {
+  padding-right: 0;
+  min-width: 60%;
+}
+
+.col-4 {
+  padding-right: 0;
+  min-width: 28%;
+}
+
+.project-detail, .creation-title {
+  margin: 15px 0;
+}
+
+.project-title, .creation-title {
+  color: #4bb134;
+}
+
+.project-title > .project-delete {
+  float: right;
+  margin-right: 30px;
+}
+
+.tit {
+  font-family: "宋体";
+  font-size: 32px;
+}
+
+.fl {
+  float: left;
+}
+
+.creation-detail .row {
+  margin-top: 15px;
+}
+
+.creation-detail .col-6 {
+  margin-top: 5px;
+}
+
+.creation-detail {
+  font-family: "宋体";
+  font-size: 18px;
+}
+
+.project-delete button {
+  background: #b74635;
+  color:#efefef;
+}
+
+.project-checkedAll {
+  position: absolute;
+  top:30px;
+  left:225px;
+}
+
+.wa-content-button {
+  display: inline-block;
+  position: absolute;
+  right: 40px;
+  top:30px;
+}
+.buttonCancelColor {
+  background-color: #b74635;
+  color: white;
+}
+.buttonSaveColor {
+  color: white;
+}
+
+

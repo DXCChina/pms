@@ -1,0 +1,83 @@
+.welcome-main {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding:0 30px;
+}
+
+.welcome-title {
+  max-width: 1250px;
+  margin: 15px auto;
+  .countProject {
+    height: 100px;
+    margin:15px auto;
+    p {
+      margin:-10px auto;
+      font-weight: 400;
+      font-size:14px;
+      text-align: center;
+      width: 200px;
+    }
+  }
+  .countProject:hover {
+    cursor: pointer;
+    outline: none;
+  }
+  .countDevice {
+    height:100px;
+    margin:15px auto;
+    p {
+      margin:-10px auto;
+      font-weight: 400;
+      font-size:14px;
+      text-align: center;
+      width: 200px;
+    }
+  }
+  .countDevice:hover {
+    cursor: pointer;
+    outline: none;
+  }
+  .welcome-svg {
+    width: 120px;
+    height: 45px;
+    margin:25px auto;
+    svg {
+      display: block;
+      padding-left: 8px;
+    }
+    .count-dev, .count-pro{
+      width: 55px;
+      text-align: center;
+      font-size:45px;
+      float: right;
+      margin-top: -33px;
+      padding-right: 8px;
+    }
+    .count-pro {
+      color: blue;
+    }
+    .count-dev {
+      color: #4bb134;
+    }
+  }
+}
+
+.welcome-pro, .welcome-dev {
+  max-width: 1250px;
+  margin: 15px auto;
+}
+
+.content-Title {
+  height: 50px;
+  width: 100%;
+  svg {
+    margin: 10px;
+  }
+  p {
+    padding-top:13px;
+    font-size:16px;
+    font-family: "Helvetica Neue", Arial, Helvetica, sans-serif;
+    color: #4d4d4d;
+    font-weight:700;
+  }
+}

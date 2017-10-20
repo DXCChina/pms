@@ -1,0 +1,23 @@
+<div class="row search-app_main">
+
+  <table class="example-full-width" cellspacing="0" style="margin: 30px auto; font-size: 16px;"><tr>
+    <td><md-input-container class="example-full-width">
+      <input [formControl]="appName" autocomplete="off" [(ngModel)]="name"  mdInput placeholder="选择应用">
+    </md-input-container></td>
+  </tr></table>
+
+  <md-nav-list *ngIf="showAppList" class="showApplist" >
+    <a md-list-item *ngIf="app_showNoItem">
+      无匹配，请选择已有项目
+      <span style="color: red;padding-left: 30px;"
+      *ngIf="appName.hasError('invalidCustom')">
+        应用后缀名为: .apk
+      </span>
+    </a>
+    <a md-list-item
+       *ngFor="let item of app_searchDataes"
+       (click)="choose(item)">
+      {{ item.name }}
+    </a>
+  </md-nav-list>
+</div>

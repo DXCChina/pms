@@ -1,0 +1,31 @@
+<div class="row search-case_main" >
+
+  <!--<div class="case_inList">-->
+    <!--<wa-sort-list [(items)]="selectedCase"></wa-sort-list>-->
+  <!--</div>-->
+
+  <table class="example-full-width" cellspacing="0" style="margin: 30px auto; font-size: 16px;"><tr>
+    <td><md-input-container class="example-full-width">
+      <input autocomplete="off" [(ngModel)]="name" mdInput placeholder="选择案例">
+    </md-input-container></td>
+  </tr>
+
+  </table>
+
+  <md-nav-list *ngIf="showCaseList" class="showCaselist">
+    <a md-list-item *ngIf="case_showNoItem">
+      无匹配，请选择已有项目
+    </a>
+    <a md-list-item
+       *ngFor="let item of case_searchDataes">
+      {{ item.name }}
+      <button md-icon-button class="addPoint" (click)="add(item)">
+        <svg class="svg_add" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+        </svg>
+      </button>
+    </a>
+  </md-nav-list>
+
+</div>

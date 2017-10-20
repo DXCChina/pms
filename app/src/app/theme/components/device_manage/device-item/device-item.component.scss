@@ -1,0 +1,68 @@
+li {
+  float: left;
+  margin: 10px 15px 25px 15px;
+  width: 160px;
+  height: 220px;
+  overflow: hidden;
+  list-style: none;
+  border: 1px solid #ccc;
+  position: relative;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.bkg {
+  width: 96px;
+  height: 96px;
+  margin: 30px auto;
+  text-align: center;
+  transition: all 1s ease-in;
+}
+//.deviceDescribe {
+//  margin-left:32px;
+//}
+
+.bkgs {
+  height: 100%;
+}
+span {
+  width:160px;
+  text-align: center;
+  display: block;
+  margin:5px auto;
+}
+
+//.bkg {
+//  width: 280px;
+//  height: 140px;
+//}
+//
+//.bkg-left {
+//  clear: left;
+//  float: left;
+//  width: 120px;
+//}
+//
+//.bkg-right {
+//  clear: left;
+//  float: right;
+//  width: 120px;
+//  position: relative;
+//  top: -50px;
+//}
+
+li:hover {
+  background: #ffffff;
+}
+
+//.bkgs{
+//  border: 0px;
+//  background: #ffffff;
+//  box-shadow: 0px 0px 0px;
+//}
+
+.bkgs-selected {
+  border: 1px solid #efefef;
+  background: #efeffe;
+  box-shadow: 2px 2px 10px #666666;
+}
