@@ -27,7 +27,7 @@ def project_update():
     return 'developing'
 
 
-@app.route("/user", methods=['GET'])
+@app.route("/userlist", methods=['GET'])
 def user_list():
     '''获取所有用户列表
 
