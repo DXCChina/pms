@@ -47,24 +47,35 @@ def logout():
     return 'developing'
 
 
-@app.route("/user/<int:user_id>", methods=['GET'])
-def user_info(user_id):
-    '''获取指定用户信息
+@app.route("/user", methods=['GET'])
+def user_info():
+    '''获取用户信息
 
-    GET /api/user/<int:user_id>
+    GET /api/user
     '''
-    return jsonify(user.findOneById(user_id))
+    return jsonify(user.findOneById('user_id'))
 
 
-@app.route("/user/<int:user_id>", methods=['PUT'])
-def user_update(user_id):
-    '''更新用户信息&修改密码
+@app.route("/user", methods=['PUT'])
+def user_update():
+    '''更新用户信息
 
-    PUT /api/user/<int:user_id>
+    PUT /api/user
     '''
     if not request.json:
         abort(400)
-    return jsonify(user.update(user_id, request.json))
+    return jsonify(user.update('user_id', request.json))
+
+
+@app.route("/password", methods=['PUT'])
+def change_password():
+    '''修改密码
+
+    PUT /api/password
+    '''
+    if not request.json:
+        abort(400)
+    return jsonify(user.update('user_id', request.json))
 
 
 # 找回密码
