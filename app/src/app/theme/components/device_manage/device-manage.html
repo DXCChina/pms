@@ -1,0 +1,40 @@
+<div class="wa-p-device">
+
+  <div class="device-item">
+    <!--<md-tab-group [(selectedIndex)]="tabIndex">-->
+
+      <!--<md-tab label="Device">-->
+
+        <div class="filter-state" *ngIf="deviceControl">
+          <md-select placeholder="请选择厂商" [(ngModel)]="brandState">
+            <md-option>None</md-option>
+            <md-option *ngFor="let state of firmFilterStates" [value]="state.name">{{ state.name }}</md-option>
+          </md-select>
+          <md-select placeholder="请选择平台" [(ngModel)]="platformState">
+            <md-option>None</md-option>
+            <md-option *ngFor="let state of platformFilterStates" [value]="state.name">{{ state.name }}</md-option>
+          </md-select>
+          <md-select placeholder="请选择系统" [(ngModel)]="systemState">
+            <md-option>None</md-option>
+            <md-option *ngFor="let state of systemFilterStates" [value]="state.name">{{ state.name }}</md-option>
+          </md-select>
+          <button md-raised-button  color="primary" (click)="findDeviceInState()">查询</button>
+          <md-checkbox [(ngModel)]="checked" color="primary">全选</md-checkbox>
+        </div>
+
+        <div *ngIf="viewDevices.length > 0">
+          <ul>
+            <device-item [checked]="checked" [deviceControl]="deviceControl" *ngFor="let dev of viewDevices" [dev]="dev"
+                         (click)="nextDeviceTab(dev)"></device-item>
+          </ul>
+        </div>
+        <div  *ngIf="viewDevices.length == 0">
+          <h1>无项目</h1>
+        </div>
+      <!--</md-tab>-->
+      <!--<md-tab label="Detail" *ngIf="!deviceControl">-->
+      <!--<h1>{{dev}}</h1>-->
+      <!--</md-tab>-->
+    <!--</md-tab-group>-->
+  </div>
+</div>

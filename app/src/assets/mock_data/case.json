@@ -1,0 +1,41 @@
+{
+  "data": [
+    {
+      "caseName": "case1 ",
+      "caseId": "001",
+      "caseInfo": "案例1",
+      "scriptList": [
+        {
+          "scriptName": "测试1 ",
+          "scriptId": "23sdfreye9",
+          "scriptInfo": "this is the 234sfd detail info"
+        },
+        {
+          "scriptName": "psds132",
+          "scriptId": "654sfd",
+          "scriptInfo": "this is the 654sfd detail info"
+        }
+      ]
+    },
+    {
+      "caseName": "case2",
+      "caseId": "002",
+      "caseInfo": "案例2",
+      "scriptList": [
+        {
+          "scriptName": "测试3",
+          "scriptId": "23sdfreye9",
+          "scriptInfo": "this is the 234sfd detail info"
+        },
+        {
+          "scriptName": "cehis4",
+          "scriptId": "654sfd",
+          "scriptInfo": "this is the 654sfd detail info"
+        }
+      ]
+    }
+  ],
+  "paging": {
+    "length": 100
+  }
+}

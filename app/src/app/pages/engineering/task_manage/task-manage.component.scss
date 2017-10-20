@@ -1,0 +1,53 @@
+.task-checkedAll {
+  position: absolute;
+  top:30px;
+  left:225px;
+}
+.task-name {
+  position: absolute;
+  top:23px;
+  left: 70px;
+  margin:3px 0 0 20px;
+}
+.task-case-list-title {
+  position: absolute;
+  top: 203px;
+  left: 85px;
+}
+.task-case-list {
+  position: relative;
+  margin-top:30px;
+}
+.belong-case-list {
+  font-size: 20px;
+}
+.delete-item {
+  float: right;
+  color: red;
+}
+.search-case-input {
+  border-radius: 5px;
+  width: 300px;
+  height: 30px;
+}
+.case-list-content {
+  width: 310px;
+  height: 300px;
+  overflow: auto;
+}
+.case-content {
+  width: 300px;
+  padding: 6px 12px;
+  margin-bottom: 4px;
+  font-size: 14px;
+  line-height: 1.4em;
+  text-align: center;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  border-color: #adadad;
+a {
+  cursor: pointer;
+  color: #4bb134;
+  float: right;
+}
+}

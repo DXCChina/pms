@@ -1,0 +1,27 @@
+.quickBtn {
+  width: 220px;
+  margin: 30px auto 0 auto;
+}
+
+.customWidth {
+  width: 550px;
+  margin: 50px auto;
+}
+.tab {
+  height: 350px;
+  position: relative;
+}
+.controlBtn {
+  height: auto;
+  width: 570px;
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  margin-left: -285px;
+}
+.btnRight {
+  float: right;
+}
+.btnLeft {
+  float: left;
+}

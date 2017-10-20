@@ -1,0 +1,62 @@
+h1 {
+  color: chartreuse;
+}
+
+.statistic {
+  height: 100px;
+  padding-top: 20px;
+}
+
+ol {
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+  list-style-type: none;
+}
+
+ol li {
+  list-style: none;
+  display: inline-block;
+  width: 25%;
+  padding-top: 8px;
+}
+
+i {
+  margin-bottom: 10px;
+}
+
+span {
+  font-size: 14px;
+}
+
+.wa-p-device {
+  max-width: 1400px;
+  min-width: 500px;
+  margin: 30px auto;
+}
+
+.device-statistic {
+  margin-bottom: 50px;
+}
+
+.filter-state {
+  position: relative;
+  margin: 0 0 20px 0;
+  color: black;
+  width: 100%;
+}
+
+.device-item{
+  margin-top: 50px;
+  overflow: auto;
+  min-height: 175px;
+}
+.mat-select{
+  margin-right: 30px;
+}
+
+.mat-checkbox {
+  position: absolute;
+  top: 9px;
+  right: 5%;
+}

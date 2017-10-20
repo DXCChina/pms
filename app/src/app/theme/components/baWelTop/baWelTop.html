@@ -1,0 +1,86 @@
+<div class="wel-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)"
+     [ngClass]="{scrolled: isScrolled}">
+  <a (click)="toggleHome()" routerLink="welcome" class="al-logo clearfix">
+    <img src="../../../../assets/img/app/logo.png">
+  </a>
+
+  <div class="level_1_menu">
+
+    <div class="btn-group" dropdown>
+      <button dropdownToggle type="button" class="btn dropdown-toggle">
+        <input type="text" placeholder="项 目 选 择" [(ngModel)]="selectedProject" disabled>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-caret-down" aria-hidden="true"></i>
+        <span class="caret"></span>
+      </button>
+      <ul *dropdownMenu class="_1_dropdown-menu" role="menu">
+        <li role="menuitem" *ngFor="let project of projectList" (click)="selectProject(project)" routerLink="project"
+            routerLinkActive="active">
+          <a class="dropdown-item" routerLink="project" routerLinkActive="active">
+            <input type="text" value="{{project.name}}" disabled>
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="level_2_menu" *ngIf="showLevel2Menu">
+      <li class="segmentation"></li>
+      <nav class="navbar navbar-toggleable-md navbar-light">
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+              <a class="nav-link"  routerLink="project/dashboard" routerLinkActive="active">工作台</a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" routerLink="project/device" routerLinkActive="active">设备管理</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="project/app" routerLinkActive="active">应用列表</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="project/script" routerLinkActive="active">脚本列表</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="project/case" routerLinkActive="active">案例列表</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="project/task" routerLinkActive="active">任务列表</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="project/report" routerLinkActive="active">结果报告</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+  <div class="resource">
+    <div class="btn-group" dropdown>
+      <button dropdownToggle type="button" class="btn dropdown-toggle">
+        <img src="../../../../assets/img/app/resource.png" alt="">
+        资源管理 <i class="fa fa-caret-down" aria-hidden="true"></i> <span class="caret"></span>
+      </button>
+      <ul *dropdownMenu class="wa_dropdown-menu" role="menu">
+        <li role="menuitem" (click)="hideLevel2Menu()">
+          <a class="wa_dropdown-item" routerLink="resource/projectMan" routerLinkActive="active">
+            项&nbsp;目&nbsp;管&nbsp;理
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="user-profile clearfix">
+    <div class="btn-group al-user-profile" dropdown>
+      <button dropdownToggle type="button" class="user-btn dropdown-toggle">
+        <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown"
+           aria-expanded="false">
+          <img src="{{ ( 'Nasta' | baProfilePicture ) }}">
+        </a>
+      </button>
+      <ul *dropdownMenu class="dropdown-menu profile-dropdown" role="menu" aria-labelledby="user-profile-dd" style="margin:10px 0 0 -53px">
+        <li class="dropdown-item"><a href class="signout" routerLink="/login" routerLinkActive="active"><i
+          class="fa fa-power-off"></i>&nbsp;&nbsp;&nbsp;Sign out</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div>

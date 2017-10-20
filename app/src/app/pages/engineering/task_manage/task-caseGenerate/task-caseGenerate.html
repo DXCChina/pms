@@ -1,0 +1,54 @@
+<div class="task-caseModel">
+
+  <div [@routerDisplay]="'in'" class="task-caseMain" (click)="close()">
+
+    <form [formGroup]="form" class="example-form" (ngSubmit)="onSubmit()">
+
+      <h3 style="margin: 20px 0 0 20px; border-left: 2px solid #4bb134 ;padding-left: 10px;">新建任务</h3>
+      <hr />
+
+      <table class="example-full-width" cellspacing="0" style="margin: 30px auto 0 auto; font-size: 16px;"><tr>
+        <td><md-form-field class="example-full-width">
+          <input [formControl]="taskName"  mdInput placeholder="项目名称">
+        </md-form-field></td>
+      </tr></table>
+
+      <div style="width: 372px;margin: 0 auto">
+        <task-appSearch
+          [showAppList]="showAppList"
+          [app_showNoItem]="app_showNoItem"
+          [app_searchDataes]="app_searchDataes"
+          (searchApp)="queryApps($event)"
+          (chooseData)="chooseApps($event)">
+
+          </task-appSearch>
+      </div>
+
+      <div class="case_inList">
+        <wa-sort-list [(items)]="isSelectedCases"></wa-sort-list>
+      </div>
+
+    <task-caseSearch
+    [(selectedCase)]="isSelectedCases"
+    [showCaseList]="showCaseList"
+    [case_showNoItem]="case_showNoItem"
+    [case_searchDataes]="case_searchDataes"
+    (searchCase)="queryCases($event)"
+    (chooseData)="chooseCases($event)">
+
+    </task-caseSearch>
+
+      <table class="example-full-width" cellspacing="0" style="font-size: 16px;"><tr>
+        <td><md-form-field class="example-full-width">
+          <input [formControl]="description"  mdInput placeholder="描述信息">
+        </md-form-field></td>
+      </tr></table>
+
+    <div class="task-caseBtn">
+      <button md-button (click)="cancelGenerate()" >取消</button>
+      <button md-button [disabled]="!form.valid"  color="primary" type="submit" >保存</button>
+    </div>
+    </form>
+  </div>
+
+</div>

@@ -1,0 +1,186 @@
+/*common*/
+.auth-main {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  overflow: hidden;
+}
+
+#header {
+  /*background-image: url(../login/img/bk-Img.png);*/
+  background-image: url(../../assets/img/app/login&register/bk-Img.png);
+  background-position: 60% 40%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  right: 0;
+  /*top: -200px;*/
+  z-index: -1;
+  top:0;
+  /*overflow: hidden;*/
+}
+
+#content{
+  width: 1200px;
+  height: 686px;
+  min-width: 1200px;
+  margin: 100px auto;
+  position: relative;
+}
+
+/*Login Part*/
+
+#LoginPart{
+  /*display: none;*/
+  width: 350px;
+  height: 300px;
+  position: absolute;
+  top: 200px;
+  right: 95px;
+  z-index: 1;
+}
+
+#us,#pw{
+  width: 265px;
+  height: 30px;
+  margin: 25px auto;
+  position: relative;
+}
+
+.us-Img{
+  width: 17px;
+  height: 17px;
+  position: absolute;
+  top: 7px;
+  left: 3px;
+  background:url(../../assets/img/app/login&register/user-Blur.png) no-repeat;
+}
+
+.pw-Img{
+  width: 17px;
+  height: 17px;
+  position: absolute;
+  top: 6px;
+  left: 3px;
+  background: url(../../assets/img/app/login&register/pw-Blur.png) no-repeat;
+}
+
+input{
+  height: 28px;
+  width: 225px;
+  margin-left: 30px;
+  border: none;
+  outline: none;
+  line-height: 25px;
+  font-size: 1em;
+}
+
+::-webkit-input-placeholder{
+  font-size: 0.8em;
+  color: #adadad;
+}
+
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  font-size: 0.8em;
+  color: #adadad;
+}
+
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  font-size: 0.8em;
+  color: #adadad;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10+ */
+  font-size: 0.8em;
+  color: #adadad;
+}
+
+.handle{
+  margin-top: 45px;
+}
+#login, #register{
+  position: relative;
+  display: block;
+  width: 265px;
+  height: 40px;
+  margin: 0 auto;
+  border: 1px solid #68b647;
+  border-radius: 20px;
+  line-height: 40px;
+  text-align: center;
+  font-size: 1em;
+  text-decoration: none;
+  color: #68b647;
+}
+
+#login{
+  margin-bottom: 30px;
+  outline: none;
+  background: White;
+  cursor:pointer;
+}
+
+.lost, .find{
+  display: inline-block;
+  width: 100px;
+  height: 25px;
+  line-height: 25px;
+  text-align: center;
+  color: #68B647;
+  font-size: 0.8em;
+  text-decoration: none;
+  margin-top: 15px;
+}
+.lost{
+  margin-left: 70px;
+}
+.find{
+  float: right;
+  margin-right: 70px;
+}
+.line{
+  width: 265px;
+  border-bottom: 1px solid #c9c9c9;
+}
+
+#usInput:focus ~ .line, #pwInput:focus ~ .line{
+  border-bottom:1px solid #68B647;
+}
+
+#usInput:focus ~ .us-Img{
+  background: url(../../assets/img/app/login&register/user-Focus.png) no-repeat;
+}
+
+#pwInput:focus ~ .pw-Img{
+  background: url(../../assets/img/app/login&register/pw-Focus.png) no-repeat;
+}
+
+#login:active, #register:active{
+  background: #68B647;
+  color: white;
+  border:none;
+  outline: none;
+}
+
+#re-register:active{
+  background: #68B647;
+  color: white;
+}
+
+.baseline{
+border-bottom: 1px solid #c9c9c9;
+}
+
+.has-error {
+  border-bottom:1px solid #ed7878;
+}
+
+.has-success{
+  border-bottom:1px solid #68B647;
+}
+
+
