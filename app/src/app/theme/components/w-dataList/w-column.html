@@ -1,0 +1,114 @@
+<div class="wa-column-item">
+  <a md-list-item (click)="exportSelected(data)">
+
+    <div class="wa-svg" [ngSwitch]="svgType">
+
+      <div *ngSwitchCase="'folder'">
+
+        <svg  class="svg_icon" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+        </svg>
+
+      </div>
+
+      <div *ngSwitchCase="'people'">
+
+        <svg *ngSwitchCase="'people'" class="svg_icon-people" fill="#f5f5f5" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 5.9c1.16 0 2.1.94 2.1 2.1s-.94 2.1-2.1 2.1S9.9 9.16 9.9 8s.94-2.1 2.1-2.1m0 9c2.97 0 6.1 1.46 6.1 2.1v1.1H5.9V17c0-.64 3.13-2.1 6.1-2.1M12 4C9.79 4 8 5.79 8 8s1.79 4 4 4 4-1.79 4-4-1.79-4-4-4zm0 9c-2.67 0-8 1.34-8 4v3h16v-3c0-2.66-5.33-4-8-4z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+
+        </svg>
+
+      </div>
+
+      <div *ngSwitchCase="'apps'">
+
+        <svg class="svg_icon" fill="#f5f5f5" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+        </svg>
+
+      </div>
+
+      <div *ngSwitchCase="'script'">
+
+        <svg class="svg_icon" fill="#f5f5f5" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+        </svg>
+
+      </div>
+
+      <div *ngSwitchCase="'case'">
+
+        <svg class="svg_icon" fill="#f5f5f5" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+        </svg>
+
+      </div>
+
+      <div *ngSwitchCase="'report'">
+
+        <svg  *ngSwitchCase="'report'" class="svg_icon" fill="#f5f5f5" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z"/>
+        </svg>
+
+      </div>
+      <div *ngSwitchCase="'task'">
+
+        <svg fill="#f5f5f5" height="24" class="svg_icon" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+        </svg>
+
+      </div>
+
+    </div>
+
+    <div *ngIf="displayCommon">
+      <span class="name" md-line > {{data[configEntity.name]}} </span>
+      <p class="info" md-line>
+        <span> {{data[configEntity.description]}} </span>
+      </p>
+
+    </div>
+
+    <div *ngIf="displayPeople">
+
+      <span class="people" md-line> {{data[configEntity.name]}} </span>
+
+    </div>
+
+  </a>
+
+  <div [ngSwitch]="displayControl">
+
+    <md-checkbox
+      *ngSwitchCase="'check'"
+      class="checkPoint"
+      color="primary"
+      [checked]="data.checked"
+      (change)="exportCheckData(data)">
+    </md-checkbox>
+
+    <button md-icon-button class="addPoint" *ngSwitchCase="'add'" (click)="add(data)">
+      <svg class="svg_add" fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>
+    </button>
+
+    <button md-icon-button class="deletePoint" *ngSwitchCase="'delete'" (click)="delete(data)">
+      <svg fill="#757575" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>
+    </button>
+
+  </div>
+
+</div>
