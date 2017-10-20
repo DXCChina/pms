@@ -12,6 +12,14 @@ controller\.info module
     :undoc-members:
     :show-inheritance:
 
+controller\.project module
+--------------------------
+
+.. automodule:: controller.project
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 controller\.task module
 -----------------------
 

@@ -1,17 +1,14 @@
-from model.db import db
+# -*- coding: utf-8 -*-
+'''用户管理操作
 
-def findAll():
-    try:
-        with db.cursor() as cursor:
-            sql = "SELECT * FROM user"
-            cursor.execute(sql)
-            result = cursor.fetchall()
-    finally:
-        print(result)
-        return result
+@author: Wang Jianhui
+'''
+
+from model.db import db
 
 
 def findOneById(id):
+    '''按 id 查询用户'''
     try:
         with db.cursor() as cursor:
             sql = "SELECT id,username,email FROM user WHERE id=%s"
@@ -22,6 +19,7 @@ def findOneById(id):
 
 
 def findOneByName(username):
+    '''按 username 查询用户'''
     try:
         with db.cursor() as cursor:
             sql = "SELECT * FROM user WHERE username=%s"
@@ -32,7 +30,7 @@ def findOneByName(username):
 
 
 def save(user):
-    print('user:', user)
+    '''添加用户并返回用户信息'''
     try:
         with db.cursor() as cursor:
             sql = "INSERT INTO user (username,email,password) VALUES (%s, %s, %s)"
@@ -49,4 +47,5 @@ def save(user):
 
 
 def update(id, user):
+    '''更新用户信息'''
     return 'deveping...'

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 '''
 api入口
+
+不包含任何业务逻辑
 '''
 from os import environ
 from flask import Flask

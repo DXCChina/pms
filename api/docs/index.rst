@@ -10,7 +10,7 @@ Welcome to PMS's documentation!
    :maxdepth: 2
    :caption: Contents:
 
-   modules.rst
+   rst/modules.rst
 
 
 Indices and tables
