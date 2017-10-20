@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS `demand` (
   `projectId` int(10) unsigned NOT NULL,
   `title` char(50) NOT NULL,
   `detail` tinytext DEFAULT NULL,
-  `level` tinytext NOT NULL DEFAULT 'normal' COMMENT 'low(低)/high(高)/normal(中,默认)',
+  `level` char(50) NOT NULL DEFAULT 'normal' COMMENT 'low(低)/high(高)/normal(中,默认)',
   `status` char(50) NOT NULL DEFAULT 'active' COMMENT 'active(默认)/done/delete',
   `createAt` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
