@@ -1,0 +1,167 @@
+{
+  "message": "msg",
+  "data": {
+    "appStaty" : [  //概要信息
+      {
+        "appName": "Task 4",
+        "appVersion": "lantern",
+        "size": 128 ,
+        "testType": 23 ,
+        "devices": "已执行" ,
+        "testState": "查看",
+        "time": 123
+      }
+    ],
+    "scriptStaty": [   //脚本统计
+      {
+        "model": "Task 4",
+        "brand": "lantern",
+        "state": 128 ,
+        "successNum": 23,
+        "failedNum": 25,
+        "scriptName": "已执行" ,
+        "appName": "查看",
+        "appVersion": 123
+      },{
+        "model": "Task 4",
+        "brand": "lantern",
+        "state": 128 ,
+        "successNum": 23,
+        "failedNum": 25,
+        "scriptName": "已执行" ,
+        "appName": "查看",
+        "appVersion": 123
+      }
+    ],
+    "barCharts": {  //柱形图cpu&ram占用量百分比
+      "cpu": [
+        {
+          "name": "Xiao Mi",
+          "value": 89.4
+        },
+        {
+          "name": "Hua Wei",
+          "value": 86
+        }
+      ],
+      "ram": [
+        {
+          "name": "Xiao Mi",
+          "value": 89.4
+        },
+        {
+          "name": "Hua Wei",
+          "value": 86
+        }
+      ]
+    },
+    "lineCharts": {  //线形图cpu&ram时刻占用量
+      "cpu": [
+        {
+          "name": "Xiao Mi",
+          "series": [
+            {
+              "value": 69,
+              "name": "2016-09-18T05:24:05.254Z"
+            },
+            {
+              "value": 45,
+              "name": "2016-09-18T10:21:55.123Z"
+            },
+            {
+              "value": 39,
+              "name": "2016-09-18T17:55:43.226Z"
+            },
+            {
+              "value": 54,
+              "name": "2016-09-18T20:13:42.627Z"
+            },
+            {
+              "value": 49,
+              "name": "2016-09-18T22:28:50.058Z"
+            }
+          ]
+        },
+        {
+          "name": "HuaWei",
+          "series": [
+            {
+              "value": 49,
+              "name": "2016-09-18T02:02:05.254Z"
+            },
+            {
+              "value": 28,
+              "name": "2016-09-18T08:08:55.123Z"
+            },
+            {
+              "value": 40,
+              "name": "2016-09-18T10:55:43.226Z"
+            },
+            {
+              "value": 47,
+              "name": "2016-09-18T18:13:42.627Z"
+            },
+            {
+              "value": 21,
+              "name": "2016-09-18T22:28:50.058Z"
+            }
+          ]
+        }
+      ],
+      "ram": [
+        {
+          "name": "Xiao Mi",
+          "series": [
+            {
+              "value": 69,
+              "name": "2016-09-18T05:24:05.254Z"
+            },
+            {
+              "value": 45,
+              "name": "2016-09-18T10:21:55.123Z"
+            },
+            {
+              "value": 39,
+              "name": "2016-09-18T17:55:43.226Z"
+            },
+            {
+              "value": 54,
+              "name": "2016-09-18T20:13:42.627Z"
+            },
+            {
+              "value": 49,
+              "name": "2016-09-18T22:28:50.058Z"
+            }
+          ]
+        },
+        {
+          "name": "HuaWei",
+          "series": [
+            {
+              "value": 49,
+              "name": "2016-09-18T02:02:05.254Z"
+            },
+            {
+              "value": 28,
+              "name": "2016-09-18T08:08:55.123Z"
+            },
+            {
+              "value": 40,
+              "name": "2016-09-18T10:55:43.226Z"
+            },
+            {
+              "value": 47,
+              "name": "2016-09-18T18:13:42.627Z"
+            },
+            {
+              "value": 21,
+              "name": "2016-09-18T22:28:50.058Z"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "code": 0,
+  "url": "/"
+}

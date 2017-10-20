@@ -19,9 +19,34 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.css"
+        "../node_modules/roboto-fontface/css/roboto/sass/roboto-fontface.scss",
+        "../node_modules/normalize.css/normalize.css",
+        "../node_modules/font-awesome/scss/font-awesome.scss",
+        "../node_modules/ionicons/scss/ionicons.scss",
+        "../node_modules/bootstrap/dist/css/bootstrap.css",
+        "../node_modules/leaflet/dist/leaflet.css",
+        "../node_modules/chartist/dist/chartist.css",
+        "../node_modules/fullcalendar/dist/fullcalendar.css",
+        "../node_modules/handsontable/dist/handsontable.full.css",
+        "../node_modules/ng2-slim-loading-bar/style.css",
+        "../node_modules/codemirror/lib/codemirror.css",
+        "../node_modules/codemirror/addon/hint/show-hint.css",
+        "../node_modules/angular2-toaster/toaster.css",
+        "../node_modules/ng2-tree/styles.css",
+        "app/theme/theme.scss",
+        "styles.scss",
+        "app/theme/sass/_material-overrides.scss"
       ],
-      "scripts": [],
+      "scripts": [
+        "../node_modules/jquery/dist/jquery.js",
+        "../node_modules/easy-pie-chart/dist/jquery.easypiechart.js",
+        "../node_modules/jquery-slimscroll/jquery.slimscroll.js",
+        "../node_modules/handsontable/dist/handsontable.full.js",
+        "../node_modules/chroma-js/chroma.js",
+        "../node_modules/codemirror/lib/codemirror.js",
+        "../node_modules/codemirror/addon/hint/show-hint.js",
+        "../node_modules/codemirror/addon/hint/xml-hint.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",

@@ -1,0 +1,70 @@
+.svg_icon {
+  display: block;
+  position: absolute;
+  fill:rgba(0, 0, 0, 0.54);
+  top: 25px;
+  left:18px;
+}
+
+.svg_icon-people {
+  display: block;
+  position: absolute;
+  fill:rgba(0, 0, 0, 0.54);
+  top: 14px;
+  left:18px;
+}
+.svg_add {
+  display: block;
+  fill:rgba(0, 0, 0, 0.54);
+  margin-left:8px;
+}
+
+.svg_delete {
+  display: block;
+  fill:rgba(0, 0, 0, 0.54);
+  margin-left:8px;
+}
+
+.name.mat-line {
+  margin-left: 43px;
+  margin-top: 15px;
+  width: 200px;
+  overflow: hidden;
+}
+.info.mat-line {
+  margin-left: 43px;
+  margin-top:10px;
+  color: #757575;
+  width: 200px;
+  overflow: hidden;
+}
+.people.mat-line {
+  margin-left: 43px;
+  margin-top: 5px;
+}
+.wa-list-item {
+  position: relative;
+}
+
+.checkPoint {
+  position: absolute;
+  top:26px;
+  right:12px;
+}
+
+.addPoint {
+  position: absolute;
+  top:5px;
+  right:12px;
+}
+
+.deletePoint {
+  position: absolute;
+  top:5px;
+  right:12px;
+}
+
+.wa-column-item {
+  position: relative;
+  z-index: 0;
+}

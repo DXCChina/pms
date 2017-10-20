@@ -1,0 +1,81 @@
+<div>
+  <ngx-datatable
+    #myTable
+    class='material fullscreen'
+    [columnMode]="'force'"
+    [headerHeight]="50"
+    [footerHeight]="50"
+    [rowHeight]="50"
+    [scrollbarV]="false"
+    [rows]='rows'
+    (page)="onPage($event)">
+    <!-- Row Detail Template -->
+    <ngx-datatable-row-detail [rowHeight]="500" #myDetailRow (toggle)="onDetailToggle($event)">
+      <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+        <div style="padding-left:35px;">
+          <img [src]="imgPath" alt="">
+          <img [src]="imgPath" alt="">
+        </div>
+      </ng-template>
+    </ngx-datatable-row-detail>
+
+    <!-- Column Templates -->
+    <ngx-datatable-column
+      [width]="50"
+      [resizeable]="false"
+      [sortable]="false"
+      [draggable]="false"
+      [canAutoResize]="false">
+      <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+        <a
+          href="#"
+          [class.datatable-icon-right]="!expanded"
+          [class.datatable-icon-down]="expanded"
+          title="Expand/Collapse Row"
+          (click)="toggleExpandRow(row)">
+        </a>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="步骤" [sortable]="false">
+      <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+        <strong>{{rowIndex + 1}}</strong>
+      </ng-template>
+    </ngx-datatable-column>
+    <!--<ngx-datatable-column name="runtime" width="80">-->
+      <!--<ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>-->
+        <!--<strong>{{expanded}}</strong>-->
+      <!--</ng-template>-->
+    <!--</ngx-datatable-column>-->
+    <ngx-datatable-column name="运行时间" prop="runtime" [sortable]="false">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <strong>{{value}}ms</strong>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="CPU" prop="cpurate" [sortable]="false">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <strong>{{value}}%</strong>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="内存" prop="memory" [sortable]="false">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <strong>{{value}}%</strong>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="动作" prop="action" [sortable]="false">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <strong>{{value}}</strong>
+      </ng-template>
+    </ngx-datatable-column>
+    <ngx-datatable-column name="取值" prop="_value" [sortable]="false">
+      <ng-template let-value="value" ngx-datatable-cell-template>
+        <strong>{{value}}</strong>
+      </ng-template>
+    </ngx-datatable-column>
+    <!--<ngx-datatable-column name="Gender" width="300">-->
+      <!--<ng-template let-row="row" let-value="value" ngx-datatable-cell-template>-->
+        <!--<i [innerHTML]="row['name']"></i> and <i>{{value}}</i>-->
+      <!--</ng-template>-->
+    <!--</ngx-datatable-column>-->
+    <!--<ngx-datatable-column name="Age" ></ngx-datatable-column>-->
+  </ngx-datatable>
+</div>

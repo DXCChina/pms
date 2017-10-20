@@ -1,0 +1,174 @@
+<div class="dashboard-main">
+
+  <div class="dashboard-title">
+    <div class="row">
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 dashboard-item" routerLink="/pages/project/device">
+        <div class="dashboard-itemHeader">
+          <div class="dashboard-itemSvg">
+            <svg t="1504607411013" fill="#4bb134" class="icon" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2429" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32">
+              <defs>
+                <style type="text/css"></style>
+              </defs>
+              <path d="M179.200422 216.422804C179.200422 159.744432 224.6148 113.766855 281.600371 113.766855h349.900625a102.399949 102.399949 0 0 1 102.399949 102.655949v704.921247a102.246349 102.246349 0 0 1-102.399949 102.655949H281.600371a102.399949 102.399949 0 0 1-102.399949-102.655949V216.422804z m102.399949 51.251174a51.046374 51.046374 0 0 1 51.353575-51.507174h255.692672A51.199974 51.199974 0 0 1 640.000192 267.673978v477.286162a51.046374 51.046374 0 0 1-51.353574 51.507174H332.953946A51.199974 51.199974 0 0 1 281.600371 744.96014V267.673978z m174.950313 699.39165c30.617585 0 55.449572-25.446387 55.449572-56.831971 0-31.436784-24.831988-56.883172-55.449572-56.883172-30.668785 0-55.500772 25.446387-55.500773 56.831972 0 31.436784 24.831988 56.934372 55.500773 56.934371z" p-id="2430"></path><path d="M280.627572 58.368483A102.143949 102.143949 0 0 1 373.043525 0.000512h364.031818c56.473572 0 102.297549 46.284777 102.297549 102.553549v728.063636a102.399949 102.399949 0 0 1-56.883171 91.955154V109.824457c0-28.415986-22.937589-51.507174-51.199975-51.507174H280.627572z" p-id="2431">
+            </path>
+            </svg>
+          </div>
+          <div class="dashboard-itemCount">
+            <p style="color: #4bb134;">{{dataInfo?.stats.device}}</p>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <h3>设备数</h3>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 dashboard-item" routerLink="/pages/project/app">
+        <div class="dashboard-itemHeader">
+          <div class="dashboard-itemSvg">
+            <svg class="svg_icon" fill="blue" height="40" viewBox="0 0 24 24" width="40" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          </div>
+          <div class="dashboard-itemCount">
+            <p style="color: blue;">{{dataInfo?.stats.app}}</p>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <h3>应用数</h3>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 dashboard-item" routerLink="/pages/project/script">
+        <div class="dashboard-itemHeader">
+          <div class="dashboard-itemSvg">
+            <svg class="svg_icon" fill="orange" height="40" viewBox="0 0 24 24" width="40" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+            </svg>
+          </div>
+          <div class="dashboard-itemCount">
+            <p style="color: orange;">{{dataInfo?.stats.script}}</p>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <h3>脚本数</h3>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 dashboard-item" routerLink="/pages/project/case">
+        <div class="dashboard-itemHeader">
+          <div class="dashboard-itemSvg">
+            <svg class="svg_icon" fill="deeppink" height="40" viewBox="0 0 24 24" width="40" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          </div>
+          <div class="dashboard-itemCount">
+            <p style="color: deeppink;">{{dataInfo?.stats.testcase}}</p>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <h3>案例数</h3>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 dashboard-item" routerLink="/pages/project/task">
+        <div class="dashboard-itemHeader">
+          <div class="dashboard-itemSvg">
+            <svg fill="deepskyblue" height="40" class="svg_icon" viewBox="0 0 24 24" width="40" xmlns="http://www.w3.org/2000/svg">
+              <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+            </svg>
+          </div>
+          <div class="dashboard-itemCount">
+            <p style="color: deepskyblue;">{{dataInfo?.stats.task}}</p>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <h3>任务数</h3>
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-6 dashboard-item" routerLink="/pages/project/report">
+        <div class="dashboard-itemHeader">
+          <div class="dashboard-itemSvg">
+            <svg  class="svg_icon" fill="blueviolet" height="40" viewBox="0 0 24 24" width="40" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 0h24v24H0z" fill="none"/>
+              <path d="M14.4 6L14 4H5v17h2v-7h5.6l.4 2h7V6z"/>
+            </svg>
+          </div>
+          <div class="dashboard-itemCount">
+            <p style="color: blueviolet;">{{dataInfo?.stats.report}}</p>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <h3>报告数</h3>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row content-Title" >
+    <svg t="1504607519252" class="icon" fill="#4d4d4d" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5387" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20">
+      <defs>
+        <style type="text/css"></style>
+      </defs>
+      <path d="M571.733 322.56H196.267a15.296 15.296 0 0 1-15.36-15.36v-5.12c0-8.533 6.826-15.36 15.36-15.36h375.466c8.534 0 15.36 6.827 15.36 15.36v5.12c0 8.533-6.826 15.36-15.36 15.36zM628.053 303.787a18.773 18.773 0 1 0 37.547 0 18.773 18.773 0 1 0-37.547 0z m46.08-134.827h-486.4c-63.146 0-116.053 51.2-116.053 116.053v592.214c0 63.146 51.2 116.053 116.053 116.053h486.4c63.147 0 116.054-51.2 116.054-116.053V285.013c0-64.853-52.907-116.053-116.054-116.053z m-486.4 58.027h486.4c32.427 0 58.027 25.6 58.027 58.026v75.094H131.413v-75.094c0-32.426 25.6-58.026 56.32-58.026z m486.4 708.266h-486.4c-32.426 0-58.026-25.6-58.026-58.026V409.6h600.746v467.627c0 32.426-25.6 58.026-56.32 58.026zM834.56 30.72h-486.4c-63.147 0-116.053 51.2-116.053 116.053v22.187h58.026v-22.187c0-32.426 25.6-58.026 58.027-58.026h486.4c32.427 0 58.027 25.6 58.027 58.026v592.214c0 32.426-25.6 58.026-58.027 58.026h-46.08v58.027h46.08c63.147 0 116.053-51.2 116.053-116.053V146.773c0-64.853-51.2-116.053-116.053-116.053z" p-id="5388">
+      </path>
+    </svg>
+    <p>快速部署</p>
+  </div>
+
+  <div class="row">
+    <div class="quickDeploy"  (click)="quickDeploied()">
+      <div class="quickDeploy-addSvg">
+        <svg fill="#ffffff" height="80" viewBox="0 0 24 24" width="80" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+          <path d="M0 0h24v24H0z" fill="none"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row content-Title">
+    <svg fill="#4d4d4d" height="20" class="svg_icon" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
+      <path d="M0 0h24v24H0z" fill="none"/>
+      <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+    </svg>
+    <p>任务统计</p>
+  </div>
+
+  <div class="row" style="padding: 0 40px">
+    <div class="row" style="width: 100%">
+
+      <h5 style="color: green;font-weight: 700; padding-left: 15px;">执行中</h5>
+      <ngx-datatable
+        class="material"
+        style="width: 100%;margin: 10px 0"
+        [loadingIndicator]="loading"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="50"
+        [sortType]="'none'"
+        [rows]="rowsing"
+        [columns]="columns"
+        [limit]="5">
+      </ngx-datatable>
+
+      <h5 style="margin: 30px 0 10px 0;font-weight: 700;padding-left: 15px;">已执行</h5>
+      <ngx-datatable
+        class="material"
+        style="width: 100%;"
+        [loadingIndicator]="loading"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="50"
+        [rows]="rowsed"
+        [columns]="columns"
+        [limit]="5">
+      </ngx-datatable>
+    </div>
+
+  </div>
+
+</div>
+
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>

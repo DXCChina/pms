@@ -1,0 +1,37 @@
+<div class="upload_main">
+  <label [for]="name" class="btn-upload">
+    <svg fill="#000000" style="position: relative; margin: -3px 0 -5px 0;" height="24" viewBox="0 0 24 24" width="24"
+         xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/>
+      <path d="M0 0h24v24H0z" fill="none"/>
+    </svg>
+    选择文件
+  </label>
+
+  <md-form-field style="width: 245px">
+    <input mdInput [value]="progress === 100 ? originalName : ''" readonly>
+  </md-form-field>
+  <md-form-field style="width: 40px; margin-right: 3px;">
+    <input mdInput style="text-align: center;"  [value]="progress > 0 ? ( progress + '%') : ''" readonly>
+  </md-form-field>
+
+  <section style="margin-top: -10px;margin-bottom: 5px" *ngIf="progress > 0">
+    <md-progress-bar
+      class="example-margin"
+      [color]="color"
+      [mode]="mode"
+      [value]="progress"
+      [bufferValue]="bufferValue">
+    </md-progress-bar>
+  </section>
+  <!--<span class="progressValue" *ngIf="progress>0">{{progress}}%</span>-->
+  <!--<span *ngIf="progress === 100">{{originalName}}</span>-->
+
+  <input class="uploadFile" ngFileSelect [options]="options" (onUpload)="handleUpload($event)"
+         (beforeUpload)="beforeUpload($event)" [id]="name" type="file" [name]="name" [disabled]="!uploading && disable">
+  <!--<progress class="progress progress-striped progress-info" [value]="progress" max="100" *ngIf="progress > 0"></progress>-->
+
+</div>
+
+
+

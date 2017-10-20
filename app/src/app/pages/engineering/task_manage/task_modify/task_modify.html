@@ -1,0 +1,39 @@
+<div class="task-caseModel">
+
+  <div class="task-caseMain">
+
+    <form [formGroup]="form" class="example-form" (ngSubmit)="onSubmit()">
+
+      <h3 style="margin: 20px 0 0 20px; border-left: 2px solid #4bb134 ;padding-left: 10px;">修改任务</h3>
+      <hr />
+
+      <table class="example-full-width" cellspacing="0" style="margin: 30px auto 0 auto; font-size: 16px;"><tr>
+        <td><md-input-container class="example-full-width">
+          <input [formControl]="taskName" [(ngModel)]="tName" style="width:400px; margin: 0 auto"  mdInput placeholder="项目名称">
+        </md-input-container></td>
+      </tr></table>
+
+      <task-appSearch
+        [name]="aName"
+        [showAppList]="showAppList"
+        [app_showNoItem]="showNoItem"
+        [app_searchDataes]="searchDataes"
+        (searchApp)="queryApps($event)"
+        (chooseData)="chooseApps($event)">
+
+      </task-appSearch>
+
+      <table class="example-full-width" cellspacing="0"><tr>
+        <td><md-input-container class="example-full-width">
+          <input [formControl]="description"  mdInput placeholder="描述信息">
+        </md-input-container></td>
+      </tr></table>
+
+      <div class="task-caseBtn">
+        <button md-button md-dialog-close >取消</button>
+        <button md-button [disabled]="!form.valid"  color="primary" type="submit" >保存</button>
+      </div>
+    </form>
+  </div>
+
+</div>

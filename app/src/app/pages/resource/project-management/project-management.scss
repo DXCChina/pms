@@ -1,0 +1,131 @@
+button {
+  font-weight: normal;
+}
+
+.wa-detail .container {
+  font-size: 18px;
+  /*font-family:"宋体";*/
+  float: left;
+  margin-left: 22px;
+}
+
+.col-5 {
+  padding-right: 0;
+  min-width: 150px;
+}
+
+.col-6 {
+  padding-right: 0;
+  min-width: 60%;
+}
+
+.col-4 {
+  padding-right: 0;
+  min-width: 28%;
+}
+
+.project-detail, .creation-title {
+  margin: 15px 0;
+}
+
+.project-title, .creation-title {
+  /*color: #4bb134;*/
+}
+
+.creation-people {
+  position: absolute;
+  font-size: 18px;
+  top:27px;
+  left:70px;
+}
+
+
+
+.project-title > .project-delete {
+  float: right;
+  margin-right: 30px;
+}
+
+.tit {
+  /*font-family: "宋体";*/
+  font-size: 32px;
+}
+
+.fl {
+  float: left;
+}
+
+.creation-detail .row {
+  margin-top: 15px;
+}
+
+.creation-detail .col-6 {
+  margin-top: 5px;
+}
+
+.creation-detail {
+  /*font-family: "宋体";*/
+  margin-top: 30px;
+  font-size: 16px;
+}
+
+.creation-main {
+  margin-bottom: 30px;
+
+}
+
+.content-header {
+  margin:10px 0;
+}
+
+.project-delete button {
+  background: #b74635;
+  color:#efefef;
+}
+
+.project-name {
+  position: absolute;
+  top:23px;
+  left: 70px;
+  margin:3px 0 0 20px;
+}
+
+.createSvg {
+  fill: rgba(0, 0, 0, 0.38);
+}
+
+.project-detail {
+  /*width:auto;*/
+  border:1px solid red;
+}
+
+.manage_peopleHeader {
+  position: relative;
+}
+
+.manage_peopleHeader svg {
+  margin:5px;
+}
+
+.manage_peopleTitle {
+  position: absolute;
+  top:23px;
+  left: 85px;
+  font-size: 18px;
+}
+
+
+
+/*.manage_searchInput:focus ~ .manage_searchList {*/
+  /*display: block;*/
+/*}*/
+
+/*.manage_searchList:hover {*/
+  /*display: block;*/
+/*}*/
+
+
+.project-showDetail {
+  margin: 20px auto;
+  font-size: 1.1em;
+}
