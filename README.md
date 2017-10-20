@@ -44,6 +44,13 @@
     cd pms
     ```
 3. 启动
+    * 添加环境变量:
+    ```
+    PY_ENV:dev
+    PY_DB:pms
+    PY_DB_USERNAME:pms
+    PY_DB_PASSWORD:pms
+    ```
     * 一键启动:`run`
     * 启动前端:`app\run`
     * 启动后端:`api\run`
@@ -85,4 +92,3 @@
         * 后端:`pip install -r api/requirements.txt`
 #### [CentOS7生产环境部署](https://github.com/canfeit/pms/blob/master/docs/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2.md)
 ## TODO
-2. 接口整理
