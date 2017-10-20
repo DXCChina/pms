@@ -1,0 +1,21 @@
+<li (click)="selectedDevice()">
+  <div class="bkgs" [ngClass]="{'bkgs-selected':showBkgsClass}">
+    <div class="bkg">
+      <img src="assets/img/app/android.png">
+    </div>
+    <span class="deviceDescribe">{{dev.model && dev.model != 'unknown' ? dev.model : ' '}}</span>
+    <span class="deviceDescribe">{{dev.width && dev.width != 'unknown' ? dev.width.split('.', 1) +'×' +dev.height.split('.', 1) : '无设备详细信息'}}</span>
+    <span class="deviceDescribe">{{dev.osName && dev.osName != 'unknown' ? dev.osName : ' '}}</span>
+  </div>
+</li>
+
+<!--<li>-->
+<!--<div class="bkg" (click)="selectedDevice()">-->
+<!--<div class="bkg-left">-->
+<!--<img src="assets/img/app/android.png">-->
+<!--</div>-->
+<!--<div class="bkg-right">-->
+<!--<span class="deviceDescribe">{{dev.name}}</span>-->
+<!--</div>-->
+<!--</div>-->
+<!--</li>-->

@@ -1,0 +1,42 @@
+{
+  "message": "ok",
+  "data": {
+    "records": [
+      {
+        "id": "5982a7d75ac4fc67fc7df72f",
+        "scriptName": "rf",
+        "createTime": "2017-08-03 12:34:31",
+        "owerId": "597e986c5ac4fc38f4a6db3e",
+        "owername": "admin",
+        "description": "afsd"
+      },
+      {
+        "id": "5982b13c5ac4fc67fc7df75c",
+        "scriptName": "sdsd",
+        "createTime": "2017-08-03 13:14:36",
+        "owerId": "597e986c5ac4fc38f4a6db3e",
+        "owername": "admin",
+        "description": "sddsd"
+      },
+      {
+        "id": "5982b91a5ac4fc67fc7df78c",
+        "scriptName": "23",
+        "createTime": "2017-08-03 13:48:10",
+        "owerId": "597e986c5ac4fc38f4a6db3e",
+        "owername": "admin",
+        "description": "98653"
+      },
+      {
+        "id": "5982b9be5ac4fc67fc7df78f",
+        "scriptName": "sdfa",
+        "createTime": "2017-08-03 13:50:54",
+        "owerId": "597e986c5ac4fc38f4a6db3e",
+        "owername": "admin",
+        "description": "sdfas"
+      }
+    ],
+    "totalRecords": 4
+  },
+  "code": 0,
+  "url": null
+}

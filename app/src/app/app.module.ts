@@ -1,16 +1,70 @@
+import { NgModule, ApplicationRef } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
+import { RouterModule } from '@angular/router';
+import { Ng2BootstrapModule } from 'ngx-bootstrap';
+// import {HttpClientModule} from '@angular/common/http';
+import { TranslateService } from '@ngx-translate/core';
+/*
+ * Platform and Environment providers/directives/pipes
+ */
+import { routing } from './app.routing';
 
-import { AppComponent } from './app.component';
+// App is our top level component
+import { App } from './app.component';
+import { AppState, InternalStateType } from './app.service';
+import { GlobalState } from './global.state';
+import { NgaModule } from './theme/nga.module';
+import {PagesModule} from "./pages/pages.module";
+import {RegisterModule} from "./register/register.module";
+import {LoginModule} from "./login/login.module";
+import {HttpInterceptorModule} from "ng-http-interceptor";
+import {APP_BASE_HREF} from "@angular/common";
 
+// Application wide providers
+const APP_PROVIDERS = [
+  AppState,
+  GlobalState
+];
+
+export type StoreType = {
+  state: InternalStateType,
+  restoreInputValues: () => void,
+  disposeOldHosts: () => void
+};
+
+/**
+ * `AppModule` is the main entry point into Angular2's bootstraping process
+ */
 @NgModule({
+  bootstrap: [App],
   declarations: [
-    AppComponent
+    App,
   ],
-  imports: [
-    BrowserModule
+  imports: [ // import Angular's modules
+    BrowserModule,
+    // HttpClientModule,
+    HttpModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    NgaModule.forRoot(),
+    Ng2BootstrapModule,
+    HttpInterceptorModule.noOverrideHttp(),
+    routing,
+    PagesModule,
+    LoginModule,
+    RegisterModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ // expose our Services and Providers into Angular's dependency injection
+    APP_PROVIDERS,
+    {provide: APP_BASE_HREF, useValue: '/'}
+  ]
 })
-export class AppModule { }
+
+export class AppModule {
+
+  constructor(public appState: AppState) {
+  }
+}

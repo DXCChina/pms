@@ -1,0 +1,30 @@
+<div class="proCreate-Model">
+
+  <div [@routerDisplay]="'in'" class="proCreate-Main">
+
+    <form [formGroup]="form" class="example-form" (ngSubmit)="onSubmit()">
+
+      <h3 *ngIf="Global.createJudge.title" style="margin: 20px 0 0 20px; border-left: 2px solid #4bb134 ;padding-left: 10px;">新建项目</h3>
+      <h3 *ngIf="!Global.createJudge.title" style="margin: 20px 0 0 20px; border-left: 2px solid #4bb134 ;padding-left: 10px;">修改项目</h3>
+      <hr />
+
+      <div class="form-group row">
+        <md-input-container class="example-full-width">
+          <input mdInput  placeholder="项目名称" [formControl]="proName">
+        </md-input-container>
+      </div>
+
+      <div class="form-group row">
+        <md-input-container class="example-full-width">
+          <input mdInput  placeholder="描述信息" [formControl]="description">
+        </md-input-container>
+      </div>
+
+      <div class="proCreate-Btn">
+        <button md-button (click)="cancelCreate()" >取消</button>
+        <button md-button [disabled]="!form.valid"  color="primary" type="submit" >保存</button>
+      </div>
+    </form>
+  </div>
+
+</div>
