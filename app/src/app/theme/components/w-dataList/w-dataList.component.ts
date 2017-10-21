@@ -13,17 +13,17 @@ import {ConfigEntity} from "./config.Entity";
         (outSearch)="exportSearch($event)">
       </wa-filter>
       
-      <md-checkbox
+      <mat-checkbox
         color="primary"
         class="w-column-checkedAll"
         [checked]="checkedSwitch"
         (change)="isChecked($event)"
         [align]="end">
         全选
-      </md-checkbox>
+      </mat-checkbox>
     </div>
     <div class="wa-columnSpace" *ngIf="columnHeader"></div>
-    <md-nav-list style="margin-top: -11px; z-index: 0">
+    <mat-nav-list style="margin-top: -11px; z-index: 0">
       <w-column
         [svgType]="svgType"
         [displayCommon]="displayCommon"
@@ -41,7 +41,7 @@ import {ConfigEntity} from "./config.Entity";
         (checkedData)="multipleSelection($event)">
         
       </w-column>
-    </md-nav-list>
+    </mat-nav-list>
   `
 })
 export class WDataListComponent implements OnInit {

@@ -2,7 +2,7 @@ import {Component, ElementRef, EventEmitter, Inject, OnChanges, OnInit, Renderer
 import {memberData, ProjectPages, Project, searchResult} from "./project.Entity";
 import {ConfigEntity} from "../../../theme/components/w-dataList/config.Entity";
 import {ProjectManageService} from "./projecgt-management.service";
-import {MD_DIALOG_DATA, MdDialog, MdDialogConfig, MdDialogRef} from "@angular/material";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material";
 import {GlobalState} from "../../../global.state";
 import {ToasterConfig, ToasterService} from "angular2-toaster";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -46,7 +46,7 @@ export class ProjectManagementComponent implements OnInit, OnChanges {
   sortField: string = 'id';
   sortOrder: string = 'asc';
 
-  constructor(private ref: ElementRef, private _service: ProjectManageService, public dialog: MdDialog, private router: Router,
+  constructor(private ref: ElementRef, private _service: ProjectManageService, public dialog: MatDialog, private router: Router,
               private Global: GlobalState, private toasterService: ToasterService, private Renderer: Renderer2, private eventManager: JhiEventManager) {
 
     this.configEntity = {
@@ -148,7 +148,7 @@ export class ProjectManagementComponent implements OnInit, OnChanges {
     this.Global.createJudge = {position: false, title: true, projectId: '', members: [], description: '', projectName: ''};
     this.router.navigate(['pages/resource/projectMan',{outlets:{popup: 'new'}}]);
     return false;
-    // let dialogRef = this.dialog.open(ProjectCreateComponent, <MdDialogConfig>{
+    // let dialogRef = this.dialog.open(ProjectCreateComponent, <MatDialogConfig>{
     //   height: "730px",
     //   width: "530px"
     // });
@@ -160,7 +160,7 @@ export class ProjectManagementComponent implements OnInit, OnChanges {
   };
 
   deleteInfo() {
-    let dialogRef = this.dialog.open(CommonDeleteDialog, <MdDialogConfig>{
+    let dialogRef = this.dialog.open(CommonDeleteDialog, <MatDialogConfig>{
       height: "170px",
       width: "300px",
       data: '项目'

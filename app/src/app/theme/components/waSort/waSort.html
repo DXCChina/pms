@@ -1,12 +1,12 @@
 
-<md-select placeholder="字段过滤" (change)="changeValue($event)">
-  <md-option *ngFor="let fields of sortFields" [value]="fields.fieldName" >
+<mat-select placeholder="字段过滤" (change)="changeValue($event)">
+  <mat-option *ngFor="let fields of sortFields" [value]="fields.fieldName" >
     {{ fields.fieldName }}
-  </md-option>
-</md-select>
+  </mat-option>
+</mat-select>
 
 <div class="wa-button-sort">
-  <button md-icon-button (click)="changedImg()">
+  <button mat-icon-button (click)="changedImg()">
     <img id="img" src="../../../../assets/img/wa-img/ic_arrow_upward_black_24px.svg">
   </button>
 </div>

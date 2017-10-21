@@ -1,5 +1,5 @@
 import {Component, OnInit} from "@angular/core";
-import {MdDialog, MdDialogConfig} from "@angular/material";
+import {MatDialog, MatDialogConfig} from "@angular/material";
 import {QuickDeployComponent} from "./quickDeploy/quickDeploy.component";
 import {DashboardService} from "./dashboard.service";
 import {DashboardData} from "./dashboard.Entity";
@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
   columns: any[];
   loading: boolean = true
 
-  constructor( public dialog: MdDialog, private service: DashboardService) {
+  constructor( public dialog: MatDialog, private service: DashboardService) {
     this.columns = [
       { prop: 'taskName', name: '任务' },
       { prop: 'type', name: '平台' },
@@ -93,7 +93,7 @@ export class DashboardComponent implements OnInit {
   }
 
   quickDeploied(){
-    let dialogRef = this.dialog.open(QuickDeployComponent, <MdDialogConfig>{
+    let dialogRef = this.dialog.open(QuickDeployComponent, <MatDialogConfig>{
       width: '920px',
       height: '580px'
     });

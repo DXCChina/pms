@@ -5,10 +5,8 @@ import {routing} from "./resource.routing";
 import {ResourceComponent} from "./resource.component";
 import {ProjectManagementComponent} from "./project-management/project-management.component";
 import {
-  MdButtonModule, MdCardModule, MdCheckboxModule, MdChipsModule, MdDialogModule, MdInputModule, MdListModule,
-  MdSelectModule,MdTabsModule,
-  MdTooltipModule
-} from "@angular/material";
+  MatButtonModule, MatCardModule, MatCheckboxModule, MatChipsModule, MatDialogModule, MatInputModule, MatListModule,
+  MatSelectModule, MatTabsModule, MatTooltipModule } from "@angular/material";
 
 import {NgaModule} from "../../theme/nga.module";
 import { PeopleManagementComponent } from './project-management/people-management/people-management.component';
@@ -22,16 +20,16 @@ import {ProjectCreateComponent} from "./project-management/project-create/projec
     ReactiveFormsModule,
     NgaModule,
     routing,
-    MdTabsModule,
-    MdButtonModule,
-    MdDialogModule,
-    MdTooltipModule,
-    MdSelectModule,
-    MdCardModule,
-    MdCheckboxModule,
-    MdChipsModule,
-    MdInputModule,
-    MdListModule,
+    MatTabsModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatSelectModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatChipsModule,
+    MatInputModule,
+    MatListModule,
     ToasterModule
   ],
   declarations:[

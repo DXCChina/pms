@@ -59,9 +59,8 @@ import {
 } from './validators';
 import {BaPagination} from "./components/waPagination/waPagination.component";
 import {
-  MdButtonModule, MdCheckboxModule, MdIconModule, MdInputModule, MdListModule, MdMenuModule, MdProgressBarModule,
-  MdSelectModule, MdTabsModule
-} from "@angular/material";
+  MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule,
+  MatSelectModule, MatTabsModule } from "@angular/material";
 import {WaDataList} from "./components/waDataList/waDataList.component";
 import {WaFilter} from "./components/waFilter/waFilter.component";
 import {WaSort} from "./components/waSort/waSort.component";
@@ -154,15 +153,15 @@ const NGA_VALIDATORS = [
     SortableModule.forRoot(),
     BsDropdownModule.forRoot(),
     // Add material design components
-    MdButtonModule,
-    MdIconModule,
-    MdListModule,
-    MdInputModule,
-    MdMenuModule,
-    MdSelectModule,
-    MdCheckboxModule,
-    MdProgressBarModule,
-    MdTabsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatListModule,
+    MatInputModule,
+    MatMenuModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatProgressBarModule,
+    MatTabsModule,
     TreeModule,
     ContextMenuModule,
     NgxDatatableModule

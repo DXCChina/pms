@@ -10,19 +10,19 @@
 
       <div class="form-group row">
         <md-input-container class="example-full-width">
-          <input mdInput  placeholder="项目名称" [formControl]="proName">
+          <input matInput  placeholder="项目名称" [formControl]="proName">
         </md-input-container>
       </div>
 
       <div class="form-group row">
         <md-input-container class="example-full-width">
-          <input mdInput  placeholder="描述信息" [formControl]="description">
+          <input matInput  placeholder="描述信息" [formControl]="description">
         </md-input-container>
       </div>
 
       <div class="proCreate-Btn">
-        <button md-button (click)="cancelCreate()" >取消</button>
-        <button md-button [disabled]="!form.valid"  color="primary" type="submit" >保存</button>
+        <button mat-button (click)="cancelCreate()" >取消</button>
+        <button mat-button [disabled]="!form.valid"  color="primary" type="submit" >保存</button>
       </div>
     </form>
   </div>

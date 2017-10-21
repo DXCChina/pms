@@ -2,7 +2,7 @@ import {NgModule} from "@angular/core";
 import {routing} from "./welcome.routing";
 import {WelcomeComponent} from "./welcome.component";
 import {NgaModule} from "../../theme/nga.module";
-import {MdCardModule} from "@angular/material";
+import {MatCardModule} from "@angular/material";
 import {HistoryProjectComponent} from "./historyProject/historyProject-component";
 import {FormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
@@ -15,7 +15,7 @@ import {WelcomeService} from "./welcome.service";
     FormsModule,
     NgaModule,
     routing,
-    MdCardModule,
+    MatCardModule,
     ToasterModule
   ],
   declarations: [

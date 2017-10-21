@@ -1,6 +1,6 @@
 import {Component} from "@angular/core";
 import {DashboardService} from "../dashboard.service";
-import {MdDialogRef} from "@angular/material";
+import {MatDialogRef} from "@angular/material";
 import {ToasterService} from "angular2-toaster";
 
 @Component({
@@ -14,7 +14,7 @@ import {ToasterService} from "angular2-toaster";
 export class QuickDeployComponent {
 
 
-  constructor(public dialogRef: MdDialogRef<QuickDeployComponent>, private deployService: DashboardService,
+  constructor(public dialogRef: MatDialogRef<QuickDeployComponent>, private deployService: DashboardService,
               private toasterService: ToasterService,){
 
   }
