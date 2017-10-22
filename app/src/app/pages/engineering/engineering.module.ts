@@ -8,7 +8,7 @@ import {CodemirrorModule} from 'ng2-codemirror';
 import {
   MatTabsModule, MatButtonModule, MatDialogModule, MatTooltipModule, MatSelectModule,
   MatCheckboxModule, MatInputModule, MatListModule, MatSortModule, MatTableModule, MatCommonModule,
-  MatProgressBarModule, MatChipsModule, MatCardModule
+  MatProgressBarModule, MatChipsModule, MatCardModule, MatExpansionModule, MatGridListModule
 } from "@angular/material";
 import {SortableModule}from 'ngx-bootstrap';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
@@ -22,15 +22,17 @@ import {QuickDeployComponent} from "./dashboard/quickDeploy/quickDeploy.componen
 import {ScriptSearchComponent} from "../common/scriptSearch/scriptSearch.component";
 import {DemandManageComponent} from "./demand_manage/demand-manage.component";
 import {ReportManageComponent} from "./report_manage/report-manage.component";
+import {CreateDemandComponent} from "./demand_manage/create_demand/create_demand.component";
+import {CKEditorModule} from "ng2-ckeditor";
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     NgaModule,
+    CKEditorModule,
     CodemirrorModule,
     MatCommonModule,
-    MatCheckboxModule,
     MatDialogModule,
     MatInputModule,
     MatSelectModule,
@@ -40,19 +42,20 @@ import {ReportManageComponent} from "./report_manage/report-manage.component";
     MatCheckboxModule,
     MatDialogModule,
     MatButtonModule,
+    MatExpansionModule,
     CdkTableModule,
+    MatGridListModule,
     MatTableModule,
     MatSortModule,
     MatChipsModule,
     MatProgressBarModule,
     ReactiveFormsModule,
-    MatInputModule,
     MatTooltipModule,
     ToasterModule,
     SortableModule.forRoot(),
     routing,
     NgxChartsModule,
-    NgxDatatableModule
+    NgxDatatableModule,
   ],
   declarations: [
     EngineeringComponent,
@@ -60,10 +63,12 @@ import {ReportManageComponent} from "./report_manage/report-manage.component";
     QuickDeployComponent,
     ScriptSearchComponent,
     ReportManageComponent,
-    DemandManageComponent
+    DemandManageComponent,
+    CreateDemandComponent
   ],
   entryComponents: [
-    QuickDeployComponent
+    QuickDeployComponent,
+    CreateDemandComponent
   ],
   providers:[EngineerService,EngineerGuard]
 })

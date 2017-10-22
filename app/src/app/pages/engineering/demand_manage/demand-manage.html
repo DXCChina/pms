@@ -1,1 +1,124 @@
-<h1>demand page</h1>
+<w-sidebar>
+  <div class="_dataList">
+    <mat-nav-list>
+      <w-dataList
+        [svgType]="'script'"
+        [displayCommon]="true"
+        [displayPeople]="false"
+        [columnHeader]="true"
+        [placeHolder]="'需求搜索'"
+        [displayControl]="'check'"
+        [dataes]="[]"
+        [configEntity]="configSEntity"
+        (outCheckDataes)="demandChecked($event)"
+        (selected)="demandSelected($event)"
+        (outSearch)="demandSearch($event)">
+      </w-dataList>
+    </mat-nav-list>
+  </div>
+
+  <div class="_paging">
+    <wa-pagination
+      [length]="10"
+      [size]="5"
+      (outPageIndex)="demandPage($event)">
+    </wa-pagination>
+  </div>
+</w-sidebar>
+
+<div class="wa-header">
+
+
+  <wa-sort
+    class="wa-sort"
+    (outFieldName)="demandFieldName($event)"
+    (outDirection)="demandSort($event)">
+  </wa-sort>
+
+  <div class="wa-controlBtn">
+    <button mat-button color="warn" id="deleteBtn" (click)="deleteDemand()" [disabled]="dispalyDelete">
+      <svg fill="#f44336" id="deleteSvg" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>
+      <span>删除</span>
+    </button>
+    <button mat-button color="primary" id="createBtn" (click)="createDemand()">
+      <svg fill="#4bb134" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+        <path d="M0 0h24v24H0z" fill="none"/>
+      </svg>
+      <span>新建</span>
+    </button>
+  </div>
+</div>
+
+<div [ngSwitch]="contentSwitch">
+
+  <div *ngSwitchCase="'emptyCase'" class="wa-content wa-content-margin">
+    <div class="wa-basic-info">
+    </div>
+    <div class="wa-core-info">
+      <div class="wa-noItem">
+        <h1>无信息</h1>
+        <h1>No Item</h1>
+      </div>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="'commonCase'" class="wa-content wa-content-margin">
+    <div class="wa-basic-info">
+      <div class="wa-title">
+        <svg fill="#757575" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+        </svg>
+        <div class="wa-title-info">
+          <div>
+            <h3>title</h3>
+            <p mat-line>description</p>
+          </div>
+
+          <mat-chip-list class="wa-titleChips">
+            <mat-chip>chip</mat-chip>
+          </mat-chip-list>
+        </div>
+
+      </div>
+      <div class="wa-detail">
+        <div class="row detail_item">
+          <div class="detail_title">
+            <h4>脚本详情</h4>
+          </div>
+
+          <div class="col-1"></div>
+          <div class="col-10">
+            <div class="row detail_info">
+              <!--<div class="col-lg-3 col-md-6 col-sm-6 col-sx-12">-->
+                <!--<p>功能归属：{{dataDetail.tag}}</p>-->
+              <!--</div>-->
+              <!--<div class="col-lg-3 col-md-6 col-sm-6 col-sx-12">-->
+                <!--<p>描述信息：{{dataDetail.description}}</p>-->
+              <!--</div>-->
+            </div>
+
+          </div>
+          <div class="col-1"></div>
+        </div>
+      </div>
+
+      <div class="wa-detail">
+        <div class="detail_title">
+          <h4>editor</h4>
+        </div>
+        <div class="wa-core-info">
+
+          <h1>editor</h1>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>

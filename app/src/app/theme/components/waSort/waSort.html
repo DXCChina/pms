@@ -1,5 +1,5 @@
 
-<mat-select placeholder="字段过滤" (change)="changeValue($event)">
+<mat-select placeholder="字段过滤" (change)="changeValue($event)" style="width: 100px">
   <mat-option *ngFor="let fields of sortFields" [value]="fields.fieldName" >
     {{ fields.fieldName }}
   </mat-option>

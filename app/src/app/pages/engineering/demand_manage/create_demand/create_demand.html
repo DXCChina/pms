@@ -1,0 +1,60 @@
+<div>
+
+    <mat-expansion-panel [expanded]="expanded" (opened)="openExpand(true)" style="margin-bottom: 20px">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          新建选择
+        </mat-panel-title>
+        <mat-panel-description>
+          {{createType}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+        <button mat-button (click)="setType('案例')">案例</button>
+
+        <button mat-button (click)="setType('需求')">需求</button>
+    </mat-expansion-panel>
+
+
+  <ckeditor [(ngModel)]="content" debounce="500" [config]="{height: '100'}">
+
+  </ckeditor>
+
+
+  <mat-grid-list cols="2" [rowHeight]="200" style="margin-top: 20px">
+    <mat-grid-tile>
+
+     <mat-form-field>
+      <mat-select placeholder="状态" [(ngModel)]="status">
+        <mat-option [value]="'new'">New</mat-option>
+        <mat-option [value]="'doing'">Doing</mat-option>
+        <mat-option [value]="'done'">Done</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+      <mat-form-field>
+      <mat-select placeholder="优先级" [(ngModel)]="level" >
+        <mat-option [value]="'low'">Low</mat-option>
+        <mat-option [value]="'normal'">Normal</mat-option>
+        <mat-option [value]="'high'">High</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+      <mat-form-field>
+      <mat-select placeholder="指派给" [(ngModel)]="assign">
+        <mat-option [value]="'self'">--自己--</mat-option>
+        <!--<mat-option *ngFor="let food of foods" [value]="food.value">-->
+          <!--{{food.viewValue}}-->
+        <!--</mat-option>-->
+      </mat-select>
+    </mat-form-field>
+
+    </mat-grid-tile>
+    <mat-grid-tile>
+
+    </mat-grid-tile>
+  </mat-grid-list>
+
+</div>
+
+
