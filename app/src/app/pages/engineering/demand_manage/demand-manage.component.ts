@@ -1,4 +1,4 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, ElementRef, OnInit, Renderer2} from "@angular/core";
 import {ConfigEntity} from "../../../theme/components/w-dataList/config.Entity";
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import {CreateDemandComponent} from "./create_demand/create_demand.component";
@@ -18,7 +18,8 @@ export class DemandManageComponent implements OnInit {
   };
   contentSwitch: string = 'emptyCase';
 
-  constructor(private matDialog: MatDialog){
+  constructor(private matDialog: MatDialog, private ref: ElementRef,
+              private Renderer: Renderer2){
 
   }
 
@@ -27,6 +28,7 @@ export class DemandManageComponent implements OnInit {
     localStorage.setItem('userId', '1');
   }
 
+  // dataList methods
   demandChecked(checked: any) {
 
   }
@@ -51,10 +53,11 @@ export class DemandManageComponent implements OnInit {
 
   }
 
+  //open create dialog
   createDemand() {
     let dialogRef = this.matDialog.open(CreateDemandComponent, <MatDialogConfig>{
-      height: '660px',
-      width: '1060px'
+      height: '550px',
+      width: '960px'
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
@@ -63,8 +66,10 @@ export class DemandManageComponent implements OnInit {
     })
   }
 
+  //delete method
   deleteDemand() {
 
   }
+
 
 }

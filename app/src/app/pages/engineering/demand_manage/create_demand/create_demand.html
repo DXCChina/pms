@@ -2,34 +2,42 @@
 
   <form (ngSubmit)="onSubmit(picker_Start, picker_End)">
 
-    <mat-expansion-panel [expanded]="expanded" (opened)="openExpand(true)" style="margin-bottom: 20px">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          新建选择
-        </mat-panel-title>
-        <mat-panel-description>
-          {{createTitle}}
-        </mat-panel-description>
-      </mat-expansion-panel-header>
+    <mat-grid-list cols="1"  [rowHeight]="70" style="margin-top: 40px">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="主题">
+        </mat-form-field>
+      </mat-grid-tile>
 
-      <div class="demand_btnGroup">
-        <button mat-button (click)="setType('需求', 'task')">需求</button>
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+       <mat-form-field id="Des" class="example-full-width des">
+          <input matInput placeholder="描述">
+        </mat-form-field>
 
-        <button mat-button (click)="setType('任务', 'demand')">任务</button>
+        <mat-form-field id="Asc" class="example-margin asc">
+          <input [(ngModel)]="ascription" name="ascription" matInput placeholder="归属于">
+        </mat-form-field>
 
-      </div>
+      </mat-grid-tile>
 
-    </mat-expansion-panel>
+    </mat-grid-list>
 
 
-    <ckeditor [(ngModel)]="content" name="ckeditor" debounce="500" [config]="{height: '100'}">
+    <!--<ckeditor [(ngModel)]="content" name="ckeditor" debounce="500" [config]="{height: '100'}">-->
 
-    </ckeditor>
+    <!--</ckeditor>-->
 
     <mat-grid-list cols="1"  [rowHeight]="70" style="margin-top: 40px">
 
       <mat-grid-tile [rowspan]="1">
         <section class="example-section">
+
+          <mat-form-field class="example-margin">
+            <mat-select placeholder="选择" (change)="targetChanged($event)" value="target">
+              <mat-option *ngFor="let target of targets" [value]="target.value">{{target.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <mat-form-field class="example-margin">
 
             <mat-select placeholder="状态" [(ngModel)]="status" name="status">
@@ -62,6 +70,10 @@
       </section>
       </mat-grid-tile>
 
+    </mat-grid-list>
+
+    <mat-grid-list cols="1"  [rowHeight]="70" style="margin-top: 20px">
+
       <mat-grid-tile [rowspan]="1">
 
         <section class="example-section">
@@ -92,12 +104,11 @@
         </section>
 
       </mat-grid-tile>
-
     </mat-grid-list>
 
-    <hr />
+    <hr style="margin-top: 20px"/>
 
-    <mat-grid-list cols="1"  [rowHeight]="50" style="margin-top: 40px">
+    <mat-grid-list cols="1"  [rowHeight]="50" style="margin-top: 20px">
       <mat-grid-tile [rowspan]="1">
         <div style="float: left">
           <button mat-button type="submit" color="primary">创建</button>
