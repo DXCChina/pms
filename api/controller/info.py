@@ -15,7 +15,7 @@ def project_list():
 
     GET /api/project
     '''
-    return 'developing'
+    return jsonify(info.getProjectList())
 
 
 @app.route("/project", methods=['POST'])
