@@ -1,6 +1,6 @@
 <w-sidebar>
   <div class="_dataList">
-    <md-nav-list>
+    <mat-nav-list>
       <w-dataList
         [svgType]="'report'"
         [displayCommon]="true"
@@ -14,7 +14,7 @@
         (selected)="returnSelected($event)"
         (outSearch)="returnSearch($event)">
       </w-dataList>
-    </md-nav-list>
+    </mat-nav-list>
   </div>
 
   <div class="_paging" *ngIf="report">
@@ -102,8 +102,8 @@
 
   <div class="wa-core-info">
     <div>
-      <md-tab-group [(selectedIndex)]="tabIndex">
-        <md-tab label="报告总览">
+      <mat-tab-group [(selectedIndex)]="tabIndex">
+        <mat-tab label="报告总览">
 
           <div class="row" style="width: 100%; padding: 25px;">
 
@@ -125,7 +125,7 @@
             <!--[selectionType]="'single'"-->
             <!--(select)='onSelect($event)'-->
             <!--(activate)="onActivate($event)"-->
-            <md-card class="chartsCard">
+            <mat-card class="chartsCard">
               <div class="row" style="width: 100%">
                 <!--<div class="col-lg-1"></div>-->
                 <div class="col-lg-5 col-md-12 col-sm-12">
@@ -184,7 +184,7 @@
                 </div>
                 <div class="col-lg-1"></div>
               </div>
-            </md-card>
+            </mat-card>
 
             <div class="report_title">
               <p>脚本统计</p>
@@ -255,7 +255,7 @@
               <!--</ngx-datatable-column>-->
             </ngx-datatable>
 
-            <md-card class="chartsCard">
+            <mat-card class="chartsCard">
               <div class="row" style="width: 100%">
                 <div class="col-lg-1"></div>
                 <div class="col-lg-10 col-md-12 col-sm-12">
@@ -306,9 +306,9 @@
                 <!--</div>-->
                 <div class="col-lg-1"></div>
               </div>
-            </md-card>
+            </mat-card>
 
-            <md-card class="chartsCard">
+            <mat-card class="chartsCard">
               <div class="row" style="width: 100%">
                 <div class="col-lg-1"></div>
                 <div class="col-lg-10 col-md-12 col-sm-12">
@@ -339,21 +339,21 @@
                 </div>
                 <div class="col-lg-1"></div>
               </div>
-            </md-card>
+            </mat-card>
 
           </div>
 
-        </md-tab>
+        </mat-tab>
 
-        <md-tab label="步骤详情">
+        <mat-tab label="步骤详情">
           <div>
             <wa-tree [nodes]="transNodes" (emitClick)="getTreeStep($event)" [tabIndex]="tabIndex"></wa-tree>
           </div>
           <div *ngIf="treeRes">
             <wa-datatable [rows]="treeData"></wa-datatable>
           </div>
-        </md-tab>
-      </md-tab-group>
+        </mat-tab>
+      </mat-tab-group>
     </div>
   </div>
 </div>

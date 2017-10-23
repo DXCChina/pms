@@ -44,51 +44,6 @@ export class ReportManageComponent implements OnInit, AfterViewInit {
   sortField: string = 'id';
   sortOrder: string = 'asc';
 
-  nodes=[
-    {
-      // expanded: true,
-      name: '案例1',
-      subTitle: 'the root',
-      children: [
-        {
-          name: '案例1-1',
-          subTitle: 'a good child',
-          // hasChildren: false
-        }, {
-          name: '案例1-2',
-          subTitle: 'a bad child',
-          // hasChildren: false
-        }
-      ]
-    },
-    {
-      name: '案例2',
-      subTitle: 'the second root',
-      // expanded: true,
-      children: [
-        {
-          name: '案例2-1',
-          subTitle: 'new and improved',
-          uuid: '11',
-          // hasChildren: false
-        }, {
-          name: '案例2-2',
-          subTitle: 'new and improved2',
-          children: [
-            {
-              uuid: 1001,
-              name: 'subsub',
-              subTitle: 'subsub',
-              // hasChildren: false
-            }
-          ]
-        }
-      ]
-    }
-  ];
-
-  displayedColumns = ['name', 'version', 'size', 'type', 'device', 'status', 'timing'];
-
   // options
   view: any
   showXAxis = true;

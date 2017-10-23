@@ -8,21 +8,21 @@
     选择文件
   </label>
 
-  <md-form-field style="width: 245px">
-    <input mdInput [value]="progress === 100 ? originalName : ''" readonly>
-  </md-form-field>
-  <md-form-field style="width: 40px; margin-right: 3px;">
-    <input mdInput style="text-align: center;"  [value]="progress > 0 ? ( progress + '%') : ''" readonly>
-  </md-form-field>
+  <mat-form-field style="width: 245px">
+    <input matInput [value]="progress === 100 ? originalName : ''" readonly>
+  </mat-form-field>
+  <mat-form-field style="width: 40px; margin-right: 3px;">
+    <input matInput style="text-align: center;"  [value]="progress > 0 ? ( progress + '%') : ''" readonly>
+  </mat-form-field>
 
   <section style="margin-top: -10px;margin-bottom: 5px" *ngIf="progress > 0">
-    <md-progress-bar
+    <mat-progress-bar
       class="example-margin"
       [color]="color"
       [mode]="mode"
       [value]="progress"
       [bufferValue]="bufferValue">
-    </md-progress-bar>
+    </mat-progress-bar>
   </section>
   <!--<span class="progressValue" *ngIf="progress>0">{{progress}}%</span>-->
   <!--<span *ngIf="progress === 100">{{originalName}}</span>-->

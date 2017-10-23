@@ -13,7 +13,6 @@ export class RegisterService {
 
   register(username: string, password: string, email: string): Promise<any> {
     let body = {username, password, email};
-    console.log(body)
     return this.http.post(this.RegisterUrl, body, this.Global.options)
       .toPromise()
       .then(this.Global.extractData)
