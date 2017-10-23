@@ -1,7 +1,6 @@
 import {RouterModule, Routes} from "@angular/router";
 import {ModuleWithProviders} from "@angular/core";
 import {EngineeringComponent} from "./engineering.component";
-import {EngineerGuard} from "./engineer.guard";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {DemandManageComponent} from "./demand_manage/demand-manage.component";
 import {ReportManageComponent} from "./report_manage/report-manage.component";
@@ -10,7 +9,6 @@ export const routes: Routes = [
   {
     path: '',
     component: EngineeringComponent,
-    canActivateChild: [EngineerGuard],
     children: [
       {
         path: 'dashboard', component: DashboardComponent
