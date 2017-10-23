@@ -1,36 +1,20 @@
 import {Component, OnInit} from "@angular/core";
-import {WelcomeService} from "./welcome.service";
-import {WelcomeData} from "./welcome.Entity";
+
 @Component({
   selector:'welcome',
   templateUrl:'./welcome.component.html',
   styleUrls: ['./welcome.component.scss']
 })
 
-export class WelcomeComponent implements OnInit {
+export class WelcomeComponent {
 
-  welcomeData: WelcomeData;
+  projects: any[];
 
-  constructor(private service: WelcomeService) {
-
-  }
-
-  ngOnInit(){
-    this.welcomeInfo();
-  }
-
-  welcomeInfo(){
-    this.service.welcomeInfo()
-      .then(res => {
-        this.welcomeData = res.data
-      }, err => {
-        console.log(err)
-      })
-      .catch()
-  }
-
-  chooseDevice(device: any){
-    console.log(device)
+  constructor() {
+    this.projects = [
+      {projectName: 'project 1', description: 'this is project 1'},
+      {projectName: 'project 2', description: 'this is project 2'}
+    ];
   }
 }
 

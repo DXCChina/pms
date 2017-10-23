@@ -1,13 +1,13 @@
 
 <ul>
   <li *ngFor="let pro of projects"  class="proItem">
-    <div class="proItem-Content" *ngIf="projects.length > 0">
+    <div class="proItem-Content" *ngIf="projects?.length > 0">
       <h3>{{pro.projectName}}</h3>
       <p>{{pro.description}}</p>
     </div>
   </li>
 
-  <li class="proItem" *ngIf="projects.length > 6" routerLink="/pages/resource/projectMan">
+  <li class="proItem" *ngIf="projects?.length > 6" routerLink="/pages/resource/projectMan">
     <div class="proItem-Content">
       <h3>更多项目</h3>
       <p> ... </p>

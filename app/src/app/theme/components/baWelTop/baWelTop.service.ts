@@ -5,7 +5,6 @@ import {Injectable} from '@angular/core';
 import {Http, Response} from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {InterceptableHttp} from "ng-http-interceptor";
-import {Project} from "../../../pages/resource/project-management/project.Entity";
 
 @Injectable()
 export class BaWelTopService {
@@ -13,7 +12,7 @@ export class BaWelTopService {
   constructor(private _http: InterceptableHttp) {
   }
 
-  findProjectList(url: string): Promise<Project> {
+  findProjectList(url: string): Promise<any> {
     return this._http.get(url).toPromise()
       .then(this.extractData)
       .catch(this.handleError)

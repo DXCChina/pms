@@ -1,5 +1,5 @@
 import {Component, Inject} from "@angular/core";
-import {MD_DIALOG_DATA, MdDialogRef} from "@angular/material";
+import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 
 @Component({
   selector:'delete',
@@ -7,15 +7,15 @@ import {MD_DIALOG_DATA, MdDialogRef} from "@angular/material";
     <h1 md-dialog-title></h1>
   <div md-dialog-content style="margin: 27px auto;text-align: center;font-size: 1.2em">确定删除该{{data}}?</div>
   <div md-dialog-actions style="margin-left:33px"> 
-    <button md-button (click)="closeDialog()">取消</button>
-    <button md-button (click)="cancelDialog()">删除</button>
+    <button mat-button (click)="closeDialog()">取消</button>
+    <button mat-button (click)="cancelDialog()">删除</button>
   </div>
   `
 })
 export class CommonDeleteDialog {
 
-  constructor( public dialogRef: MdDialogRef<CommonDeleteDialog> ,
-              @Inject(MD_DIALOG_DATA) public data: any){
+  constructor( public dialogRef: MatDialogRef<CommonDeleteDialog> ,
+              @Inject(MAT_DIALOG_DATA) public data: any){
 
   }
 

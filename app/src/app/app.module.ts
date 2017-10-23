@@ -4,8 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { Ng2BootstrapModule } from 'ngx-bootstrap';
-// import {HttpClientModule} from '@angular/common/http';
-import { TranslateService } from '@ngx-translate/core';
+
 /*
  * Platform and Environment providers/directives/pipes
  */
@@ -13,7 +12,6 @@ import { routing } from './app.routing';
 
 // App is our top level component
 import { App } from './app.component';
-import { AppState, InternalStateType } from './app.service';
 import { GlobalState } from './global.state';
 import { NgaModule } from './theme/nga.module';
 import {PagesModule} from "./pages/pages.module";
@@ -24,12 +22,10 @@ import {APP_BASE_HREF} from "@angular/common";
 
 // Application wide providers
 const APP_PROVIDERS = [
-  AppState,
   GlobalState
 ];
 
 export type StoreType = {
-  state: InternalStateType,
   restoreInputValues: () => void,
   disposeOldHosts: () => void
 };
@@ -65,6 +61,6 @@ export type StoreType = {
 
 export class AppModule {
 
-  constructor(public appState: AppState) {
+  constructor() {
   }
 }
