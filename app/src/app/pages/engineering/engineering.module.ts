@@ -8,7 +8,8 @@ import {CodemirrorModule} from 'ng2-codemirror';
 import {
   MatTabsModule, MatButtonModule, MatDialogModule, MatTooltipModule, MatSelectModule,
   MatCheckboxModule, MatInputModule, MatListModule, MatSortModule, MatTableModule, MatCommonModule,
-  MatProgressBarModule, MatChipsModule, MatCardModule, MatExpansionModule, MatGridListModule
+  MatProgressBarModule, MatChipsModule, MatCardModule, MatExpansionModule, MatGridListModule, MatDatepickerModule,
+  MatNativeDateModule, MAT_DATE_LOCALE, MatSliderModule
 } from "@angular/material";
 import {SortableModule}from 'ngx-bootstrap';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
@@ -37,6 +38,7 @@ import {CKEditorModule} from "ng2-ckeditor";
     MatCardModule,
     MatTabsModule,
     MatListModule,
+    MatSliderModule,
     MatCheckboxModule,
     MatDialogModule,
     MatButtonModule,
@@ -46,6 +48,8 @@ import {CKEditorModule} from "ng2-ckeditor";
     MatTableModule,
     MatSortModule,
     MatChipsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatProgressBarModule,
     ReactiveFormsModule,
     MatTooltipModule,
@@ -53,7 +57,7 @@ import {CKEditorModule} from "ng2-ckeditor";
     SortableModule.forRoot(),
     routing,
     NgxChartsModule,
-    NgxDatatableModule,
+    NgxDatatableModule
   ],
   declarations: [
     EngineeringComponent,
@@ -66,7 +70,10 @@ import {CKEditorModule} from "ng2-ckeditor";
   entryComponents: [
     CreateDemandComponent
   ],
-  providers:[EngineerService]
+  providers:[
+    EngineerService,
+    {provide: MAT_DATE_LOCALE, useValue: 'zh-cn'}
+  ]
 })
 export class EngineeringModule {
 

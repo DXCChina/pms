@@ -1,61 +1,109 @@
 <div>
 
+  <form (ngSubmit)="onSubmit(picker_Start, picker_End)">
+
     <mat-expansion-panel [expanded]="expanded" (opened)="openExpand(true)" style="margin-bottom: 20px">
       <mat-expansion-panel-header>
         <mat-panel-title>
           新建选择
         </mat-panel-title>
         <mat-panel-description>
-          {{createType}}
+          {{createTitle}}
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-        <button mat-button (click)="setType('需求')">需求</button>
+      <div class="demand_btnGroup">
+        <button mat-button (click)="setType('需求', 'task')">需求</button>
 
-        <button mat-button (click)="setType('任务')">任务</button>
+        <button mat-button (click)="setType('任务', 'demand')">任务</button>
+
+      </div>
 
     </mat-expansion-panel>
 
 
-  <ckeditor [(ngModel)]="content" debounce="500" [config]="{height: '100'}">
+    <ckeditor [(ngModel)]="content" name="ckeditor" debounce="500" [config]="{height: '100'}">
 
-  </ckeditor>
+    </ckeditor>
 
+    <mat-grid-list cols="1"  [rowHeight]="70" style="margin-top: 40px">
 
-  <mat-grid-list cols="2" [rowHeight]="200" style="margin-top: 20px">
-    <mat-grid-tile>
+      <mat-grid-tile [rowspan]="1">
+        <section class="example-section">
+          <mat-form-field class="example-margin">
 
-     <mat-form-field>
-      <mat-select placeholder="状态" [(ngModel)]="status">
-        <mat-option [value]="'new'">New</mat-option>
-        <mat-option [value]="'doing'">Doing</mat-option>
-        <mat-option [value]="'done'">Done</mat-option>
-      </mat-select>
-    </mat-form-field>
+            <mat-select placeholder="状态" [(ngModel)]="status" name="status">
+              <mat-option [value]="'new'">New</mat-option>
+              <mat-option [value]="'doing'">Doing</mat-option>
+              <mat-option [value]="'done'">Done</mat-option>
+            </mat-select>
 
-      <mat-form-field>
-      <mat-select placeholder="优先级" [(ngModel)]="level" >
-        <mat-option [value]="'low'">Low</mat-option>
-        <mat-option [value]="'normal'">Normal</mat-option>
-        <mat-option [value]="'high'">High</mat-option>
-      </mat-select>
-    </mat-form-field>
+          </mat-form-field>
+          <mat-form-field class="example-margin">
 
-      <mat-form-field>
-      <mat-select placeholder="指派给" [(ngModel)]="assign">
-        <mat-option [value]="'self'">--自己--</mat-option>
-        <!--<mat-option *ngFor="let food of foods" [value]="food.value">-->
-          <!--{{food.viewValue}}-->
-        <!--</mat-option>-->
-      </mat-select>
-    </mat-form-field>
+            <mat-select placeholder="优先级" [(ngModel)]="level" name="level">
+              <mat-option [value]="'low'">Low</mat-option>
+              <mat-option [value]="'normal'">Normal</mat-option>
+              <mat-option [value]="'high'">High</mat-option>
+            </mat-select>
 
-    </mat-grid-tile>
-    <mat-grid-tile>
+          </mat-form-field>
+          <mat-form-field class="example-margin">
 
-    </mat-grid-tile>
-  </mat-grid-list>
+            <mat-select placeholder="指派给" [(ngModel)]="assign" name="assign">
+              <mat-option [value]="self">--自己--</mat-option>
+              <!--<mat-option *ngFor="let food of foods" [value]="food.value">-->
+                <!--{{food.viewValue}}-->
+              <!--</mat-option>-->
+            </mat-select>
 
+          </mat-form-field>
+
+      </section>
+      </mat-grid-tile>
+
+      <mat-grid-tile [rowspan]="1">
+
+        <section class="example-section">
+          <mat-form-field class="example-margin">
+
+            <input matInput [value]="pickerStart"  [matDatepicker]="picker_Start" placeholder="开始日期">
+            <mat-datepicker-toggle matSuffix [for]="picker_Start"></mat-datepicker-toggle>
+            <mat-datepicker #picker_Start></mat-datepicker>
+
+          </mat-form-field>
+          <mat-form-field class="example-margin">
+
+            <input matInput [value]="pickerEnd" [matDatepicker]="picker_End" placeholder="计划完成日期">
+            <mat-datepicker-toggle matSuffix [for]="picker_End"></mat-datepicker-toggle>
+            <mat-datepicker #picker_End></mat-datepicker>
+
+          </mat-form-field>
+          <mat-form-field class="example-margin">
+
+            <input [(ngModel)]="cost" name="cost" matInput placeholder="预期时间（小时）">
+
+          </mat-form-field>
+          <mat-form-field class="example-margin">
+
+            <input [(ngModel)]="progress" name="progress" matInput placeholder="完成度(%)">
+
+          </mat-form-field>
+        </section>
+
+      </mat-grid-tile>
+
+    </mat-grid-list>
+
+    <hr />
+
+    <mat-grid-list cols="1"  [rowHeight]="50" style="margin-top: 40px">
+      <mat-grid-tile [rowspan]="1">
+        <div style="float: left">
+          <button mat-button type="submit" color="primary">创建</button>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+
+  </form>
 </div>
-
-

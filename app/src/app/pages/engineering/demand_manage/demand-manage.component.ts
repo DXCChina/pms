@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, OnInit} from "@angular/core";
 import {ConfigEntity} from "../../../theme/components/w-dataList/config.Entity";
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import {CreateDemandComponent} from "./create_demand/create_demand.component";
@@ -9,7 +9,7 @@ import {CreateDemandComponent} from "./create_demand/create_demand.component";
   styleUrls: ['./demand-manage.scss']
 })
 
-export class DemandManageComponent {
+export class DemandManageComponent implements OnInit {
 
   configSEntity: ConfigEntity = {
       "name": "id",
@@ -22,7 +22,10 @@ export class DemandManageComponent {
 
   }
 
-
+  ngOnInit() {
+    localStorage.setItem('projectId', '1');
+    localStorage.setItem('userId', '1');
+  }
 
   demandChecked(checked: any) {
 
@@ -50,8 +53,8 @@ export class DemandManageComponent {
 
   createDemand() {
     let dialogRef = this.matDialog.open(CreateDemandComponent, <MatDialogConfig>{
-      height: '600px',
-      width: '960px'
+      height: '660px',
+      width: '1060px'
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){

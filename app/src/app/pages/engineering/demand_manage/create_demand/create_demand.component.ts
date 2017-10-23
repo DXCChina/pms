@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import './ckeditor.load'
 import 'ckeditor'
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'create-demand',
@@ -8,22 +9,33 @@ import 'ckeditor'
   styleUrls: ['./create_demand.scss']
 })
 export class CreateDemandComponent {
-
-  createType: string;
+  createTitle: string;
   expanded: boolean;
-  content: string = `<p>Hello <strong>World !!!</strong></p>`;
 
+  form: FormGroup;
+  target: string;
+  pickerStart: any;
+  pickerEnd: any;
+  cost: number;
+  progress: number;
+  content: string = `<p>descripton</p>`;
   status: string = 'new';
   level: string = 'normal';
   assign: string = 'self';
 
-  constructor() {
+  constructor(private fb: FormBuilder) {
 
   }
 
-  setType(type: string) {
-    this.createType = type;
+  onSubmit(pickerstart: any, pickerend: any) {
+
+  }
+
+  setType(title: string, type: string) {
+    this.createTitle = title;
+    this.target = type;
     this.expanded = false;
+    return false;
   }
 
   openExpand(bool: boolean) {
