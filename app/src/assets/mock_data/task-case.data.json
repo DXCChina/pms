@@ -1,0 +1,14 @@
+{
+  "data": [
+    {
+      "caseName": "case1 ",
+      "caseId": "001",
+      "caseInfo": "案例1"
+    },
+    {
+      "caseName": "case2",
+      "caseId": "002",
+      "caseInfo": "案例2"
+    }
+  ]
+}

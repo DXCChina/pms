@@ -1,0 +1,44 @@
+<div class="wel-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)"
+     [ngClass]="{scrolled: isScrolled}">
+  <a (click)="toggleHome()" routerLink="welcome" class="al-logo clearfix">
+    Pms
+  </a>
+
+  <div class="level_1_menu">
+
+    <div class="level_2_menu">
+      <li class="segmentation"></li>
+      <nav class="navbar navbar-toggleable-md navbar-light">
+        <div class="collapse navbar-collapse">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item ">
+              <a class="nav-link"  routerLink="project/dashboard" routerLinkActive="active">项目</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" routerLink="project/demand" routerLinkActive="active">需求</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <div class="user-profile clearfix">
+    <div class="btn-group al-user-profile" dropdown>
+      <button dropdownToggle type="button" class="user-btn dropdown-toggle">
+        <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown"
+           aria-expanded="false">
+          <img src="{{ ( 'Nasta' | baProfilePicture ) }}">
+        </a>
+      </button>
+
+      <ul *dropdownMenu class="dropdown-menu profile-dropdown" role="menu" aria-labelledby="user-profile-dd" style="margin:10px 0 0 -53px">
+        <li class="dropdown-item"><a href class="signout" routerLink="/pages/user" routerLinkActive="active"><i
+          class="fa fa-cog fa-fw"></i>&nbsp;&nbsp;&nbsp;Setting</a></li>
+        <li class="dropdown-item"><a href class="signout" routerLink="/login" routerLinkActive="active"><i
+          class="fa fa-power-off"></i>&nbsp;&nbsp;&nbsp;Sign out</a></li>
+      </ul>
+    </div>
+  </div>
+
+</div>

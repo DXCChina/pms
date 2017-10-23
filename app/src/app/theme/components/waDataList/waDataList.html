@@ -1,0 +1,16 @@
+
+
+<wa-dataListItem
+  *ngFor="let data of dataes,let first = first"
+  [ngClass]="{ selected:first }"
+  [data]=data
+  [checkedAll]="checkedAll"
+  [svgType]="svgType"
+  [displayControl]="displayControl"
+  [displayCommon]="displayCommon"
+  [displayPeople]="displayPeople"
+  (checkedData)="multipleSelection($event)"
+  (selectedData)="selectedData($event)"
+  [class.selected]="isSelected(data)" >
+
+</wa-dataListItem>

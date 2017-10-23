@@ -1,0 +1,27 @@
+<div class="wa-pagination">
+  <div class="wa-pagination-content">
+    <div class="wa-range-label">
+      <!--<p>{{prePage}}-{{nextPage}}</p>-->
+      <p>{{prePage}}-{{nextPage}} of {{length}}</p>
+      <!--<p>{{paging.pageIndex}} of {{paging.length}}</p>-->
+    </div>
+
+    <div class="wa-button-pagination">
+      <button mat-icon-button (click)="preClick()" [disabled]="judgePre">
+        <!--<mat-icon  class="md-btn" >keyboard_arrow_left</mat-icon>-->
+        <svg id="pre" fill="#757575" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M15.41 16.09l-4.58-4.59 4.58-4.59L14 5.5l-6 6 6 6z"/>
+          <path d="M0-.5h24v24H0z" fill="none"/>
+        </svg>
+      </button>
+
+      <button mat-icon-button (click)="nextClick()" [disabled]="judgeNext">
+        <!--<mat-icon  class="md-btn" >keyboard_arrow_right</mat-icon>-->
+        <svg id="next" fill="#757575" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M8.59 16.34l4.58-4.59-4.58-4.59L10 5.75l6 6-6 6z"/>
+          <path d="M0-.25h24v24H0z" fill="none"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>

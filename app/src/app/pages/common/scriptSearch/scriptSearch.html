@@ -1,0 +1,23 @@
+<div class="row search-script_main">
+
+  <table class="example-full-width" cellspacing="0" style="margin: 30px auto; font-size: 16px;"><tr>
+    <td><md-input-container class="example-full-width">
+      <input [formControl]="scriptName" autocomplete="off" [(ngModel)]="name"  matInput placeholder="选择脚本">
+    </md-input-container></td>
+  </tr></table>
+
+  <mat-nav-list *ngIf="showScriptList" class="showScriptlist" >
+    <a mat-list-item *ngIf="script_showNoItem">
+      无匹配，请选择已有项目
+      <span style="color: red;padding-left: 30px;"
+            *ngIf="scriptName.hasError('invalidCustom')">
+        应用后缀名为: .py
+      </span>
+    </a>
+    <a mat-list-item
+       *ngFor="let item of script_searchDataes"
+       (click)="choose(item)">
+      {{ item.name }}
+    </a>
+  </mat-nav-list>
+</div>

@@ -1,0 +1,36 @@
+<aside class="wa-sidebar" sidebarResize>
+
+  <div class="wa-pagination-list">
+
+    <mat-nav-list>
+
+      <wa-dataList
+        class="dataList"
+        [svgType]="svgType"
+        [displayControl]="displayControl"
+        [dataes]="dataes"
+        [checkedAll]="checkedAll"
+        [displayCommon]="displayCommon"
+        [displayPeople]="displayPeople"
+        (outSelectedData)="exportSelected($event)"
+        (outCheckDataes)="exportChecked($event)">
+
+      </wa-dataList>
+
+    </mat-nav-list>
+
+
+  </div>
+
+
+  <div class="wa-pagination-footer">
+
+    <wa-pagination
+    [length]="paging.length"
+    (outPageIndex)="exportPageIndex($event)">
+
+    </wa-pagination>
+
+  </div>
+
+</aside>

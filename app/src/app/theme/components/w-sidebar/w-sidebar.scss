@@ -1,0 +1,16 @@
+.wa-sidebar-center {
+  position: fixed;
+  top: 132px;
+  height: 100%;
+  width: 300px;
+  z-index: 0;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+.wa-sidebar-footer {
+  position: fixed;
+  width: 300px;
+  left: 0;
+  bottom: 0;
+  z-index: 1;
+}
