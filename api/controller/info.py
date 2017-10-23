@@ -15,7 +15,7 @@ def project_list():
 
     GET /api/project
     '''
-    return jsonify(info.getProjectList())
+    return jsonify(info.project_list())
 
 
 @app.route("/project", methods=['POST'])
@@ -33,4 +33,4 @@ def task_list():
 
     GET /api/task
     '''
-    return 'developing'
+    return jsonify(info.task_list())
