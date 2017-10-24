@@ -5,6 +5,12 @@
 '''
 
 from model.db import db
+from flask import session
+import uuid
+
+
+STATUS = 'active'
+
 
 def project_list():
     try:
@@ -14,6 +20,40 @@ def project_list():
             result = cursor.fetchone()
     finally:
         return result
+
+
+def project_add(project):
+    if 'user_id' in session:
+        owner_id = session['user_id']
+    owner_id = "2" #todo delete
+
+    try:
+        with db.cursor() as cursor:
+            sql = "SELECT * FROM project"
+            cursor.execute(sql)
+            projects = cursor.fetchall()
+        for ele in projects:
+            if ele['name'] == project['name']:
+                project_exist = True
+                break
+            else:
+                project_exist = False
+
+        if project_exist:
+            result = {'msg': '项目名称重复'}
+        else:
+            with db.cursor() as cursor:
+                sql = "INSERT INTO project (name,detail,ownerId,status) VALUE (%s, %s, %s, %s)"
+                cursor.execute(sql, (project['name'], project['detail'], owner_id, STATUS))
+                db.commit()
+
+            with db.cursor() as cursor:
+                sql = "SELECT * FROM project WHERE name=%s"
+                cursor.execute(sql, (project['name']))
+                result = cursor.fetchone()
+    finally:
+        return result
+
 
 def task_list():
     try:
