@@ -18,13 +18,21 @@ def demand_list(project_id):
     return 'developing'
 
 
-@app.route("/project/<int:project_id>/demand", methods=['POST'])
-def demand_add(project_id):
+# @app.route("/project/<int:project_id>/demand", methods=['POST'])
+@app.route("/project/demand", methods=['POST'])
+def demand_add():
     '''添加需求
 
-    POST /api/project/<int:project_id>/demand
+    POST /api/project/demand
     '''
-    return 'developing'
+    if not request.json or\
+        not 'title' in request.json or\
+        not 'ownerId' in request.json or\
+        not 'level' in request.json:
+        print(request.json)
+        abort(400)
+
+    return handleData(task.createDemand(request.json))
 
 
 @app.route("/project/<int:project_id>/demand/<int:demand_id>", methods=['GET'])
@@ -45,13 +53,15 @@ def demand_update(project_id, demand_id):
     return 'developing'
 
 
-@app.route("/demand/<int:demand_id>/task", methods=['GET'])
-def task_list(demand_id):
+# @app.route("/demand/<int:demand_id>/task", methods=['GET'])
+@app.route("/demand/list", methods=['GET'])
+def task_list():
     '''获取需求任务列表
 
-    GET /api/demand/<int:demand_id>/task
+    GET /api/demand/list
     '''
-    return 'developing'
+
+    return handleData(task.demandList(request.args.to_dict()))
 
 
 @app.route("/demand/<int:demand_id>/task", methods=['POST'])
@@ -79,3 +89,21 @@ def task_update(demand_id, task_id):
     PUT /api/demand/<int:demand_id>/task/<int:task_id>
     '''
     return 'developing'
+
+
+def handleData(data):
+    res = {
+        "message": "",
+        "data": {}
+    }
+    if data == None:
+        res["message"] = "Missing data"
+        res["data"] = {}
+    elif 'errMsg' in data:
+        res['message'] = data['errMsg']
+        res["data"] = {}
+    else:
+        res["message"] = "ok"
+        res["data"] = data
+
+    return jsonify(res)
