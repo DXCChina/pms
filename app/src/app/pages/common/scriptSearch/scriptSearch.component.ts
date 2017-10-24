@@ -1,6 +1,5 @@
 import {Component, ElementRef, EventEmitter, Input, Output} from "@angular/core";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {ScriptPages} from "../../engineering/script_manage/script.Entity";
 import {Observable} from "rxjs/Observable";
 
 @Component({
@@ -15,9 +14,9 @@ export class ScriptSearchComponent {
   @Input() name: string = '';
   @Input() showScriptList: boolean = false;
   @Input() script_showNoItem: boolean = false;
-  @Input() script_searchDataes: ScriptPages[] = [];
+  @Input() script_searchDataes: any[] = [];
   @Output() searchScript: EventEmitter<string> = new EventEmitter<string>();
-  @Output() chooseData: EventEmitter<ScriptPages> = new EventEmitter<ScriptPages>();
+  @Output() chooseData: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private fb: FormBuilder, private ref: ElementRef){
 
@@ -34,7 +33,7 @@ export class ScriptSearchComponent {
       .subscribe( (text: any) => {this.searchScript.next(text)},(err: any) => {console.log(err)},() => console.log('complete'));
   }
 
-  choose(item: ScriptPages){
+  choose(item: any){
     this.name = item.name;
     this.script_searchDataes = [];
     this.chooseData.emit(item);

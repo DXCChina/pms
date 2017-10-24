@@ -9,7 +9,7 @@ import {Pages} from "./pages.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {CommonDeleteDialog} from "./common/deleteDialog/deleteDialog.component";
 import {NgJhipsterModule} from "ng-jhipster";
-import {MdButtonModule} from "@angular/material";
+import {MatButtonModule} from "@angular/material";
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import {MdButtonModule} from "@angular/material";
     NgaModule,
     routing,
     BrowserAnimationsModule,
-    MdButtonModule,
+    MatButtonModule,
     NgJhipsterModule.forRoot({
       // set below to true to make alerts look like toast
       alertAsToast: false,

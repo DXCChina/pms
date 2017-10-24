@@ -1,25 +1,25 @@
 <div class="wa-p-device">
 
   <div class="device-item">
-    <!--<md-tab-group [(selectedIndex)]="tabIndex">-->
+    <!--<mat-tab-group [(selectedIndex)]="tabIndex">-->
 
-      <!--<md-tab label="Device">-->
+      <!--<mat-tab label="Device">-->
 
         <div class="filter-state" *ngIf="deviceControl">
-          <md-select placeholder="请选择厂商" [(ngModel)]="brandState">
-            <md-option>None</md-option>
-            <md-option *ngFor="let state of firmFilterStates" [value]="state.name">{{ state.name }}</md-option>
-          </md-select>
-          <md-select placeholder="请选择平台" [(ngModel)]="platformState">
-            <md-option>None</md-option>
-            <md-option *ngFor="let state of platformFilterStates" [value]="state.name">{{ state.name }}</md-option>
-          </md-select>
-          <md-select placeholder="请选择系统" [(ngModel)]="systemState">
-            <md-option>None</md-option>
-            <md-option *ngFor="let state of systemFilterStates" [value]="state.name">{{ state.name }}</md-option>
-          </md-select>
-          <button md-raised-button  color="primary" (click)="findDeviceInState()">查询</button>
-          <md-checkbox [(ngModel)]="checked" color="primary">全选</md-checkbox>
+          <mat-select placeholder="请选择厂商" [(ngModel)]="brandState">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let state of firmFilterStates" [value]="state.name">{{ state.name }}</mat-option>
+          </mat-select>
+          <mat-select placeholder="请选择平台" [(ngModel)]="platformState">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let state of platformFilterStates" [value]="state.name">{{ state.name }}</mat-option>
+          </mat-select>
+          <mat-select placeholder="请选择系统" [(ngModel)]="systemState">
+            <mat-option>None</mat-option>
+            <mat-option *ngFor="let state of systemFilterStates" [value]="state.name">{{ state.name }}</mat-option>
+          </mat-select>
+          <button mat-raised-button  color="primary" (click)="findDeviceInState()">查询</button>
+          <mat-checkbox [(ngModel)]="checked" color="primary">全选</mat-checkbox>
         </div>
 
         <div *ngIf="viewDevices.length > 0">
@@ -31,10 +31,10 @@
         <div  *ngIf="viewDevices.length == 0">
           <h1>无项目</h1>
         </div>
-      <!--</md-tab>-->
-      <!--<md-tab label="Detail" *ngIf="!deviceControl">-->
+      <!--</mat-tab>-->
+      <!--<mat-tab label="Detail" *ngIf="!deviceControl">-->
       <!--<h1>{{dev}}</h1>-->
-      <!--</md-tab>-->
-    <!--</md-tab-group>-->
+      <!--</mat-tab>-->
+    <!--</mat-tab-group>-->
   </div>
 </div>
