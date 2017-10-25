@@ -1,6 +1,4 @@
-import {Component, ElementRef, Input, Output, Renderer2} from "@angular/core";
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {DemandService} from "../demand.service";
+import {Component, ElementRef, EventEmitter, Input, Output, Renderer2} from "@angular/core";
 import {D_tModel} from "./d_t.model";
 
 @Component({
@@ -10,7 +8,9 @@ import {D_tModel} from "./d_t.model";
 })
 export class D_tComponent {
 
-  @Input() detailDates: D_tModel;
+  @Input() detailDatas: D_tModel;
+  @Output() retractEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() modifyEvent: EventEmitter<any> = new EventEmitter<any>();
 
   targets: any[] = [
     {value: 'demand', name: '需求'},
@@ -26,9 +26,12 @@ export class D_tComponent {
 
   }
 
+  retract() {
+    this.retractEvent.emit(true)
+  }
 
-  onSubmit(pickerstart: any, pickerend: any) {
-
+  modifyed(title: any) {
+    this.modifyEvent.emit(this.detailDatas)
   }
 
   //target value changed method

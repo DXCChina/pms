@@ -57,3 +57,13 @@ def updateDemands(params):
                 db.commit()
         finally:
             return jsonify({"message": "ok" if bool(cursor.rowcount > 0) else "" })
+
+def demandDetail(demandId):
+        '''获取需求详情'''
+        try:
+            with db.cursor() as cursor:
+                sql = "SELECT * FROM demand WHERE `Id`=%s"
+                cursor.execute(sql, (demandId))
+                result = cursor.fetchone()
+        finally:
+            return result

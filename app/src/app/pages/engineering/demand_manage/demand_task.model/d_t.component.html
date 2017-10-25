@@ -1,6 +1,6 @@
 
 
-<div style="width:900px">
+<div style="width:900px; margin: 0 auto">
 
   <!--<form  (ngSubmit)="onSubmit(picker_Start, picker_End)">-->
 
@@ -8,14 +8,14 @@
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-form-field class="example-full-width">
-          <input [value]="detailDates.title" matInput placeholder="主题">
+          <input [(ngModel)]="detailDatas.title" name="title"  matInput placeholder="主题">
         </mat-form-field>
       </mat-grid-tile>
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
 
        <mat-form-field id="Des" class="example-full-width des">
-          <input [value]="detailDates?.detail" matInput placeholder="描述">
+          <input [(ngModel)]="detailDatas.detail" name="detail" matInput placeholder="描述">
        </mat-form-field>
 
         <mat-form-field id="Asc" class="example-margin asc">
@@ -26,25 +26,20 @@
 
     </mat-grid-list>
 
-
-    <!--<ckeditor [(ngModel)]="content" name="ckeditor" debounce="500" [config]="{height: '100'}">-->
-
-    <!--</ckeditor>-->
-
     <mat-grid-list cols="1"  [rowHeight]="70" style="margin-top: 40px">
 
       <mat-grid-tile [rowspan]="1">
         <section class="example-section">
 
           <mat-form-field class="example-margin">
-            <mat-select placeholder="选择" (change)="targetChanged($event)" [disabled]="true"  [value]="detailDates?.demandId ? 'task': 'demand'">
+            <mat-select placeholder="选择" (change)="targetChanged($event)" [disabled]="true"  [value]="detailDatas?.demandId ? 'task': 'demand'">
               <mat-option *ngFor="let target of targets" [value]="target.value">{{target.name}}</mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="example-margin">
 
-            <mat-select placeholder="状态" [value]="detailDates?.status">
+            <mat-select placeholder="状态" [(ngModel)]="detailDatas.status" name="status">
               <mat-option [value]="'active'">Active(进行中)</mat-option>
               <mat-option [value]="'test'">Testing(测试中)</mat-option>
               <mat-option [value]="'fix'">Fixing(修复中)</mat-option>
@@ -54,7 +49,7 @@
           </mat-form-field>
           <mat-form-field class="example-margin">
 
-            <mat-select placeholder="优先级" [value]="detailDates?.level">
+            <mat-select placeholder="优先级" [(ngModel)]="detailDatas.level" name="level">
               <mat-option [value]="'low'">Low</mat-option>
               <mat-option [value]="'normal'">Normal</mat-option>
               <mat-option [value]="'high'">High</mat-option>
@@ -83,26 +78,26 @@
         <section class="example-section">
           <mat-form-field class="example-margin">
 
-            <input matInput [value]="detailDates?.startDate"  [matDatepicker]="picker_Start" placeholder="开始日期">
+            <input matInput [(ngModel)]="detailDatas.startDate" name="startDate"  [matDatepicker]="picker_Start" placeholder="开始日期">
             <mat-datepicker-toggle matSuffix [for]="picker_Start"></mat-datepicker-toggle>
             <mat-datepicker #picker_Start></mat-datepicker>
 
           </mat-form-field>
           <mat-form-field class="example-margin">
 
-            <input matInput [value]="detailDates?.endDate" [matDatepicker]="picker_End" placeholder="计划完成日期">
+            <input matInput [(ngModel)]="detailDatas.endDate" name="endDate" [matDatepicker]="picker_End" placeholder="计划完成日期">
             <mat-datepicker-toggle matSuffix [for]="picker_End"></mat-datepicker-toggle>
             <mat-datepicker #picker_End></mat-datepicker>
 
           </mat-form-field>
           <mat-form-field class="example-margin">
 
-            <input [value]="detailDates?.cost" matInput placeholder="预期时间（小时）">
+            <input [(ngModel)]="detailDatas.cost" name="cost" matInput placeholder="预期时间（小时）">
 
           </mat-form-field>
           <mat-form-field class="example-margin">
 
-            <input [value]="detailDates?.progress" matInput placeholder="完成度(%)">
+            <input [(ngModel)]="detailDatas.progress" name="progress" matInput placeholder="完成度(%)">
 
           </mat-form-field>
         </section>
@@ -115,11 +110,11 @@
     <mat-grid-list cols="1"  [rowHeight]="50" style="margin-top: 20px">
       <mat-grid-tile [rowspan]="1">
         <div style="float: left">
-          <button mat-button type="submit" color="primary">修改</button>
+          <button mat-button color="primary" (click)="retract()" style="margin-right: 100px;">撤回</button>
+          <button mat-button color="primary" (click)="modifyed()" style="margin-left: 100px;">修改</button>
         </div>
       </mat-grid-tile>
     </mat-grid-list>
 
   <!--</form>-->
 </div>
-<!--<h1>name</h1>-->

@@ -22,7 +22,7 @@ export class DemandManageComponent implements OnInit {
   checkedDatas: any[];
   dispalyDelete: boolean = true;
   contentSwitch: string = 'emptyCase';
-  selectedDatas: any;
+  demandDetails: any;
 
   configSEntity: ConfigEntity = {
       "name": "title",
@@ -67,10 +67,7 @@ export class DemandManageComponent implements OnInit {
   }
 
   demandSelected(selected: any) {
-    this.selectedDatas = selected;
-    console.log(this.selectedDatas);
-    console.log(this.selectedDatas.title);
-    this.contentSwitch = 'commonCase';
+    this.demandDetail(selected.id);
     // console.log(selected)
   }
 
@@ -116,11 +113,32 @@ export class DemandManageComponent implements OnInit {
       item.status = 'delete';
       return item
     });
-    this.service.updateDemand(this.checkedDatas)
+
+    this.updateDemand(this.checkedDatas);
+  }
+
+  updateDemand(data: any) {
+    this.service.updateDemand(data)
       .then(res => {
         this.getDemandList()
       }).catch(err => {console.log(err)});
     return false;
   }
 
+
+  demandDetail(id: number) {
+    this.service.demandDetail(id)
+      .then(res => {
+        this.demandDetails = res.data;
+        this.contentSwitch = 'commonCase';
+      }).catch(err => {console.log(err)})
+  }
+
+  retract(bool: boolean) {
+    this.demandDetail(this.demandDetails.id)
+  }
+
+  modifyed(detail: any) {
+    this.updateDemand([this.demandDetails])
+  }
 }

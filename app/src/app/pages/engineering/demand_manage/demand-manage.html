@@ -77,12 +77,12 @@
         </svg>
         <div class="wa-title-info">
           <div>
-            <h3>title</h3>
-            <p mat-line>description</p>
+            <h3>{{demandDetails?.title}}</h3>
+            <p mat-line>{{demandDetails?.startDate.toString().substr(0,10)}}</p>
           </div>
 
           <mat-chip-list class="wa-titleChips">
-            <mat-chip>chip</mat-chip>
+            <mat-chip>{{demandDetails?.status}}</mat-chip>
           </mat-chip-list>
         </div>
 
@@ -98,14 +98,18 @@
             <div class="row detail_info">
 
               <d_t-component
-                [detailDates]="selectedDatas">
+                [(detailDatas)]="demandDetails"
+                (retractEvent)="retract($event)"
+                (modifyEvent)="modifyed($event)">
 
               </d_t-component>
+
 
             </div>
 
           </div>
           <div class="col-1"></div>
+
         </div>
 
       <!--<div class="wa-detail">-->

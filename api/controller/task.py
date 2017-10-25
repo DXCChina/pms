@@ -35,14 +35,13 @@ def demand_add():
     return handleData(task.createDemand(request.json))
 
 
-@app.route("/project/<int:project_id>/demand/<int:demand_id>", methods=['GET'])
-def demand_info(project_id, demand_id):
+@app.route("/project/demand/detail/<int:demand_id>", methods=['GET'])
+def demand_info(demand_id):
     '''获取需求详情
 
-    GET /api/project/<int:project_id>/demand/<int:demand_id>
+    GET /api/project/demand/detail/<int:demand_id>
     '''
-
-    return
+    return handleData(task.demandDetail(demand_id))
 
 # @app.route("/project/<int:project_id>/demand/<int:demand_id>", methods=['PUT'])
 @app.route("/project/demand/update", methods=['PUT'])
@@ -51,6 +50,8 @@ def demand_update():
 
     PUT /api/project/demand/update
     '''
+    print(request.json)
+    print(request.json["data"])
     if not request.json or not 'data' in request.json:
         print('request:', request.json)
         abort(400)
@@ -66,7 +67,8 @@ def demand_update():
     #     params.append(
     #         (item['ownerId'],item['level'],item['title'])
     #     )
-
+    print('--', params)
+    print('**', tuple(params))
     return task.updateDemands(tuple(params))
 
 
