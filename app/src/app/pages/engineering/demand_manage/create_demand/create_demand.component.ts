@@ -2,6 +2,8 @@ import {Component, ElementRef, Input, Renderer2} from "@angular/core";
 import './ckeditor.load'
 import 'ckeditor'
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {DemandService} from "../demand.service";
+import {MatDialogRef} from "@angular/material";
 
 @Component({
   selector: 'create-demand',
@@ -17,8 +19,6 @@ export class CreateDemandComponent {
   detail: AbstractControl;
   cost: AbstractControl;
   progress: AbstractControl;
-  pickerStart: any;
-  pickerEnd: any;
 
   targets: any[] = [
     {value: 'demand', name: '需求'},
@@ -27,10 +27,14 @@ export class CreateDemandComponent {
   target: any;
   status: string = 'active';
   level: string = 'normal';
-  assign: string = 'self';
+  assign: number = 1;
+  assignCustom = [
+    {userName: '——自己——', userId: 1}
+  ];
 
   //some judge
-  constructor(private fb: FormBuilder, private ref: ElementRef, private Renderer: Renderer2) {
+  constructor(private fb: FormBuilder, private ref: ElementRef, private Renderer: Renderer2, private service: DemandService,
+              public dialogRef: MatDialogRef<CreateDemandComponent>) {
 
     this.form = this.fb.group({
       "title": ['', Validators.compose([Validators.required, Validators.minLength(1)])],
@@ -52,7 +56,13 @@ export class CreateDemandComponent {
   }
 
   onSubmit(pickerstart: any, pickerend: any) {
-    console.log(this.target)
+    this.service.createDemand(this.assign, this.title.value, this.detail.value, this.level,
+                              this.status, pickerstart.startAt, pickerend.startAt, Number(this.progress.value), Number(this.cost.value))
+      .then(res => {
+        if(res.message === 'ok') {
+          this.dialogRef.close(true)
+        }
+      }).catch(err => { console.log('err:', err) })
   }
 
   //target value changed method

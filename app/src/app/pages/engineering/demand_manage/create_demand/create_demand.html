@@ -62,10 +62,9 @@
           <mat-form-field class="example-margin">
 
             <mat-select placeholder="指派给" [value]="assign" >
-              <mat-option [value]="'self'">--自己--</mat-option>
-              <!--<mat-option *ngFor="let food of foods" [value]="food.value">-->
-                <!--{{food.viewValue}}-->
-              <!--</mat-option>-->
+              <mat-option *ngFor="let custom of assignCustom" [value]="custom.userId">
+                {{custom.userName}}
+              </mat-option>
             </mat-select>
 
           </mat-form-field>
