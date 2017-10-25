@@ -1,4 +1,4 @@
-  <mat-select placeholder="字段排序" (change)="changeValue($event)" style="width: 100px">
+  <mat-select placeholder="字段排序" (change)="changeValue($event)" style="width: 100px" [value]="'createAt'">
     <mat-option *ngFor="let fields of sortFields" [value]="fields.fieldValue" >
       {{ fields.fieldName }}
     </mat-option>

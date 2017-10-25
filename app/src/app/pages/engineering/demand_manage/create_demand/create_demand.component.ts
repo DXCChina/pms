@@ -1,8 +1,7 @@
-import {Component, ElementRef, Renderer2} from "@angular/core";
+import {Component, ElementRef, Input, Renderer2} from "@angular/core";
 import './ckeditor.load'
 import 'ckeditor'
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {MatSelectChange} from "@angular/material";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'create-demand',
@@ -10,29 +9,46 @@ import {MatSelectChange} from "@angular/material";
   styleUrls: ['./create_demand.scss']
 })
 export class CreateDemandComponent {
-  createTitle: string;
-  expanded: boolean;
+
 
   form: FormGroup;
 
+  title: AbstractControl;
+  detail: AbstractControl;
+  cost: AbstractControl;
+  progress: AbstractControl;
   pickerStart: any;
   pickerEnd: any;
-  cost: number;
-  progress: number;
-  content: string = `<p>descripton</p>`;
+
   targets: any[] = [
     {value: 'demand', name: '需求'},
     {value: 'task', name: '任务'}
   ];
   target: any;
-  status: string = 'new';
+  status: string = 'active';
   level: string = 'normal';
   assign: string = 'self';
 
   //some judge
-
   constructor(private fb: FormBuilder, private ref: ElementRef, private Renderer: Renderer2) {
 
+    this.form = this.fb.group({
+      "title": ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+      "detail": ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+      "cost": ['', Validators.compose([Validators.required, this.numberValidator])],
+      "progress": ['', Validators.compose([Validators.required, this.numberValidator])]
+    });
+
+    this.title = this.form.controls["title"];
+    this.detail = this.form.controls["detail"];
+    this.cost = this.form.controls["cost"];
+    this.progress = this.form.controls["progress"];
+  }
+
+  numberValidator(control: FormControl){
+    if(!control.value.match(/^[1-9]\d*$/)){
+      return {invalidCustom: true}
+    }
   }
 
   onSubmit(pickerstart: any, pickerend: any) {

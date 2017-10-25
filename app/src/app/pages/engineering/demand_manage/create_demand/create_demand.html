@@ -1,21 +1,23 @@
 <div>
 
-  <form (ngSubmit)="onSubmit(picker_Start, picker_End)">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(picker_Start, picker_End)">
 
     <mat-grid-list cols="1"  [rowHeight]="70" style="margin-top: 40px">
+
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="主题">
+          <input [formControl]="title" matInput placeholder="主题">
         </mat-form-field>
       </mat-grid-tile>
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
+
        <mat-form-field id="Des" class="example-full-width des">
-          <input matInput placeholder="描述">
-        </mat-form-field>
+          <input [formControl]="detail" matInput placeholder="描述">
+       </mat-form-field>
 
         <mat-form-field id="Asc" class="example-margin asc">
-          <input [(ngModel)]="ascription" name="ascription" matInput placeholder="归属于">
+          <input matInput placeholder="归属于">
         </mat-form-field>
 
       </mat-grid-tile>
@@ -33,23 +35,24 @@
         <section class="example-section">
 
           <mat-form-field class="example-margin">
-            <mat-select placeholder="选择" (change)="targetChanged($event)" value="target">
+            <mat-select placeholder="选择" (change)="targetChanged($event)" [value]="'demand'">
               <mat-option *ngFor="let target of targets" [value]="target.value">{{target.name}}</mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="example-margin">
 
-            <mat-select placeholder="状态" [(ngModel)]="status" name="status">
-              <mat-option [value]="'new'">New</mat-option>
-              <mat-option [value]="'doing'">Doing</mat-option>
-              <mat-option [value]="'done'">Done</mat-option>
+            <mat-select placeholder="状态" [value]="status">
+              <mat-option [value]="'active'">Active(进行中)</mat-option>
+              <mat-option [value]="'test'">Testing(测试中)</mat-option>
+              <mat-option [value]="'fix'">Fixing(修复中)</mat-option>
+              <mat-option [value]="'done'">Done(完成)</mat-option>
             </mat-select>
 
           </mat-form-field>
           <mat-form-field class="example-margin">
 
-            <mat-select placeholder="优先级" [(ngModel)]="level" name="level">
+            <mat-select placeholder="优先级" [value]="level">
               <mat-option [value]="'low'">Low</mat-option>
               <mat-option [value]="'normal'">Normal</mat-option>
               <mat-option [value]="'high'">High</mat-option>
@@ -58,8 +61,8 @@
           </mat-form-field>
           <mat-form-field class="example-margin">
 
-            <mat-select placeholder="指派给" [(ngModel)]="assign" name="assign">
-              <mat-option [value]="self">--自己--</mat-option>
+            <mat-select placeholder="指派给" [value]="assign" >
+              <mat-option [value]="'self'">--自己--</mat-option>
               <!--<mat-option *ngFor="let food of foods" [value]="food.value">-->
                 <!--{{food.viewValue}}-->
               <!--</mat-option>-->
@@ -93,12 +96,12 @@
           </mat-form-field>
           <mat-form-field class="example-margin">
 
-            <input [(ngModel)]="cost" name="cost" matInput placeholder="预期时间（小时）">
+            <input [formControl]="cost" matInput placeholder="预期时间（小时）">
 
           </mat-form-field>
           <mat-form-field class="example-margin">
 
-            <input [(ngModel)]="progress" name="progress" matInput placeholder="完成度(%)">
+            <input [formControl]="progress" matInput placeholder="完成度(%)">
 
           </mat-form-field>
         </section>
@@ -111,10 +114,11 @@
     <mat-grid-list cols="1"  [rowHeight]="50" style="margin-top: 20px">
       <mat-grid-tile [rowspan]="1">
         <div style="float: left">
-          <button mat-button type="submit" color="primary">创建</button>
+          <button mat-button type="submit" [disabled]="!form.valid" color="primary">创建</button>
         </div>
       </mat-grid-tile>
     </mat-grid-list>
 
   </form>
 </div>
+<!--<h1>name</h1>-->
