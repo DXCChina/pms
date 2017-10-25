@@ -52,6 +52,7 @@
       <span>新建</span>
     </button>
   </div>
+
 </div>
 
 <div [ngSwitch]="contentSwitch">
@@ -86,38 +87,38 @@
         </div>
 
       </div>
-      <div class="wa-detail">
+
         <div class="row detail_item">
           <div class="detail_title">
-            <h4>脚本详情</h4>
+            <h4></h4>
           </div>
 
           <div class="col-1"></div>
           <div class="col-10">
             <div class="row detail_info">
-              <!--<div class="col-lg-3 col-md-6 col-sm-6 col-sx-12">-->
-                <!--<p>功能归属：{{dataDetail.tag}}</p>-->
-              <!--</div>-->
-              <!--<div class="col-lg-3 col-md-6 col-sm-6 col-sx-12">-->
-                <!--<p>描述信息：{{dataDetail.description}}</p>-->
-              <!--</div>-->
+
+              <d_t-component
+                [detailDates]="selectedDatas">
+
+              </d_t-component>
+
             </div>
 
           </div>
           <div class="col-1"></div>
         </div>
-      </div>
 
-      <div class="wa-detail">
-        <div class="detail_title">
-          <h4>editor</h4>
-        </div>
-        <div class="wa-core-info">
+      <!--<div class="wa-detail">-->
+        <!--<div class="detail_title">-->
+          <!--<h4>editor</h4>-->
+        <!--</div>-->
+        <!--<div class="wa-core-info">-->
 
-          <h1>editor</h1>
+          <!--<h1>editor</h1>-->
 
-        </div>
-      </div>
+        <!--</div>-->
+      <!--</div>-->
+
     </div>
 
   </div>

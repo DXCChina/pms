@@ -24,6 +24,7 @@ import {ReportManageComponent} from "./report_manage/report-manage.component";
 import {CreateDemandComponent} from "./demand_manage/create_demand/create_demand.component";
 import {CKEditorModule} from "ng2-ckeditor";
 import {DemandService} from "./demand_manage/demand.service";
+import {D_tComponent} from "./demand_manage/demand_task.model/d_t.component";
 
 @NgModule({
   imports: [
@@ -66,7 +67,8 @@ import {DemandService} from "./demand_manage/demand.service";
     ScriptSearchComponent,
     ReportManageComponent,
     DemandManageComponent,
-    CreateDemandComponent
+    CreateDemandComponent,
+    D_tComponent
   ],
   entryComponents: [
     CreateDemandComponent

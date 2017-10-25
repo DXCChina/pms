@@ -1,6 +1,6 @@
 import {Component, ElementRef, OnInit, Renderer2} from "@angular/core";
 import {ConfigEntity} from "../../../theme/components/w-dataList/config.Entity";
-import {MatDialog, MatDialogConfig} from "@angular/material";
+import {MatDialog, MatDialogConfig, MatDialogRef} from "@angular/material";
 import {CreateDemandComponent} from "./create_demand/create_demand.component";
 import {DemandService} from "./demand.service";
 import {SearchField} from "../../../theme/components/waDataList/searchField.Entity";
@@ -21,6 +21,8 @@ export class DemandManageComponent implements OnInit {
   demandList: any;
   checkedDatas: any[];
   dispalyDelete: boolean = true;
+  contentSwitch: string = 'emptyCase';
+  selectedDatas: any;
 
   configSEntity: ConfigEntity = {
       "name": "title",
@@ -32,7 +34,7 @@ export class DemandManageComponent implements OnInit {
     {"fieldValue": "title", "fieldName": "主题"},
     {"fieldValue": "progress", "fieldName": "完成度"}
   ];
-  contentSwitch: string = 'emptyCase';
+
 
   constructor(private matDialog: MatDialog, private service: DemandService,
               private ref: ElementRef, private Renderer: Renderer2){
@@ -65,7 +67,11 @@ export class DemandManageComponent implements OnInit {
   }
 
   demandSelected(selected: any) {
-
+    this.selectedDatas = selected;
+    console.log(this.selectedDatas);
+    console.log(this.selectedDatas.title);
+    this.contentSwitch = 'commonCase';
+    // console.log(selected)
   }
 
   demandSearch(search: any) {
