@@ -1,9 +1,9 @@
 
 <ul>
-  <li *ngFor="let pro of projects"  class="proItem">
-    <div class="proItem-Content" *ngIf="projects?.length > 0">
-      <h3>{{pro.projectName}}</h3>
-      <p>{{pro.description}}</p>
+  <li *ngFor="let project of projects"  class="proItem">
+    <div class="proItem-Content">
+      <h3>{{project?.name}}</h3>
+      <p>{{project?.detail}}</p>
     </div>
   </li>
 

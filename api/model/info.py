@@ -17,7 +17,7 @@ def project_list():
         with db.cursor() as cursor:
             sql = "SELECT * FROM project"
             cursor.execute(sql)
-            result = cursor.fetchone()
+            result = cursor.fetchall()
     finally:
         return result
 
