@@ -31,6 +31,7 @@
 
   <wa-sort
     class="wa-sort"
+    [sortFields]="sortFields"
     (outFieldName)="demandFieldName($event)"
     (outDirection)="demandSort($event)">
   </wa-sort>

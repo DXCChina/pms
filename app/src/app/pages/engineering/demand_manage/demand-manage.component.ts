@@ -3,6 +3,7 @@ import {ConfigEntity} from "../../../theme/components/w-dataList/config.Entity";
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import {CreateDemandComponent} from "./create_demand/create_demand.component";
 import {DemandService} from "./demand.service";
+import {SearchField} from "../../../theme/components/waDataList/searchField.Entity";
 
 @Component({
   selector: 'demand',
@@ -26,6 +27,11 @@ export class DemandManageComponent implements OnInit {
       "id": "id",
       "description": "detail",
   };
+  sortFields: SearchField[] = [
+    {"fieldValue": "createAt", "fieldName": "时间"},
+    {"fieldValue": "title", "fieldName": "主题"},
+    {"fieldValue": "progress", "fieldName": "完成度"}
+  ];
   contentSwitch: string = 'emptyCase';
 
   constructor(private matDialog: MatDialog, private service: DemandService,
@@ -43,8 +49,6 @@ export class DemandManageComponent implements OnInit {
     this.service.getDemandList(this.page, this.size, this.sortField, this.sortOrder)
       .then(res => {
           this.demandList = res;
-          console.log(res)
-          console.log(res.data)
       }).catch(err => console.log(err))
   }
 
@@ -74,11 +78,13 @@ export class DemandManageComponent implements OnInit {
   }
 
   demandFieldName(fieldName: any) {
-
+    this.sortField = fieldName;
+    this.getDemandList();
   }
 
   demandSort(sort: any) {
-
+    this.sortOrder = sort;
+    this.getDemandList();
   }
 
   //open create dialog
