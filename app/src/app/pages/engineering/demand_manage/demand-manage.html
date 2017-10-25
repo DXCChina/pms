@@ -19,7 +19,7 @@
 
   <div class="_paging" *ngIf="demandList">
     <wa-pagination
-      [length]="demandList.data?.length"
+      [length]="demandList?.total"
       [size]="size"
       (outPageIndex)="demandPage($event)">
     </wa-pagination>

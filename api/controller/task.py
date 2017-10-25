@@ -76,9 +76,12 @@ def task_list():
     '''获取需求任务列表
 
     GET /api/demand/list
-    '''
-
-    return handleData(task.demandList(request.args.to_dict()))
+    # '''
+    return jsonify({
+        "message": "ok",
+        "data": task.demandList(request.args.to_dict())["data"],
+        "total": task.demandList(request.args.to_dict())["total"]
+    })
 
 
 @app.route("/demand/<int:demand_id>/task", methods=['POST'])

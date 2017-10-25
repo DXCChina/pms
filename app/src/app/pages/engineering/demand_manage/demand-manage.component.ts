@@ -40,11 +40,10 @@ export class DemandManageComponent implements OnInit {
   }
 
   getDemandList() {
-    console.log('-----')
-    console.log(this.page)
     this.service.getDemandList(this.page, this.size, this.sortField, this.sortOrder)
       .then(res => {
           this.demandList = res;
+          console.log(res)
           console.log(res.data)
       }).catch(err => console.log(err))
   }
@@ -71,6 +70,7 @@ export class DemandManageComponent implements OnInit {
 
   demandPage(page: any) {
     this.page = page;
+    this.getDemandList()
   }
 
   demandFieldName(fieldName: any) {
