@@ -29,8 +29,8 @@ def project_add():
         not 'name' in request.json or\
         not 'detail' in request.json:
         abort(400)
-    return make_response(jsonify(message="success", data=info.project_add(request.json), status=200), 200)
-    # return jsonify(info.project_add(request.json))
+    # return make_response(jsonify(message="success", data=info.project_add(request.json), status=201), 201)
+    return info.project_add(request.json)
 
 
 @app.route("/task", methods=['GET'])
@@ -39,5 +39,5 @@ def task_list():
 
     GET /api/task
     '''
-    return make_response(jsonify(message="success", data=info.task_list(), status=200), 200)
-    # return jsonify(info.task_list())
+    # return make_response(jsonify(message="success", data=info.task_list(), status=200), 200)
+    return info.task_list()

@@ -5,8 +5,7 @@
 '''
 
 from model.db import db
-from flask import session
-import uuid
+from flask import session, make_response, jsonify
 
 
 STATUS = 'active'
@@ -41,6 +40,8 @@ def project_add(project):
 
         if project_exist:
             result = {'msg': '项目名称重复'}
+            res_msg = make_response(jsonify(message="success", data=result, status=200), 200)
+
         else:
             with db.cursor() as cursor:
                 sql = "INSERT INTO project (name,detail,ownerId,status) VALUE (%s, %s, %s, %s)"
@@ -51,8 +52,11 @@ def project_add(project):
                 sql = "SELECT * FROM project WHERE name=%s"
                 cursor.execute(sql, (project['name']))
                 result = cursor.fetchone()
+
+            res_msg = make_response(jsonify(message="success", data=result, status=201), 201)
     finally:
-        return result
+       return res_msg
+
 
 
 def task_list():
