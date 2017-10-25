@@ -3,7 +3,6 @@ import {routing} from "./welcome.routing";
 import {WelcomeComponent} from "./welcome.component";
 import {NgaModule} from "../../theme/nga.module";
 import {MatButtonModule, MatCardModule} from "@angular/material";
-import {HistoryProjectComponent} from "./historyProject/historyProject-component";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {ToasterModule} from "angular2-toaster";
@@ -25,7 +24,6 @@ import { DialogCreateProjectComponent } from './dialog-create-project/dialog-cre
   ],
   declarations: [
     WelcomeComponent,
-    HistoryProjectComponent,
     DialogCreateProjectComponent,
   ],
   entryComponents: [

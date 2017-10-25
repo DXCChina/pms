@@ -15,6 +15,7 @@ export class DialogCreateProjectComponent implements OnInit {
   detail: AbstractControl;
 
   projectForm: FormGroup;
+  errorMessage: string = "";
 
   constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<DialogCreateProjectComponent>,private _service:WelcomeService) {
     this.projectForm = this.fb.group({
@@ -29,13 +30,15 @@ export class DialogCreateProjectComponent implements OnInit {
   onSubmit(event: any) {
     this._service.newProject(this.projectForm.value)
       .then(res=>{
-        console.log("dialog",res)
+        if(res.status == 201){
+          this.dialogRef.close();
+        }else if(res.status == 200){
+          this.errorMessage = res.data.msg;
+        }
       })
   }
 
   closeDialog(){
     this.dialogRef.close();
   }
-
-
 }
