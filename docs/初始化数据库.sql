@@ -100,7 +100,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `username` char(50) NOT NULL,
-  `password` char(50) NOT NULL,
+  `password` char(88) NOT NULL,
   `email` char(50) NOT NULL,
   `status` char(50) NOT NULL DEFAULT 'active' COMMENT '用户状态:active(默认)/delete(已删除)',
   `createAt` timestamp NOT NULL DEFAULT current_timestamp(),

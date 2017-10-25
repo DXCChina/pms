@@ -3,6 +3,7 @@
 
 @author: Wang Jianhui
 '''
+import traceback
 
 from model.db import db
 
@@ -25,8 +26,22 @@ def findOneByName(username):
             sql = "SELECT * FROM user WHERE username=%s"
             cursor.execute(sql, (username))
             result = cursor.fetchone()
-    finally:
+    except db.Warning:
+        return 'Warning' # 数据被截断等警告
+    except db.InterfaceError:
+        return 'InterfaceError' # 数据库接口模块本身的错误
+    except db.IntegrityError:
+        return 'IntegrityError' # 违反完整性约束
+    except db.DataError:
+        return 'DataError' # 数据超范围等
+    except (db.ProgrammingError, db.NotSupportedError):
+        return 'ProgramError' # SQL 语法错误等程序错误
+    except (db.OperationalError, db.InternalError):
+        return 'SystemError' # 连接意外断开,事务处理失败,内存分配错误等系统或数据库内部错误
+    else:
         return result
+    finally:
+        print("save 执行完毕")
 
 
 def save(user):
@@ -37,13 +52,26 @@ def save(user):
             cursor.execute(sql,
                            (user['username'], user['email'], user['password']))
         db.commit()
+    except db.Warning:
+        return 'Warning' # 数据被截断等警告
+    except db.InterfaceError:
+        return 'InterfaceError' # 数据库接口模块本身的错误
+    except db.IntegrityError:
+        return 'IntegrityError' # 违反完整性约束
+    except db.DataError:
+        return 'DataError' # 数据超范围等
+    except (db.ProgrammingError, db.NotSupportedError):
+        return 'ProgramError' # SQL 语法错误等程序错误
+    except (db.OperationalError, db.InternalError):
+        return 'SystemError' # 连接意外断开,事务处理失败,内存分配错误等系统或数据库内部错误
+    else:
         with db.cursor() as cursor:
             sql = "SELECT * FROM user WHERE email=%s"
             cursor.execute(sql, (user['email']))
             result = cursor.fetchone()
-    finally:
-        print('result', result)
         return result
+    finally:
+        print("save 执行完毕")
 
 
 def update(id, user):

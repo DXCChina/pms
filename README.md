@@ -47,9 +47,11 @@
     * 添加环境变量:
     ```
     PY_ENV:dev
-    PY_DB:pms
+    PY_DB_NAME:pms
+    PY_DB_HOST:localhost
     PY_DB_USERNAME:pms
     PY_DB_PASSWORD:pms
+    JWT_SECRET_KEY:pms
     ```
     * 一键启动:`run`
     * 启动前端:`app\run`

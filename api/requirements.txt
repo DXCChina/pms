@@ -1,2 +1,14 @@
 flask
+
 PyMySQL
+
+passlib
+argon2_cffi
+bcrypt
+
+flask-jwt-extended
+PyJWT
+
+Flask-Login
+Flask-HTTPAuth
+schema
