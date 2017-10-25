@@ -2,6 +2,7 @@ import {Component, ElementRef, OnInit, Renderer2} from "@angular/core";
 import {ConfigEntity} from "../../../theme/components/w-dataList/config.Entity";
 import {MatDialog, MatDialogConfig} from "@angular/material";
 import {CreateDemandComponent} from "./create_demand/create_demand.component";
+import {DemandService} from "./demand.service";
 
 @Component({
   selector: 'demand',
@@ -11,26 +12,53 @@ import {CreateDemandComponent} from "./create_demand/create_demand.component";
 
 export class DemandManageComponent implements OnInit {
 
+  page: number = 1;
+  size: number = 10;
+  sortField: string = 'createAt';
+  sortOrder: string = 'desc';
+
+  demandList: any;
+  checkedDatas: any[];
+  dispalyDelete: boolean = true;
+
   configSEntity: ConfigEntity = {
-      "name": "id",
+      "name": "title",
       "id": "id",
-      "description": "taskName",
+      "description": "detail",
   };
   contentSwitch: string = 'emptyCase';
 
-  constructor(private matDialog: MatDialog, private ref: ElementRef,
-              private Renderer: Renderer2){
+  constructor(private matDialog: MatDialog, private service: DemandService,
+              private ref: ElementRef, private Renderer: Renderer2){
 
   }
 
   ngOnInit() {
     localStorage.setItem('projectId', '1');
-    localStorage.setItem('userId', '1');
+    localStorage.setItem('ownerId', '1');
+    this.getDemandList()
+  }
+
+  getDemandList() {
+    console.log('-----')
+    console.log(this.page)
+    this.service.getDemandList(this.page, this.size, this.sortField, this.sortOrder)
+      .then(res => {
+          this.demandList = res;
+          console.log(res.data)
+      }).catch(err => console.log(err))
   }
 
   // dataList methods
-  demandChecked(checked: any) {
-
+  demandChecked(data: any[]) {
+    this.checkedDatas = data;
+    this.dispalyDelete = !Boolean(this.checkedDatas.length);
+    let deleteSvg: HTMLElement = this.ref.nativeElement.querySelector('#deleteSvg');
+    if (!this.dispalyDelete) {
+      this.Renderer.setStyle(deleteSvg, 'fill', '#f44336');
+    } else {
+      this.Renderer.setStyle(deleteSvg, 'fill', '#9e9e9e');
+    }
   }
 
   demandSelected(selected: any) {
@@ -42,7 +70,7 @@ export class DemandManageComponent implements OnInit {
   }
 
   demandPage(page: any) {
-
+    this.page = page;
   }
 
   demandFieldName(fieldName: any) {
@@ -68,8 +96,19 @@ export class DemandManageComponent implements OnInit {
 
   //delete method
   deleteDemand() {
+    this.dispalyDelete = true;
+    let deleteSvg: HTMLElement = this.ref.nativeElement.querySelector('#deleteSvg');
+    this.Renderer.setStyle(deleteSvg, 'fill', '#9e9e9e');
 
+    this.checkedDatas.map(item => {
+      item.status = 'delete';
+      return item
+    });
+    this.service.updateDemand(this.checkedDatas)
+      .then(res => {
+        this.getDemandList()
+      }).catch(err => {console.log(err)});
+    return false;
   }
-
 
 }

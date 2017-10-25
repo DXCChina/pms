@@ -23,6 +23,7 @@ import {DemandManageComponent} from "./demand_manage/demand-manage.component";
 import {ReportManageComponent} from "./report_manage/report-manage.component";
 import {CreateDemandComponent} from "./demand_manage/create_demand/create_demand.component";
 import {CKEditorModule} from "ng2-ckeditor";
+import {DemandService} from "./demand_manage/demand.service";
 
 @NgModule({
   imports: [
@@ -72,7 +73,8 @@ import {CKEditorModule} from "ng2-ckeditor";
   ],
   providers:[
     EngineerService,
-    {provide: MAT_DATE_LOCALE, useValue: 'zh-cn'}
+    {provide: MAT_DATE_LOCALE, useValue: 'zh-cn'},
+    DemandService
   ]
 })
 export class EngineeringModule {

@@ -35,8 +35,19 @@ def demandList(args):
         '''获取需求列表'''
         try:
             with db.cursor() as cursor:
-                sql = "SELECT * FROM `demand` WHERE `ownerID`=%s AND `projectId`=%s ORDER BY %s %s LIMIT %s, %s" % (args['ownerId'], args['projectId'], args['sortField'], args['sortOrder'], int(args['page'])-1, int(args['page']) * int(args['size']))
+                sql = "SELECT * FROM `demand` WHERE `ownerID`=%s AND `projectId`=%s AND status!='delete' ORDER BY %s %s LIMIT %s, %s" % (args['ownerId'], args['projectId'], args['sortField'], args['sortOrder'], int(args['page'])-1, int(args['page']) * int(args['size']))
                 cursor.execute(sql)
                 result = cursor.fetchall()
         finally:
             return result
+
+def updateDemands(params):
+        '''更新需求'''
+        print(params)
+        try:
+            with db.cursor() as cursor:
+                sql = "UPDATE demand SET `status`=%s, `level`=%s, `endDate`=%s, `title`=%s, `detail`=%s, `progress`=%s, `cost`=%s  WHERE `id`=%s"
+                cursor.executemany(sql, params)
+                db.commit()
+        finally:
+            return jsonify({"message": "ok" if bool(cursor.rowcount > 0) else "" })

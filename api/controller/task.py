@@ -41,16 +41,33 @@ def demand_info(project_id, demand_id):
 
     GET /api/project/<int:project_id>/demand/<int:demand_id>
     '''
-    return 'developing'
 
+    return
 
-@app.route("/project/<int:project_id>/demand/<int:demand_id>", methods=['PUT'])
-def demand_update(project_id, demand_id):
+# @app.route("/project/<int:project_id>/demand/<int:demand_id>", methods=['PUT'])
+@app.route("/project/demand/update", methods=['PUT'])
+def demand_update():
     '''更新需求信息
 
-    PUT /api/project/<int:project_id>/demand/<int:demand_id>
+    PUT /api/project/demand/update
     '''
-    return 'developing'
+    if not request.json or not 'data' in request.json:
+        print('request:', request.json)
+        abort(400)
+
+    params = []
+    for item in request.json["data"]:
+        params.append(
+            (item['status'], item['level'], item['endDate'],item['title'], item['detail'], item['progress'], item['cost'], item['id'])
+        )
+
+    # params = []
+    # for item in request.json["data"]:
+    #     params.append(
+    #         (item['ownerId'],item['level'],item['title'])
+    #     )
+
+    return task.updateDemands(tuple(params))
 
 
 # @app.route("/demand/<int:demand_id>/task", methods=['GET'])
