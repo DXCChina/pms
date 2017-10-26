@@ -25,7 +25,6 @@ def project_list():
 def project_add(project):
     if 'user_id' in session:
         owner_id = session['user_id']
-    owner_id = "2" #todo delete
 
     try:
         with db.cursor() as cursor:
