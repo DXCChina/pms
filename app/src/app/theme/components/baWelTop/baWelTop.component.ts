@@ -38,8 +38,8 @@ export class BaWelTop {
     if (this.isContainRoute('/project/')) {
       this.showLevel2Menu = true;
     }
-    this.registerChangeInProjects();
-    this.findProjectList();
+    // this.registerChangeInProjects();
+    // this.findProjectList();
   }
 
   registerChangeInProjects() {

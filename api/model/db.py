@@ -19,7 +19,8 @@ db = pymysql.connect(
     user=PY_DB_USERNAME,
     password=PY_DB_PASSWORD,
     db=PY_DB_NAME,
-    cursorclass=pymysql.cursors.DictCursor)
+    cursorclass=pymysql.cursors.DictCursor,
+    charset='utf8')
 print('建立数据库连接:', {
     'host': PY_DB_HOST,
     'user': PY_DB_USERNAME,
