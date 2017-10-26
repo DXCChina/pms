@@ -1,2 +1,12 @@
 flask
+
+flask-jwt-extended
+PyJWT
+
 PyMySQL
+peewee
+marshmallow
+
+passlib
+argon2_cffi
+bcrypt
