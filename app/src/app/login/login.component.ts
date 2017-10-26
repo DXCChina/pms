@@ -42,14 +42,8 @@ export class Login {
     if (this.form.valid) {
       this._service.login(this.name.value, this.password.value).then(
         res => {
-          if (res.code === 0) {
-            let data = res.data;
-            let accessToken = data.accessToken;
-            let refreshToken = data.refreshToken;
-            //todo
-            //后面放到session storage
-            localStorage.accessToken = accessToken;
-            localStorage.refreshToken = refreshToken;
+          console.log(res)
+          if (res.id !== '') {
             this.router.navigate(['/']);
           } else {
             this.toasterService.pop('error', '用户名或密码错误' , '登录失败');

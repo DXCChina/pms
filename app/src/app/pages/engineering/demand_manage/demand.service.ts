@@ -68,7 +68,6 @@ export class DemandService {
   createTask(ownerId: number, demandId: number, title: string, detail: string, level: string,
                status: string, startDate: any, endDate: any, progress: number, cost: number): Promise<any> {
     let memberId = Number(localStorage.getItem('projectId'));
-    console.log({ownerId, memberId, demandId, title, detail, level, status, startDate, endDate, progress, cost});
     let body = JSON.stringify({ownerId, memberId, demandId, title, detail, level, status, startDate, endDate, progress, cost});
     return this.http.post(this.createTaskUrl, body, this._global.options)
       .toPromise()
