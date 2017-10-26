@@ -14,7 +14,7 @@ export class BaPagination implements AfterContentInit,OnInit,OnChanges{
 
   judgePre:boolean = false;
   judgeNext:boolean = false;
-  length: number = 0;
+  length: number;
   page: number = 1;
   size: number;
   prePage:number;

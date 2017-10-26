@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
--- 主机:                           127.0.0.1
--- 服务器版本:                        10.2.9-MariaDB - mariadb.org binary distribution
--- 服务器操作系统:                      Win64
+-- 主机:                           122.115.49.94
+-- 服务器版本:                        10.2.9-MariaDB - MariaDB Server
+-- 服务器操作系统:                      Linux
 -- HeidiSQL 版本:                  9.4.0.5174
 -- --------------------------------------------------------
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `demand` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='需求表';
 
--- 正在导出表  pms.demand 的数据：~1 rows (大约)
+-- 正在导出表  pms.demand 的数据：~0 rows (大约)
 DELETE FROM `demand`;
 /*!40000 ALTER TABLE `demand` DISABLE KEYS */;
 INSERT INTO `demand` (`id`, `ownerId`, `projectId`, `title`, `detail`, `level`, `status`, `createAt`) VALUES
@@ -47,10 +47,11 @@ CREATE TABLE IF NOT EXISTS `project` (
   `ownerId` int(10) unsigned NOT NULL,
   `status` char(50) NOT NULL DEFAULT 'active' COMMENT 'active(默认)/done/delete',
   `createAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='项目表';
 
--- 正在导出表  pms.project 的数据：~1 rows (大约)
+-- 正在导出表  pms.project 的数据：~0 rows (大约)
 DELETE FROM `project`;
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
 INSERT INTO `project` (`id`, `name`, `detail`, `ownerId`, `status`, `createAt`) VALUES
@@ -66,7 +67,7 @@ CREATE TABLE IF NOT EXISTS `projectmember` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='项目与成员关系表';
 
--- 正在导出表  pms.projectmember 的数据：~1 rows (大约)
+-- 正在导出表  pms.projectmember 的数据：~0 rows (大约)
 DELETE FROM `projectmember`;
 /*!40000 ALTER TABLE `projectmember` DISABLE KEYS */;
 INSERT INTO `projectmember` (`id`, `projectId`, `memberId`) VALUES
@@ -88,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `task` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='任务表';
 
--- 正在导出表  pms.task 的数据：~1 rows (大约)
+-- 正在导出表  pms.task 的数据：~0 rows (大约)
 DELETE FROM `task`;
 /*!40000 ALTER TABLE `task` DISABLE KEYS */;
 INSERT INTO `task` (`id`, `ownerId`, `memberId`, `demandId`, `title`, `detail`, `level`, `status`, `createAt`) VALUES
@@ -100,14 +101,14 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE IF NOT EXISTS `user` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `username` char(50) NOT NULL,
-  `password` char(50) NOT NULL,
+  `password` char(100) NOT NULL,
   `email` char(50) NOT NULL,
   `status` char(50) NOT NULL DEFAULT 'active' COMMENT '用户状态:active(默认)/delete(已删除)',
   `createAt` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=47 DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- 正在导出表  pms.user 的数据：~1 rows (大约)
 DELETE FROM `user`;

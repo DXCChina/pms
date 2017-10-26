@@ -1,12 +1,12 @@
+  <mat-select placeholder="字段排序" (change)="changeValue($event)" style="width: 100px" [value]="'createAt'">
+    <mat-option *ngFor="let fields of sortFields" [value]="fields.fieldValue" >
+      {{ fields.fieldName }}
+    </mat-option>
+  </mat-select>
 
-<mat-select placeholder="字段过滤" (change)="changeValue($event)" style="width: 100px">
-  <mat-option *ngFor="let fields of sortFields" [value]="fields.fieldName" >
-    {{ fields.fieldName }}
-  </mat-option>
-</mat-select>
+  <div class="wa-button-sort">
+    <button mat-icon-button (click)="changedImg()">
+      <img id="img" src="../../../../assets/img/wa-img/ic_arrow_downward_black_24px.svg">
+    </button>
+  </div>
 
-<div class="wa-button-sort">
-  <button mat-icon-button (click)="changedImg()">
-    <img id="img" src="../../../../assets/img/wa-img/ic_arrow_upward_black_24px.svg">
-  </button>
-</div>
