@@ -1,14 +1,11 @@
 flask
 
+flask-jwt-extended
+PyJWT
+
 PyMySQL
+marshmallow
 
 passlib
 argon2_cffi
 bcrypt
-
-flask-jwt-extended
-PyJWT
-
-Flask-Login
-Flask-HTTPAuth
-schema

@@ -4,8 +4,8 @@ set path=%PYTHON_HOME%%path%
 REM set path=%path%
 set startdir=%cd%
 cd %~dp0
-rd /s/q docs\rst docs\_build
-sphinx-apidoc -o docs/rst .
+REM rd /s/q docs\rst docs\_build
+REM sphinx-apidoc -o docs/rst .
 cd docs
 call make html
 cd ..

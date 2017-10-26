@@ -25,7 +25,11 @@
 * MariaDB 
 [下载](https://mirrors.tuna.tsinghua.edu.cn/mariadb//mariadb-10.2.9/winx64-packages/mariadb-10.2.9-winx64.msi) 
 [文档](http://www.runoob.com/mysql/mysql-tutorial.html)
-[驱动](https://pymysql.readthedocs.io/en/latest/modules/index.html)
+### API Requirements
+* [flask-jwt-extended](http://flask-jwt-extended.readthedocs.io/en/latest/):Flask JWT 扩展
+* [PyMySQL](https://pymysql.readthedocs.io/en/latest/modules/index.html):MariaDB Python Client
+* [marshmallow](http://marshmallow.readthedocs.io/en/latest/):数据字段验证
+* [passlib](https://passlib.readthedocs.io/en/stable/):密码哈希算法库
 ### 开发部署
 #### Windows开发环境搭建
 0. 安装 [git](https://git-scm.com/download/win),
@@ -95,3 +99,4 @@
         * 后端:`pip install -r api/requirements.txt`
 #### [CentOS7生产环境部署](https://github.com/canfeit/pms/blob/master/docs/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2.md)
 ## TODO
+ user active 判断
