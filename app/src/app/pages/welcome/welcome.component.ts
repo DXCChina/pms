@@ -14,16 +14,6 @@ export class WelcomeComponent implements OnInit {
 
   projects: any[];
   taskList: any[];
-   rows = [
-    { name: 'Austin', gender: 'Male', company: 'Swimlane' },
-    { name: 'Dany', gender: 'Male', company: 'KFC' },
-    { name: 'Molly', gender: 'Female', company: 'Burger King' },
-  ];
-  columns = [
-    { prop: 'name' },
-    { name: 'Gender' },
-    { name: 'Company' }
-  ];
 
   constructor(private _service: WelcomeService, public dialog: MatDialog) {
   }
