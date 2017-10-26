@@ -29,15 +29,9 @@ def project_add(project):
 
     try:
         with db.cursor() as cursor:
-            sql = "SELECT * FROM project"
-            cursor.execute(sql)
-            projects = cursor.fetchall()
-        for ele in projects:
-            if ele['name'] == project['name']:
-                project_exist = True
-                break
-            else:
-                project_exist = False
+            sql = "SELECT * FROM project WHERE name=%s"
+            cursor.execute(sql, project['name'])
+            project_exist = cursor.fetchall()
 
         if project_exist:
             result = {'msg': '项目名称重复'}
