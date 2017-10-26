@@ -72,6 +72,23 @@ def demand_update():
     return task.updateDemands(tuple(params))
 
 
+@app.route("/demand/<string:demand_title>", methods=['GET'])
+def demand_search(demand_title):
+    '''模糊查询需求
+
+    GET /api/demand/demand_title
+    '''
+    res = {
+        "message": "ok",
+        "data": {}
+    }
+
+    if task.demandSearch(demand_title) != None:
+        res["data"] = task.demandSearch(demand_title)
+
+
+    return jsonify(res)
+
 # @app.route("/demand/<int:demand_id>/task", methods=['GET'])
 @app.route("/demand/list", methods=['GET'])
 def task_list():

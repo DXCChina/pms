@@ -32,6 +32,9 @@ export class CreateDemandComponent {
     {userName: '——自己——', userId: 1}
   ];
 
+  demandSearchList: any[];
+  showDemandList: boolean = false;
+
   //some judge
   constructor(private fb: FormBuilder, private ref: ElementRef, private Renderer: Renderer2, private service: DemandService,
               public dialogRef: MatDialogRef<CreateDemandComponent>) {
@@ -56,13 +59,20 @@ export class CreateDemandComponent {
   }
 
   onSubmit(pickerstart: any, pickerend: any) {
-    this.service.createDemand(this.assign, this.title.value, this.detail.value, this.level,
-                              this.status, pickerstart.startAt, pickerend.startAt, Number(this.progress.value), Number(this.cost.value))
-      .then(res => {
-        if(res.message === 'ok') {
-          this.dialogRef.close(true)
-        }
-      }).catch(err => { console.log('err:', err) })
+
+    if(this.target === 'demand') {
+
+      this.service.createDemand(this.assign, this.title.value, this.detail.value, this.level,
+                                this.status, pickerstart.startAt, pickerend.startAt, Number(this.progress.value), Number(this.cost.value))
+        .then(res => {
+          if(res.message === 'ok') {
+            this.dialogRef.close(true)
+          }
+        }).catch(err => { console.log('err:', err) })
+
+    } else if (this.target === 'task') {
+
+    }
   }
 
   //target value changed method
@@ -79,6 +89,23 @@ export class CreateDemandComponent {
       this.Renderer.addClass(asc, 'asc');
       this.Renderer.removeClass(asc, 'isAsc');
     }
+  }
+
+  searchDemand(query: any){
+    if (query !== '') {
+      this.service.demandFuzzySearch(query)
+      .then(res => {
+        this.demandSearchList = res.data;
+        res.data.length > 0 ? this.showDemandList = true : this.showDemandList = false;
+        console.log(this.demandSearchList);
+      }).catch(err => { console.log(err)} )
+    } else {
+      this.showDemandList = false;
+    }
+  }
+
+  chooseData(demand: any) {
+    console.log(demand)
   }
 
 }

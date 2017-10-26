@@ -67,3 +67,14 @@ def demandDetail(demandId):
                 result = cursor.fetchone()
         finally:
             return result
+
+def demandSearch(title):
+        '''模糊查询需求'''
+        try:
+            with db.cursor() as cursor:
+                sql = "SELECT * FROM demand WHERE `title` LIKE %s"
+                cursor.execute(sql, ('%'+title+'%'))
+                result = cursor.fetchall()
+                print(result)
+        finally:
+            return result

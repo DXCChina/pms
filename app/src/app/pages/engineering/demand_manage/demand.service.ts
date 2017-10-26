@@ -8,6 +8,8 @@ export class DemandService {
   demandListUrl: string = this._global.baseURL + '/api/demand/list';
   updateDemandUrl: string = this._global.baseURL + '/api/project/demand/update';
   demandDetailUrl: string = this._global.baseURL + '/api/project/demand/detail';
+  demandSearchUrl: string = this._global.baseURL + '/api/demand';
+
   constructor(private _global: GlobalState, private http: Http) {
 
   }
@@ -48,6 +50,13 @@ export class DemandService {
 
   demandDetail(id: number): Promise<any> {
     return this.http.get(`${this.demandDetailUrl}/${id}`)
+      .toPromise()
+      .then(this._global.extractData)
+      .catch(this._global.handleError)
+  }
+
+  demandFuzzySearch(title: string): Promise<any> {
+    return this.http.get(`${this.demandSearchUrl}/${title}`)
       .toPromise()
       .then(this._global.extractData)
       .catch(this._global.handleError)

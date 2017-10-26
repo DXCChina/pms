@@ -78,7 +78,7 @@
         <section class="example-section">
           <mat-form-field class="example-margin">
 
-            <input matInput [(ngModel)]="detailDatas.startDate" name="startDate"  [matDatepicker]="picker_Start" placeholder="开始日期">
+            <input matInput [(ngModel)]="detailDatas.startDate" name="startDate" [disabled]="true" [matDatepicker]="picker_Start" placeholder="开始日期">
             <mat-datepicker-toggle matSuffix [for]="picker_Start"></mat-datepicker-toggle>
             <mat-datepicker #picker_Start></mat-datepicker>
 

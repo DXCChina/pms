@@ -10,15 +10,21 @@
         </mat-form-field>
       </mat-grid-tile>
 
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-grid-tile [colspan]="1" [rowspan]="1" style="overflow: visible">
 
        <mat-form-field id="Des" class="example-full-width des">
           <input [formControl]="detail" matInput placeholder="描述">
        </mat-form-field>
 
-        <mat-form-field id="Asc" class="example-margin asc">
-          <input matInput placeholder="归属于">
-        </mat-form-field>
+        <demand-search
+          id="Asc"
+          class="asc"
+          [demandList]="demandSearchList"
+          [showDemandList]="showDemandList"
+          (searchDemand)="searchDemand($event)"
+          (chooseData)="chooseData($event)">
+
+        </demand-search>
 
       </mat-grid-tile>
 
@@ -120,4 +126,3 @@
 
   </form>
 </div>
-<!--<h1>name</h1>-->
