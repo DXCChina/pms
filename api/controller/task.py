@@ -94,7 +94,7 @@ def demand_search(demand_title):
 @app.route("/demand/list", methods=['GET'])
 @fresh_jwt_required
 def demand_lists():
-    '''获取需求任务列表
+    '''获取需求列表
 
     GET /api/demand/list
     # '''
@@ -134,6 +134,19 @@ def task_add():
         abort(400)
 
     return handleData(task.createTask(request.json))
+
+@app.route("/demand/task/update", methods=["PUT"])
+@fresh_jwt_required
+def update_task():
+    '''更新、删除任务
+
+    GET /api/demand/task/update
+    '''
+    if not request.json or not 'data' in request.json:
+        print('request:', request.json)
+        abort(400)
+
+    return task.updateTask(request.json["data"])
 
 
 @app.route("/demand/<int:demand_id>/task/<int:task_id>", methods=['GET'])

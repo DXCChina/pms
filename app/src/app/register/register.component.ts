@@ -35,11 +35,11 @@ export class Register {
               private service: RegisterService, private router: Router, private toasterService: ToasterService) {
 
     this.form = fb.group({
-      'name': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+      'name': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
       'email': ['', Validators.compose([Validators.required, EmailValidator.validate])],
       'passwords': fb.group({
-        'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-        'repeatPassword': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
+        'password': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+        'repeatPassword': ['', Validators.compose([Validators.required, Validators.minLength(1)])]
       }, {validator: EqualPasswordsValidator.validate('password', 'repeatPassword')})
     });
 

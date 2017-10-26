@@ -49,7 +49,6 @@ def demandList(args):
 
 def updateDemands(params):
         '''更新需求'''
-        print(params)
         try:
             with db.cursor() as cursor:
                 sql = "UPDATE demand SET `status`=%s, `level`=%s, `endDate`=%s, `title`=%s, `detail`=%s, `progress`=%s, `cost`=%s  WHERE `id`=%s"
@@ -83,24 +82,15 @@ def createTask(task):
         '''新建任务'''
         try:
             with db.cursor() as cursor:
-                sql = "SELECT title FROM task WHERE title=%s"
+                sql = "INSERT INTO task (ownerId, memberId, demandId, title, detail, level, status, startDate, endDate, progress, cost) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                cursor.execute(sql, (task['ownerId'], task['memberId'], task['demandId'], task['title'], task['detail'],
+                                     task['level'], task['status'], task['startDate'], task['endDate'],
+                                     task['progress'], task['cost']))
+                db.commit()
+            with db.cursor() as cursor:
+                sql = "SELECT * FROM task WHERE title=%s"
                 cursor.execute(sql, (task['title']))
                 result = cursor.fetchone()
-                if result == None:
-                    try:
-                        with db.cursor() as cursor:
-                            sql = "INSERT INTO task (ownerId, memberId, demandId, title, detail, level, status, startDate, endDate, progress, cost) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                            cursor.execute(sql, (task['ownerId'], task['memberId'], task['demandId'], task['title'], task['detail'],
-                                                 task['level'], task['status'], task['startDate'], task['endDate'],
-                                                 task['progress'], task['cost']))
-                            db.commit()
-                        with db.cursor() as cursor:
-                            sql = "SELECT * FROM task WHERE title=%s"
-                            cursor.execute(sql, (task['title']))
-                    finally:
-                        result = cursor.fetchone()
-                else:
-                    result = {'errMsg': 'Title already exists'}
         finally:
             return result
 
@@ -120,3 +110,13 @@ def taskList(args):
 
     finally:
         return {"data": data, "total": total}
+
+def updateTask(task):
+    '''任务信息更新'''
+    try:
+        with db.cursor() as cursor:
+            sql = "UPDATE task SET `status`=%s, `level`=%s, `endDate`=%s, `title`=%s, `detail`=%s, `progress`=%s, `cost`=%s  WHERE `id`=%s"
+            cursor.execute(sql, (task["status"], task["level"], task["endDate"], task["title"], task["detail"], task["progress"], task["cost"], task["id"]))
+            db.commit()
+    finally:
+        return jsonify({"message": "ok" if bool(cursor.rowcount > 0) else ""})

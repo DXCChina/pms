@@ -132,6 +132,12 @@ export class DemandManageComponent implements OnInit {
     return false;
   }
 
+  updateTask(data: any) {
+    this.service.updateTask(data)
+      .then(res => {
+        res.message === 'ok' ? console.log('update task success') : console.log('update task faild')
+      }).catch(err => {console.log(err)})
+  }
 
   demandDetail(id: number) {
     this.service.demandDetail(id)
@@ -157,13 +163,12 @@ export class DemandManageComponent implements OnInit {
   }
 
   taskRetract(bool: boolean) {
-    // this.demandDetail(this.demandDetails.id)
-    console.log('**')
+    this.getTaskList(this.selectId);
+    return false;
   }
 
   taskModifyed(detail: any) {
-    // this.updateDemand([this.demandDetails])
-    console.log('--')
+    this.updateTask(detail);
   }
 
 }

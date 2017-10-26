@@ -11,7 +11,8 @@ export class DemandService {
   demandSearchUrl: string = this._global.baseURL + '/api/demand';
 
   createTaskUrl: string = this._global.baseURL + '/api/demand/task';
-  taskListUrl: string =this._global.baseURL + '/api/task/list';
+  taskListUrl: string = this._global.baseURL + '/api/task/list';
+  updateTaskUrl: string = this._global.baseURL + '/api/demand/task/update';
 
   constructor(private _global: GlobalState, private http: Http) {
 
@@ -82,6 +83,14 @@ export class DemandService {
       `demandId=${demandId}`
     ].join('&');
     return this.http.get(`${this.taskListUrl}?${params}`)
+      .toPromise()
+      .then(this._global.extractData)
+      .catch(this._global.handleError)
+  }
+
+  updateTask(data: any): Promise<any> {
+    let body = JSON.stringify({data});
+    return this.http.put(this.updateTaskUrl, body, this._global.options)
       .toPromise()
       .then(this._global.extractData)
       .catch(this._global.handleError)
