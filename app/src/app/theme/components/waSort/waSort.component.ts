@@ -1,7 +1,7 @@
 /**
  * Created by XD on 2017/7/19.
  */
-import {Component, ElementRef, EventEmitter} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, Output} from "@angular/core";
 import {SearchField} from "../waDataList/searchField.Entity";
 @Component({
   selector:'wa-sort',
@@ -11,7 +11,7 @@ import {SearchField} from "../waDataList/searchField.Entity";
 })
 export class WaSort{
 
-  sortFields : SearchField[];
+  @Input() sortFields : SearchField[];
 
   judgeImg : boolean = true;
 
@@ -21,16 +21,9 @@ export class WaSort{
 
   constructor( private elementRef:ElementRef) {
 
-    this.sortFields = [
-      {"fieldName":"Time"},
-      {"fieldName":"Name"},
-      {"fieldName":"ID"}
-    ]
-
   }
 
   changeValue(sortField: any){
-
     this.outFieldName.emit(sortField.value ? sortField.value : 'time');
 
   }
@@ -43,16 +36,16 @@ export class WaSort{
 
     if(!this.judgeImg){
 
-      img.setAttribute('src','../../../../assets/img/wa-img/ic_arrow_downward_black_24px.svg');
-
-      this.outDirection.emit('down');
-
-    }else{
 
       img.setAttribute('src','../../../../assets/img/wa-img/ic_arrow_upward_black_24px.svg');
 
-      this.outDirection.emit('up');
+      this.outDirection.emit('ASC');
 
+    }else{
+
+      img.setAttribute('src','../../../../assets/img/wa-img/ic_arrow_downward_black_24px.svg');
+
+      this.outDirection.emit('DESC');
     }
 
   }

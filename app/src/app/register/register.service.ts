@@ -5,7 +5,7 @@ import {Http} from "@angular/http";
 @Injectable()
 export class RegisterService {
 
-  private RegisterUrl = this.Global.baseURL + '/account/register';
+  private RegisterUrl = this.Global.baseURL + '/api/user';
 
   constructor(private Global: GlobalState, private http: Http){
 
