@@ -3,6 +3,7 @@
  */
 export class SearchField{
   constructor(
+    public fieldValue:string,
     public fieldName:string
   ){}
 }

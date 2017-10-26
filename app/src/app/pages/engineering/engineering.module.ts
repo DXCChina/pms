@@ -8,7 +8,8 @@ import {CodemirrorModule} from 'ng2-codemirror';
 import {
   MatTabsModule, MatButtonModule, MatDialogModule, MatTooltipModule, MatSelectModule,
   MatCheckboxModule, MatInputModule, MatListModule, MatSortModule, MatTableModule, MatCommonModule,
-  MatProgressBarModule, MatChipsModule, MatCardModule, MatExpansionModule, MatGridListModule
+  MatProgressBarModule, MatChipsModule, MatCardModule, MatExpansionModule, MatGridListModule, MatDatepickerModule,
+  MatNativeDateModule, MAT_DATE_LOCALE, MatSliderModule
 } from "@angular/material";
 import {SortableModule}from 'ngx-bootstrap';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
@@ -22,6 +23,9 @@ import {DemandManageComponent} from "./demand_manage/demand-manage.component";
 import {ReportManageComponent} from "./report_manage/report-manage.component";
 import {CreateDemandComponent} from "./demand_manage/create_demand/create_demand.component";
 import {CKEditorModule} from "ng2-ckeditor";
+import {DemandService} from "./demand_manage/demand.service";
+import {D_tComponent} from "./demand_manage/demand_task.model/d_t.component";
+import {DemandSearchComponent} from "../common/demandSearch/demandSearch.component";
 
 @NgModule({
   imports: [
@@ -37,6 +41,7 @@ import {CKEditorModule} from "ng2-ckeditor";
     MatCardModule,
     MatTabsModule,
     MatListModule,
+    MatSliderModule,
     MatCheckboxModule,
     MatDialogModule,
     MatButtonModule,
@@ -46,6 +51,8 @@ import {CKEditorModule} from "ng2-ckeditor";
     MatTableModule,
     MatSortModule,
     MatChipsModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     MatProgressBarModule,
     ReactiveFormsModule,
     MatTooltipModule,
@@ -53,7 +60,7 @@ import {CKEditorModule} from "ng2-ckeditor";
     SortableModule.forRoot(),
     routing,
     NgxChartsModule,
-    NgxDatatableModule,
+    NgxDatatableModule
   ],
   declarations: [
     EngineeringComponent,
@@ -61,12 +68,18 @@ import {CKEditorModule} from "ng2-ckeditor";
     ScriptSearchComponent,
     ReportManageComponent,
     DemandManageComponent,
-    CreateDemandComponent
+    CreateDemandComponent,
+    D_tComponent,
+    DemandSearchComponent
   ],
   entryComponents: [
     CreateDemandComponent
   ],
-  providers:[EngineerService]
+  providers:[
+    EngineerService,
+    {provide: MAT_DATE_LOCALE, useValue: 'zh-cn'},
+    DemandService
+  ]
 })
 export class EngineeringModule {
 
