@@ -16,4 +16,5 @@ db = pymysql.connect(
     user=PY_DB_USERNAME,
     password=PY_DB_PASSWORD,
     db=PY_DB,
-    cursorclass=pymysql.cursors.DictCursor)
+    cursorclass=pymysql.cursors.DictCursor,
+    charset='utf8')
