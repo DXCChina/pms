@@ -4,6 +4,7 @@ flask-jwt-extended
 PyJWT
 
 PyMySQL
+peewee
 marshmallow
 
 passlib

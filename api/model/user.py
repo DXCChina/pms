@@ -3,7 +3,6 @@
 
 @author: Wang Jianhui
 '''
-import traceback
 
 from model.db import db
 
