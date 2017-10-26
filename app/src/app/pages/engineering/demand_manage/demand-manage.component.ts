@@ -23,6 +23,8 @@ export class DemandManageComponent implements OnInit {
   dispalyDelete: boolean = true;
   contentSwitch: string = 'emptyCase';
   demandDetails: any;
+  taskList: any[];
+  selectId: number;
 
   configSEntity: ConfigEntity = {
       "name": "title",
@@ -67,7 +69,9 @@ export class DemandManageComponent implements OnInit {
   }
 
   demandSelected(selected: any) {
+    this.selectId = selected.id;
     this.demandDetail(selected.id);
+    this.getTaskList(selected.id)
     // console.log(selected)
   }
 
@@ -98,7 +102,8 @@ export class DemandManageComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        this.getDemandList()
+        this.getDemandList();
+        // this.getTaskList(this.)
       }
     })
   }
@@ -141,4 +146,23 @@ export class DemandManageComponent implements OnInit {
   modifyed(detail: any) {
     this.updateDemand([this.demandDetails])
   }
+
+  getTaskList(demandId: number) {
+    this.service.getTaskList(demandId)
+      .then(res => {
+        this.taskList = res.data
+        console.log(this.taskList)
+    }).catch(err => { console.log(err) })
+  }
+
+  taskRetract(bool: boolean) {
+    // this.demandDetail(this.demandDetails.id)
+    console.log('**')
+  }
+
+  taskModifyed(detail: any) {
+    // this.updateDemand([this.demandDetails])
+    console.log('--')
+  }
+
 }

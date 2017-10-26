@@ -112,16 +112,31 @@
 
         </div>
 
-      <!--<div class="wa-detail">-->
-        <!--<div class="detail_title">-->
-          <!--<h4>editor</h4>-->
-        <!--</div>-->
-        <!--<div class="wa-core-info">-->
+      <div class="wa-detail">
+        <div class="detail_title">
+          <h4>任务列表</h4>
+        </div>
+        <div class="wa-core-info">
 
-          <!--<h1>editor</h1>-->
+          <mat-accordion>
 
-        <!--</div>-->
-      <!--</div>-->
+            <mat-expansion-panel
+              *ngFor="let task of taskList">
+              <mat-expansion-panel-header>
+                {{task.title}}
+              </mat-expansion-panel-header>
+
+                <d_t-component
+                  [detailDatas]="task">
+
+                </d_t-component>
+
+            </mat-expansion-panel>
+
+          </mat-accordion>
+
+        </div>
+      </div>
 
     </div>
 

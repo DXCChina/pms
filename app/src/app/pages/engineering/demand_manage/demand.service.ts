@@ -11,6 +11,7 @@ export class DemandService {
   demandSearchUrl: string = this._global.baseURL + '/api/demand';
 
   createTaskUrl: string = this._global.baseURL + '/api/demand/task';
+  taskListUrl: string =this._global.baseURL + '/api/task/list';
 
   constructor(private _global: GlobalState, private http: Http) {
 
@@ -70,6 +71,18 @@ export class DemandService {
     console.log({ownerId, memberId, demandId, title, detail, level, status, startDate, endDate, progress, cost});
     let body = JSON.stringify({ownerId, memberId, demandId, title, detail, level, status, startDate, endDate, progress, cost});
     return this.http.post(this.createTaskUrl, body, this._global.options)
+      .toPromise()
+      .then(this._global.extractData)
+      .catch(this._global.handleError)
+  }
+
+  getTaskList(demandId:number): Promise<any> {
+    let params = [
+      `ownerId=${localStorage.getItem('ownerId')}`,
+      `memberId=${localStorage.getItem('projectId')}`,
+      `demandId=${demandId}`
+    ].join('&');
+    return this.http.get(`${this.taskListUrl}?${params}`)
       .toPromise()
       .then(this._global.extractData)
       .catch(this._global.handleError)
