@@ -6,10 +6,16 @@
 
 from flask import jsonify, request, abort, Blueprint
 from model import task
+
+from flask_jwt_extended import (create_access_token, get_jwt_identity,
+                                get_jwt_claims, fresh_jwt_required,
+                                set_access_cookies, unset_jwt_cookies)
+from marshmallow import Schema, fields
+
 app = Blueprint('task', __name__, url_prefix='/api')  # pylint: disable=c0103
 
-
 @app.route("/project/<int:project_id>/demand", methods=['GET'])
+@fresh_jwt_required
 def demand_list(project_id):
     '''获取指定项目需求列表
 
@@ -20,6 +26,7 @@ def demand_list(project_id):
 
 # @app.route("/project/<int:project_id>/demand", methods=['POST'])
 @app.route("/project/demand", methods=['POST'])
+@fresh_jwt_required
 def demand_add():
     '''添加需求
 
@@ -36,6 +43,7 @@ def demand_add():
 
 
 @app.route("/project/demand/detail/<int:demand_id>", methods=['GET'])
+@fresh_jwt_required
 def demand_info(demand_id):
     '''获取需求详情
 
@@ -45,6 +53,7 @@ def demand_info(demand_id):
 
 # @app.route("/project/<int:project_id>/demand/<int:demand_id>", methods=['PUT'])
 @app.route("/project/demand/update", methods=['PUT'])
+@fresh_jwt_required
 def demand_update():
     '''更新需求信息
 
@@ -64,6 +73,7 @@ def demand_update():
 
 
 @app.route("/demand/<string:demand_title>", methods=['GET'])
+@fresh_jwt_required
 def demand_search(demand_title):
     '''模糊查询需求
 
@@ -82,6 +92,7 @@ def demand_search(demand_title):
 
 # @app.route("/demand/<int:demand_id>/task", methods=['GET'])
 @app.route("/demand/list", methods=['GET'])
+@fresh_jwt_required
 def demand_lists():
     '''获取需求任务列表
 
@@ -94,6 +105,7 @@ def demand_lists():
     })
 
 @app.route("/task/list", methods=['GET'])
+@fresh_jwt_required
 def task_list():
     '''获取任务列表
 
@@ -108,6 +120,7 @@ def task_list():
 
 # @app.route("/demand/<int:demand_id>/task", methods=['POST'])
 @app.route("/demand/task", methods=['POST'])
+@fresh_jwt_required
 def task_add():
     '''添加任务
 
@@ -124,6 +137,7 @@ def task_add():
 
 
 @app.route("/demand/<int:demand_id>/task/<int:task_id>", methods=['GET'])
+@fresh_jwt_required
 def task_info(demand_id, task_id):
     '''获取任务详情
 
@@ -133,6 +147,7 @@ def task_info(demand_id, task_id):
 
 
 @app.route("/demand/<int:demand_id>/task/<int:task_id>", methods=['PUT'])
+@fresh_jwt_required
 def task_update(demand_id, task_id):
     '''更新指定任务信息
 
