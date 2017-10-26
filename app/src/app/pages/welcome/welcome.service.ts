@@ -6,6 +6,7 @@ import 'rxjs/add/operator/toPromise';
 export class WelcomeService {
 
   private projectUrl = 'api/project';
+  private taskUrl = 'api/task';
 
   constructor(private http: Http) {
   }
@@ -21,6 +22,12 @@ export class WelcomeService {
   newProject(project: any): Promise<any> {
     return this.http.post(this.projectUrl, project).toPromise()
       .then(response => response.json())
+      .catch(this.handleError)
+  }
+
+  getTaskList(): Promise<any> {
+    return this.http.get(this.taskUrl).toPromise()
+      .then(res=>res.json())
       .catch(this.handleError)
   }
 

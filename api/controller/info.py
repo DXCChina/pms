@@ -39,5 +39,5 @@ def task_list():
 
     GET /api/task
     '''
-    # return make_response(jsonify(message="success", data=info.task_list(), status=200), 200)
-    return info.task_list()
+    return make_response(jsonify(message="success", data=info.task_list(), status=200), 200)
+    # return info.task_list()

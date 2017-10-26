@@ -8,6 +8,7 @@ import {CommonModule} from "@angular/common";
 import {ToasterModule} from "angular2-toaster";
 import { MatDialogModule, MatInputModule } from '@angular/material';
 import { DialogCreateProjectComponent } from './dialog-create-project/dialog-create-project.component';
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { DialogCreateProjectComponent } from './dialog-create-project/dialog-cre
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
-    ToasterModule
+    ToasterModule,
+    NgxDatatableModule
   ],
   declarations: [
     WelcomeComponent,

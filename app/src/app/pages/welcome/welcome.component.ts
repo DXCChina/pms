@@ -13,12 +13,14 @@ import {MatDialog} from "@angular/material";
 export class WelcomeComponent implements OnInit {
 
   projects: any[];
+  taskList: any[];
 
   constructor(private _service: WelcomeService, public dialog: MatDialog) {
   }
 
   ngOnInit() {
     this.getProjectList();
+    this.getTaskList();
   }
 
   getProjectList() {
@@ -40,6 +42,19 @@ export class WelcomeComponent implements OnInit {
       // this.animal = result;
       this.getProjectList();
     });
+  }
+
+  getTaskList(){
+    this._service.getTaskList()
+      .then(res=>{
+        console.log("res", res);
+        if(res.status == 200){
+          this.taskList = res.data.map(task=>{
+            task["createAt"] = new Date(task["createAt"]).toLocaleDateString()
+            return task;
+          })
+        }
+      })
   }
 }
 
