@@ -34,6 +34,7 @@ export class BaWelTop {
   }
 
   ngOnInit() {
+
     // this.selectedProject = this.sessionStorage.getItem("projectName");
     // if (this.isContainRoute('/project/')) {
     //   this.showLevel2Menu = true;
