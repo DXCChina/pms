@@ -50,8 +50,6 @@ def demand_update():
 
     PUT /api/project/demand/update
     '''
-    print(request.json)
-    print(request.json["data"])
     if not request.json or not 'data' in request.json:
         print('request:', request.json)
         abort(400)
@@ -67,8 +65,6 @@ def demand_update():
     #     params.append(
     #         (item['ownerId'],item['level'],item['title'])
     #     )
-    print('--', params)
-    print('**', tuple(params))
     return task.updateDemands(tuple(params))
 
 
@@ -103,13 +99,21 @@ def task_list():
     })
 
 
-@app.route("/demand/<int:demand_id>/task", methods=['POST'])
-def task_add(demand_id):
+# @app.route("/demand/<int:demand_id>/task", methods=['POST'])
+@app.route("/demand/task", methods=['POST'])
+def task_add():
     '''添加任务
 
-    POST /api/demand/<int:demand_id>/task
+    POST /api/demand/task
     '''
-    return 'developing'
+    if not request.json or\
+        not 'title' in request.json or\
+        not 'ownerId' in request.json or\
+        not 'level' in request.json:
+        print(request.json)
+        abort(400)
+
+    return handleData(task.createTask(request.json))
 
 
 @app.route("/demand/<int:demand_id>/task/<int:task_id>", methods=['GET'])

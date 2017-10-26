@@ -78,3 +78,28 @@ def demandSearch(title):
                 print(result)
         finally:
             return result
+
+def createTask(task):
+        '''新建任务'''
+        try:
+            with db.cursor() as cursor:
+                sql = "SELECT title FROM task WHERE title=%s"
+                cursor.execute(sql, (task['title']))
+                result = cursor.fetchone()
+                if result == None:
+                    try:
+                        with db.cursor() as cursor:
+                            sql = "INSERT INTO task (ownerId, memberId, demandId, title, detail, level, status, startDate, endDate, progress, cost) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                            cursor.execute(sql, (task['ownerId'], task['memberId'], task['demandId'], task['title'], task['detail'],
+                                                 task['level'], task['status'], task['startDate'], task['endDate'],
+                                                 task['progress'], task['cost']))
+                            db.commit()
+                        with db.cursor() as cursor:
+                            sql = "SELECT * FROM task WHERE title=%s"
+                            cursor.execute(sql, (task['title']))
+                    finally:
+                        result = cursor.fetchone()
+                else:
+                    result = {'errMsg': 'Title already exists'}
+        finally:
+            return result

@@ -41,7 +41,7 @@
         <section class="example-section">
 
           <mat-form-field class="example-margin">
-            <mat-select placeholder="选择" (change)="targetChanged($event)" [value]="'demand'">
+            <mat-select placeholder="选择" (change)="targetChanged($event)" [value]="target">
               <mat-option *ngFor="let target of targets" [value]="target.value">{{target.name}}</mat-option>
             </mat-select>
           </mat-form-field>

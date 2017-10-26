@@ -24,7 +24,7 @@ export class CreateDemandComponent {
     {value: 'demand', name: '需求'},
     {value: 'task', name: '任务'}
   ];
-  target: any;
+  target: string = 'demand';
   status: string = 'active';
   level: string = 'normal';
   assign: number = 1;
@@ -34,7 +34,7 @@ export class CreateDemandComponent {
 
   demandSearchList: any[];
   showDemandList: boolean = false;
-
+  demandId: number;
   //some judge
   constructor(private fb: FormBuilder, private ref: ElementRef, private Renderer: Renderer2, private service: DemandService,
               public dialogRef: MatDialogRef<CreateDemandComponent>) {
@@ -60,6 +60,7 @@ export class CreateDemandComponent {
 
   onSubmit(pickerstart: any, pickerend: any) {
 
+    console.log(this.target)
     if(this.target === 'demand') {
 
       this.service.createDemand(this.assign, this.title.value, this.detail.value, this.level,
@@ -72,11 +73,19 @@ export class CreateDemandComponent {
 
     } else if (this.target === 'task') {
 
+      this.service.createTask(this.assign, this.demandId, this.title.value, this.detail.value, this.level,
+                                this.status, pickerstart.startAt, pickerend.startAt, Number(this.progress.value), Number(this.cost.value))
+        .then(res => {
+          if(res.message === 'ok') {
+            this.dialogRef.close(true)
+          }
+        }).catch(err => { console.log('err:', err) })
     }
   }
 
   //target value changed method
   targetChanged(target: any) {
+    this.target = target.value;
     let des = this.ref.nativeElement.querySelector('#Des');
     let asc = this.ref.nativeElement.querySelector('#Asc');
 
@@ -105,7 +114,8 @@ export class CreateDemandComponent {
   }
 
   chooseData(demand: any) {
-    console.log(demand)
+    console.log(demand.id);
+    this.demandId = demand.id
   }
 
 }
