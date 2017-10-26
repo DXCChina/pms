@@ -103,3 +103,20 @@ def createTask(task):
                     result = {'errMsg': 'Title already exists'}
         finally:
             return result
+
+
+def taskList(args):
+    '''任务列表查询'''
+    try:
+        with db.cursor() as cursor:
+            sql = "SELECT * FROM `task` WHERE `ownerId`=%s AND `memberId`=%s AND `demandId`=%s AND status!='delete'"
+            cursor.execute(sql, (args['ownerId'], args['memberId'], args['demandId']))
+            data = cursor.fetchall()
+
+        with db.cursor() as cursor:
+            sql = "SELECT * FROM `task` WHERE `ownerId`=%s AND `memberId`=%s  AND `demandId`=%s AND status!='delete'"
+            cursor.execute(sql, (args['ownerId'], args['memberId'], args['demandId']))
+            total = len(cursor.fetchall())
+
+    finally:
+        return {"data": data, "total": total}

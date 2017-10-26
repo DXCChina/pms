@@ -87,7 +87,7 @@ def demand_search(demand_title):
 
 # @app.route("/demand/<int:demand_id>/task", methods=['GET'])
 @app.route("/demand/list", methods=['GET'])
-def task_list():
+def demand_lists():
     '''获取需求任务列表
 
     GET /api/demand/list
@@ -98,6 +98,18 @@ def task_list():
         "total": task.demandList(request.args.to_dict())["total"]
     })
 
+@app.route("/task/list", methods=['GET'])
+def task_list():
+    '''获取任务列表
+
+    GET /api/task/list
+    # '''
+    print(request.args.to_dict())
+    return jsonify({
+        "message": "ok",
+        "data": task.taskList(request.args.to_dict())["data"],
+        "total": task.taskList(request.args.to_dict())["total"]
+    })
 
 # @app.route("/demand/<int:demand_id>/task", methods=['POST'])
 @app.route("/demand/task", methods=['POST'])
