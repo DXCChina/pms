@@ -4,7 +4,7 @@ import {RequestOptions, Response , Headers} from '@angular/http';
 
 @Injectable()
 export class GlobalState {
-  baseURL: string = 'http://cloud.testwa.com/testwa';
+  baseURL: string = 'http://localhost:81';
   jwtHeader: string = 'X-TOKEN';
   jwtRefreshCode: number = -5;
   headers = new Headers({'Content-Type': 'application/json'});
