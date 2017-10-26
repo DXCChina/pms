@@ -103,7 +103,9 @@ export class DemandManageComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result){
         this.getDemandList();
-        // this.getTaskList(this.)
+        if (this.selectId) {
+          this.getTaskList(this.selectId)
+        }
       }
     })
   }

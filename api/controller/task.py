@@ -60,11 +60,6 @@ def demand_update():
             (item['status'], item['level'], item['endDate'],item['title'], item['detail'], item['progress'], item['cost'], item['id'])
         )
 
-    # params = []
-    # for item in request.json["data"]:
-    #     params.append(
-    #         (item['ownerId'],item['level'],item['title'])
-    #     )
     return task.updateDemands(tuple(params))
 
 

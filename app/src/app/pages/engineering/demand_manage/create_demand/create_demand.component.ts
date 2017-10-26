@@ -60,7 +60,6 @@ export class CreateDemandComponent {
 
   onSubmit(pickerstart: any, pickerend: any) {
 
-    console.log(this.target)
     if(this.target === 'demand') {
 
       this.service.createDemand(this.assign, this.title.value, this.detail.value, this.level,
@@ -78,6 +77,8 @@ export class CreateDemandComponent {
         .then(res => {
           if(res.message === 'ok') {
             this.dialogRef.close(true)
+          } else {
+            alert('任务名重复！')
           }
         }).catch(err => { console.log('err:', err) })
     }
