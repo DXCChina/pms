@@ -171,4 +171,10 @@ export class DemandManageComponent implements OnInit {
     this.updateTask(detail);
   }
 
+  deleteTask(task: any) {
+    task.status = 'delete';
+    this.updateTask(task);
+    this.getTaskList(this.selectId);
+  }
+
 }
