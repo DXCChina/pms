@@ -57,8 +57,7 @@ export class Register {
 
     this.service.register(this.name.value, this.password.value, this.email.value)
       .then(res => {
-        console.log(res)
-        if(res.code === 0){
+        if(res.id !== ''){
           this.router.navigate(['/login']);
         }else {
           this.toasterService.pop('error', res.message , '注册失败');

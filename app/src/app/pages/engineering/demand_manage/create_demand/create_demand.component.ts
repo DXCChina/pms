@@ -107,7 +107,6 @@ export class CreateDemandComponent {
       .then(res => {
         this.demandSearchList = res.data;
         res.data.length > 0 ? this.showDemandList = true : this.showDemandList = false;
-        console.log(this.demandSearchList);
       }).catch(err => { console.log(err)} )
     } else {
       this.showDemandList = false;

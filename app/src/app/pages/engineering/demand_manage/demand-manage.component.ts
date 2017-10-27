@@ -153,7 +153,6 @@ export class DemandManageComponent implements OnInit {
     this.service.getTaskList(demandId)
       .then(res => {
         this.taskList = res.data
-        console.log(this.taskList)
     }).catch(err => { console.log(err) })
   }
 

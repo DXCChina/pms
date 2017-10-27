@@ -10,7 +10,7 @@ export class LoginService {
   constructor(private http: Http, private global: GlobalState) {}
 
   login(username: string, password: string): Promise<any> {
-    let url = `${this.global.baseURL}/auth/login`;
+    let url = `${this.global.baseURL}/api/login`;
     let body = {
       username: username,
       password: password
