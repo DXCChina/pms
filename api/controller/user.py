@@ -139,12 +139,12 @@ def user_update():
         # data.pop('email', None)
         pass
     elif user.findOneByEmail(data['email']):
-        return jsonify({"msg": {'email': '邮箱已存在'}}), 400
+        return jsonify({"msg": ('email', '邮箱已存在')}), 400
     if current_user['username'] == data['username']:
         # data.pop('username', None)
         pass
     elif user.findOneByName(data['username']):
-        return jsonify({"msg": {'username': '用户名已存在'}}), 400
+        return jsonify({"msg": ('username', '用户名已存在')}), 400
     data.pop('password', None)
     data['id'] = get_jwt_identity()
     user.update(data)

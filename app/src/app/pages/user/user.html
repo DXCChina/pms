@@ -1,0 +1,16 @@
+<div id="content">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div id="UserPart">
+      <div id="re-Email" class="baseline">
+        <label for="">邮 箱:</label>
+        <input type="email" [formControl]="email" [value]="email" id="emailInput" placeholder="邮箱" />
+      </div>
+      <div id="re-Name" class="baseline">
+        <label for="">用户名:</label>
+        <input type="text" [formControl]="name" [value]="name" id="nameInput" placeholder="用户名" />
+      </div>
+      <button [disabled]="!form.valid" type="submit" id="re-user">更新</button>
+    </div>
+  </form>
+</div>
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>

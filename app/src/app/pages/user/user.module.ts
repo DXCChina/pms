@@ -1,21 +1,18 @@
-import {NgModule} from "@angular/core";
-import {CommonModule} from "@angular/common";
-import {UserComponent} from "./user.component";
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {routing} from "./user.routing";
-
+import {User} from "./user.component";
+import {ToasterModule} from "angular2-toaster";
 
 @NgModule({
   imports: [
-    CommonModule,
-    routing
+    ReactiveFormsModule,
+    FormsModule,
+    routing,
+    ToasterModule,
   ],
   declarations: [
-    UserComponent
-  ],
-  entryComponents:[
-
+    User
   ]
 })
-export class UserModule {
-
-}
+export class UserModule {}
