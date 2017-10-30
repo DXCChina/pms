@@ -6,9 +6,11 @@ setup(
     include_package_data=True,
     install_requires=[
         'flask',
+        'flask-jwt-extended',
+        'peewee',
+        'marshmallow',
         'PyMySQL',
         'passlib',
-        'marshmallow',
-        'flask-jwt-extended',
+        'argon2_cffi',
     ],
 )
