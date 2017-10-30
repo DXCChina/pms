@@ -118,8 +118,6 @@ def user_info():
     * 或 Cookie:access_token_cookie(默认)
 
     '''
-    print('jwt', get_jwt_identity(), get_jwt_claims())
-    print('session', session['user_id'])
     return jsonify(get_jwt_claims())
 
 
