@@ -25,12 +25,8 @@ def update_project(project_id, request):
             cursor.execute(sql, (str(request['name']), str(request['detail']), int(request['ownerId']), str(request['status']), project_id))
 
         db.commit()
-        with db.cursor() as cursor:
-            sql = "SELECT * FROM project WHERE id=%s"
-            cursor.execute(sql, (project_id))
-            result = cursor.fetchone()
     finally:
-        return result
+        return find_project(project_id)
 
 def find_users():
     '''查询所有用户列表'''
