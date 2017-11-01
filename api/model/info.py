@@ -8,7 +8,6 @@ from model.db import db
 from flask import session, make_response, jsonify
 import time
 
-
 STATUS = 'active'
 
 
@@ -28,28 +27,17 @@ def project_add(project):
 
     try:
         with db.cursor() as cursor:
+            sql = "INSERT INTO project (name,detail,ownerId,status) VALUE (%s, %s, %s, %s)"
+            cursor.execute(
+                sql, (project['name'], project['detail'], owner_id, STATUS))
+            db.commit()
+
+        with db.cursor() as cursor:
             sql = "SELECT * FROM project WHERE name=%s"
-            cursor.execute(sql, project['name'])
-            project_exist = cursor.fetchall()
-
-        if project_exist:
-            result = {'msg': '项目名称重复'}
-            res_msg = make_response(jsonify(message="success", data=result, status=200), 200)
-
-        else:
-            with db.cursor() as cursor:
-                sql = "INSERT INTO project (name,detail,ownerId,status) VALUE (%s, %s, %s, %s)"
-                cursor.execute(sql, (project['name'], project['detail'], owner_id, STATUS))
-                db.commit()
-
-            with db.cursor() as cursor:
-                sql = "SELECT * FROM project WHERE name=%s"
-                cursor.execute(sql, (project['name']))
-                result = cursor.fetchone()
-
-            res_msg = make_response(jsonify(message="success", data=result, status=201), 201)
+            cursor.execute(sql, (project['name']))
+            result = cursor.fetchone()
     finally:
-       return res_msg
+        return result
 
 
 def task_list():
@@ -61,3 +49,11 @@ def task_list():
             result = cursor.fetchall()
     finally:
         return result
+
+
+def find_one_project_by_name(name):
+    with db.cursor() as cursor:
+        sql = "SELECT * FROM project WHERE name=%s"
+        cursor.execute(sql, (name))
+        result = cursor.fetchone()
+    return result
