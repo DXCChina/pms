@@ -12,12 +12,21 @@ STATUS = 'active'
 
 
 def project_list():
+    print("project list get model")
     try:
         with db.cursor() as cursor:
             sql = "SELECT * FROM project"
             cursor.execute(sql)
-            result = cursor.fetchall()
+            data = cursor.fetchall()
+        with db.cursor() as cursor:
+            sql = "SELECT count(id) AS toatal From project"
+            cursor.execute(sql)
+            total = cursor.fetchone()
     finally:
+        result = dict()
+        result["data"] = data
+        result["total"] = total["toatal"]
+
         return result
 
 
@@ -46,8 +55,15 @@ def task_list():
             sql = "SELECT t.id, t.title, t.detail, t.status,t.level,u.username AS ownerName, m.username AS memberName,t.createAt FROM task t " \
                   "LEFT JOIN user u ON  t.ownerId=u.id LEFT JOIN user m ON  t.memberId=m.id"
             cursor.execute(sql)
-            result = cursor.fetchall()
+            data = cursor.fetchall()
+        with db.cursor() as cursor:
+            sql = "SELECT count(id) AS toatal From task"
+            cursor.execute(sql)
+            total = cursor.fetchone()
     finally:
+        result = dict()
+        result["data"] = data
+        result["total"] = total["toatal"]
         return result
 
 

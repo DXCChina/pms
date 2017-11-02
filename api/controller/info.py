@@ -27,6 +27,7 @@ def project_list():
     GET /api/project
     '''
     # return make_response(jsonify(message="success", data=info.project_list(), status=200), 200)
+    print("project list get")
     return jsonify(info.project_list())
 
 
@@ -46,7 +47,7 @@ def project_add():
     if errors:
         return jsonify({"msg": errors}), 400
     if info.find_one_project_by_name(data["name"]):
-        return jsonify({"msg": "项目名称重复"}), 400
+        return jsonify({"msg": "项目名称重复"}), 200
 
     return jsonify(info.project_add(data)), 201
 
