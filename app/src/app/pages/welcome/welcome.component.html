@@ -16,7 +16,7 @@
               p-id="5388">
             </path>
           </svg>
-          <p class="count-pro">1</p>
+          <p class="count-pro">{{projects?.total}}</p>
         </div>
         <p>PERSONAL PROJECTS</p>
 
@@ -38,9 +38,9 @@
               p-id="2431">
             </path>
           </svg>
-          <p class="count-dev">1</p>
+          <p class="count-dev">{{taskList?.total}}</p>
         </div>
-        <p>PERSONAL DEMAND</p>
+        <p>PERSONAL TASK</p>
       </div>
       <div class="col-lg-2 col-md-1 col-sm-1"></div>
     </div>
@@ -63,17 +63,16 @@
       </svg>
       <p>参与项目</p>
     </div>
-    <!--<history-project [projects]="projects" [style.width]="'100%'"></history-project>-->
     <div [style.width]="'100%'">
       <ul>
-        <li *ngFor="let project of projects" class="proItem">
-          <div class="proItem-Content">
+        <li *ngFor="let project of projects.data" class="proItem">
+          <div class="proItem-Content" (click)="getProject()">
             <h3>{{project?.name}}</h3>
             <p>{{project?.detail}}</p>
           </div>
         </li>
 
-        <li class="proItem" *ngIf="projects?.length > 6" routerLink="/pages/resource/projectMan">
+        <li class="proItem" *ngIf="projects?.total > 6" routerLink="/pages/resource/projectMan">
           <div class="proItem-Content">
             <h3>更多项目</h3>
             <p> ... </p>
@@ -117,7 +116,7 @@
     <div>
       <ngx-datatable
         class="material"
-        [rows]="taskList"
+        [rows]="taskList.data"
         [columnMode]="'force'"
         [headerHeight]="50"
         [footerHeight]="50"
