@@ -4,6 +4,7 @@ API入口
 
 不包含任何业务逻辑
 '''
+from datetime import timedelta
 from os import environ
 from flask import Flask, jsonify
 from flask_jwt_extended import (JWTManager)
@@ -19,8 +20,9 @@ app.config['JWT_SESSION_COOKIE'] = False  # 不使用临时 Cookie
 app.config['JWT_ACCESS_COOKIE_PATH'] = '/api/'
 app.config['JWT_COOKIE_CSRF_PROTECT'] = False  # 开发环境临时禁用
 app.config['JWT_COOKIE_SECURE'] = False  # 开发环境临时禁用
+app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=7)  # Token 过期时间
 
-jwt = JWTManager(app) # pylint:disable=c0103
+jwt = JWTManager(app)  # pylint:disable=c0103
 
 
 @jwt.user_identity_loader
