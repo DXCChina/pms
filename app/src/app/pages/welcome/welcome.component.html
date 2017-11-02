@@ -66,7 +66,7 @@
     <div [style.width]="'100%'">
       <ul>
         <li *ngFor="let project of projects.data" class="proItem">
-          <div class="proItem-Content" (click)="getProject()">
+          <div class="proItem-Content" (click)="getProject(project?.id)">
             <h3>{{project?.name}}</h3>
             <p>{{project?.detail}}</p>
           </div>
