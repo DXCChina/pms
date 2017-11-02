@@ -57,8 +57,9 @@ export class WelcomeComponent implements OnInit {
       });
   }
 
-  getProject() {
-    this.router.navigate(["/dashboard"])
+  getProject(projectId) {
+    this.router.navigate(["/pages/project/dashboard"]);
+    sessionStorage.setItem("projectId", projectId);
   }
 }
 
