@@ -1,0 +1,26 @@
+<div class="transfer-container">
+  <mat-card>
+    <div class="tranfer-card-title">已选成员
+      <strong>{{selectList.selectedOptions.selected.length}}/{{selectedName?.length}}</strong>
+    </div>
+    <mat-selection-list #selectList>
+      <mat-list-option *ngFor="let sOpt of selectedName" [value] = "sOpt.id">
+        {{sOpt?.name}}
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-card>
+  <div class="transfer-btn">
+    <button mat-mini-fab color="primary" (click)="deleteOpt()">></button>
+    <button mat-mini-fab color="primary" (click)="addOpt()"><</button>
+  </div>
+  <mat-card>
+    <div class="tranfer-card-title">可选成员
+      <strong>{{allList.selectedOptions.selected.length}}/{{addName?.length}}</strong>
+    </div>
+    <mat-selection-list #allList>
+      <mat-list-option *ngFor="let aOpt of addName" value = "{{aOpt.id}}">
+        {{aOpt?.name}}
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-card>
+</div>

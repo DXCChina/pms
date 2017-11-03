@@ -1,35 +1,65 @@
 <div class="dashboard-main">
-
-  <div class="row content-Title" >
-    <svg t="1504607519252" class="icon" fill="#4d4d4d" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5387" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20">
-      <defs>
-        <style type="text/css"></style>
-      </defs>
-      <path d="M571.733 322.56H196.267a15.296 15.296 0 0 1-15.36-15.36v-5.12c0-8.533 6.826-15.36 15.36-15.36h375.466c8.534 0 15.36 6.827 15.36 15.36v5.12c0 8.533-6.826 15.36-15.36 15.36zM628.053 303.787a18.773 18.773 0 1 0 37.547 0 18.773 18.773 0 1 0-37.547 0z m46.08-134.827h-486.4c-63.146 0-116.053 51.2-116.053 116.053v592.214c0 63.146 51.2 116.053 116.053 116.053h486.4c63.147 0 116.054-51.2 116.054-116.053V285.013c0-64.853-52.907-116.053-116.054-116.053z m-486.4 58.027h486.4c32.427 0 58.027 25.6 58.027 58.026v75.094H131.413v-75.094c0-32.426 25.6-58.026 56.32-58.026z m486.4 708.266h-486.4c-32.426 0-58.026-25.6-58.026-58.026V409.6h600.746v467.627c0 32.426-25.6 58.026-56.32 58.026zM834.56 30.72h-486.4c-63.147 0-116.053 51.2-116.053 116.053v22.187h58.026v-22.187c0-32.426 25.6-58.026 58.027-58.026h486.4c32.427 0 58.027 25.6 58.027 58.026v592.214c0 32.426-25.6 58.026-58.027 58.026h-46.08v58.027h46.08c63.147 0 116.053-51.2 116.053-116.053V146.773c0-64.853-51.2-116.053-116.053-116.053z" p-id="5388">
+  <div class="wa-title">
+    <svg fill="#757575" height="36" viewBox="0 0 24 24" width="36" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"
+      />
+    </svg>
+    <div class="wa-title-info">
+      <div>
+        <h3>{{projectDetail?.name}}</h3>
+        <p mat-line>{{projectDetail?.createAt | date: 'yyyy-MM-dd'}}</p>
+      </div>
+      <mat-chip-list class="wa-titleChips">
+        <mat-chip>{{projectDetail?.status}}</mat-chip>
+      </mat-chip-list>
+    </div>
+  </div>
+  <hr />
+  <div class="row content-Title">
+    <svg t="1504607519252" class="icon" fill="#4d4d4d" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+      p-id="5387" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20">
+      <path d="M571.733 322.56H196.267a15.296 15.296 0 0 1-15.36-15.36v-5.12c0-8.533 6.826-15.36 15.36-15.36h375.466c8.534 0 15.36 6.827 15.36 15.36v5.12c0 8.533-6.826 15.36-15.36 15.36zM628.053 303.787a18.773 18.773 0 1 0 37.547 0 18.773 18.773 0 1 0-37.547 0z m46.08-134.827h-486.4c-63.146 0-116.053 51.2-116.053 116.053v592.214c0 63.146 51.2 116.053 116.053 116.053h486.4c63.147 0 116.054-51.2 116.054-116.053V285.013c0-64.853-52.907-116.053-116.054-116.053z m-486.4 58.027h486.4c32.427 0 58.027 25.6 58.027 58.026v75.094H131.413v-75.094c0-32.426 25.6-58.026 56.32-58.026z m486.4 708.266h-486.4c-32.426 0-58.026-25.6-58.026-58.026V409.6h600.746v467.627c0 32.426-25.6 58.026-56.32 58.026zM834.56 30.72h-486.4c-63.147 0-116.053 51.2-116.053 116.053v22.187h58.026v-22.187c0-32.426 25.6-58.026 58.027-58.026h486.4c32.427 0 58.027 25.6 58.027 58.026v592.214c0 32.426-25.6 58.026-58.027 58.026h-46.08v58.027h46.08c63.147 0 116.053-51.2 116.053-116.053V146.773c0-64.853-51.2-116.053-116.053-116.053z"
+        p-id="5388">
       </path>
     </svg>
-    <p>快速部署</p>
+    <p>项目信息</p>
   </div>
+  <div class="row" style="padding: 0 40px">
+    <form style="width: 60%; margin: 0 auto;">
+      <mat-form-field style="width: 100%">
+        <input [(ngModel)]="detailData.name" [formControl]="formControl" matInput placeholder="项目名称">
+        <mat-error *ngIf="formControl.hasError('required')">
+          项目名称是
+          <strong>必填的</strong>
+        </mat-error>
+      </mat-form-field>
+      <br>
+      <mat-form-field style="width: 100%">
+        <textarea matInput placeholder="项目详情">{{detailData.detail}}</textarea>
+      </mat-form-field>
 
-  {{projectDetail}}
-
-  <hr />
+      <br>
+      <div style="margin: 12px auto;display: table;">
+        <button mat-button color="primary" (click)="cancelProject()" style="margin-right: 100px;">撤回</button>
+        <button mat-button color="primary" (click)="updateProject()">修改</button>
+      </div>
+    </form>
+  </div>
 
   <div class="row content-Title">
     <svg fill="#4d4d4d" height="20" class="svg_icon" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg">
-      <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"/>
-      <path d="M0 0h24v24H0z" fill="none"/>
-      <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z"/>
+      <path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z"
+      />
+      <path d="M0 0h24v24H0z" fill="none" />
+      <path d="M12.5 7H11v6l5.25 3.15.75-1.23-4.5-2.67z" />
     </svg>
-    <p>任务统计</p>
+    <p>项目人员管理</p>
   </div>
-
   <div class="row" style="padding: 0 40px">
-    <div class="row" style="width: 100%">
-      {{projectUser}}
+    <div class="content-transfer" style="width: 60%;margin: 0 auto;">
+      <transfer-component [selectedIdArr]="userData" [allOpt]="userlist" (changeOpt)="changeUser($event)"></transfer-component>
     </div>
   </div>
-
 </div>
-
-<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+<!-- <toaster-container [toasterconfig]="toasterconfig"></toaster-container> -->
