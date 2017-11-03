@@ -10,26 +10,38 @@ def createDemand(demand):
     '''新建需求'''
     try:
         with db.cursor() as cursor:
-            sql = "SELECT title FROM demand WHERE title=%s"
+            sql = "INSERT INTO demand (ownerId, projectId, title, detail, level, status, startDate, endDate, progress, cost) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+            cursor.execute(sql, (demand['ownerId'], demand['projectId'], demand['title'], demand['detail'],
+                                 demand['level'], demand['status'], demand['startDate'], demand['endDate'],
+                                 demand['progress'], demand['cost'],))
+            db.commit()
+        with db.cursor() as cursor:
+            sql = "SELECT * FROM demand WHERE title=%s"
             cursor.execute(sql, (demand['title']))
             result = cursor.fetchone()
-            if result == None:
-               try:
-                    with db.cursor() as cursor:
-                        sql = "INSERT INTO demand (ownerId, projectId, title, detail, level, status, startDate, endDate, progress, cost) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-                        cursor.execute(sql, (demand['ownerId'], demand['projectId'], demand['title'], demand['detail'],
-                                            demand['level'], demand['status'], demand['startDate'], demand['endDate'],
-                                            demand['progress'], demand['cost'],))
-                        db.commit()
-                    with db.cursor() as cursor:
-                        sql = "SELECT * FROM demand WHERE title=%s"
-                        cursor.execute(sql, (demand['title']))
-               finally:
-                   result = cursor.fetchone()
-            else:
-                result = {'errMsg': 'Title already exists'}
     finally:
         return result
+
+def findDemandTitle(title):
+    '''查询需求标题'''
+    try:
+        with db.cursor() as cursor:
+            sql = "SELECT * FROM `demand` WHERE `title`=%s"
+            cursor.execute(sql, (title))
+            result = cursor.fetchone()
+    finally:
+        return result
+
+def findMember(projectId):
+    '''按照项目ID查询成员'''
+    try:
+        with db.cursor() as cursor:
+            sql = "SELECT u.name, p.memberId FROM `projectmember` as p LEFT JOIN `user` as u ON p.memberId = u.id WHERE p.projectId=%s"
+            cursor.execute(sql, (projectId))
+            result = cursor.fetchone()
+    finally:
+        return result
+
 
 def demandList(args):
         '''获取需求列表'''
@@ -71,10 +83,9 @@ def demandSearch(title):
         '''模糊查询需求'''
         try:
             with db.cursor() as cursor:
-                sql = "SELECT * FROM demand WHERE `title` LIKE %s"
+                sql = "SELECT * FROM demand WHERE `status`!='delete' AND `title` LIKE %s"
                 cursor.execute(sql, ('%'+title+'%'))
                 result = cursor.fetchall()
-                print(result)
         finally:
             return result
 

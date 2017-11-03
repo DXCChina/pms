@@ -14,6 +14,33 @@ from marshmallow import Schema, fields
 
 app = Blueprint('task', __name__, url_prefix='/api')  # pylint: disable=c0103
 
+class DemandSchema(Schema):
+    '''注册信息'''
+    ownerId = fields.Number(required=True)
+    projectId = fields.Number(required=True)
+    progress = fields.Number(required=True)
+    cost = fields.Number(required=True)
+    title = fields.String(required=True)
+    detail = fields.String(required=True)
+    level = fields.String(required=True)
+    status = fields.String(required=True)
+    startDate = fields.String(required=True)
+    endDate = fields.String(required=True)
+
+class TaskSchema(Schema):
+    '''注册信息'''
+    ownerId = fields.Number(required=True)
+    memberId = fields.Number(required=True)
+    demandId = fields.Number(required=True)
+    progress = fields.Number(required=True)
+    cost = fields.Number(required=True)
+    title = fields.String(required=True)
+    detail = fields.String(required=True)
+    level = fields.String(required=True)
+    status = fields.String(required=True)
+    startDate = fields.String(required=True)
+    endDate = fields.String(required=True)
+
 @app.route("/project/<int:project_id>/demand", methods=['GET'])
 @fresh_jwt_required
 def demand_list(project_id):
@@ -32,12 +59,21 @@ def demand_add():
 
     POST /api/project/demand
     '''
-    if not request.json or\
-        not 'title' in request.json or\
-        not 'ownerId' in request.json or\
-        not 'level' in request.json:
-        print(request.json)
-        abort(400)
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+    schema = DemandSchema()
+    data, errors = schema.load(request.json)
+    if errors:
+        return jsonify({"msg": errors}), 400
+    if task.findDemandTitle(data['title']):
+        return jsonify({"msg": {'title': '主题已存在'}}), 400
+
+    # if not request.json or\
+    #     not 'title' in request.json or\
+    #     not 'ownerId' in request.json or\
+    #     not 'level' in request.json:
+    #     print(request.json)
+    #     abort(400)
 
     return handleData(task.createDemand(request.json))
 
@@ -172,16 +208,16 @@ def task_update(demand_id, task_id):
 def handleData(data):
     res = {
         "message": "",
-        "data": {}
+        "data": data
     }
-    if data == None:
-        res["message"] = "Missing data"
-        res["data"] = {}
-    elif 'errMsg' in data:
-        res['message'] = data['errMsg']
-        res["data"] = {}
-    else:
-        res["message"] = "ok"
-        res["data"] = data
+    # if data == None:
+    #     res["message"] = "Missing data"
+    #     res["data"] = {}
+    # elif 'errMsg' in data:
+    #     res['message'] = data['errMsg']
+    #     res["data"] = {}
+    # else:
+    #     res["message"] = "ok"
+    #     res["data"] = data
 
     return jsonify(res)
