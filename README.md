@@ -90,7 +90,12 @@
     [http://localhost:81/api](http://localhost:81/api)
     * APP:[http://localhost:4200](http://localhost:4200)
     * API:[http://localhost:5000/api](http://localhost:5000/api)
-6. 问题解决
+6. 测试
+    * [python 单元测试](https://hypothesis.readthedocs.io/en/master/quickstart.html)
+    * [angular 单元测试](https://angular.cn/guide/testing)
+    * [flask 应用测试](http://flask.pocoo.org/docs/dev/testing/)
+    * [angular 端对端测试](http://www.protractortest.org/#/tutorial)
+7. 问题解决
     * pip install报编码错误:
         * 修改字符编码为utf-8:`chcp 65001`
         * 修改字符编码为gbk:`chcp 936`

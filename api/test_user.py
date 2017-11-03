@@ -12,8 +12,5 @@ def test_get_user():
 
 @given(integers(), integers())
 @example(1, 2)
-def test_ints_are_commutative(x, y):
-    assert  user.findOneByName('test')['username'] == 'test'
-
-
-
+def test_find_one_by_user(x, y):
+    assert user.findOneByName('test')['username'] == 'test'
