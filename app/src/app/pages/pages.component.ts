@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { Routes } from '@angular/router';
+import { Router } from '@angular/router';
+import { PagesService } from "./pages.service";
 
 import { BaMenuService } from '../theme';
 
@@ -10,14 +11,27 @@ import { BaMenuService } from '../theme';
     <div class="wa-main">
         <router-outlet></router-outlet>
     </div>
-    `
+    `,
+  providers: [PagesService]
 })
 export class Pages {
-
-  constructor(private _menuService: BaMenuService) {
+  public user: any;
+  constructor(private router: Router, private service: PagesService) {
   }
+
 
   ngOnInit() {
-
+    this.service.user_info()
+      .then(res => {
+        if (res.id !== '') {
+          this.user = res;
+        } else {
+          this.router.navigate(['/login']);
+        }
+      }).catch(err => {
+        console.log(err)
+        this.router.navigate(['/login']);
+      })
   }
+
 }

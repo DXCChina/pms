@@ -14,21 +14,23 @@
 
         <input [formControl]="name" type="text" name="" id="usInput"  placeholder="请输入用户名"/>
         <span class="us-Img"></span>
-
+        <span *ngIf="name.invalid && name.touched" class="help-block sub-little-text">用户名不能少于四位</span>
+        
       </div>
 
       <div id="pw" class="baseline" [ngClass]="{'has-error': (!password.valid && password.touched), 'has-success': (password.valid && password.touched)}">
 
         <input [formControl]="password" type="password" name="" id="pwInput" value="" placeholder="请输入密码"/>
         <span class="pw-Img"></span>
-
+        <span *ngIf="password.invalid && password.touched" class="help-block sub-little-text">密码不能少于四位</span>
+        
       </div>
 
     <div class="handle">
       <button [disabled]="!form.valid" type="submit"  id="login">登录</button>
       <a id="register" routerLink="/register" >注册</a>
-      <a class="lost" href="javascript:;">忘记密码</a>
-      <a class="find" href="javascript:;">点击找回</a>
+      <!-- <a class="lost" href="javascript:;">忘记密码</a>
+      <a class="find" href="javascript:;">点击找回</a> -->
     </div>
 
     </form>

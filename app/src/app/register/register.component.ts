@@ -60,10 +60,11 @@ export class Register {
         if(res.id !== ''){
           this.router.navigate(['/login']);
         }else {
-          this.toasterService.pop('error', res.message , '注册失败');
+          this.toasterService.pop('error', res.msg[1] , '注册失败');
         }
       }, err => {
         console.log(err)
+        this.toasterService.pop('error', JSON.parse(err._body).msg[1] , '注册失败');
       })
   }
 
