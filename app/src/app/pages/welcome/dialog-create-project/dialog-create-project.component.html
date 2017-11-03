@@ -2,19 +2,21 @@
   <div>
     <h1>创建项目</h1>
   </div>
-  <form class="project-form" [formGroup]="projectForm" (ngSubmit)="onSubmit(projectForm.value)">
-    <mat-form-field class="">
-      <input matInput placeholder="项目名称" formControlName="name">
-    </mat-form-field>
-
-    <mat-form-field class="">
-      <input matInput placeholder="项目描述" formControlName="detail">
-    </mat-form-field>
-
-    <div class="handle">
-      <span style="color: red">{{errorMessage}}</span>
-      <button mat-button (click)="closeDialog()">取消</button>
-      <button mat-button [disabled]="!projectForm.valid" type="submit">创建</button>
-    </div>
-  </form>
+  <div class="project-new-form">
+    <form  [formGroup]="projectForm" (ngSubmit)="onSubmit(projectForm.value)">
+      <mat-form-field class="">
+        <input matInput placeholder="项目名称" formControlName="name">
+      </mat-form-field>
+    
+      <mat-form-field class="">
+        <input matInput placeholder="项目描述" formControlName="detail">
+      </mat-form-field>
+    
+      <div class="handle">
+        <span style="color: red">{{errorMessage}}</span>
+        <button mat-button (click)="closeDialog()">取消</button>
+        <button mat-button [disabled]="!projectForm.valid" type="submit">创建</button>
+      </div>
+    </form>
+  </div>
 </div>

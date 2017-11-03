@@ -21,7 +21,7 @@ export class DialogCreateProjectComponent implements OnInit {
     this.projectForm = this.fb.group({
       'name': ['', Validators.compose([Validators.required])],
       'detail': ['', Validators.compose([])]
-    })
+    });
   }
 
   ngOnInit() {
@@ -30,15 +30,15 @@ export class DialogCreateProjectComponent implements OnInit {
   onSubmit(event: any) {
     this._service.newProject(this.projectForm.value)
       .then(res=>{
-        if(res.status == 201){
+        if(res.status == 'active') {
           this.dialogRef.close();
-        }else if(res.status == 200){
-          this.errorMessage = res.data.msg;
+        }else {
+          this.errorMessage = res.msg;
         }
-      })
+      });
   }
 
-  closeDialog(){
+  closeDialog() {
     this.dialogRef.close();
   }
 }
