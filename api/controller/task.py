@@ -162,12 +162,19 @@ def task_add():
 
     POST /api/demand/task
     '''
-    if not request.json or\
-        not 'title' in request.json or\
-        not 'ownerId' in request.json or\
-        not 'level' in request.json:
-        print(request.json)
-        abort(400)
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+    schema = TaskSchema()
+    data, errors = schema.load(request.json)
+    if errors:
+        return jsonify({"msg": errors}), 400
+
+    # if not request.json or\
+    #     not 'title' in request.json or\
+    #     not 'ownerId' in request.json or\
+    #     not 'level' in request.json:
+    #     print(request.json)
+    #     abort(400)
 
     return handleData(task.createTask(request.json))
 
@@ -208,16 +215,16 @@ def task_update(demand_id, task_id):
 def handleData(data):
     res = {
         "message": "",
-        "data": data
+        "data": {}
     }
-    # if data == None:
-    #     res["message"] = "Missing data"
-    #     res["data"] = {}
-    # elif 'errMsg' in data:
-    #     res['message'] = data['errMsg']
-    #     res["data"] = {}
-    # else:
-    #     res["message"] = "ok"
-    #     res["data"] = data
+    if data == None:
+        res["message"] = "Missing data"
+        res["data"] = {}
+    elif 'errMsg' in data:
+        res['message'] = data['errMsg']
+        res["data"] = {}
+    else:
+        res["message"] = "ok"
+        res["data"] = data
 
     return jsonify(res)
