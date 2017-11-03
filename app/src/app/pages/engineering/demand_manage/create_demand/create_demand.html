@@ -48,7 +48,7 @@
 
           <mat-form-field class="example-margin">
 
-            <mat-select placeholder="状态" [value]="status">
+            <mat-select placeholder="状态" [(value)]="status">
               <mat-option [value]="'active'">Active(进行中)</mat-option>
               <mat-option [value]="'test'">Testing(测试中)</mat-option>
               <mat-option [value]="'fix'">Fixing(修复中)</mat-option>
@@ -58,7 +58,7 @@
           </mat-form-field>
           <mat-form-field class="example-margin">
 
-            <mat-select placeholder="优先级" [value]="level">
+            <mat-select placeholder="优先级" [(value)]="level">
               <mat-option [value]="'low'">Low</mat-option>
               <mat-option [value]="'normal'">Normal</mat-option>
               <mat-option [value]="'high'">High</mat-option>
@@ -67,9 +67,9 @@
           </mat-form-field>
           <mat-form-field class="example-margin">
 
-            <mat-select placeholder="指派给" [value]="assign" >
-              <mat-option *ngFor="let custom of assignCustom" [value]="custom.userId">
-                {{custom.userName}}
+            <mat-select placeholder="指派给" [(value)]="assign">
+              <mat-option *ngFor="let custom of assignCustom" [value]="custom.memberId">
+                {{custom.username}}
               </mat-option>
             </mat-select>
 
