@@ -172,7 +172,7 @@ def change_password():
     if argon2.verify(data['old_password'], account['password']):
         user.change_password(get_jwt_identity(),
                              argon2.hash(data['new_password']))
-        return ''
+        return jsonify({"OK": "OK"})
     else:
         return jsonify({"msg": "密码错误"}), 403
 

@@ -17,12 +17,17 @@ export class UserService {
       .then(this.Global.extractData)
       .catch(this.Global.handleError)
   }
-  user_update(username: string, email: string): Promise<any> {
-    let body = {username, email};
+  user_update(body): Promise<any> {
     return this.http.put(this.UserUrl, body)
       .toPromise()
       .then(this.Global.extractData)
       .catch(this.Global.handleError)
   }
-
+  change_password(body): Promise<any> {
+    console.log(body)
+    return this.http.put(this.Global.baseURL + '/api/password', body)
+      .toPromise()
+      .then(this.Global.extractData)
+      .catch(this.Global.handleError)
+  }
 }
