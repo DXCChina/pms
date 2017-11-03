@@ -67,9 +67,9 @@ def reg():
     if errors:
         return jsonify({"msg": errors}), 400
     if user.findOneByEmail(data['email']):
-        return jsonify({"msg": {'email': '邮箱已存在'}}), 400
+        return jsonify({"msg": ('email', '邮箱已存在')}), 400
     if user.findOneByName(data['username']):
-        return jsonify({"msg": {'username': '用户名已存在'}}), 400
+        return jsonify({"msg": ('username', '用户名已存在')}), 400
     data['password'] = argon2.hash(data['password'])
     user.save(data)
     data = user.findOneByName(data['username'])
