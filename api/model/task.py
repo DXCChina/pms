@@ -34,11 +34,12 @@ def findDemandTitle(title):
 
 def findMember(projectId):
     '''按照项目ID查询成员'''
+    print(projectId)
     try:
         with db.cursor() as cursor:
-            sql = "SELECT u.name, p.memberId FROM `projectmember` as p LEFT JOIN `user` as u ON p.memberId = u.id WHERE p.projectId=%s"
+            sql = "SELECT u.username, p.memberId FROM `projectmember` as p LEFT JOIN `user` as u ON p.memberId = u.id WHERE p.projectId=%s"
             cursor.execute(sql, (projectId))
-            result = cursor.fetchone()
+            result = cursor.fetchall()
     finally:
         return result
 

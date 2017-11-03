@@ -178,6 +178,26 @@ def task_add():
 
     return handleData(task.createTask(request.json))
 
+
+@app.route("/member/<int:projectId>", methods=["GET"])
+@fresh_jwt_required
+def getMemberInfo(projectId):
+    '''获取成员信息
+
+    GET /api/member/<int:projectId>
+    '''
+    print(projectId)
+    res = {
+        "message": "ok",
+        "data": {}
+    }
+
+    print(task.findMember(projectId))
+    if task.findMember(projectId) != None:
+        res["data"] = task.findMember(projectId)
+
+    return jsonify(res)
+
 @app.route("/demand/task/update", methods=["PUT"])
 @fresh_jwt_required
 def update_task():
