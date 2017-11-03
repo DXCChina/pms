@@ -99,7 +99,7 @@
         * 后端:`pip install -r api/requirements.txt`
 #### [CentOS7生产环境部署](https://github.com/canfeit/pms/blob/master/docs/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2.md)
 ### 测试
-    * [python 单元测试](https://hypothesis.readthedocs.io/en/master/quickstart.html)
-    * [angular 单元测试](https://angular.cn/guide/testing)
-    * [flask 应用测试](http://flask.pocoo.org/docs/dev/testing/)
-    * [angular 端对端测试](http://www.protractortest.org/#/tutorial)
+* [python 单元测试](https://hypothesis.readthedocs.io/en/master/quickstart.html)
+* [flask 接口测试](http://flask.pocoo.org/docs/dev/testing/)
+* [angular 单元测试](https://angular.cn/guide/testing)
+* [angular E2E测试](http://www.protractortest.org/#/tutorial)
