@@ -67,9 +67,9 @@ def reg():
     if errors:
         return jsonify({"msg": errors}), 400
     if user.findOneByEmail(data['email']):
-        return jsonify({"msg": {'email': '邮箱已存在'}}), 400
+        return jsonify({"msg": ('email', '邮箱已存在')}), 400
     if user.findOneByName(data['username']):
-        return jsonify({"msg": {'username': '用户名已存在'}}), 400
+        return jsonify({"msg": ('username', '用户名已存在')}), 400
     data['password'] = argon2.hash(data['password'])
     user.save(data)
     data = user.findOneByName(data['username'])
@@ -118,8 +118,6 @@ def user_info():
     * 或 Cookie:access_token_cookie(默认)
 
     '''
-    print('jwt', get_jwt_identity(), get_jwt_claims())
-    print('session', session['user_id'])
     return jsonify(get_jwt_claims())
 
 
@@ -141,12 +139,12 @@ def user_update():
         # data.pop('email', None)
         pass
     elif user.findOneByEmail(data['email']):
-        return jsonify({"msg": {'email': '邮箱已存在'}}), 400
+        return jsonify({"msg": ('email', '邮箱已存在')}), 400
     if current_user['username'] == data['username']:
         # data.pop('username', None)
         pass
     elif user.findOneByName(data['username']):
-        return jsonify({"msg": {'username': '用户名已存在'}}), 400
+        return jsonify({"msg": ('username', '用户名已存在')}), 400
     data.pop('password', None)
     data['id'] = get_jwt_identity()
     user.update(data)
@@ -174,7 +172,7 @@ def change_password():
     if argon2.verify(data['old_password'], account['password']):
         user.change_password(get_jwt_identity(),
                              argon2.hash(data['new_password']))
-        return ''
+        return jsonify({"OK": "OK"})
     else:
         return jsonify({"msg": "密码错误"}), 403
 
