@@ -28,7 +28,7 @@ export class CreateDemandComponent {
   level: string = 'normal';
   assign: number;
   assignCustom = [
-    {username: '--我自己--', memberId: localStorage.getItem('memberId')}
+    {username: '--我自己--', memberId: localStorage.getItem('userId')}
   ];
 
   demandSearchList: any[];
@@ -98,7 +98,7 @@ export class CreateDemandComponent {
       this.Renderer.addClass(asc, 'isAsc');
     } else {
       this.assignCustom = [
-        {username: '--我自己--', memberId: localStorage.getItem('memberId')}
+        {username: '--我自己--', memberId: localStorage.getItem('userId')}
       ];
       this.Renderer.removeClass(des, 'isDes');
       this.Renderer.addClass(asc, 'asc');

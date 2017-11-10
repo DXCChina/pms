@@ -18,7 +18,7 @@ export class D_tComponent {
   ];
 
   assignCustom = [
-    {userName: '——自己——', userId: 1}
+    {userName: '——自己——', userId: localStorage.getItem('userId')}
   ];
 
   //some judge
