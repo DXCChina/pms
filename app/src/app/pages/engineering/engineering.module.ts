@@ -9,7 +9,7 @@ import {
   MatTabsModule, MatButtonModule, MatDialogModule, MatTooltipModule, MatSelectModule,
   MatCheckboxModule, MatInputModule, MatListModule, MatSortModule, MatTableModule, MatCommonModule,
   MatProgressBarModule, MatChipsModule, MatCardModule, MatExpansionModule, MatGridListModule, MatDatepickerModule,
-  MatNativeDateModule, MAT_DATE_LOCALE, MatSliderModule
+  MatNativeDateModule, MAT_DATE_LOCALE, MatSliderModule, MatIconModule
 } from "@angular/material";
 import {SortableModule}from 'ngx-bootstrap';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
@@ -51,6 +51,7 @@ import {DemandSearchComponent} from "../common/demandSearch/demandSearch.compone
     MatTableModule,
     MatSortModule,
     MatChipsModule,
+    MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,
     MatProgressBarModule,
