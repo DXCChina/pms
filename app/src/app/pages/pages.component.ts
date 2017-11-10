@@ -25,6 +25,7 @@ export class Pages {
       .then(res => {
         if (res.id !== '') {
           this.user = res;
+          localStorage.setItem('userId',res.id)
         } else {
           this.router.navigate(['/login']);
         }
