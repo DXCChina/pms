@@ -1,0 +1,34 @@
+<mat-list class="container">
+  <h3 mat-subheader>个人信息</h3>
+  <form class="container" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <input type="email" matInput placeholder="邮箱" [formControl]="email" required>
+      <mat-error>{{getEmailMessage()}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="text" matInput placeholder="用户名" [formControl]="name" required>
+      <mat-error>{{getNameMessage()}}</mat-error>
+    </mat-form-field>
+    <button mat-raised-button [disabled]="name.invalid||email.invalid" type="submit">更新信息</button>
+  </form>
+
+  <h3 mat-subheader>帐号管理</h3>
+  <form class="container" (ngSubmit)="changePassword()">
+    <mat-form-field>
+      <input type="password" matInput placeholder="原密码" [formControl]="oldPassword" required>
+      <mat-error>{{getPasswordMessage('oldPassword')}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="password" matInput placeholder="新密码" [formControl]="newPassword" required>
+      <mat-error>{{getPasswordMessage('newPassword')}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <input type="password" matInput placeholder="确认密码" [formControl]="repeatPassword" required>
+      <mat-error>{{getPasswordMessage('repeatPassword')}}</mat-error>
+      <span [hidden]='passwords.valid||!newPassword.touched||!repeatPassword.touched' class='mat-error'>两次密码不一致</span>
+    </mat-form-field>
+    <button mat-raised-button [disabled]="oldPassword.invalid||passwords.invalid" type="submit">修改密码</button>
+  </form>
+</mat-list>
+
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>

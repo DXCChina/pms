@@ -112,7 +112,7 @@
 
         </div>
 
-      <div class="wa-detail">
+      <div class="wa-detail" style="width: 90%">
         <div class="detail_title">
           <h4>任务列表</h4>
         </div>
@@ -123,13 +123,24 @@
             <mat-expansion-panel
               *ngFor="let task of taskList">
               <mat-expansion-panel-header>
-                {{task.title}}
+                <mat-panel-title>
+                  <b>{{task.title}}</b>
+                </mat-panel-title>
+                <mat-panel-description>
+                  {{task.detail}}
+                </mat-panel-description>
               </mat-expansion-panel-header>
 
                 <d_t-component
-                  [detailDatas]="task">
+                  [detailDatas]="task"
+                  (retractEvent)="taskRetract($event)"
+                  (modifyEvent)="taskModifyed($event)">
 
                 </d_t-component>
+
+                <mat-action-row>
+                  <button mat-button color="primary" (click)="deleteTask(task)">删除</button>
+                </mat-action-row>
 
             </mat-expansion-panel>
 

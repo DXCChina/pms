@@ -17,6 +17,7 @@ import { NgaModule } from './theme/nga.module';
 import {PagesModule} from "./pages/pages.module";
 import {RegisterModule} from "./register/register.module";
 import {LoginModule} from "./login/login.module";
+import {SignoutModule} from "./signout/signout.module";
 import {HttpInterceptorModule} from "ng-http-interceptor";
 import {APP_BASE_HREF} from "@angular/common";
 
@@ -51,6 +52,7 @@ export type StoreType = {
     routing,
     PagesModule,
     LoginModule,
+    SignoutModule,
     RegisterModule
   ],
   providers: [ // expose our Services and Providers into Angular's dependency injection

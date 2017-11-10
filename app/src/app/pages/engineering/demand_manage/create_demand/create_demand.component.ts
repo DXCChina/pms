@@ -12,7 +12,6 @@ import {MatDialogRef} from "@angular/material";
 })
 export class CreateDemandComponent {
 
-
   form: FormGroup;
 
   title: AbstractControl;
@@ -27,14 +26,15 @@ export class CreateDemandComponent {
   target: string = 'demand';
   status: string = 'active';
   level: string = 'normal';
-  assign: number = 1;
+  assign: number;
   assignCustom = [
-    {userName: '——自己——', userId: 1}
+    {username: '--我自己--', memberId: localStorage.getItem('memberId')}
   ];
 
   demandSearchList: any[];
   showDemandList: boolean = false;
   demandId: number;
+
   //some judge
   constructor(private fb: FormBuilder, private ref: ElementRef, private Renderer: Renderer2, private service: DemandService,
               public dialogRef: MatDialogRef<CreateDemandComponent>) {
@@ -62,7 +62,7 @@ export class CreateDemandComponent {
 
     if(this.target === 'demand') {
 
-      this.service.createDemand(this.assign, this.title.value, this.detail.value, this.level,
+      this.service.createDemand(this.title.value, this.detail.value, this.level,
                                 this.status, pickerstart.startAt, pickerend.startAt, Number(this.progress.value), Number(this.cost.value))
         .then(res => {
           if(res.message === 'ok') {
@@ -72,6 +72,7 @@ export class CreateDemandComponent {
 
     } else if (this.target === 'task') {
 
+      console.log(this.assign, this.level)
       this.service.createTask(this.assign, this.demandId, this.title.value, this.detail.value, this.level,
                                 this.status, pickerstart.startAt, pickerend.startAt, Number(this.progress.value), Number(this.cost.value))
         .then(res => {
@@ -91,14 +92,28 @@ export class CreateDemandComponent {
     let asc = this.ref.nativeElement.querySelector('#Asc');
 
     if(target.value === 'task') {
+      this.getMember();
       this.Renderer.addClass(des, 'isDes');
       this.Renderer.removeClass(asc, 'asc');
       this.Renderer.addClass(asc, 'isAsc');
     } else {
+      this.assignCustom = [
+        {username: '--我自己--', memberId: localStorage.getItem('memberId')}
+      ];
       this.Renderer.removeClass(des, 'isDes');
       this.Renderer.addClass(asc, 'asc');
       this.Renderer.removeClass(asc, 'isAsc');
     }
+  }
+
+  getMember() {
+    this.service.getMember()
+      .then(res => {
+        if (res.message === 'ok') {
+          console.log(res.data)
+          this.assignCustom = res.data;
+        }
+      }).catch(err => console.log(err))
   }
 
   searchDemand(query: any){

@@ -1,7 +1,8 @@
-import {Component, OnInit} from "@angular/core";
-import {WelcomeService} from "./welcome.service";
-import {DialogCreateProjectComponent} from "./dialog-create-project/dialog-create-project.component";
-import {MatDialog} from "@angular/material";
+import { Component, OnInit } from "@angular/core";
+import { WelcomeService } from "./welcome.service";
+import { DialogCreateProjectComponent } from "./dialog-create-project/dialog-create-project.component";
+import { MatDialog } from "@angular/material";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'welcome',
@@ -12,10 +13,10 @@ import {MatDialog} from "@angular/material";
 
 export class WelcomeComponent implements OnInit {
 
-  projects: any[];
-  taskList: any[];
+  projects = { data: [], total: 0 };
+  taskList = {data: [], total: 0};
 
-  constructor(private _service: WelcomeService, public dialog: MatDialog) {
+  constructor(private _service: WelcomeService, public dialog: MatDialog, private router: Router) {
   }
 
   ngOnInit() {
@@ -26,11 +27,12 @@ export class WelcomeComponent implements OnInit {
   getProjectList() {
     this._service.getProjectList()
       .then(res => {
-        this.projects = res.data;
+        this.projects.data = res.data;
+        this.projects.total = res.total;
         // if (this.projects.length > 6) {
         //   this.projects = this.projects.slice(0, 7);
         // }
-      })
+      });
   }
 
   createPro() {
@@ -44,17 +46,20 @@ export class WelcomeComponent implements OnInit {
     });
   }
 
-  getTaskList(){
+  getTaskList() {
     this._service.getTaskList()
-      .then(res=>{
-        console.log("res", res);
-        if(res.status == 200){
-          this.taskList = res.data.map(task=>{
-            task["createAt"] = new Date(task["createAt"]).toLocaleDateString()
-            return task;
-          })
-        }
-      })
+      .then(res => {
+        this.taskList.data = res.data.map(task => {
+          task["createAt"] = new Date(task["createAt"]).toLocaleDateString();
+          return task;
+        });
+        this.taskList.total = res.total;
+      });
+  }
+
+  getProject(projectId) {
+    this.router.navigate(["/pages/project/dashboard"]);
+    sessionStorage.setItem("projectId", projectId);
   }
 }
 

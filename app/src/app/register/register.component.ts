@@ -35,11 +35,11 @@ export class Register {
               private service: RegisterService, private router: Router, private toasterService: ToasterService) {
 
     this.form = fb.group({
-      'name': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+      'name': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
       'email': ['', Validators.compose([Validators.required, EmailValidator.validate])],
       'passwords': fb.group({
-        'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-        'repeatPassword': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
+        'password': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+        'repeatPassword': ['', Validators.compose([Validators.required, Validators.minLength(1)])]
       }, {validator: EqualPasswordsValidator.validate('password', 'repeatPassword')})
     });
 
@@ -60,10 +60,11 @@ export class Register {
         if(res.id !== ''){
           this.router.navigate(['/login']);
         }else {
-          this.toasterService.pop('error', res.message , '注册失败');
+          this.toasterService.pop('error', res.msg[1] , '注册失败');
         }
       }, err => {
         console.log(err)
+        this.toasterService.pop('error', JSON.parse(err._body).msg[1] , '注册失败');
       })
   }
 
