@@ -44,7 +44,7 @@ export class Login {
         res => {
           console.log(res)
           if (res.id !== '') {
-            this.router.navigate(['/']);
+            this.router.navigate(['/pages/welcome']);
           } else {
             this.toasterService.pop('error', '用户名或密码错误', '登录失败');
           }
