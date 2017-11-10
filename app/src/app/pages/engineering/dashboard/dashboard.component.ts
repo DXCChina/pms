@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormControl, Validators } from '@angular/forms';
 import { DashboardService } from "./dashboard.service";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'dashboard',
@@ -13,7 +14,7 @@ import { DashboardService } from "./dashboard.service";
 export class DashboardComponent implements OnInit {
 
   // 项目ID
-  projectId: string = "1"
+  projectId: string
 
   // 保存现有数据
   userlist: any[] // 全部用户
@@ -23,21 +24,21 @@ export class DashboardComponent implements OnInit {
   // 修改后的数据
   detailData: any = {
     name: "",
-    detail: "",
-    ownerId: null,
-    status: ""
+    detail: ""
   } // 项目详情
   userData: any // 项目成员ID数组
 
   // 表单验证
   formControl: any;
 
-  constructor(private service: DashboardService) {
+  constructor(private router: Router, private service: DashboardService) {
   }
 
   ngOnInit() {
-    localStorage.setItem('projectId', this.projectId);
-    localStorage.setItem('ownerId', '1');
+    this.projectId = sessionStorage.getItem('projectId');
+    if (!this.projectId) {
+      this.router.navigate(['/welcome']);
+    }
 
     this.getData();
 

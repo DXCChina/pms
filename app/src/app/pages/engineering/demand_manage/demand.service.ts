@@ -22,7 +22,7 @@ export class DemandService {
   createDemand(title: string, detail: string, level: string,
                status: string, startDate: any, endDate: any, progress: number, cost: number): Promise<any> {
     let ownerId = Number(localStorage.getItem('ownerId'));
-    let projectId = Number(localStorage.getItem('projectId'));
+    let projectId = Number(sessionStorage.getItem('projectId'));
     console.log({ownerId, projectId, title, detail, level, status, startDate, endDate, progress, cost})
     let body = JSON.stringify({ownerId, projectId, title, detail, level, status, startDate, endDate, progress, cost});
     return this.http.post(this.createDemandUrl, body, this._global.options)
@@ -69,7 +69,7 @@ export class DemandService {
   }
 
   getMember(): Promise<any> {
-    let url = `${this.getMemberUrl}/${localStorage.getItem('projectId')}`;
+    let url = `${this.getMemberUrl}/${sessionStorage.getItem('projectId')}`;
     return this.http.get(url)
       .toPromise()
       .then(this._global.extractData)
