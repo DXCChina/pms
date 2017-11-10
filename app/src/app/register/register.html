@@ -14,25 +14,28 @@
         <input type="email" [formControl]="email" name="" id="emailInput"  placeholder="注册邮箱"/>
         <span class="email-Img"></span>
         <!--<div class="line"></div>-->
+        <span *ngIf="email.invalid && email.touched" class="help-block sub-little-text">邮箱格式不正确</span>
       </div>
 
       <div id="re-Name" class="baseline" [ngClass]="{'has-error': (!name.valid && name.touched), 'has-success': (name.valid && name.touched)}">
         <input type="text" [formControl]="name" name="" id="nameInput" value="" placeholder="用户名"/>
         <span class="name-Img"></span>
         <!--<div class="line"></div>-->
+        <span *ngIf="name.invalid && name.touched" class="help-block sub-little-text">用户名不能少于四位</span>
       </div>
 
       <div id="re-Pw" class="baseline" [ngClass]="{'has-error': (!password.valid && password.touched), 'has-success': (password.valid && password.touched)}">
         <input type="password" [formControl]="password" name="" id="rePwInput"  placeholder="请输入密码"/>
         <span class="rePw-Img"></span>
         <!--<div class="line"></div>-->
+        <span *ngIf="password.invalid && password.touched" class="help-block sub-little-text">密码不能少于四位</span>
       </div>
 
       <div id="re-DbPw" class="baseline" [ngClass]="{'has-error': (!repeatPassword.valid && repeatPassword.touched), 'has-success': (repeatPassword.valid && repeatPassword.touched)}">
         <input type="password" [formControl]="repeatPassword" name="" id="reDbPwInput" value="" placeholder="请再次输入密码"/>
         <span class="reDbPw-Img"></span>
         <!--<div class="line"></div>-->
-        <span *ngIf="!passwords.valid && (password.touched || repeatPassword.touched)" class="help-block sub-little-text">Passwords don't match.</span>
+        <span *ngIf="!passwords.valid && (password.touched || repeatPassword.touched)" class="help-block sub-little-text">两次密码不一致</span>
       </div>
 
       <button [disabled]="!form.valid" type="submit" id="re-register">注册</button>

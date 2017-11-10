@@ -1,16 +1,16 @@
 import "style-loader!./login.scss";
-import {LoginService} from "./login.service";
-import {Component, ElementRef, HostListener, Renderer2} from '@angular/core';
-import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
+import { LoginService } from "./login.service";
+import { Component, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 import 'style-loader!./login.scss';
-import {ActivatedRoute, Router} from "@angular/router";
-import {ToasterConfig, ToasterService} from "angular2-toaster";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ToasterConfig, ToasterService } from "angular2-toaster";
 
 @Component({
   selector: 'login',
   templateUrl: './login.html',
   providers: [LoginService],
-  styleUrls:['./login.css']
+  styleUrls: ['./login.css']
 })
 export class Login {
 
@@ -26,7 +26,7 @@ export class Login {
     });
 
   constructor(private _service: LoginService, private fb: FormBuilder, private elementRef: ElementRef,
-              private route: ActivatedRoute, private router: Router, private Renderer: Renderer2, private toasterService: ToasterService,) {
+    private route: ActivatedRoute, private router: Router, private Renderer: Renderer2, private toasterService: ToasterService, ) {
 
     this.form = this.fb.group({
       'name': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
@@ -46,37 +46,40 @@ export class Login {
           if (res.id !== '') {
             this.router.navigate(['/']);
           } else {
-            this.toasterService.pop('error', '用户名或密码错误' , '登录失败');
+            this.toasterService.pop('error', '用户名或密码错误', '登录失败');
           }
-        }).catch(error => console.log(error))
+        }).catch(error => {
+          console.log(error)
+          this.toasterService.pop('error', '用户名或密码错误', '登录失败');
+        })
     }
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event){
+  onResize(event) {
 
-    let header : HTMLElement = this.elementRef.nativeElement.querySelector('#header');
-    let content : HTMLElement = this.elementRef.nativeElement.querySelector('#content');
-    let login : HTMLElement = this.elementRef.nativeElement.querySelector('#LoginPart');
+    let header: HTMLElement = this.elementRef.nativeElement.querySelector('#header');
+    let content: HTMLElement = this.elementRef.nativeElement.querySelector('#content');
+    let login: HTMLElement = this.elementRef.nativeElement.querySelector('#LoginPart');
 
-    if( header.scrollHeight > content.scrollHeight) {
+    if (header.scrollHeight > content.scrollHeight) {
       // content.style.marginTop = (header.scrollHeight - content.scrollHeight) / 2 + 20 + 'px';
-      this.Renderer.setStyle(content,'marginTop', "(header.scrollHeight - content.scrollHeight)/2 + 20 + 'px'");
+      this.Renderer.setStyle(content, 'marginTop', "(header.scrollHeight - content.scrollHeight)/2 + 20 + 'px'");
     }
 
-    if( screen.width < 1920 && screen.height < 1080) {
+    if (screen.width < 1920 && screen.height < 1080) {
       // content.style.width = 980 + 'px' ;
       // content.style.height = 560 + 'px';
       // content.style.minWidth = 980 + 'px';
       // login.style.top = 120 + 'px';
-      this.Renderer.setStyle(content,'width','980px');
-      this.Renderer.setStyle(content,'height','560px');
-      this.Renderer.setStyle(content,'minWidth','980px');
-      this.Renderer.setStyle(login,'top','120px')
+      this.Renderer.setStyle(content, 'width', '980px');
+      this.Renderer.setStyle(content, 'height', '560px');
+      this.Renderer.setStyle(content, 'minWidth', '980px');
+      this.Renderer.setStyle(login, 'top', '120px')
     }
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.onResize(event);
   }
 
