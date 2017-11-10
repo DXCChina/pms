@@ -21,22 +21,18 @@ def update_project(project_id, request):
     '''更新项目信息'''
     try:
         with db.cursor() as cursor:
-            sql = "UPDATE project SET name=%s, detail=%s, ownerId=%s, status=%s WHERE id=%s"
-            cursor.execute(sql, (str(request['name']), str(request['detail']), int(request['ownerId']), str(request['status']), project_id))
+            sql = "UPDATE project SET name=%s, detail=%s WHERE id=%s"
+            cursor.execute(sql, (str(request['name']), str(request['detail']), project_id))
 
         db.commit()
-        with db.cursor() as cursor:
-            sql = "SELECT * FROM project WHERE id=%s"
-            cursor.execute(sql, (project_id))
-            result = cursor.fetchone()
     finally:
-        return result
+        return find_project(project_id)
 
 def find_users():
     '''查询所有用户列表'''
     try:
         with db.cursor() as cursor:
-            sql = "SELECT * FROM user WHERE status='active'"
+            sql = "SELECT id, username, email FROM user WHERE status='active'"
             cursor.execute(sql)
             result = cursor.fetchall()
     finally:
@@ -63,9 +59,9 @@ def update_project_users(project_id, request):
                 sql = "DELETE FROM projectmember WHERE projectId=%s"
                 cursor.execute(sql, (project_id))
 
-                sql = "INSERT INTO projectmember (id,projectId,memberId) VALUES (%s, %s, %s)"
-                cursor.executemany(sql, tuple((1, project_id, member) for member in request['memberIdArr']))
-                db.commit()                    
+                sql = "INSERT INTO projectmember (projectId,memberId) VALUES (%s, %s)"
+                cursor.executemany(sql, tuple((project_id, member) for member in request['memberIdArr']))
+                db.commit()
             except:
                 db.rollback()
     finally:

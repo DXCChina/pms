@@ -1,0 +1,41 @@
+.transfer-container{
+    width: 100%;
+    height: 250px;
+    .mat-card{
+        position: relative;
+        float: left;
+        min-width: 200px;
+        width: 40%;
+        height: 100%;
+        overflow: auto;
+        .tranfer-card-title{
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            font-size: 16px;
+        }
+        .mat-selection-list{
+            margin-top:18px;
+        }
+    }
+    .transfer-btn{
+        position: relative;
+        float: left;
+        width: 20%;
+        height: 100%;
+        .mat-mini-fab{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            &:nth-child(1){
+                transform: translate(-50%,-150%);
+            }
+            &:nth-child(2){
+                transform: translate(-50%,50%);
+            }
+            font-size: 24px !important;
+            color: #fff !important;
+            font-weight: lighter !important;
+        }
+    }
+}
