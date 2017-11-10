@@ -34,7 +34,7 @@ export class DemandService {
   getDemandList(page: number, size: number, sortField: string, sortOrder: string): Promise<any> {
     let params = [
       `ownerId=${localStorage.getItem('ownerId')}`,
-      `projectId=${localStorage.getItem('projectId')}`,
+      `projectId=${sessionStorage.getItem('projectId')}`,
       `sortField=${sortField}`,
       `sortOrder=${sortOrder}`,
       `page=${page}`,
@@ -89,7 +89,7 @@ export class DemandService {
   getTaskList(demandId:number): Promise<any> {
     let params = [
       `ownerId=${localStorage.getItem('ownerId')}`,
-      `memberId=${localStorage.getItem('memberId')}`,
+      `memberId=${localStorage.getItem('userId')}`,
       `demandId=${demandId}`
     ].join('&');
     return this.http.get(`${this.taskListUrl}?${params}`)
