@@ -14,6 +14,33 @@ from marshmallow import Schema, fields
 
 app = Blueprint('task', __name__, url_prefix='/api')  # pylint: disable=c0103
 
+class DemandSchema(Schema):
+    '''注册信息'''
+    ownerId = fields.Number(required=True)
+    projectId = fields.Number(required=True)
+    progress = fields.Number(required=True)
+    cost = fields.Number(required=True)
+    title = fields.String(required=True)
+    detail = fields.String(required=True)
+    level = fields.String(required=True)
+    status = fields.String(required=True)
+    startDate = fields.String(required=True)
+    endDate = fields.String(required=True)
+
+class TaskSchema(Schema):
+    '''注册信息'''
+    ownerId = fields.Number(required=True)
+    memberId = fields.Number(required=True)
+    demandId = fields.Number(required=True)
+    progress = fields.Number(required=True)
+    cost = fields.Number(required=True)
+    title = fields.String(required=True)
+    detail = fields.String(required=True)
+    level = fields.String(required=True)
+    status = fields.String(required=True)
+    startDate = fields.String(required=True)
+    endDate = fields.String(required=True)
+
 @app.route("/project/<int:project_id>/demand", methods=['GET'])
 @fresh_jwt_required
 def demand_list(project_id):
@@ -32,12 +59,21 @@ def demand_add():
 
     POST /api/project/demand
     '''
-    if not request.json or\
-        not 'title' in request.json or\
-        not 'ownerId' in request.json or\
-        not 'level' in request.json:
-        print(request.json)
-        abort(400)
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+    schema = DemandSchema()
+    data, errors = schema.load(request.json)
+    if errors:
+        return jsonify({"msg": errors}), 400
+    if task.findDemandTitle(data['title']):
+        return jsonify({"msg": {'title': '主题已存在'}}), 400
+
+    # if not request.json or\
+    #     not 'title' in request.json or\
+    #     not 'ownerId' in request.json or\
+    #     not 'level' in request.json:
+    #     print(request.json)
+    #     abort(400)
 
     return handleData(task.createDemand(request.json))
 
@@ -94,7 +130,7 @@ def demand_search(demand_title):
 @app.route("/demand/list", methods=['GET'])
 @fresh_jwt_required
 def demand_lists():
-    '''获取需求任务列表
+    '''获取需求列表
 
     GET /api/demand/list
     # '''
@@ -126,14 +162,54 @@ def task_add():
 
     POST /api/demand/task
     '''
-    if not request.json or\
-        not 'title' in request.json or\
-        not 'ownerId' in request.json or\
-        not 'level' in request.json:
-        print(request.json)
-        abort(400)
+    if not request.is_json:
+        return jsonify({"msg": "Missing JSON in request"}), 400
+    schema = TaskSchema()
+    data, errors = schema.load(request.json)
+    if errors:
+        return jsonify({"msg": errors}), 400
+
+    # if not request.json or\
+    #     not 'title' in request.json or\
+    #     not 'ownerId' in request.json or\
+    #     not 'level' in request.json:
+    #     print(request.json)
+    #     abort(400)
 
     return handleData(task.createTask(request.json))
+
+
+@app.route("/member/<int:projectId>", methods=["GET"])
+@fresh_jwt_required
+def getMemberInfo(projectId):
+    '''获取成员信息
+
+    GET /api/member/<int:projectId>
+    '''
+    print(projectId)
+    res = {
+        "message": "ok",
+        "data": {}
+    }
+
+    print(task.findMember(projectId))
+    if task.findMember(projectId) != None:
+        res["data"] = task.findMember(projectId)
+
+    return jsonify(res)
+
+@app.route("/demand/task/update", methods=["PUT"])
+@fresh_jwt_required
+def update_task():
+    '''更新、删除任务
+
+    GET /api/demand/task/update
+    '''
+    if not request.json or not 'data' in request.json:
+        print('request:', request.json)
+        abort(400)
+
+    return task.updateTask(request.json["data"])
 
 
 @app.route("/demand/<int:demand_id>/task/<int:task_id>", methods=['GET'])

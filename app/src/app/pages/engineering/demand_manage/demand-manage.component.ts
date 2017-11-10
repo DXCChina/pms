@@ -46,6 +46,7 @@ export class DemandManageComponent implements OnInit {
   ngOnInit() {
     localStorage.setItem('projectId', '1');
     localStorage.setItem('ownerId', '1');
+    localStorage.setItem('memberId', '21');
     this.getDemandList()
   }
 
@@ -71,6 +72,7 @@ export class DemandManageComponent implements OnInit {
   demandSelected(selected: any) {
     this.selectId = selected.id;
     this.demandDetail(selected.id);
+    console.log(selected.id)
     this.getTaskList(selected.id)
     // console.log(selected)
   }
@@ -132,6 +134,12 @@ export class DemandManageComponent implements OnInit {
     return false;
   }
 
+  updateTask(data: any) {
+    this.service.updateTask(data)
+      .then(res => {
+        res.message === 'ok' ? console.log('update task success') : console.log('update task faild')
+      }).catch(err => {console.log(err)})
+  }
 
   demandDetail(id: number) {
     this.service.demandDetail(id)
@@ -157,13 +165,18 @@ export class DemandManageComponent implements OnInit {
   }
 
   taskRetract(bool: boolean) {
-    // this.demandDetail(this.demandDetails.id)
-    console.log('**')
+    this.getTaskList(this.selectId);
+    return false;
   }
 
   taskModifyed(detail: any) {
-    // this.updateDemand([this.demandDetails])
-    console.log('--')
+    this.updateTask(detail);
+  }
+
+  deleteTask(task: any) {
+    task.status = 'delete';
+    this.updateTask(task);
+    this.getTaskList(this.selectId);
   }
 
 }
