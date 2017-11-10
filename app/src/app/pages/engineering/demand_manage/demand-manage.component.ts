@@ -44,9 +44,9 @@ export class DemandManageComponent implements OnInit {
   }
 
   ngOnInit() {
-    localStorage.setItem('projectId', '1');
-    localStorage.setItem('ownerId', '1');
-    localStorage.setItem('memberId', '21');
+    // localStorage.setItem('projectId', '1');
+    // localStorage.setItem('ownerId', '1');
+    // localStorage.setItem('memberId', '21');
     this.getDemandList()
   }
 

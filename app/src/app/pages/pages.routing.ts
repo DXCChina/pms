@@ -19,7 +19,7 @@ export const routes: Routes = [
         path: 'user',
         loadChildren: "app/pages/user/user.module#UserModule"
       },
-      // {path: '', redirectTo: 'welcome', pathMatch: 'full'}
+      {path: '', redirectTo: 'welcome', pathMatch: 'full'}
     ]
   }
 ];
