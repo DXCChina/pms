@@ -88,66 +88,108 @@
 
       </div>
 
-        <div class="row detail_item">
-          <div class="detail_title">
-            <h4></h4>
-          </div>
+      <hr>
 
-          <div class="col-1"></div>
-          <div class="col-10">
-            <div class="row detail_info">
+      <mat-card>
 
-              <d_t-component
+        <div class="wrap">
+          <mat-card class="card-one">
+            <div class="main">
+             <d_t-component
                 [(detailDatas)]="demandDetails"
                 (retractEvent)="retract($event)"
                 (modifyEvent)="modifyed($event)">
 
               </d_t-component>
-
-
             </div>
+          </mat-card>
+
+          <div class="show">
+
+            <mat-card class="card-two">
+
+              <div class="sider">
+
+                <div class="item">
+                  <mat-card>
+                    <div class="item-card-header">
+                      <h3>BASIC STATISTICS</h3>
+                      <p>FOR {{demandDetails?.title}}</p>
+                    </div>
+                    <div class="item-card-body">
+                      <div class="item-num">
+                        {{taskList?.length}}
+                      </div>
+                      <div>
+                        <p>TASK WAS CREATED</p>
+                      </div>
+                    </div>
+                    <div class="item-card-footer">
+
+                      <div class="item-progress">
+                         <mat-progress-spinner
+                            class="example-margin-progress"
+                            [mode]="'determinate'"
+                            [value]="demandDetails?.progress">
+                        </mat-progress-spinner>
+
+                        <div class="number">
+                          {{demandDetails?.progress}}
+                        </div>
+                      </div>
+
+                      <div class="show-progress">
+                        DEMAND PROGRESS
+                      </div>
+
+                    </div>
+                  </mat-card>
+                </div>
+
+              </div>
+
+            </mat-card>
 
           </div>
-          <div class="col-1"></div>
+
 
         </div>
 
-      <div class="wa-detail" style="width: 90%">
-        <div class="detail_title">
-          <h4>任务列表</h4>
-        </div>
-        <div class="wa-core-info">
+        <hr>
 
-          <mat-accordion>
+        <h3>任务列表</h3>
 
-            <mat-expansion-panel
-              *ngFor="let task of taskList">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <b>{{task.title}}</b>
-                </mat-panel-title>
-                <mat-panel-description>
-                  {{task.detail}}
-                </mat-panel-description>
-              </mat-expansion-panel-header>
+        <hr>
 
-                <d_t-component
-                  [detailDatas]="task"
-                  (retractEvent)="taskRetract($event)"
-                  (modifyEvent)="taskModifyed($event)">
+        <mat-accordion>
 
-                </d_t-component>
+          <mat-expansion-panel
+            *ngFor="let task of taskList">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <b>{{task.title}}</b>
+              </mat-panel-title>
+              <mat-panel-description>
+                {{task.detail}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
 
-                <mat-action-row>
-                  <button mat-button color="primary" (click)="deleteTask(task)">删除</button>
-                </mat-action-row>
+              <d_t-component
+                [detailDatas]="task"
+                (retractEvent)="taskRetract($event)"
+                (modifyEvent)="taskModifyed($event)">
 
-            </mat-expansion-panel>
+              </d_t-component>
 
-          </mat-accordion>
+              <mat-action-row>
+                <button mat-button color="primary" (click)="deleteTask(task)">删除</button>
+              </mat-action-row>
 
-        </div>
-      </div>
+          </mat-expansion-panel>
+
+        </mat-accordion>
+
+      </mat-card>
 
     </div>
 
