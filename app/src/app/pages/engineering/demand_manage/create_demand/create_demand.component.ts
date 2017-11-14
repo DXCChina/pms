@@ -27,6 +27,7 @@ export class CreateDemandComponent {
   status: string = 'active';
   level: string = 'normal';
   assign: number;
+  assignSelf: any = {username: '--我自己--', memberId: localStorage.getItem('userId')};
   assignCustom = [
     {username: '--我自己--', memberId: localStorage.getItem('userId')}
   ];
@@ -110,7 +111,7 @@ export class CreateDemandComponent {
     this.service.getMember()
       .then(res => {
         if (res.message === 'ok') {
-          console.log(res.data)
+          console.log(res.data);
           this.assignCustom = res.data;
         }
       }).catch(err => console.log(err))

@@ -44,9 +44,6 @@ export class DemandManageComponent implements OnInit {
   }
 
   ngOnInit() {
-    // localStorage.setItem('projectId', '1');
-    // localStorage.setItem('ownerId', '1');
-    // localStorage.setItem('memberId', '21');
     this.getDemandList()
   }
 
@@ -72,7 +69,6 @@ export class DemandManageComponent implements OnInit {
   demandSelected(selected: any) {
     this.selectId = selected.id;
     this.demandDetail(selected.id);
-    console.log(selected.id)
     this.getTaskList(selected.id)
     // console.log(selected)
   }
@@ -160,7 +156,7 @@ export class DemandManageComponent implements OnInit {
   getTaskList(demandId: number) {
     this.service.getTaskList(demandId)
       .then(res => {
-        this.taskList = res.data
+        this.taskList = res.data;
     }).catch(err => { console.log(err) })
   }
 
