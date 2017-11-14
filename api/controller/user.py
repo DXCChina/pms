@@ -72,8 +72,8 @@ def reg():
         return jsonify({"msg": ('username', '用户名已存在')}), 400
     data['password'] = argon2.hash(data['password'])
     user.save(data)
-    data = user.findOneByName(data['username'])
-    return jsonify(id=data['id'])
+    # data = user.findOneByName(data['username'])
+    return jsonify(result=True)
 
 
 @app.route("/login", methods=['POST'])
@@ -145,9 +145,9 @@ def user_update():
         pass
     elif user.findOneByName(data['username']):
         return jsonify({"msg": ('username', '用户名已存在')}), 400
-    data.pop('password', None)
     data['id'] = get_jwt_identity()
     user.update(data)
+    data.pop('password', None)
     access_token = create_access_token(identity=data, fresh=True)
     resp = jsonify({'access_token': access_token})
     set_access_cookies(resp, access_token)

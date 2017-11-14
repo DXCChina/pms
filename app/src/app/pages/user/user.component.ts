@@ -15,7 +15,7 @@ import { ToasterConfig, ToasterService } from "angular2-toaster";
 })
 export class User implements OnInit {
 
-  public form: FormGroup;
+  // public form: FormGroup;
   public name: AbstractControl;
   public email: AbstractControl;
   public oldPassword: AbstractControl;
