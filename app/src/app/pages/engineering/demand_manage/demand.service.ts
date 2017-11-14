@@ -88,8 +88,8 @@ export class DemandService {
 
   getTaskList(demandId:number): Promise<any> {
     let params = [
-      `ownerId=${localStorage.getItem('userId')}`,
-      `memberId=${localStorage.getItem('memberId')}`,
+      `ownerId=${localStorage.getItem('ownerId')}`,
+      `memberId=${localStorage.getItem('userId')}`,
       `demandId=${demandId}`
     ].join('&');
     return this.http.get(`${this.taskListUrl}?${params}`)
