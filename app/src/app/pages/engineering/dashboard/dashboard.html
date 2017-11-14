@@ -28,15 +28,15 @@
   <div class="row" style="padding: 0 40px">
     <form style="width: 60%; margin: 0 auto;">
       <mat-form-field style="width: 100%">
-        <input [(ngModel)]="detailData.name" [formControl]="formControl" matInput placeholder="项目名称">
-        <mat-error *ngIf="formControl.hasError('required')">
+        <input [(ngModel)]="detailData.name" [formControl]="formCtl" matInput placeholder="项目名称" name="proName">
+        <mat-error *ngIf="formCtl.hasError('required')">
           项目名称是
           <strong>必填的</strong>
         </mat-error>
       </mat-form-field>
       <br>
       <mat-form-field style="width: 100%">
-        <textarea matInput placeholder="项目详情">{{detailData.detail}}</textarea>
+        <textarea matInput placeholder="项目详情" [(ngModel)]="detailData.detail" name="proDetail"></textarea>
       </mat-form-field>
 
       <br>

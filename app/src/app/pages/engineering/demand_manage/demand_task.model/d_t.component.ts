@@ -1,14 +1,15 @@
-import {Component, ElementRef, EventEmitter, Input, Output, Renderer2} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2} from "@angular/core";
 import {D_tModel} from "./d_t.model";
+import {DemandService} from "../demand.service";
 
 @Component({
   selector: 'd_t-component',
   templateUrl: './d_t.component.html',
   styleUrls: ['./d_t.component.scss']
 })
-export class D_tComponent {
+export class D_tComponent implements OnInit {
 
-  @Input() detailDatas: D_tModel;
+  @Input() detailDatas: any;
   @Output() retractEvent: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() modifyEvent: EventEmitter<any> = new EventEmitter<any>();
 
@@ -16,14 +17,21 @@ export class D_tComponent {
     {value: 'demand', name: '需求'},
     {value: 'task', name: '任务'}
   ];
+  ttt: any;
+  assignSelf: any = localStorage.getItem('userId');
+  assignCustom: any[];
 
-  assignCustom = [
-    {userName: '——自己——', userId: localStorage.getItem('userId')}
-  ];
+  ngOnInit() {
+    if (this.detailDatas.demandId) {
+      this.getMember();
+    }
+  }
 
   //some judge
-  constructor(private ref: ElementRef, private Renderer: Renderer2) {
-
+  constructor(private ref: ElementRef, private Renderer: Renderer2, private service: DemandService) {
+    this.assignCustom = [
+      {username: '——自己——', memberId: localStorage.getItem('userId')}
+    ];
   }
 
   retract() {
@@ -31,7 +39,18 @@ export class D_tComponent {
   }
 
   modifyed(title: any) {
+    console.log('---ttt---', this.ttt, this.detailDatas.memberId);
+    console.log(this.detailDatas);
     this.modifyEvent.emit(this.detailDatas)
+  }
+
+  getMember() {
+  this.service.getMember()
+    .then(res => {
+      if (res.message === 'ok') {
+        this.assignCustom = res.data;
+      }
+    }).catch(err => console.log(err))
   }
 
   //target value changed method

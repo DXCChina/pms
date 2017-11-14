@@ -68,13 +68,6 @@ def demand_add():
     if task.findDemandTitle(data['title']):
         return jsonify({"msg": {'title': '主题已存在'}}), 400
 
-    # if not request.json or\
-    #     not 'title' in request.json or\
-    #     not 'ownerId' in request.json or\
-    #     not 'level' in request.json:
-    #     print(request.json)
-    #     abort(400)
-
     return handleData(task.createDemand(request.json))
 
 
@@ -168,13 +161,6 @@ def task_add():
     data, errors = schema.load(request.json)
     if errors:
         return jsonify({"msg": errors}), 400
-
-    # if not request.json or\
-    #     not 'title' in request.json or\
-    #     not 'ownerId' in request.json or\
-    #     not 'level' in request.json:
-    #     print(request.json)
-    #     abort(400)
 
     return handleData(task.createTask(request.json))
 
