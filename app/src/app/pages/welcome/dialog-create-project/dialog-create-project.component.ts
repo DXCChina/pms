@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, AbstractControl, Validators} from "@angular/forms";
-import {MatDialogRef} from "@angular/material";
-import {WelcomeService} from "../welcome.service";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, AbstractControl, Validators } from "@angular/forms";
+import { MatDialogRef } from "@angular/material";
+import { WelcomeService } from "../welcome.service";
 
 @Component({
   selector: 'app-dialog-create-project',
@@ -17,7 +17,7 @@ export class DialogCreateProjectComponent implements OnInit {
   projectForm: FormGroup;
   errorMessage: string = "";
 
-  constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<DialogCreateProjectComponent>,private _service:WelcomeService) {
+  constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<DialogCreateProjectComponent>, private _service: WelcomeService) {
     this.projectForm = this.fb.group({
       'name': ['', Validators.compose([Validators.required])],
       'detail': ['', Validators.compose([])]
@@ -28,14 +28,15 @@ export class DialogCreateProjectComponent implements OnInit {
   }
 
   onSubmit(event: any) {
-    this._service.newProject(this.projectForm.value)
-      .then(res=>{
-        if(res.status == 'active') {
-          this.dialogRef.close();
-        }else {
-          this.errorMessage = res.msg;
-        }
-      });
+    if (this.projectForm.value.name)
+      this._service.newProject(this.projectForm.value)
+        .then(res => {
+          if (res.status == 'active') {
+            this.dialogRef.close();
+          } else {
+            this.errorMessage = res.msg;
+          }
+        });
   }
 
   closeDialog() {
