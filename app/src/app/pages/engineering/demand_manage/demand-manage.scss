@@ -78,6 +78,7 @@
 .item-num {
   color: white;
   font-size: 4em;
+
 }
 .example-margin-progress {
   height:200px;
@@ -87,9 +88,10 @@
 .number {
   color: rgba(0, 0, 0, .54);
   font-size: 2.5em;
-  position: absolute;
-  top: 290px;
-  left: 110px;
+  margin: -109px 0 100px 0;
+  //position: absolute;
+  //top: 290px;
+  //left: 110px;
 }
 .taskList {
   display: flex;
