@@ -57,10 +57,10 @@ export class Register {
 
     this.service.register(this.name.value, this.password.value, this.email.value)
       .then(res => {
-        if(res.id !== ''){
-          this.router.navigate(['/login']);
-        }else {
+        if(res.msg){
           this.toasterService.pop('error', res.msg[1] , '注册失败');
+        }else {
+          this.router.navigate(['/login']);
         }
       }, err => {
         console.log(err)
