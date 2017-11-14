@@ -2,7 +2,7 @@ set startdir=%cd%
 cd %~dp0app
 set PYTHON_HOME=C:\Python27\;C:\Python27\Scripts;
 set path=%PYTHON_HOME%%path%
-call yarn
+call yarn||call cnpm i node-sass
 start /min run
 cd ..
 REM set tmppath=%path%

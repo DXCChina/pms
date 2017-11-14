@@ -29,8 +29,8 @@ export class Login {
     private route: ActivatedRoute, private router: Router, private Renderer: Renderer2, private toasterService: ToasterService, ) {
 
     this.form = this.fb.group({
-      'name': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-      'password': ['', Validators.compose([Validators.required, Validators.minLength(4)])]
+      'name': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
+      'password': ['', Validators.compose([Validators.required, Validators.minLength(1)])]
     });
 
     this.name = this.form.controls['name'];
@@ -44,7 +44,7 @@ export class Login {
         res => {
           console.log(res)
           if (res.id !== '') {
-            this.router.navigate(['/']);
+            this.router.navigate(['/pages/welcome']);
           } else {
             this.toasterService.pop('error', '用户名或密码错误', '登录失败');
           }

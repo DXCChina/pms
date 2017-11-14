@@ -6,6 +6,7 @@ import {RequestOptions, Response , Headers} from '@angular/http';
 export class GlobalState {
   baseURL: string = 'http://localhost:81';
   isSelectProject:boolean = false;
+
   jwtHeader: string = 'X-TOKEN';
   jwtRefreshCode: number = -5;
   headers = new Headers({'Content-Type': 'application/json'});
