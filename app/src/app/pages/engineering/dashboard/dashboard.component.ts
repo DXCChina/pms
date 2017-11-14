@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
   userData: any // 项目成员ID数组
 
   // 表单验证
-  formControl: any;
+  formCtl: FormControl;
 
   constructor(private router: Router, private service: DashboardService) {
   }
@@ -41,7 +41,7 @@ export class DashboardComponent implements OnInit {
     } else {
       this.getData();
     }
-    this.formControl = new FormControl(this.detailData.name, Validators.required);    
+    this.formCtl = new FormControl(this.detailData.name, Validators.required);
   }
 
   //初始化数据 调用三个接口
