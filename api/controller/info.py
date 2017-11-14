@@ -4,7 +4,7 @@
 @author: Gao Le
 '''
 
-from flask import jsonify, request, abort, Blueprint, make_response
+from flask import jsonify, request, abort, Blueprint, make_response, session
 from model import info
 from flask_jwt_extended import (create_access_token, get_jwt_identity,
                                 get_jwt_claims, fresh_jwt_required,
@@ -27,7 +27,6 @@ def project_list():
     GET /api/project
     '''
     # return make_response(jsonify(message="success", data=info.project_list(), status=200), 200)
-    print("project list get")
     return jsonify(info.project_list())
 
 
@@ -48,6 +47,9 @@ def project_add():
         return jsonify({"msg": errors}), 400
     if info.find_one_project_by_name(data["name"]):
         return jsonify({"msg": "项目名称重复"}), 200
+
+    if 'user_id' in session:
+        data['user_id'] = session['user_id']
 
     return jsonify(info.project_add(data)), 201
 

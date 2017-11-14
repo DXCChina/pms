@@ -6,7 +6,7 @@
 
   <div class="level_1_menu">
 
-    <div class="level_2_menu">
+    <div class="level_2_menu" *ngIf="showLevel2Menu==true">
       <li class="segmentation"></li>
       <nav class="navbar navbar-toggleable-md navbar-light">
         <div class="collapse navbar-collapse">
@@ -33,7 +33,7 @@
       </button>
 
       <ul *dropdownMenu class="dropdown-menu profile-dropdown" role="menu" aria-labelledby="user-profile-dd" style="margin:10px 0 0 -53px">
-        <li class="dropdown-item"><a href class="signout" routerLink="/pages/user" routerLinkActive="active"><i
+        <li class="dropdown-item"><a href class="signout" routerLink="/pages/user" routerLinkActive="active" (click)="showPersonInfo()"><i
           class="fa fa-cog fa-fw"></i>&nbsp;&nbsp;&nbsp;Setting</a></li>
         <li class="dropdown-item"><a href class="signout" routerLink="/signout" routerLinkActive="active"><i
           class="fa fa-power-off"></i>&nbsp;&nbsp;&nbsp;Sign out</a></li>
