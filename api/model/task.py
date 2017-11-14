@@ -40,16 +40,11 @@ def findMember(projectId):
 def demandList(args):
     '''获取需求列表'''
     with db.cursor() as cursor:
-        sql = "SELECT * FROM `demand` WHERE `ownerID`=%s AND `projectId`=%s AND status!='delete' ORDER BY %s %s LIMIT %s, %s" % (args['ownerId'], args['projectId'], args['sortField'], args['sortOrder'], (int(args['page']) - 1) * int(args['size']) , int(args['page']) * int(args['size']))
+        sql = "SELECT * FROM `demand` WHERE `projectId`=%s AND status!='delete' ORDER BY %s %s LIMIT %s, %s" % (args['projectId'], args['sortField'], args['sortOrder'], (int(args['page']) - 1) * int(args['size']) , int(args['page']) * int(args['size']))
         cursor.execute(sql)
         data = cursor.fetchall()
 
-    with db.cursor() as cursor:
-        sql = "SELECT * FROM `demand` WHERE `ownerId`=%s AND `projectId`=%s AND status!='delete'"
-        cursor.execute(sql, (args['ownerId'], args['projectId']))
-        total= len(cursor.fetchall())
-
-    return {"data": data, "total": total}
+    return {"data": data, "total": len(data)}
 
 def updateDemands(params):
     '''更新需求'''
