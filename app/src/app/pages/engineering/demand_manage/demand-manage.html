@@ -114,7 +114,7 @@
                   <mat-card>
                     <div class="item-card-header">
                       <h3>BASIC STATISTICS</h3>
-                      <p>FOR {{demandDetails?.title}}</p>
+                      <p>FOR:  <b>{{demandDetails?.title}}</b></p>
                     </div>
                     <div class="item-card-body">
                       <div class="item-num">
@@ -174,16 +174,63 @@
               </mat-panel-description>
             </mat-expansion-panel-header>
 
-              <d_t-component
-                [detailDatas]="task"
-                (retractEvent)="taskRetract($event)"
-                (modifyEvent)="taskModifyed($event)">
+            <div class="taskList">
+                <div class="taskItem">
+                  <d_t-component
+              [detailDatas]="task"
+              (retractEvent)="taskRetract($event)"
+              (modifyEvent)="taskModifyed($event)">
 
-              </d_t-component>
+            </d_t-component>
 
-              <mat-action-row>
-                <button mat-button color="primary" (click)="deleteTask(task)">删除</button>
-              </mat-action-row>
+                  <mat-action-row>
+                    <button mat-button color="primary" (click)="deleteTask(task)">删除</button>
+                  </mat-action-row>
+                </div>
+
+                <div class="sider">
+
+                <div class="item">
+                  <mat-card>
+                    <div class="item-card-header">
+                      <h3>BASIC STATISTICS</h3>
+                      <p>FOR:  <b>{{task?.title}}</b></p>
+                    </div>
+                    <div class="item-card-body">
+                      <div class="item-num">
+                        {{task?.cost}}
+                      </div>
+                      <div>
+                        <p>EXPECTED TIME</p>
+                      </div>
+                    </div>
+                    <div class="item-card-footer">
+
+                      <div class="item-progress">
+                         <mat-progress-spinner
+                            class="example-margin-progress"
+                            [mode]="'determinate'"
+                            [value]="task?.progress">
+                        </mat-progress-spinner>
+
+                        <div class="number">
+                          {{task?.progress}}
+                        </div>
+                      </div>
+
+                      <div class="show-progress">
+                        DEMAND PROGRESS
+                      </div>
+
+                    </div>
+                  </mat-card>
+                </div>
+
+              </div>
+
+            </div>
+
+
 
           </mat-expansion-panel>
 
