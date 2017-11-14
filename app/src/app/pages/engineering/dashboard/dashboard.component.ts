@@ -38,11 +38,10 @@ export class DashboardComponent implements OnInit {
     this.projectId = sessionStorage.getItem('projectId');
     if (!this.projectId) {
       this.router.navigate(['/welcome']);
+    } else {
+      this.getData();
     }
-
-    this.getData();
-
-    this.formControl = new FormControl(this.detailData.name, Validators.required);
+    this.formControl = new FormControl(this.detailData.name, Validators.required);    
   }
 
   //初始化数据 调用三个接口

@@ -36,7 +36,7 @@ def project_update(project_id):
 
 
 @app.route("/userlist", methods=['GET'])
-# @fresh_jwt_required
+@fresh_jwt_required
 def user_list():
     '''获取所有用户列表
 
@@ -46,7 +46,7 @@ def user_list():
 
 
 @app.route("/project/<int:project_id>/user", methods=['GET'])
-# @fresh_jwt_required
+@fresh_jwt_required
 def project_user(project_id):
     '''获取项目成员
     
@@ -56,7 +56,7 @@ def project_user(project_id):
 
 
 @app.route("/project/<int:project_id>/user", methods=['PUT'])
-# @fresh_jwt_required
+@fresh_jwt_required
 def project_user_update(project_id):
     '''更新项目成员
     
