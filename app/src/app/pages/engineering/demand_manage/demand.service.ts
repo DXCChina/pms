@@ -21,7 +21,7 @@ export class DemandService {
 
   createDemand(title: string, detail: string, level: string,
                status: string, startDate: any, endDate: any, progress: number, cost: number): Promise<any> {
-    let ownerId = Number(localStorage.getItem('ownerId'));
+    let ownerId = Number(localStorage.getItem('userId'));
     let projectId = Number(sessionStorage.getItem('projectId'));
     console.log({ownerId, projectId, title, detail, level, status, startDate, endDate, progress, cost})
     let body = JSON.stringify({ownerId, projectId, title, detail, level, status, startDate, endDate, progress, cost});
@@ -33,7 +33,7 @@ export class DemandService {
 
   getDemandList(page: number, size: number, sortField: string, sortOrder: string): Promise<any> {
     let params = [
-      `ownerId=${localStorage.getItem('ownerId')}`,
+      `ownerId=${localStorage.getItem('userId')}`,
       `projectId=${sessionStorage.getItem('projectId')}`,
       `sortField=${sortField}`,
       `sortOrder=${sortOrder}`,
@@ -78,7 +78,7 @@ export class DemandService {
 
   createTask(memberId: number, demandId: number, title: string, detail: string, level: string,
                status: string, startDate: any, endDate: any, progress: number, cost: number): Promise<any> {
-    let ownerId = localStorage.getItem('ownerId');
+    let ownerId = localStorage.getItem('userId');
     let body = JSON.stringify({ownerId, memberId, demandId, title, detail, level, status, startDate, endDate, progress, cost});
     return this.http.post(this.createTaskUrl, body, this._global.options)
       .toPromise()
