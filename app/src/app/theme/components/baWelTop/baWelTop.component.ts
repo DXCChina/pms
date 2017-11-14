@@ -11,7 +11,7 @@ import {JhiEventManager} from "ng-jhipster";
   styleUrls: ['baWelTop.scss'],
   providers: [BaWelTopService]
 })
-export class BaWelTop {
+export class BaWelTop{
 
   public isScrolled: boolean = false;
   public isMenuCollapsed: boolean = false;
@@ -34,19 +34,20 @@ export class BaWelTop {
   }
 
   ngOnInit() {
-
-    // this.selectedProject = this.sessionStorage.getItem("projectName");
-    // if (this.isContainRoute('/project/')) {
-    //   this.showLevel2Menu = true;
-    // }
-    // this.registerChangeInProjects();
-    // this.findProjectList();
+    this.registerChangeInProjects();
   }
-
+  
   registerChangeInProjects() {
     this.eventSubscriber = this.eventManager.subscribe('projectListModification', (response) => {
-      this.findProjectList();
+      // this.findProjectList();
+      if (this._state.isSelectProject) {
+        this.showLevel2Menu = true;
+      }
     });
+  }
+
+  showPersonInfo(){
+    this.showLevel2Menu = false;
   }
 
   isContainRoute(str: string) {
@@ -73,12 +74,12 @@ export class BaWelTop {
     this.showLevel2Menu = true;
   }
 
-  hideLevel2Menu() {
-    this.showLevel2Menu = false;
-    this.selectedProject = "";
-    this.sessionStorage.removeItem("projectName")
-    // this.sessionStorage.clear();
-  }
+  // hideLevel2Menu() {
+  //   this.showLevel2Menu = false;
+  //   this.selectedProject = "";
+  //   this.sessionStorage.removeItem("projectName")
+  //   // this.sessionStorage.clear();
+  // }
 
   public toggleHome() {
     this.showLevel2Menu = false;
