@@ -1,3 +1,90 @@
 .demand_btn {
   margin: 20px 300px;
 }
+.wrap {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+.show {
+  flex: 1 1 50%;
+  max-width: 50%;
+}
+.card-one {
+  margin-right: 30px;
+}
+
+.card-two {
+  height: 100%;
+}
+
+.sider {
+  height:100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.item {
+  height: 500px;
+  width: 280px;
+  display: flex;
+  flex-flow: column nowrap;
+  .mat-card {
+    height:460px;
+    padding: 0;
+  }
+}
+
+.item-card-header {
+  height:134px;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  h3 {
+    margin-top: 20px;
+  }
+  p {
+    margin-top: 10px;
+  }
+}
+.item-card-body {
+  height: 66px;
+  background: rgba(0, 0, 0, .34);
+  display: flex;
+  flex-flow: row nowrap;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  p {
+    color: white;
+    margin: 20px 0 0 10px;
+  }
+}
+.item-card-footer {
+  height: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
+  justify-content: center;
+}
+.item-num {
+  color: white;
+  font-size: 4em;
+}
+.example-margin-progress {
+  height:200px;
+  width: 200px;
+  margin: 50px auto;
+}
+.number {
+  color: rgba(0, 0, 0, .54);
+  font-size: 2.5em;
+  position: absolute;
+  top: 290px;
+  left: 110px;
+}
