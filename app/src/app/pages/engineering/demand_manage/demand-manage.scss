@@ -7,11 +7,12 @@
   justify-content: space-between;
 }
 .show {
-  flex: 1 1 50%;
-  max-width: 50%;
+  //flex: 1 1 50%;
+  //max-width: 50%;
 }
 .card-one {
   margin-right: 30px;
+  width: 100%;
 }
 
 .card-two {
@@ -27,19 +28,21 @@
   align-items: center;
 }
 .item {
-  height: 500px;
+  height: 100%;
   width: 280px;
   display: flex;
   flex-flow: column nowrap;
   .mat-card {
-    height:460px;
+    height: 100%;
     padding: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
   }
 }
 
 .item-card-header {
   height:134px;
-  border-bottom: 1px solid rgba(0,0,0,.12);
   display: flex;
   flex-flow: column nowrap;
   text-align: center;
@@ -56,6 +59,7 @@
   }
 }
 .item-card-body {
+  border-top: 1px solid rgba(0,0,0,.12);
   height: 66px;
   background: rgba(0, 0, 0, .34);
   display: flex;
@@ -95,7 +99,13 @@
 }
 .taskList {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   text-align: center;
   justify-content: center;
+  .taskList-content {
+    display: flex;
+    flex-flow: row nowrap;
+    text-align: center;
+    justify-content: space-around;
+  }
 }

@@ -39,7 +39,8 @@
   <div class="wa-controlBtn">
     <button mat-button color="warn" id="deleteBtn" (click)="deleteDemand()" [disabled]="dispalyDelete">
       <svg fill="#9e9e9e" id="deleteSvg" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        <path
+          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
         <path d="M0 0h24v24H0z" fill="none"/>
       </svg>
       <span>删除</span>
@@ -95,7 +96,7 @@
         <div class="wrap">
           <mat-card class="card-one">
             <div class="main">
-             <d_t-component
+              <d_t-component
                 [(detailDatas)]="demandDetails"
                 (retractEvent)="retract($event)"
                 (modifyEvent)="modifyed($event)">
@@ -106,49 +107,49 @@
 
           <div class="show">
 
-            <mat-card class="card-two">
+            <!--<mat-card class="card-two">-->
 
-              <div class="sider">
+            <div class="sider">
 
-                <div class="item">
-                  <mat-card>
-                    <div class="item-card-header">
-                      <h3>BASIC STATISTICS</h3>
-                      <p>FOR:  <b>{{demandDetails?.title}}</b></p>
+              <div class="item">
+                <mat-card>
+                  <div class="item-card-header">
+                    <h3>BASIC STATISTICS</h3>
+                    <p>FOR: <b>{{demandDetails?.title}}</b></p>
+                  </div>
+                  <div class="item-card-body">
+                    <div class="item-num">
+                      {{taskList?.length}}
                     </div>
-                    <div class="item-card-body">
-                      <div class="item-num">
-                        {{taskList?.length}}
-                      </div>
-                      <div>
-                        <p>TASK WAS CREATED</p>
+                    <div>
+                      <p>TASK WAS CREATED</p>
+                    </div>
+                  </div>
+                  <div class="item-card-footer">
+
+                    <div class="item-progress">
+                      <mat-progress-spinner
+                        class="example-margin-progress"
+                        [mode]="'determinate'"
+                        [value]="demandDetails?.progress">
+                      </mat-progress-spinner>
+
+                      <div class="number">
+                        {{demandDetails?.progress}}
                       </div>
                     </div>
-                    <div class="item-card-footer">
 
-                      <div class="item-progress">
-                         <mat-progress-spinner
-                            class="example-margin-progress"
-                            [mode]="'determinate'"
-                            [value]="demandDetails?.progress">
-                        </mat-progress-spinner>
-
-                        <div class="number">
-                          {{demandDetails?.progress}}
-                        </div>
-                      </div>
-
-                      <div class="show-progress">
-                        DEMAND PROGRESS
-                      </div>
-
+                    <div class="show-progress">
+                      DEMAND PROGRESS
                     </div>
-                  </mat-card>
-                </div>
 
+                  </div>
+                </mat-card>
               </div>
 
-            </mat-card>
+            </div>
+
+            <!--</mat-card>-->
 
           </div>
 
@@ -175,61 +176,66 @@
             </mat-expansion-panel-header>
 
             <div class="taskList">
-                <div class="taskItem">
-                  <d_t-component
-              [detailDatas]="task"
-              (retractEvent)="taskRetract($event)"
-              (modifyEvent)="taskModifyed($event)">
 
-            </d_t-component>
+              <div class="taskList-content">
+                <div class="taskItem" style="margin: 20px 10px">
+                  <mat-card style="margin: 10px;">
+                    <d_t-component
+                      [detailDatas]="task"
+                      (retractEvent)="taskRetract($event)"
+                      (modifyEvent)="taskModifyed($event)">
 
-                  <mat-action-row>
-                    <button mat-button color="primary" (click)="deleteTask(task)">删除</button>
-                  </mat-action-row>
-                </div>
-
-                <div class="sider">
-
-                <div class="item">
-                  <mat-card>
-                    <div class="item-card-header">
-                      <h3>BASIC STATISTICS</h3>
-                      <p>FOR:  <b>{{task?.title}}</b></p>
-                    </div>
-                    <div class="item-card-body">
-                      <div class="item-num">
-                        {{task?.cost}}
-                      </div>
-                      <div>
-                        <p>EXPECTED TIME</p>
-                      </div>
-                    </div>
-                    <div class="item-card-footer">
-
-                      <div class="item-progress">
-                         <mat-progress-spinner
-                            class="example-margin-progress"
-                            [mode]="'determinate'"
-                            [value]="task?.progress">
-                        </mat-progress-spinner>
-
-                        <div class="number">
-                          {{task?.progress}}
-                        </div>
-                      </div>
-
-                      <div class="show-progress">
-                        DEMAND PROGRESS
-                      </div>
-
-                    </div>
+                    </d_t-component>
                   </mat-card>
+
+                </div>
+                <div style="margin: 30px 0">
+
+                  <div class="sider">
+                    <div class="item">
+                      <mat-card>
+                        <div class="item-card-header">
+                          <h3>BASIC STATISTICS</h3>
+                          <p>FOR: <b>{{task?.title}}</b></p>
+                        </div>
+                        <div class="item-card-body">
+                          <div class="item-num">
+                            {{task?.cost}}
+                          </div>
+                          <div>
+                            <p>EXPECTED TIME</p>
+                          </div>
+                        </div>
+                        <div class="item-card-footer">
+
+                          <div class="item-progress">
+                            <mat-progress-spinner
+                              class="example-margin-progress"
+                              [mode]="'determinate'"
+                              [value]="task?.progress">
+                            </mat-progress-spinner>
+
+                            <div class="number">
+                              {{task?.progress}}
+                            </div>
+                          </div>
+
+                          <div class="show-progress">
+                            DEMAND PROGRESS
+                          </div>
+
+                        </div>
+                      </mat-card>
+                    </div>
+                  </div>
                 </div>
 
               </div>
 
+              <mat-action-row>
+                <button mat-button color="primary" (click)="deleteTask(task)">删除</button>
+              </mat-action-row>
             </div>
-
 
 
           </mat-expansion-panel>
