@@ -54,7 +54,7 @@ export class CreateDemandComponent {
   }
 
   numberValidator(control: FormControl){
-    if(!control.value.match(/^[1-9]\d*$/)){
+    if(!control.value.match(/^[0-9]\d*$/)){
       return {invalidCustom: true}
     }
   }
@@ -118,6 +118,7 @@ export class CreateDemandComponent {
   }
 
   searchDemand(query: any){
+    query=query.trim()
     if (query !== '') {
       this.service.demandFuzzySearch(query)
       .then(res => {
