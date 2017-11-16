@@ -4,7 +4,8 @@
 :host /deep/ {
 
   .wel-top {
-    background-color: $sidebar;
+    //background-color: $sidebar;
+    background-color: #8847dc;
     position: fixed;
     z-index: 904;
     box-shadow: 2px 0 3px rgba(0, 0, 0, 0.5);
@@ -46,10 +47,12 @@
     line-height: 60px;
   }
   a.al-logo:hover {
-    color: $primary;
+    //color: $primary;
+    color: #cccccc;
   }
 
   .user-profile {
+    background: #8847dc;
     float: right;
     min-width: 230px;
     margin-top: 10px;
@@ -142,9 +145,13 @@
   }
 
   .nav-item {
-    margin-left: 10px;
+    width: 80px;
+    border: 1px solid transparent;
+    text-align: center;
+    margin-left: 30px;
     .nav-link {
-      font-size: 15px;
+      color: #cccccc;
+      font-size: 16px;
     }
     .nav-link:hover {
       color: white;
@@ -153,9 +160,14 @@
 
   .navbar-light .navbar-nav .open > .nav-link, .navbar-light .navbar-nav .active {
     color: #ffffff;
-    font-size: 15px;
+    font-size: 16px;
     //background: rgba(255, 255, 255, 0.3);
+    width: 80px;
+    text-align: center;
     border: 1px solid #ffffff;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
   }
   .level_1_menu {
     font-size: 14px;
@@ -167,7 +179,8 @@
       margin-top: 15px;
       input {
         width: 80px;
-        background: #22a01b;
+        background: #8847dc;
+        //background: #22a01b;
         border: 0;
         outline: 0;
         color: #FFFFFF;
@@ -215,7 +228,8 @@
         border-bottom: 0.1px solid rgba(200, 200, 200, 0.3);
       }
       li:hover {
-        border-left: 1px solid #4bb134;
+        //border-left: 1px solid #4bb134;
+        border-left: 1px solid #8847dc;
         background: #ececec;
         input {
           background: #f7f7f9;
@@ -246,7 +260,8 @@
       float: left;
       width: 2px;
       height: 20px;
-      background: #22a01b;
+      //background: #22a01b;
+      background: #8847dc;
       margin: 15px 25px 15px 0;
     }
 
@@ -270,7 +285,8 @@
     .wa_dropdown-item.active, .wa_dropdown-item:active {
       color: #fff;
       text-decoration: none;
-      background-color: #4bb134;
+      //background-color: #4bb134 ;
+      background-color: #8847dc;
     }
 
     .wa_dropdown-item {
@@ -316,8 +332,8 @@
   }
 
   .user-btn {
-    background: #4bb134;
-    border: 0px;
+    background: #8847dc;
+    border: 0;
   }
 
   .show > .dropdown-menu {
