@@ -105,4 +105,3 @@
 * [angular E2E测试](http://www.protractortest.org/#/tutorial)
 ### TODO
 * 多线程下项目人员抖动
-* 禁用浏览器不兼容部分
