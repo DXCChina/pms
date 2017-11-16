@@ -99,7 +99,13 @@
 }
 .taskList {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   text-align: center;
   justify-content: center;
+  .taskList-content {
+    display: flex;
+    flex-flow: row nowrap;
+    text-align: center;
+    justify-content: space-around;
+  }
 }

@@ -175,59 +175,65 @@
             </mat-expansion-panel-header>
 
             <div class="taskList">
-                <div class="taskItem" style="margin-right: 20px">
-                  <d_t-component
-                    [detailDatas]="task"
-                    (retractEvent)="taskRetract($event)"
-                    (modifyEvent)="taskModifyed($event)">
 
-                  </d_t-component>
+              <div class="taskList-content">
+                <div class="taskItem" style="margin: 20px 10px">
+                  <mat-card style="margin: 10px;">
+                    <d_t-component
+                      [detailDatas]="task"
+                      (retractEvent)="taskRetract($event)"
+                      (modifyEvent)="taskModifyed($event)">
 
-                <mat-action-row>
-                    <button mat-button color="primary" (click)="deleteTask(task)">删除</button>
-                  </mat-action-row>
+                    </d_t-component>
+                  </mat-card>
+
                 </div>
+                <div style="margin: 30px 0">
 
-                <div class="sider">
-
+                  <div class="sider">
                     <div class="item">
-                  <mat-card>
-                    <div class="item-card-header">
-                      <h3>BASIC STATISTICS</h3>
-                      <p>FOR:  <b>{{task?.title}}</b></p>
-                    </div>
-                    <div class="item-card-body">
-                      <div class="item-num">
-                        {{task?.cost}}
+                    <mat-card>
+                      <div class="item-card-header">
+                        <h3>BASIC STATISTICS</h3>
+                        <p>FOR:  <b>{{task?.title}}</b></p>
                       </div>
-                      <div>
-                        <p>EXPECTED TIME</p>
-                      </div>
-                    </div>
-                    <div class="item-card-footer">
-
-                      <div class="item-progress">
-                         <mat-progress-spinner
-                            class="example-margin-progress"
-                            [mode]="'determinate'"
-                            [value]="task?.progress">
-                        </mat-progress-spinner>
-
-                        <div class="number">
-                          {{task?.progress}}
+                      <div class="item-card-body">
+                        <div class="item-num">
+                          {{task?.cost}}
+                        </div>
+                        <div>
+                          <p>EXPECTED TIME</p>
                         </div>
                       </div>
+                      <div class="item-card-footer">
 
-                      <div class="show-progress">
-                        DEMAND PROGRESS
+                        <div class="item-progress">
+                           <mat-progress-spinner
+                              class="example-margin-progress"
+                              [mode]="'determinate'"
+                              [value]="task?.progress">
+                          </mat-progress-spinner>
+
+                          <div class="number">
+                            {{task?.progress}}
+                          </div>
+                        </div>
+
+                        <div class="show-progress">
+                          DEMAND PROGRESS
+                        </div>
+
                       </div>
-
-                    </div>
-                  </mat-card>
+                    </mat-card>
+                  </div>
+                  </div>
                 </div>
 
-                </div>
+              </div>
 
+                <mat-action-row>
+                  <button mat-button color="primary" (click)="deleteTask(task)">删除</button>
+                </mat-action-row>
             </div>
 
 
