@@ -9,7 +9,7 @@ import {
   MatTabsModule, MatButtonModule, MatDialogModule, MatTooltipModule, MatSelectModule,
   MatCheckboxModule, MatInputModule, MatListModule, MatSortModule, MatTableModule, MatCommonModule,
   MatProgressBarModule, MatChipsModule, MatCardModule, MatExpansionModule, MatGridListModule, MatDatepickerModule,
-  MatNativeDateModule, MAT_DATE_LOCALE, MatSliderModule, MatIconModule
+  MatNativeDateModule, MAT_DATE_LOCALE, MatSliderModule, MatIconModule, MatProgressSpinnerModule
 } from "@angular/material";
 import {SortableModule}from 'ngx-bootstrap';
 import {NgxChartsModule} from "@swimlane/ngx-charts";
@@ -52,6 +52,7 @@ import {TransferComponent} from "./dashboard/transfer/transfer.component";
     MatTableModule,
     MatSortModule,
     MatChipsModule,
+    MatProgressSpinnerModule,
     MatIconModule,
     MatDatepickerModule,
     MatNativeDateModule,

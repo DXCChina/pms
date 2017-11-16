@@ -88,66 +88,155 @@
 
       </div>
 
-        <div class="row detail_item">
-          <div class="detail_title">
-            <h4></h4>
-          </div>
+      <hr>
 
-          <div class="col-1"></div>
-          <div class="col-10">
-            <div class="row detail_info">
+      <mat-card>
 
-              <d_t-component
+        <div class="wrap">
+          <mat-card class="card-one">
+            <div class="main">
+             <d_t-component
                 [(detailDatas)]="demandDetails"
                 (retractEvent)="retract($event)"
                 (modifyEvent)="modifyed($event)">
 
               </d_t-component>
+            </div>
+          </mat-card>
 
+          <div class="show">
+
+            <mat-card class="card-two">
+
+              <div class="sider">
+
+                <div class="item">
+                  <mat-card>
+                    <div class="item-card-header">
+                      <h3>BASIC STATISTICS</h3>
+                      <p>FOR:  <b>{{demandDetails?.title}}</b></p>
+                    </div>
+                    <div class="item-card-body">
+                      <div class="item-num">
+                        {{taskList?.length}}
+                      </div>
+                      <div>
+                        <p>TASK WAS CREATED</p>
+                      </div>
+                    </div>
+                    <div class="item-card-footer">
+
+                      <div class="item-progress">
+                         <mat-progress-spinner
+                            class="example-margin-progress"
+                            [mode]="'determinate'"
+                            [value]="demandDetails?.progress">
+                        </mat-progress-spinner>
+
+                        <div class="number">
+                          {{demandDetails?.progress}}
+                        </div>
+                      </div>
+
+                      <div class="show-progress">
+                        DEMAND PROGRESS
+                      </div>
+
+                    </div>
+                  </mat-card>
+                </div>
+
+              </div>
+
+            </mat-card>
+
+          </div>
+
+
+        </div>
+
+        <hr>
+
+        <h3>任务列表</h3>
+
+        <hr>
+
+        <mat-accordion>
+
+          <mat-expansion-panel
+            *ngFor="let task of taskList">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <b>{{task.title}}</b>
+              </mat-panel-title>
+              <mat-panel-description>
+                {{task.detail}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+
+            <div class="taskList">
+                <div class="taskItem">
+                  <d_t-component
+              [detailDatas]="task"
+              (retractEvent)="taskRetract($event)"
+              (modifyEvent)="taskModifyed($event)">
+
+            </d_t-component>
+
+                  <mat-action-row>
+                    <button mat-button color="primary" (click)="deleteTask(task)">删除</button>
+                  </mat-action-row>
+                </div>
+
+                <div class="sider">
+
+                <div class="item">
+                  <mat-card>
+                    <div class="item-card-header">
+                      <h3>BASIC STATISTICS</h3>
+                      <p>FOR:  <b>{{task?.title}}</b></p>
+                    </div>
+                    <div class="item-card-body">
+                      <div class="item-num">
+                        {{task?.cost}}
+                      </div>
+                      <div>
+                        <p>EXPECTED TIME</p>
+                      </div>
+                    </div>
+                    <div class="item-card-footer">
+
+                      <div class="item-progress">
+                         <mat-progress-spinner
+                            class="example-margin-progress"
+                            [mode]="'determinate'"
+                            [value]="task?.progress">
+                        </mat-progress-spinner>
+
+                        <div class="number">
+                          {{task?.progress}}
+                        </div>
+                      </div>
+
+                      <div class="show-progress">
+                        DEMAND PROGRESS
+                      </div>
+
+                    </div>
+                  </mat-card>
+                </div>
+
+              </div>
 
             </div>
 
-          </div>
-          <div class="col-1"></div>
 
-        </div>
 
-      <div class="wa-detail" style="width: 90%">
-        <div class="detail_title">
-          <h4>任务列表</h4>
-        </div>
-        <div class="wa-core-info">
+          </mat-expansion-panel>
 
-          <mat-accordion>
+        </mat-accordion>
 
-            <mat-expansion-panel
-              *ngFor="let task of taskList">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <b>{{task.title}}</b>
-                </mat-panel-title>
-                <mat-panel-description>
-                  {{task.detail}}
-                </mat-panel-description>
-              </mat-expansion-panel-header>
-
-                <d_t-component
-                  [detailDatas]="task"
-                  (retractEvent)="taskRetract($event)"
-                  (modifyEvent)="taskModifyed($event)">
-
-                </d_t-component>
-
-                <mat-action-row>
-                  <button mat-button color="primary" (click)="deleteTask(task)">删除</button>
-                </mat-action-row>
-
-            </mat-expansion-panel>
-
-          </mat-accordion>
-
-        </div>
-      </div>
+      </mat-card>
 
     </div>
 

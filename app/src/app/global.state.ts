@@ -4,7 +4,7 @@ import {RequestOptions, Response , Headers} from '@angular/http';
 
 @Injectable()
 export class GlobalState {
-  baseURL: string = 'http://localhost:81';
+  baseURL: string = '';
   isSelectProject:boolean = false;
 
   jwtHeader: string = 'X-TOKEN';
