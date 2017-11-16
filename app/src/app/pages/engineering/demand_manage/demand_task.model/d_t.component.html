@@ -1,6 +1,6 @@
 
 
-<div style="width:900px; margin: 0 auto">
+<div>
 
   <!--<form  (ngSubmit)="onSubmit(picker_Start, picker_End)">-->
 
@@ -26,11 +26,12 @@
 
     </mat-grid-list>
 
-    <mat-grid-list cols="1"  [rowHeight]="70" style="margin-top: 40px">
+    <!--<mat-grid-list cols="1"  [rowHeight]="70" style="margin-top: 40px">-->
 
-      <mat-grid-tile [rowspan]="1">
-        <section class="example-section">
+      <!--<mat-grid-tile [rowspan]="1">-->
+        <!--<section class="example-section">-->
 
+      <div class="demand-list">
           <mat-form-field class="example-margin">
             <mat-select placeholder="选择" (change)="targetChanged($event)" [disabled]="true"  [value]="detailDatas?.demandId ? 'task': 'demand'">
               <mat-option *ngFor="let target of targets" [value]="target.value">{{target.name}}</mat-option>
@@ -66,16 +67,16 @@
 
           </mat-form-field>
 
-      </section>
-      </mat-grid-tile>
+      <!--</section>-->
+      <!--</mat-grid-tile>-->
 
-    </mat-grid-list>
+    <!--</mat-grid-list>-->
 
-    <mat-grid-list cols="1"  [rowHeight]="70" style="margin-top: 20px">
+    <!--<mat-grid-list cols="1"  [rowHeight]="70" style="margin-top: 20px">-->
 
-      <mat-grid-tile [rowspan]="1">
+      <!--<mat-grid-tile [rowspan]="1">-->
 
-        <section class="example-section">
+        <!--<section class="example-section">-->
           <mat-form-field class="example-margin">
 
             <input matInput [(ngModel)]="detailDatas.startDate" name="startDate" [disabled]="true" [matDatepicker]="picker_Start" placeholder="开始日期">
@@ -100,10 +101,12 @@
             <input [(ngModel)]="detailDatas.progress" name="progress" matInput placeholder="完成度(%)">
 
           </mat-form-field>
-        </section>
 
-      </mat-grid-tile>
-    </mat-grid-list>
+    </div>
+        <!--</section>-->
+
+      <!--</mat-grid-tile>-->
+    <!--</mat-grid-list>-->
 
     <hr style="margin-top: 20px"/>
 
