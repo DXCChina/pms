@@ -1,3 +1,111 @@
 .demand_btn {
   margin: 20px 300px;
 }
+.wrap {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+.show {
+  //flex: 1 1 50%;
+  //max-width: 50%;
+}
+.card-one {
+  margin-right: 30px;
+  width: 100%;
+}
+
+.card-two {
+  height: 100%;
+}
+
+.sider {
+  height:100%;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+}
+.item {
+  height: 100%;
+  width: 280px;
+  display: flex;
+  flex-flow: column nowrap;
+  .mat-card {
+    height: 100%;
+    padding: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+  }
+}
+
+.item-card-header {
+  height:134px;
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  h3 {
+    margin-top: 20px;
+  }
+  p {
+    margin-top: 10px;
+    b {
+      color: #8847dc;
+    }
+  }
+}
+.item-card-body {
+  border-top: 1px solid rgba(0,0,0,.12);
+  height: 66px;
+  background: rgba(0, 0, 0, .34);
+  display: flex;
+  flex-flow: row nowrap;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  p {
+    color: white;
+    margin: 20px 0 0 10px;
+  }
+}
+.item-card-footer {
+  height: auto;
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
+  justify-content: center;
+}
+.item-num {
+  color: white;
+  font-size: 4em;
+
+}
+.example-margin-progress {
+  height:200px;
+  width: 200px;
+  margin: 50px auto;
+}
+.number {
+  color: rgba(0, 0, 0, .54);
+  font-size: 2.5em;
+  margin: -109px 0 100px 0;
+  //position: absolute;
+  //top: 290px;
+  //left: 110px;
+}
+.taskList {
+  display: flex;
+  flex-flow: column nowrap;
+  text-align: center;
+  justify-content: center;
+  .taskList-content {
+    display: flex;
+    flex-flow: row nowrap;
+    text-align: center;
+    justify-content: space-around;
+  }
+}

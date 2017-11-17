@@ -103,3 +103,5 @@
 * [flask 接口测试](http://flask.pocoo.org/docs/dev/testing/)
 * [angular 单元测试](https://angular.cn/guide/testing)
 * [angular E2E测试](http://www.protractortest.org/#/tutorial)
+### TODO
+* 多线程下项目人员抖动

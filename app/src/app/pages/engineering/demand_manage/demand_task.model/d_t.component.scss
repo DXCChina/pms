@@ -15,3 +15,12 @@
 .asc {
   display: none;
 }
+
+.demand-list {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+.example-margin {
+  margin: 20px 0 0 0;
+}

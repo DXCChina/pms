@@ -54,10 +54,10 @@
       padding-right: 8px;
     }
     .count-pro {
-      color: blue;
+      color: #8847dc;
     }
     .count-dev {
-      color: #4bb134;
+      color: #8847dc;
     }
   }
 }
@@ -98,7 +98,8 @@ ul {
   padding:4px;
   width: auto;
   height: 115px;
-  background: rgba(75, 177, 52, 1);
+  //background: rgba(75, 177, 52, 1) ;
+  background: #8847dc;
   border-radius: 3px;
   h3 {
     margin: 26px 0 10px 30px;
@@ -128,7 +129,8 @@ ul li .proItem-addMain:hover {
 }
 
 ul li .proItem-Content:hover {
-  background: rgba(75, 177, 52, 0.9);
+  //background: rgba(75, 177, 52, 0.9);
+  background: #8847dc;
 }
 
 @media screen and (max-width: 990px) {

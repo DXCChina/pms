@@ -45,7 +45,7 @@
       <span>删除</span>
     </button>
     <button mat-button color="primary" id="createBtn" (click)="createDemand()">
-      <svg fill="#4bb134" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+      <svg fill="#8847dc" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
         <path d="M0 0h24v24H0z" fill="none"/>
       </svg>
@@ -88,66 +88,160 @@
 
       </div>
 
-        <div class="row detail_item">
-          <div class="detail_title">
-            <h4></h4>
-          </div>
+      <hr>
 
-          <div class="col-1"></div>
-          <div class="col-10">
-            <div class="row detail_info">
+      <mat-card>
 
+        <div class="wrap">
+          <mat-card class="card-one">
+            <div class="main">
               <d_t-component
                 [(detailDatas)]="demandDetails"
                 (retractEvent)="retract($event)"
                 (modifyEvent)="modifyed($event)">
 
               </d_t-component>
+            </div>
+          </mat-card>
 
+          <div class="show">
+
+            <!--<mat-card class="card-two">-->
+
+            <div class="sider">
+
+              <div class="item">
+                <mat-card>
+                  <div class="item-card-header">
+                    <h3>BASIC STATISTICS</h3>
+                    <p>FOR: <b>{{demandDetails?.title}}</b></p>
+                  </div>
+                  <div class="item-card-body">
+                    <div class="item-num">
+                      {{taskList?.length}}
+                    </div>
+                    <div>
+                      <p>TASK WAS CREATED</p>
+                    </div>
+                  </div>
+                  <div class="item-card-footer">
+
+                    <div class="item-progress">
+                      <mat-progress-spinner
+                        class="example-margin-progress"
+                        [mode]="'determinate'"
+                        [value]="demandDetails?.progress">
+                      </mat-progress-spinner>
+
+                      <div class="number">
+                        {{demandDetails?.progress}}
+                      </div>
+                    </div>
+
+                    <div class="show-progress">
+                      DEMAND PROGRESS
+                    </div>
+
+                  </div>
+                </mat-card>
+              </div>
 
             </div>
 
+            <!--</mat-card>-->
+
           </div>
-          <div class="col-1"></div>
+
 
         </div>
 
-      <div class="wa-detail" style="width: 90%">
-        <div class="detail_title">
-          <h4>任务列表</h4>
-        </div>
-        <div class="wa-core-info">
+        <hr>
 
-          <mat-accordion>
+        <h3>任务列表</h3>
 
-            <mat-expansion-panel
-              *ngFor="let task of taskList">
-              <mat-expansion-panel-header>
-                <mat-panel-title>
-                  <b>{{task.title}}</b>
-                </mat-panel-title>
-                <mat-panel-description>
-                  {{task.detail}}
-                </mat-panel-description>
-              </mat-expansion-panel-header>
+        <hr>
 
-                <d_t-component
-                  [detailDatas]="task"
-                  (retractEvent)="taskRetract($event)"
-                  (modifyEvent)="taskModifyed($event)">
+        <mat-accordion>
 
-                </d_t-component>
+          <mat-expansion-panel
+            *ngFor="let task of taskList">
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <b>{{task.title}}</b>
+              </mat-panel-title>
+              <mat-panel-description>
+                {{task.detail}}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
 
-                <mat-action-row>
-                  <button mat-button color="primary" (click)="deleteTask(task)">删除</button>
-                </mat-action-row>
+            <div class="taskList">
 
-            </mat-expansion-panel>
+              <div class="taskList-content">
+                <div class="taskItem" style="margin: 20px 10px">
+                  <mat-card style="margin: 10px;">
+                    <d_t-component
+                      [detailDatas]="task"
+                      (retractEvent)="taskRetract($event)"
+                      (modifyEvent)="taskModifyed($event)">
 
-          </mat-accordion>
+                    </d_t-component>
+                  </mat-card>
 
-        </div>
-      </div>
+                </div>
+                <div style="margin: 30px 0">
+
+                  <div class="sider">
+                    <div class="item">
+                      <mat-card>
+                        <div class="item-card-header">
+                          <h3>BASIC STATISTICS</h3>
+                          <p>FOR: <b>{{task?.title}}</b></p>
+                        </div>
+                        <div class="item-card-body">
+                          <div class="item-num">
+                            {{task?.cost}}
+                          </div>
+                          <div>
+                            <p>EXPECTED TIME</p>
+                          </div>
+                        </div>
+                        <div class="item-card-footer">
+
+                          <div class="item-progress">
+                            <mat-progress-spinner
+                              class="example-margin-progress"
+                              [mode]="'determinate'"
+                              [value]="task?.progress">
+                            </mat-progress-spinner>
+
+                            <div class="number">
+                              {{task?.progress}}
+                            </div>
+                          </div>
+
+                          <div class="show-progress">
+                            DEMAND PROGRESS
+                          </div>
+
+                        </div>
+                      </mat-card>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <mat-action-row>
+                <button mat-button color="primary" (click)="deleteTask(task)">删除</button>
+              </mat-action-row>
+            </div>
+
+
+          </mat-expansion-panel>
+
+        </mat-accordion>
+
+      </mat-card>
 
     </div>
 

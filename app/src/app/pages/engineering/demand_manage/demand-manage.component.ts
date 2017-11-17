@@ -69,8 +69,7 @@ export class DemandManageComponent implements OnInit {
   demandSelected(selected: any) {
     this.selectId = selected.id;
     this.demandDetail(selected.id);
-    this.getTaskList(selected.id)
-    // console.log(selected)
+    this.getTaskList(selected.id);
   }
 
   demandSearch(search: any) {
