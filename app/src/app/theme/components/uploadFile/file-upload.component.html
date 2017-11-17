@@ -28,7 +28,7 @@
   <!--<span *ngIf="progress === 100">{{originalName}}</span>-->
 
   <input class="uploadFile" ngFileSelect [options]="options" (onUpload)="handleUpload($event)"
-         (beforeUpload)="beforeUpload($event)" [id]="name" type="file" [name]="name" [disabled]="!uploading && disable">
+         (beforeUpload)="beforeUpload($event)" [id]="name" type="file" [name]="name" [disabled]="!onUploading && disable">
   <!--<progress class="progress progress-striped progress-info" [value]="progress" max="100" *ngIf="progress > 0"></progress>-->
 
 </div>

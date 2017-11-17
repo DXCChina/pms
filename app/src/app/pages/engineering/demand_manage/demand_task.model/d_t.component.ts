@@ -38,7 +38,7 @@ export class D_tComponent implements OnInit {
     this.retractEvent.emit(true)
   }
 
-  modifyed(title: any) {
+  modifyed() {
     console.log('---ttt---', this.ttt, this.detailDatas.memberId);
     console.log(this.detailDatas);
     this.modifyEvent.emit(this.detailDatas)
