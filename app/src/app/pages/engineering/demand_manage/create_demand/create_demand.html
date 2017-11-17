@@ -87,14 +87,14 @@
         <section class="example-section">
           <mat-form-field class="example-margin">
 
-            <input matInput [value]="pickerStart"  [matDatepicker]="picker_Start" placeholder="开始日期">
+            <input matInput  [matDatepicker]="picker_Start" placeholder="开始日期">
             <mat-datepicker-toggle matSuffix [for]="picker_Start"></mat-datepicker-toggle>
             <mat-datepicker #picker_Start></mat-datepicker>
 
           </mat-form-field>
           <mat-form-field class="example-margin">
 
-            <input matInput [value]="pickerEnd" [matDatepicker]="picker_End" placeholder="计划完成日期">
+            <input matInput [matDatepicker]="picker_End" placeholder="计划完成日期">
             <mat-datepicker-toggle matSuffix [for]="picker_End"></mat-datepicker-toggle>
             <mat-datepicker #picker_End></mat-datepicker>
 
