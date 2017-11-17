@@ -21,7 +21,7 @@ export class TransferComponent implements OnChanges {
   constructor(private elementRef: ElementRef) { }
 
   ngOnChanges() {
-    this.initData()
+    this.initData();
   }
 
   initData() {
@@ -45,31 +45,31 @@ export class TransferComponent implements OnChanges {
   }
 
   deleteOpt() {
-    let a = this.selectListEl['selectedOptions'].selected.map(el => {
+    const a = this.selectListEl['selectedOptions'].selected.map(el => {
       return parseInt(el.value)
-    })
+    });
     a.forEach(el => {
-      this.selectedIdArr.indexOf(el)==-1?null:this.selectedIdArr.splice(this.selectedIdArr.indexOf(el),1);
+      this.selectedIdArr.indexOf(el) === -1 ? null : this.selectedIdArr.splice(this.selectedIdArr.indexOf(el), 1);
     });
     this.initData()
-    this.selectListEl['deselectAll']()
-    this.allListEl['deselectAll']()
-        
-    this.changeOpt.emit(this.selectedIdArr)
+    this.selectListEl['deselectAll']();
+    this.allListEl['deselectAll']();
+
+    this.changeOpt.emit(this.selectedIdArr);
   }
 
   addOpt() {
-    let a = this.allListEl['selectedOptions'].selected.map(el => {
+    const a = this.allListEl['selectedOptions'].selected.map(el => {
       return parseInt(el.value)
-    })
-    a.forEach(el => {
-      this.selectedIdArr.indexOf(el)==-1?this.selectedIdArr.push(el):null;
     });
-    this.initData()
-    this.selectListEl['deselectAll']()
-    this.allListEl['deselectAll']()    
+    a.forEach(el => {
+      this.selectedIdArr.indexOf(el) === -1 ? this.selectedIdArr.push(el) : null;
+    });
+    this.initData();
+    this.selectListEl['deselectAll']();
+    this.allListEl['deselectAll']();
 
-    this.changeOpt.emit(this.selectedIdArr)
+    this.changeOpt.emit(this.selectedIdArr);
   }
 
 }
