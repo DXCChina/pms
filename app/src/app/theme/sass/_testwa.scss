@@ -286,18 +286,6 @@ input:focus {
   outline: none;
 }
 
-.dropdown-item .active, .dropdown-item:active {
-  background-color: #4bb134;
-}
-
-.level_1_menu {
-  .dropdown-item.active, .dropdown-item:active {
-    color: #fff;
-    text-decoration: none;
-    background-color: #fcfcfc;
-  }
-}
-
 .row.detail_info {
   margin-top:10px;
   p {
