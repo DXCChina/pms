@@ -26,7 +26,7 @@
     <p>项目信息</p>
   </div>
   <div class="row" style="padding: 0 40px">
-    <form style="width: 60%; margin: 0 auto;">
+    <mat-card style="width: 60%; margin: 0 auto; padding-top: 36px;">
       <mat-form-field style="width: 100%">
         <input [(ngModel)]="detailData.name" [formControl]="formCtl" matInput placeholder="项目名称" name="proName">
         <mat-error *ngIf="formCtl.hasError('required')">
@@ -40,11 +40,11 @@
       </mat-form-field>
 
       <br>
-      <div style="margin: 12px auto;display: table;">
+      <div style="margin:0 auto;display: table;">
         <button mat-button color="primary" (click)="cancelProject()" style="margin-right: 100px;">撤回</button>
         <button mat-button color="primary" (click)="updateProject()">修改</button>
       </div>
-    </form>
+    </mat-card>
   </div>
 
   <div class="row content-Title">

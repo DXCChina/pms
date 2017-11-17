@@ -10,7 +10,7 @@ import 'rxjs/Rx'
   selector: 'app',
   styleUrls: ['./app.component.scss'],
   template: `
-    <main [class.menu-collapsed]="isMenuCollapsed" baThemeRun>
+    <main baThemeRun>
       <div class="additional-bg"></div>
       <router-outlet></router-outlet>
     </main>
