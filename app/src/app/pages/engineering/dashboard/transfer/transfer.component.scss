@@ -7,15 +7,30 @@
         min-width: 200px;
         width: 40%;
         height: 100%;
-        overflow: auto;
+        overflow: hidden;
         .tranfer-card-title{
             position: absolute;
-            top: 24px;
-            left: 24px;
+            top: 0;
+            padding: 24px 24px;
+            left: 0;
+            height: 25%;
+            width: 100%;
+            background: #fff;
             font-size: 16px;
+            span{
+                float: right;
+                font-size: 14px;
+            }
         }
         .mat-selection-list{
-            margin-top:18px;
+            position: absolute;
+            bottom: 10%;
+            left: 10%;
+            margin: 0;
+            padding: 0;
+            width: 80%;
+            height: 65%;
+            overflow: auto;
         }
     }
     .transfer-btn{
