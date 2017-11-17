@@ -1,6 +1,6 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { DashboardService } from "./dashboard.service";
+import { DashboardService } from './dashboard.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,19 +14,19 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit {
 
   // 项目ID
-  projectId: string
+  projectId: string;
 
   // 保存现有数据
-  userlist: any[] // 全部用户
-  projectDetail: any // 项目详情
-  projectUser: any[] // 项目成员
+  userlist: any[]; // 全部用户
+  projectDetail: any; // 项目详情
+  projectUser: any[]; // 项目成员
 
   // 修改后的数据
   detailData: any = {
-    name: "",
-    detail: ""
-  } // 项目详情
-  userData: any // 项目成员ID数组
+    name: '',
+    detail: ''
+  }; // 项目详情
+  userData: any; // 项目成员ID数组
 
   // 表单验证
   formCtl: FormControl;
@@ -44,7 +44,7 @@ export class DashboardComponent implements OnInit {
     this.formCtl = new FormControl(this.detailData.name, Validators.required);
   }
 
-  //初始化数据 调用三个接口
+  // 初始化数据 调用三个接口
   getData() {
     this.getProjectDetail();
     this.getProjectUser();
@@ -56,12 +56,12 @@ export class DashboardComponent implements OnInit {
     this.service.getUserlist()
       .then(res => {
         this.userlist = [];
-        for (var index in res) {
+        for (const index in res) {
           if (res.hasOwnProperty(index)) {
             this.userlist.push(res[index]);
           }
         }
-      }).catch(err => console.log(err))
+      }).catch(err => console.log(err));
   }
 
   // 获取项目详情
@@ -70,7 +70,7 @@ export class DashboardComponent implements OnInit {
       .then(res => {
         this.projectDetail = Object.assign({}, res);
         this.detailData = Object.assign({}, res);
-      }).catch(err => console.log(err))
+      }).catch(err => console.log(err));
   }
 
   // 获取项目成员
@@ -79,12 +79,12 @@ export class DashboardComponent implements OnInit {
       .then(res => {
         this.projectUser = Object.assign({}, res);
         this.userData = [];
-        for (var index in res) {
+        for (const index in res) {
           if (res.hasOwnProperty(index)) {
-            this.userData.push(res[index].memberId);            
+            this.userData.push(res[index].memberId);
           }
         }
-      }).catch(err => console.log(err))
+      }).catch(err => console.log(err));
   }
 
   // 修改项目详情
@@ -93,7 +93,7 @@ export class DashboardComponent implements OnInit {
       .then(res => {
         this.projectDetail = Object.assign({}, res);
         this.detailData = Object.assign({}, res);
-      }).catch(err => console.log(err))
+      }).catch(err => console.log(err));
   }
 
   // 修改项目成员
@@ -102,12 +102,12 @@ export class DashboardComponent implements OnInit {
       .then(res => {
         this.projectUser = Object.assign({}, res);
         this.userData = [];
-        for (var index in res) {
+        for (const index in res) {
           if (res.hasOwnProperty(index)) {
             this.userData.push(res[index].memberId);
           }
         }
-      }).catch(err => console.log(err))
+      }).catch(err => console.log(err));
   }
 
   // 取消修改项目详情
@@ -120,12 +120,12 @@ export class DashboardComponent implements OnInit {
     this.putProjectDetail({
       name: this.detailData.name,
       detail: this.detailData.detail
-    })
+    });
   }
 
   // 修改项目成员
   changeUser(newUser) {
-    this.putProjectUser({memberIdArr:newUser})
+    this.putProjectUser({ memberIdArr: newUser });
   }
 
 }
