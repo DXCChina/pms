@@ -20,7 +20,7 @@ import {DashboardComponent} from "./dashboard/dashboard.component";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {ScriptSearchComponent} from "../common/scriptSearch/scriptSearch.component";
 import {DemandManageComponent} from "./demand_manage/demand-manage.component";
-import {ReportManageComponent} from "./report_manage/report-manage.component";
+// import {ReportManageComponent} from "./report_manage/report-manage.component";
 import {CreateDemandComponent} from "./demand_manage/create_demand/create_demand.component";
 import {CKEditorModule} from "ng2-ckeditor";
 import {DemandService} from "./demand_manage/demand.service";
@@ -69,7 +69,7 @@ import {TransferComponent} from "./dashboard/transfer/transfer.component";
     EngineeringComponent,
     DashboardComponent,
     ScriptSearchComponent,
-    ReportManageComponent,
+    // ReportManageComponent,
     DemandManageComponent,
     CreateDemandComponent,
     D_tComponent,
