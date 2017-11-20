@@ -19,6 +19,10 @@ export const routes: Routes = [
         path: 'user',
         loadChildren: "app/pages/user/user.module#UserModule"
       },
+      {
+        path: 'pm',
+        loadChildren: "app/pages/pm/pm.module#PmModule"
+      },
       {path: '', redirectTo: 'welcome', pathMatch: 'full'}
     ]
   }
