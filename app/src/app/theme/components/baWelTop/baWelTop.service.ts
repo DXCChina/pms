@@ -12,12 +12,6 @@ export class BaWelTopService {
   constructor(private _http: InterceptableHttp) {
   }
 
-  findProjectList(url: string): Promise<any> {
-    return this._http.get(url).toPromise()
-      .then(this.extractData)
-      .catch(this.handleError)
-  }
-
   extractData(res: Response) {
     let body = res.json();
     return body || {};

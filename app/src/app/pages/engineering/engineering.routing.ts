@@ -10,10 +10,10 @@ export const routes: Routes = [
     component: EngineeringComponent,
     children: [
       {
-        path: 'dashboard', component: DashboardComponent
+        path: 'dashboard', component: DashboardComponent, data:{isShowNav:true}
       },
       {
-        path: 'demand', component: DemandManageComponent
+        path: 'demand', component: DemandManageComponent, data:{isShowNav:true}
       },
       {
         path: '', redirectTo: 'dashboard', pathMatch: 'full'
