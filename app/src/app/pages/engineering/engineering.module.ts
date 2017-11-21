@@ -25,7 +25,6 @@ import {CreateDemandComponent} from "./demand_manage/create_demand/create_demand
 import {CKEditorModule} from "ng2-ckeditor";
 import {DemandService} from "./demand_manage/demand.service";
 import {D_tComponent} from "./demand_manage/demand_task.model/d_t.component";
-import {DemandSearchComponent} from "../common/demandSearch/demandSearch.component";
 import {TransferComponent} from "./dashboard/transfer/transfer.component";
 
 @NgModule({
@@ -73,7 +72,6 @@ import {TransferComponent} from "./dashboard/transfer/transfer.component";
     DemandManageComponent,
     CreateDemandComponent,
     D_tComponent,
-    DemandSearchComponent,
     TransferComponent
   ],
   entryComponents: [

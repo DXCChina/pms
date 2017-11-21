@@ -77,6 +77,7 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {WaDatableComponent} from "./components/wa-datatable/wa-datatable.component";
 import {DeviceManageComponent} from "./components/device_manage/device-manage.component";
 import {DeviceItemComponent} from "./components/device_manage/device-item/device-item.component";
+import {DemandSearchComponent} from "./components/demandSearch/demandSearch.component";
 
 const NGA_COMPONENTS = [
   BaAmChart,
@@ -109,7 +110,8 @@ const NGA_COMPONENTS = [
   NgxTreeComponent,
   WaDatableComponent,
   DeviceManageComponent,
-  DeviceItemComponent
+  DeviceItemComponent,
+  DemandSearchComponent
 ];
 
 const NGA_DIRECTIVES = [
