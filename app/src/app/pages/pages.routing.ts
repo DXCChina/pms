@@ -23,6 +23,14 @@ export const routes: Routes = [
         path: 'pm',
         loadChildren: "app/pages/pm/pm.module#PmModule"
       },
+      {
+        path: 'dev',
+        loadChildren: "app/pages/dev/dev.module#DevModule"
+      },
+      {
+        path: 'test',
+        loadChildren: "app/pages/test/test.module#TestModule"
+      },
       {path: '', redirectTo: 'welcome', pathMatch: 'full'}
     ]
   }
