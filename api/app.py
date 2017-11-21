@@ -8,8 +8,8 @@ from datetime import timedelta
 from os import environ
 from flask import Flask  #, jsonify
 from flask_jwt_extended import (JWTManager)
-from controller import bps
 from peewee import InternalError
+from controller import bps
 from model.db import database
 from model.user import User
 

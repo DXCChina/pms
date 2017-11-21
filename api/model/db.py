@@ -4,12 +4,11 @@ python -m pwiz -e mysql -H 122.115.49.94 -u pms pms > api/model/pms.py
 @author: Wang Jianhui
 '''
 
-from peewee import *
 import logging
-# from datetime import datetime
 from os import environ
 from pymysql import cursors, connect
 from playhouse.pool import PooledMySQLDatabase
+from peewee import Model, DoesNotExist
 
 logger = logging.getLogger('peewee')
 logger.setLevel(
@@ -33,7 +32,7 @@ DB_CONF = {
     'stale_timeout':
     300  # 5 minutes.
 }
-print('\n\n','数据库配置:', DB_CONF, '\n\n')
+print('\n\n', '数据库配置:', DB_CONF, '\n\n')
 # peewee 实现
 database = PooledMySQLDatabase(**DB_CONF)
 # pymysql 实现
@@ -49,62 +48,59 @@ class MySQLModel(Model):
 
     @classmethod
     def getOne(cls, *query, **kwargs):
-        #查询不到返回None，而不抛出异常
+        # 数据不存在返回None，而不是抛出异常
         try:
             return cls.get(*query, **kwargs)
         except DoesNotExist:
             return None
 
 
-class Demand(MySQLModel):
-    cost = IntegerField(null=True)
-    createat = DateTimeField(db_column='createAt')
-    detail = TextField(null=True)
-    enddate = CharField(db_column='endDate', null=True)
-    level = CharField()
-    ownerid = IntegerField(db_column='ownerId')
-    progress = IntegerField(null=True)
-    projectid = IntegerField(db_column='projectId')
-    startdate = CharField(db_column='startDate')
-    status = CharField()
-    title = CharField()
+# class Demand(MySQLModel):
+#     cost = IntegerField(null=True)
+#     createat = DateTimeField(db_column='createAt')
+#     detail = TextField(null=True)
+#     enddate = CharField(db_column='endDate', null=True)
+#     level = CharField()
+#     ownerid = IntegerField(db_column='ownerId')
+#     progress = IntegerField(null=True)
+#     projectid = IntegerField(db_column='projectId')
+#     startdate = CharField(db_column='startDate')
+#     status = CharField()
+#     title = CharField()
 
-    class Meta:
-        db_table = 'demand'
+#     class Meta:
+#         db_table = 'demand'
 
+# class Project(MySQLModel):
+#     createat = DateTimeField(db_column='createAt')
+#     detail = TextField(null=True)
+#     name = CharField(unique=True)
+#     ownerid = IntegerField(db_column='ownerId')
+#     status = CharField()
 
-class Project(MySQLModel):
-    createat = DateTimeField(db_column='createAt')
-    detail = TextField(null=True)
-    name = CharField(unique=True)
-    ownerid = IntegerField(db_column='ownerId')
-    status = CharField()
+#     class Meta:
+#         db_table = 'project'
 
-    class Meta:
-        db_table = 'project'
+# class Projectmember(MySQLModel):
+#     memberid = IntegerField(db_column='memberId')
+#     projectid = IntegerField(db_column='projectId')
 
+#     class Meta:
+#         db_table = 'projectmember'
 
-class Projectmember(MySQLModel):
-    memberid = IntegerField(db_column='memberId')
-    projectid = IntegerField(db_column='projectId')
+# class Task(MySQLModel):
+#     cost = FloatField(null=True)
+#     createat = DateTimeField(db_column='createAt')
+#     demandid = IntegerField(db_column='demandId')
+#     detail = TextField(null=True)
+#     enddate = CharField(db_column='endDate', null=True)
+#     level = CharField()
+#     memberid = IntegerField(db_column='memberId')
+#     ownerid = IntegerField(db_column='ownerId')
+#     progress = IntegerField(null=True)
+#     startdate = CharField(db_column='startDate')
+#     status = CharField()
+#     title = CharField()
 
-    class Meta:
-        db_table = 'projectmember'
-
-
-class Task(MySQLModel):
-    cost = FloatField(null=True)
-    createat = DateTimeField(db_column='createAt')
-    demandid = IntegerField(db_column='demandId')
-    detail = TextField(null=True)
-    enddate = CharField(db_column='endDate', null=True)
-    level = CharField()
-    memberid = IntegerField(db_column='memberId')
-    ownerid = IntegerField(db_column='ownerId')
-    progress = IntegerField(null=True)
-    startdate = CharField(db_column='startDate')
-    status = CharField()
-    title = CharField()
-
-    class Meta:
-        db_table = 'task'
+#     class Meta:
+#         db_table = 'task'

@@ -4,9 +4,9 @@
 @author: Wang Jianhui
 '''
 
-from peewee import *
-from model.db import MySQLModel
 from datetime import datetime
+from peewee import DateTimeField, FixedCharField
+from model.db import MySQLModel
 
 
 class User(MySQLModel):
