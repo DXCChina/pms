@@ -42,6 +42,17 @@ def add_claims_to_access_token(user):
     return user
 
 
+@app.before_request
+def _db_connect():
+    database.connect()
+
+
+@app.teardown_request
+def _db_close():
+    if not database.is_closed():
+        database.close()
+
+
 # @app.errorhandler(404)
 # def not_found():
 #     '''自定义404提示信息'''
@@ -52,13 +63,10 @@ for bp in bps:
 
 if __name__ == "__main__":
     try:
-        database.connect()
-        print('初始化数据库', '\n\n\n\n')
+        print('初始化数据库')
         database.create_tables([User])
     except InternalError:
         pass
-    finally:
-        database.close()
 
     app.run(
         host='PY_IP' in environ and environ['PY_IP'] or "0.0.0.0",

@@ -33,7 +33,7 @@ DB_CONF = {
     'stale_timeout':
     300  # 5 minutes.
 }
-print('数据库配置:', DB_CONF, '\n\n\n\n')
+print('\n\n','数据库配置:', DB_CONF, '\n\n')
 # peewee 实现
 database = PooledMySQLDatabase(**DB_CONF)
 # pymysql 实现
