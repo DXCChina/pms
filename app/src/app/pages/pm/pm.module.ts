@@ -7,6 +7,7 @@ import {PmDashboardComponent} from "./pm-dashboard.component/pm-dashboard.compon
 import {PmDemandComponent} from "./pm-demand.component/pm-demand.component";
 import {PmComponent} from "./pm.component";
 import {PmActivityComponent} from "./pm-activity.component/pm-activity.component";
+import {MatButtonModule, MatCardModule, MatChipsModule} from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,11 @@ import {PmActivityComponent} from "./pm-activity.component/pm-activity.component
     CommonModule,
     FormsModule,
     NgaModule,
-    routing
+    routing,
+
+    MatCardModule,
+    MatChipsModule,
+    MatButtonModule
   ],
   providers: [
 

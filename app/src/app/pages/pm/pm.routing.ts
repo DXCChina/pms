@@ -21,11 +21,6 @@ export const routes: Routes = [
       {
         path: 'activity',
         component: PmActivityComponent
-      },
-      {
-        path: '',
-        redirectTo: 'dashboard',
-        pathMatch: 'full'
       }
     ]
   }
