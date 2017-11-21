@@ -7,14 +7,19 @@ import {PmDashboardComponent} from "./pm-dashboard.component/pm-dashboard.compon
 import {PmDemandComponent} from "./pm-demand.component/pm-demand.component";
 import {PmComponent} from "./pm.component";
 import {PmActivityComponent} from "./pm-activity.component/pm-activity.component";
-import {MatButtonModule, MatCardModule, MatChipsModule} from "@angular/material";
+import {
+  MatButtonModule, MatCardModule, MatChipsModule, MatFormFieldModule, MatInputModule,
+  MatListModule
+} from "@angular/material";
+import {PmPeoplemanageComponent} from "./pm-peoplemanage/pm-peoplemanage.component";
 
 @NgModule({
   declarations: [
     PmComponent,
     PmDashboardComponent,
     PmDemandComponent,
-    PmActivityComponent
+    PmActivityComponent,
+    PmPeoplemanageComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +29,10 @@ import {MatButtonModule, MatCardModule, MatChipsModule} from "@angular/material"
 
     MatCardModule,
     MatChipsModule,
-    MatButtonModule
+    MatButtonModule,
+    MatInputModule,
+    MatListModule,
+    MatFormFieldModule
   ],
   providers: [
 

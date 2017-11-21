@@ -1,0 +1,41 @@
+.mat-list-item {
+  border-bottom: 1px solid rgb(238, 238, 238);
+}
+p {
+  text-align: center;
+  margin: 6px auto;
+}
+.people-item-body {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+}
+
+.people-item-header {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  .people-item-title {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    .item-cell {
+      font-size: 14px;
+    }
+  }
+  .people-item-control {
+    width: 40px;
+    height:100%;
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
