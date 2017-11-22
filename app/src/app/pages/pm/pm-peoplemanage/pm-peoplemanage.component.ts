@@ -13,7 +13,7 @@ import {add} from "./pm-peoplemanage.animation";
 })
 export class PmPeoplemanageComponent implements AfterViewInit{
   dataListModel: PeopleManageModel[] = [];
-  post: any;
+  post: any = 'pm';
   data: any[] = [];
   showField: string = 'name';
   inputName: string = '';

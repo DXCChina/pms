@@ -36,6 +36,7 @@ export class DemandSearchComponent {
   }
 
   choose(item: any){
+    this.showDemandList = false;
     this.name = item.title;
     this.demandList = [];
     this.chooseData.emit(item);
