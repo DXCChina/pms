@@ -1,5 +1,5 @@
 import {
-  AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, QueryList, Renderer2, ViewChild,
+  AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, Output, QueryList, Renderer2, ViewChild,
   ViewChildren
 } from "@angular/core";
 import {PeopleManageModel} from "./pm-peoplemanage.model";
@@ -11,10 +11,10 @@ import {add} from "./pm-peoplemanage.animation";
   styleUrls: ['./pm-peoplemanage.component.scss'],
   animations: [add]
 })
-export class PmPeoplemanageComponent implements AfterViewInit{
+export class PmPeoplemanageComponent implements AfterViewInit {
   dataListModel: PeopleManageModel[] = [];
   post: any = 'pm';
-  data: any[] = [];
+  datas: any[] = [];
   showField: string = 'name';
   inputName: string = '';
 
@@ -35,7 +35,7 @@ export class PmPeoplemanageComponent implements AfterViewInit{
       { name: '邮箱', value: 'email' },
       { name: '时间', value: 'date' },
     ];
-    this.data = [
+    this.datas = [
       {
         name: 'jerry',
         job: 'PM',
@@ -67,8 +67,13 @@ export class PmPeoplemanageComponent implements AfterViewInit{
   }
 
   ngAfterViewInit() {
+    this.modifyStyle();
+  }
+
+  modifyStyle() {
     let width = (100 / this.dataListModel.length).toString().substr(0, 4) + '%';
     let cellList = this.ref.nativeElement.querySelectorAll('.item-cell');
+    console.log(cellList.length);
     cellList.forEach(cell => {
       this.Renderer.setStyle(cell, 'width', width);
     });
@@ -76,13 +81,16 @@ export class PmPeoplemanageComponent implements AfterViewInit{
 
   delete(item: any) {
     console.log('delete: ', item);
-    this.data = this.data.filter(data => data !== item);
+    this.datas = this.datas.filter(data => data !== item);
   }
 
   create() {
     this.state = this.state === 'active' ? 'inactive' : 'active';
     this.choosedData.job = this.post;
-    this.data.push(this.choosedData);
+    this.datas.push(this.choosedData);
+    setTimeout( () => {
+      this.modifyStyle();
+    }, 0);
     this.searchList = [];
     this.showList = false;
     this.inputName = '';

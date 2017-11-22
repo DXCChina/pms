@@ -12,21 +12,25 @@
      </div>
   </mat-list-item>
 </mat-list>
+
 <mat-nav-list>
-  <mat-list-item *ngFor="let data of data">
-     <div class="people-item-body">
-        <p *ngFor="let item of dataListModel" class="item-cell">
-          {{data[item.value]}}
-        </p>
-     </div>
-     <button mat-icon-button (click)="delete(data)">
-        <svg fill="#757575" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-            <path d="M0 0h24v24H0z" fill="none"/>
-        </svg>
-     </button>
-  </mat-list-item>
+  <div [@peopleList]="datas.length">
+    <mat-list-item *ngFor="let data of datas" [ngClass]="{'people-part': true}">
+       <div class="people-item-body">
+          <p *ngFor="let item of dataListModel" class="item-cell">
+            {{data[item.value]}}
+          </p>
+       </div>
+       <button mat-icon-button (click)="delete(data)">
+          <svg fill="#757575" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+          </svg>
+       </button>
+    </mat-list-item>
+  </div>
 </mat-nav-list>
+
 <mat-list>
 
   <mat-list-item class="people-add-item" [@add]="state">
