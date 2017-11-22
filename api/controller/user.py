@@ -95,13 +95,17 @@ def login():
     account = user.findOneByName(data['username'])
     if not account:
         return jsonify({"msg": {'username': '用户名不存在'}}), 400
-    elif argon2.verify(data['password'], account['password']):
-        account.pop('password', None)
-        account.pop('createAt', None)
-        access_token = create_access_token(identity=account, fresh=True)
+    elif argon2.verify(data['password'], account.password):
+        access_token = create_access_token(
+            identity={
+                'id': account.id,
+                'username': account.username,
+                'email': account.email
+            },
+            fresh=True)
         resp = jsonify({'access_token': access_token})
         set_access_cookies(resp, access_token)
-        session['user_id'] = account['id']
+        session['user_id'] = account.id
         return resp
     else:
         return jsonify({"msg": "用户名或密码错误"}), 403
