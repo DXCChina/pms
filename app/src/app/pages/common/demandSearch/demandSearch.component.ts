@@ -12,6 +12,8 @@ export class DemandSearchComponent {
   form: FormGroup;
   demand: AbstractControl;
   @Input() name: string = '';
+  @Input() showField: string = 'title';
+  @Input() placeholder: string = '';
   @Input() showDemandList: boolean = false;
   @Input() demand_showNoItem: boolean = false;
   @Input() demandList: any[] = [];
@@ -20,10 +22,10 @@ export class DemandSearchComponent {
 
   constructor(private fb: FormBuilder, private ref: ElementRef){
 
-    this.form = this.fb.group({
-      "demand": ['', Validators.compose([Validators.required, Validators.minLength(1)])]
-    });
-    this.demand = this.form.controls['demand'];
+    // this.form = this.fb.group({
+    //   "demand": ['', Validators.compose([Validators.required, Validators.minLength(1)])]
+    // });
+    // this.demand = this.form.controls['demand'];
   }
 
   ngOnInit(){

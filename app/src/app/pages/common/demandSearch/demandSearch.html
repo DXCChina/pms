@@ -1,10 +1,12 @@
-
-  <table class="example-full-width" cellspacing="0" style="margin: 30px auto; font-size: 16px;"><tr>
-    <td><mat-input-container class="example-full-width">
-      <input [formControl]="demand" autocomplete="off" [(ngModel)]="name"  matInput placeholder="案例归属搜索">
-    </mat-input-container></td>
-  </tr></table>
-
+<div style="width: 100%">
+  <!--<table class="example-full-width" cellspacing="0" style="margin: 30px auto; font-size: 16px;"><tr>-->
+    <!--<td><mat-input-container class="example-full-width">-->
+      <!--<input autocomplete="off" [(ngModel)]="name"  matInput placeholder="{{placeholder}}">-->
+    <!--</mat-input-container></td>-->
+  <!--</tr></table>-->
+  <mat-form-field style="width: 100%;">
+    <input autocomplete="off" [(ngModel)]="name"  matInput placeholder="{{placeholder}}">
+  </mat-form-field>
   <mat-nav-list *ngIf="showDemandList" class="showDemandlist" >
     <a mat-list-item *ngIf="demand_showNoItem">
       无匹配，请选择已有项目
@@ -12,7 +14,7 @@
     <a mat-list-item
        *ngFor="let item of demandList"
        (click)="choose(item)">
-      {{ item.title }}
+      {{ item[showField]}}
     </a>
   </mat-nav-list>
-
+</div>

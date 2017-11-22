@@ -9,9 +9,10 @@ import {PmComponent} from "./pm.component";
 import {PmActivityComponent} from "./pm-activity.component/pm-activity.component";
 import {
   MatButtonModule, MatCardModule, MatChipsModule, MatFormFieldModule, MatInputModule,
-  MatListModule
+  MatListModule, MatSelectModule, MatTooltipModule
 } from "@angular/material";
 import {PmPeoplemanageComponent} from "./pm-peoplemanage/pm-peoplemanage.component";
+import {DemandSearchComponent} from "../common/demandSearch/demandSearch.component";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import {PmPeoplemanageComponent} from "./pm-peoplemanage/pm-peoplemanage.compone
     PmDashboardComponent,
     PmDemandComponent,
     PmActivityComponent,
-    PmPeoplemanageComponent
+    PmPeoplemanageComponent,
+    DemandSearchComponent
   ],
   imports: [
     CommonModule,
@@ -32,6 +34,8 @@ import {PmPeoplemanageComponent} from "./pm-peoplemanage/pm-peoplemanage.compone
     MatButtonModule,
     MatInputModule,
     MatListModule,
+    MatSelectModule,
+    MatTooltipModule,
     MatFormFieldModule
   ],
   providers: [

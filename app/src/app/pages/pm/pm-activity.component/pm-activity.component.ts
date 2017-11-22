@@ -9,32 +9,42 @@ import {PeopleManageModel} from "../pm-peoplemanage/pm-peoplemanage.model";
 export class PmActivityComponent {
   dataListModel: PeopleManageModel[];
   mockData: any[];
+  searchList: any[] = [];
+  showList: boolean = false;
+  showNoItem: boolean = false;
+  inputName: string = '';
   constructor() {
-    this.dataListModel = [
-      { name: '姓名', value: 'name' },
-      { name: '年龄', value: 'age' },
-      { name: '性别', value: 'sex' },
-      { name: 'ID', value: 'id' }
-    ];
-    this.mockData = [
-      {
-        name: 'jerry',
-        id: 'sdfasfsf',
-        age: 13,
-        sex: 'man'
-      },
-      {
-        name: 'tom',
-        id: 'sfaswe',
-        age: 85,
-        sex: 'woman'
-      },
-      {
-        name: 'tom',
-        id: 'sfaswe',
-        age: 85,
-        sex: 'woman'
-      }
-    ]
+
+  }
+
+  search(str: any) {
+    console.log(str);
+    if (str === 'qwer') {
+      this.searchList = [
+        {
+          name: 'qwer',
+          job: 'PM',
+          email: 'qwer@hpe.com',
+          date: '2017/11/23',
+          id: 'sdfsdfsafas',
+        },
+        {
+          name: 'QWER',
+          job: 'dev',
+          email: 'QWER@hpe.com',
+          date: '2017/11/22',
+          id: 'sddfsffsdd',
+        }
+      ];
+      this.showList = true;
+    } else {
+      // this.searchList = [];
+      // this.showList = true;
+      // this.showNoItem = true;
+    }
+  }
+  choose(data: any) {
+    console.log('choose: ', data);
+    this.inputName = data.name;
   }
 }
