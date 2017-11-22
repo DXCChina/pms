@@ -4,15 +4,17 @@
 @author: Xing Dong
 '''
 
-from flask import jsonify, request, abort, Blueprint
+from flask import jsonify, request, abort, Blueprint, session
 from model import task
 
 from flask_jwt_extended import (create_access_token, get_jwt_identity,
                                 get_jwt_claims, fresh_jwt_required,
                                 set_access_cookies, unset_jwt_cookies)
 from marshmallow import Schema, fields
+from rbac.context import PermissionDenied
 
 app = Blueprint('task', __name__, url_prefix='/api')  # pylint: disable=c0103
+
 
 class DemandSchema(Schema):
     '''注册信息'''
@@ -27,6 +29,7 @@ class DemandSchema(Schema):
     startDate = fields.String(required=True)
     endDate = fields.String(required=True)
 
+
 class TaskSchema(Schema):
     '''注册信息'''
     ownerId = fields.Number(required=True)
@@ -40,6 +43,7 @@ class TaskSchema(Schema):
     status = fields.String(required=True)
     startDate = fields.String(required=True)
     endDate = fields.String(required=True)
+
 
 @app.route("/project/<int:project_id>/demand", methods=['GET'])
 @fresh_jwt_required
@@ -68,7 +72,10 @@ def demand_add():
     if task.findDemandTitle(data['title']):
         return jsonify({"msg": {'title': '主题已存在'}}), 400
 
-    return handleData(task.createDemand(request.json))
+    try:
+        return handleData(task.createDemand(request.json))
+    except PermissionDenied:
+        return jsonify({'msg': 'PermissionDenied'})
 
 
 @app.route("/project/demand/detail/<int:demand_id>", methods=['GET'])
@@ -79,6 +86,7 @@ def demand_info(demand_id):
     GET /api/project/demand/detail/<int:demand_id>
     '''
     return handleData(task.demandDetail(demand_id))
+
 
 # @app.route("/project/<int:project_id>/demand/<int:demand_id>", methods=['PUT'])
 @app.route("/project/demand/update", methods=['PUT'])
@@ -95,10 +103,13 @@ def demand_update():
     params = []
     for item in request.json["data"]:
         params.append(
-            (item['status'], item['level'], item['endDate'],item['title'], item['detail'], item['progress'], item['cost'], item['id'])
-        )
+            (item['status'], item['level'], item['endDate'], item['title'],
+             item['detail'], item['progress'], item['cost'], item['id']))
 
-    return task.updateDemands(tuple(params))
+    try:
+        return task.updateDemands(tuple(params))
+    except PermissionDenied:
+        return jsonify({'msg': 'PermissionDenied'})
 
 
 @app.route("/demand/<string:demand_title>", methods=['GET'])
@@ -108,16 +119,13 @@ def demand_search(demand_title):
 
     GET /api/demand/demand_title
     '''
-    res = {
-        "message": "ok",
-        "data": {}
-    }
+    res = {"message": "ok", "data": {}}
 
     if task.demandSearch(demand_title) != None:
         res["data"] = task.demandSearch(demand_title)
 
-
     return jsonify(res)
+
 
 # @app.route("/demand/<int:demand_id>/task", methods=['GET'])
 @app.route("/demand/list", methods=['GET'])
@@ -133,6 +141,7 @@ def demand_lists():
         "total": task.demandList(request.args.to_dict())["total"]
     })
 
+
 @app.route("/task/list", methods=['GET'])
 @fresh_jwt_required
 def task_list():
@@ -146,6 +155,7 @@ def task_list():
         "data": task.taskList(request.args.to_dict())["data"],
         "total": task.taskList(request.args.to_dict())["total"]
     })
+
 
 # @app.route("/demand/<int:demand_id>/task", methods=['POST'])
 @app.route("/demand/task", methods=['POST'])
@@ -162,7 +172,10 @@ def task_add():
     if errors:
         return jsonify({"msg": errors}), 400
 
-    return handleData(task.createTask(request.json))
+    try:
+        return handleData(task.createTask(request.json))
+    except PermissionDenied:
+        return jsonify({'msg': 'PermissionDenied'})
 
 
 @app.route("/member/<int:projectId>", methods=["GET"])
@@ -173,10 +186,7 @@ def getMemberInfo(projectId):
     GET /api/member/<int:projectId>
     '''
     print(projectId)
-    res = {
-        "message": "ok",
-        "data": {}
-    }
+    res = {"message": "ok", "data": {}}
 
     print(task.findMember(projectId))
     if task.findMember(projectId) != None:
@@ -184,18 +194,23 @@ def getMemberInfo(projectId):
 
     return jsonify(res)
 
+
 @app.route("/demand/task/update", methods=["PUT"])
 @fresh_jwt_required
 def update_task():
     '''更新、删除任务
 
-    GET /api/demand/task/update
+    PUT /api/demand/task/update
     '''
     if not request.json or not 'data' in request.json:
         print('request:', request.json)
         abort(400)
+    session['task_id'] = request.json["data"]["id"]
 
-    return task.updateTask(request.json["data"])
+    try:
+        return task.updateTask(request.json["data"])
+    except PermissionDenied:
+        return jsonify({'msg': 'PermissionDenied'})
 
 
 @app.route("/demand/<int:demand_id>/task/<int:task_id>", methods=['GET'])
@@ -219,10 +234,7 @@ def task_update(demand_id, task_id):
 
 
 def handleData(data):
-    res = {
-        "message": "",
-        "data": {}
-    }
+    res = {"message": "", "data": {}}
     if data == None:
         res["message"] = "Missing data"
         res["data"] = {}

@@ -7,10 +7,12 @@ setup(
     install_requires=[
         'flask',
         'flask-jwt-extended',
+        'PyMySQL',
         'peewee',
         'marshmallow',
-        'PyMySQL',
         'passlib',
         'argon2_cffi',
+        'bcrypt',
+        'simple-rbac'
     ],
 )

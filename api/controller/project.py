@@ -8,6 +8,8 @@ from flask_jwt_extended import (create_access_token, get_jwt_identity,
                                 set_access_cookies, unset_jwt_cookies)
 from marshmallow import Schema, fields
 from flask import jsonify, request, abort, Blueprint, session
+from rbac.context import PermissionDenied
+
 from model import project
 app = Blueprint('project', __name__, url_prefix='/api')  # pylint: disable=c0103
 
@@ -34,7 +36,11 @@ def project_update(project_id):
     not 'detail' in request.json['data']:
         abort(400)
     session['project_id'] = project_id
-    return jsonify(project.update_project(project_id, request.json['data']))
+    try:
+        return jsonify(
+            project.update_project(project_id, request.json['data']))
+    except PermissionDenied:
+        return jsonify({'msg': 'PermissionDenied'})
 
 
 @app.route("/userlist", methods=['GET'])
@@ -67,5 +73,9 @@ def project_user_update(project_id):
     if not request.json or\
     not 'memberIdArr' in request.json['data']:
         abort(400)
-    return jsonify(
-        project.update_project_users(project_id, request.json['data']))
+    session['project_id'] = project_id    
+    try:
+        return jsonify(
+            project.update_project_users(project_id, request.json['data']))
+    except PermissionDenied:
+        return jsonify({'msg': 'PermissionDenied'})
