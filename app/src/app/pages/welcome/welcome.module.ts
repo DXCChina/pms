@@ -2,12 +2,12 @@ import {NgModule} from "@angular/core";
 import {routing} from "./welcome.routing";
 import {WelcomeComponent} from "./welcome.component";
 import {NgaModule} from "../../theme/nga.module";
-import {MatButtonModule, MatCardModule} from "@angular/material";
+import {MatButtonModule, MatCardModule, MatChipsModule} from "@angular/material";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {ToasterModule} from "angular2-toaster";
-import { MatDialogModule, MatInputModule } from '@angular/material';
-import { DialogCreateProjectComponent } from './dialog-create-project/dialog-create-project.component';
+import {MatDialogModule, MatInputModule} from '@angular/material';
+import {DialogCreateProjectComponent} from './dialog-create-project/dialog-create-project.component';
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 
 @NgModule({
@@ -22,7 +22,8 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
     MatButtonModule,
     MatInputModule,
     ToasterModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    MatChipsModule
   ],
   declarations: [
     WelcomeComponent,
@@ -32,9 +33,7 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
     DialogCreateProjectComponent
   ],
 
-  providers: [
-
-  ]
+  providers: []
 })
 
 export class WelcomeModule {
