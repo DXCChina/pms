@@ -5,8 +5,6 @@
 '''
 
 from model.db import db
-from flask import make_response, jsonify
-import time
 
 STATUS = 'active'
 
@@ -16,21 +14,22 @@ def project_list():
         sql = "SELECT * FROM project"
         cursor.execute(sql)
         data = cursor.fetchall()
-    
-    return {'data':data, 'total':len(data)}
+
+    return {'data': data, 'total': len(data)}
 
 
 def project_add(project):
     with db.cursor() as cursor:
         sql = "INSERT INTO project (name,detail,ownerId,status) VALUE (%s, %s, %s, %s)"
         cursor.execute(
-        sql, (project['name'], project['detail'], project['user_id'], STATUS))
+            sql,
+            (project['name'], project['detail'], project['user_id'], STATUS))
         db.commit()
     with db.cursor() as cursor:
         sql = "SELECT * FROM project WHERE name=%s"
         cursor.execute(sql, (project['name']))
         result = cursor.fetchone()
-    
+
     return result
 
 
@@ -40,8 +39,8 @@ def task_list():
         "LEFT JOIN user u ON  t.ownerId=u.id LEFT JOIN user m ON  t.memberId=m.id"
         cursor.execute(sql)
         data = cursor.fetchall()
-         
-    return {'data':data, 'total':len(data)}
+
+    return {'data': data, 'total': len(data)}
 
 
 def find_one_project_by_name(name):
@@ -49,5 +48,5 @@ def find_one_project_by_name(name):
         sql = "SELECT * FROM project WHERE name=%s"
         cursor.execute(sql, (name))
         result = cursor.fetchone()
-        
+
     return result
