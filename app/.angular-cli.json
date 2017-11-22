@@ -30,7 +30,8 @@
         "../node_modules/angular2-toaster/toaster.css",
         "app/theme/theme.scss",
         "styles.scss",
-        "app/theme/sass/_material-overrides.scss"
+        "app/theme/sass/_material-overrides.scss",
+        "theme.scss"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",

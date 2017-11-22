@@ -7,6 +7,7 @@ export class WelcomeService {
 
   private projectUrl = 'api/project';
   private taskUrl = 'api/task';
+  private usesRoleUrl = '';
 
   constructor(private http: Http) {
   }
@@ -28,6 +29,13 @@ export class WelcomeService {
   getTaskList(): Promise<any> {
     return this.http.get(this.taskUrl).toPromise()
       .then(res=>res.json())
+      .catch(this.handleError)
+  }
+
+  getUserRoleInProject(id:string):Promise<any>{
+    // return this.http.post(this.usesRoleUrl, id).toPromise()
+    return this.http.get(this.taskUrl).toPromise()
+      .then(response => response.json())
       .catch(this.handleError)
   }
 

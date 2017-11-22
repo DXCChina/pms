@@ -5,13 +5,11 @@ import {RequestOptions, Response , Headers} from '@angular/http';
 @Injectable()
 export class GlobalState {
   baseURL: string = '';
-  isSelectProject:boolean = false;
-
   jwtHeader: string = 'X-TOKEN';
   jwtRefreshCode: number = -5;
   headers = new Headers({'Content-Type': 'application/json'});
   options = new RequestOptions({headers: this.headers});
-  userRoleInPro: string = '';
+  userRoleInProject: string = '';
   createJudge: any = {position: false, title: false, projectId: '', members: [], description: '', projectName: ''};
 
   private _data = new Subject<Object>();

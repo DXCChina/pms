@@ -3,7 +3,6 @@ import {ModuleWithProviders} from "@angular/core";
 import {EngineeringComponent} from "./engineering.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {DemandManageComponent} from "./demand_manage/demand-manage.component";
-// import {ReportManageComponent} from "./report_manage/report-manage.component";
 
 export const routes: Routes = [
   {
@@ -11,14 +10,11 @@ export const routes: Routes = [
     component: EngineeringComponent,
     children: [
       {
-        path: 'dashboard', component: DashboardComponent
+        path: 'dashboard', component: DashboardComponent, data:{isShowNav:true}
       },
       {
-        path: 'demand', component: DemandManageComponent
+        path: 'demand', component: DemandManageComponent, data:{isShowNav:true}
       },
-      // {
-      //   path: 'report', component: ReportManageComponent
-      // },
       {
         path: '', redirectTo: 'dashboard', pathMatch: 'full'
       }
