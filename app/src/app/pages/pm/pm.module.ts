@@ -11,10 +11,13 @@ import {
 
   MatButtonModule, MatCommonModule, MatDialogModule, MatSelectModule, MatInputModule,
   MatTabsModule, MatCardModule, MatExpansionModule, MatCheckboxModule, MatSliderModule, MatListModule,
-  MatProgressSpinnerModule, MatChipsModule, MatGridListModule, MatDatepickerModule, MatNativeDateModule
+  MatProgressSpinnerModule, MatChipsModule, MatGridListModule, MatDatepickerModule, MatNativeDateModule,
+  MatTooltipModule
 } from "@angular/material";
 import {D_tComponent} from "./pm-demand.component/demand_task.model/d_t.component";
 import {CreateDemandComponent} from "./pm-demand.component/create_demand/create_demand.component";
+import {DemandSearchComponent} from "../common/demandSearch/demandSearch.component";
+import {PmPeoplemanageComponent} from "./pm-peoplemanage/pm-peoplemanage.component";
 
 
 @NgModule({
@@ -23,9 +26,9 @@ import {CreateDemandComponent} from "./pm-demand.component/create_demand/create_
     PmDashboardComponent,
     PmDemandComponent,
     PmActivityComponent,
-
     PmPeoplemanageComponent,
-    DemandSearchComponent
+    D_tComponent,
+    CreateDemandComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +36,7 @@ import {CreateDemandComponent} from "./pm-demand.component/create_demand/create_
     ReactiveFormsModule,
     NgaModule,
     routing,
-    
+
     MatCommonModule,
     MatDialogModule,
     MatInputModule,
@@ -45,6 +48,7 @@ import {CreateDemandComponent} from "./pm-demand.component/create_demand/create_
     MatCheckboxModule,
     MatDialogModule,
     MatButtonModule,
+    MatTooltipModule,
     MatExpansionModule,
     MatProgressSpinnerModule,
     MatChipsModule,
@@ -58,7 +62,7 @@ import {CreateDemandComponent} from "./pm-demand.component/create_demand/create_
 
   ],
   entryComponents:[
-    CreateDemandComponent
+    // CreateDemandComponent
   ]
 })
 export class PmModule {}
