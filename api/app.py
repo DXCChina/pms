@@ -42,17 +42,6 @@ def add_claims_to_access_token(user):
     return user
 
 
-@app.before_request
-def _db_connect():
-    database.connect()
-
-
-@app.teardown_request
-def _db_close():
-    if not database.is_closed():
-        database.close()
-
-
 # @app.errorhandler(404)
 # def not_found():
 #     '''自定义404提示信息'''
