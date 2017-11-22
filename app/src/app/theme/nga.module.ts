@@ -60,7 +60,8 @@ import {
 import {BaPagination} from "./components/waPagination/waPagination.component";
 import {
   MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule,
-  MatSelectModule, MatTabsModule } from "@angular/material";
+  MatSelectModule, MatTabsModule, MatToolbarModule, MatChipsModule
+} from "@angular/material";
 import {WaDataList} from "./components/waDataList/waDataList.component";
 import {WaFilter} from "./components/waFilter/waFilter.component";
 import {WaSort} from "./components/waSort/waSort.component";
@@ -78,6 +79,9 @@ import {WaDatableComponent} from "./components/wa-datatable/wa-datatable.compone
 import {DeviceManageComponent} from "./components/device_manage/device-manage.component";
 import {DeviceItemComponent} from "./components/device_manage/device-item/device-item.component";
 import {DemandSearchComponent} from "./components/demandSearch/demandSearch.component";
+import {DemandDetailDialogComponent} from "./components/demand-detail-dialog/demand-detail-dialog.component";
+import {TaskDetailDialogComponent} from "./components/task-detail-dialog/task-detail-dialog.component";
+import {ChipListComponent} from "./components/chip-list/chip-lsit.component";
 
 const NGA_COMPONENTS = [
   BaAmChart,
@@ -111,7 +115,10 @@ const NGA_COMPONENTS = [
   WaDatableComponent,
   DeviceManageComponent,
   DeviceItemComponent,
-  DemandSearchComponent
+  DemandSearchComponent,
+  DemandDetailDialogComponent,
+  TaskDetailDialogComponent,
+  ChipListComponent
 ];
 
 const NGA_DIRECTIVES = [
@@ -166,12 +173,18 @@ const NGA_VALIDATORS = [
     MatTabsModule,
     TreeModule,
     ContextMenuModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    MatToolbarModule,
+    MatChipsModule
   ],
   exports: [
     ...NGA_PIPES,
     ...NGA_DIRECTIVES,
     ...NGA_COMPONENTS
+  ],
+  entryComponents:[
+    DemandDetailDialogComponent,
+    TaskDetailDialogComponent
   ]
 })
 export class NgaModule {
