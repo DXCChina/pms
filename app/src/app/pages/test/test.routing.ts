@@ -1,7 +1,8 @@
-import {Routes} from "@angular/router";
+import {Routes, RouterModule} from "@angular/router";
 import {TestComponent} from "./test.component";
 import {TestDashboardComponent} from "./test-dashboard/test-dashboard.component";
 import {TestActivityComponent} from "./test-activity/test-activity.component";
+import {ModuleWithProviders} from "@angular/core";
 
 export const routes: Routes = [
   {
@@ -10,11 +11,13 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        component: TestDashboardComponent
+        component: TestDashboardComponent,
+        data:{isShowNav:true}
       },
       {
         path: 'activity',
-        component: TestActivityComponent
+        component: TestActivityComponent,
+        data:{isShowNav:true}
       },
       {
         path: '',
@@ -24,3 +27,5 @@ export const routes: Routes = [
     ]
   }
 ];
+
+export const routing: ModuleWithProviders = RouterModule.forChild(routes);
