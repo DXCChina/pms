@@ -39,8 +39,8 @@ def project_update(project_id):
     try:
         return jsonify(
             project.update_project(project_id, request.json['data']))
-    except PermissionDenied as exception:
-        return jsonify({'msg': exception.kwargs['message']})
+    except PermissionDenied:
+        return jsonify({'msg': 'PermissionDenied'})
 
 
 @app.route("/userlist", methods=['GET'])
@@ -78,4 +78,4 @@ def project_user_update(project_id):
         return jsonify(
             project.update_project_users(project_id, request.json['data']))
     except PermissionDenied:
-        return jsonify({'msg': ''})
+        return jsonify({'msg': 'PermissionDenied'})

@@ -17,7 +17,7 @@ def find_project(project_id):
     return result
 
 
-@identity.check_permission("update", 'project', message="can't update")
+@identity.check_permission("update", 'project')
 def update_project(project_id, request):
     '''更新项目信息'''
     with db.cursor() as cursor:
