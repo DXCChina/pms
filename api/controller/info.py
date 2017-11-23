@@ -19,7 +19,7 @@ class projectNewSchema(Schema):
     detail = fields.String(required=False)
 
 
-@app.route("/project", methods=['GET'])
+# @app.route("/project", methods=['GET'])
 @fresh_jwt_required
 def project_list():
     '''获取所有项目列表
@@ -30,7 +30,7 @@ def project_list():
     return jsonify(info.project_list())
 
 
-@app.route("/project", methods=['POST'])
+# @app.route("/project", methods=['POST'])
 @fresh_jwt_required
 def project_add():
     '''创建新项目
@@ -54,7 +54,7 @@ def project_add():
     return jsonify(info.project_add(data)), 201
 
 
-@app.route("/task", methods=['GET'])
+# @app.route("/task", methods=['GET'])
 @fresh_jwt_required
 def task_list():
     '''获取所有任务列表

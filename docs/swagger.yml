@@ -5,31 +5,241 @@ info:
   version: "1.0"
 
 paths:
+# @author: Wang Jianhui
   /user:
     post:
-      summary: Generate greeting
+      summary: api
       operationId: controller.user.reg
       responses:
         200:
-          description: greeting response
+          description: ok
   /login:
     post:
-      summary: Generate greeting
+      summary: api
       operationId: controller.user.login
       responses:
         200:
-          description: greeting response
+          description: ok
   /user:
     get:
-      summary: Generate greeting
+      summary: api
       operationId: controller.user.user_info
       responses:
         200:
-          description: greeting response
+          description: ok
   /user:
-    get:
-      summary: Generate greeting
-      operationId: controller.user.user_info
+    put:
+      summary: api
+      operationId: controller.user.user_update
       responses:
         200:
-          description: greeting response
+          description: ok
+  /password:
+    put:
+      summary: api
+      operationId: controller.user.change_password
+      responses:
+        200:
+          description: ok
+  /logout:
+    get:
+      summary: api
+      operationId: controller.user.logout
+      responses:
+        200:
+          description: ok
+# @author: Gao Le
+  /project:
+    get:
+      summary: api
+      operationId: controller.info.project_list
+      responses:
+        200:
+          description: ok
+  /project:
+    post:
+      summary: api
+      operationId: controller.info.project_add
+      responses:
+        200:
+          description: ok
+  /task:
+    get:
+      summary: api
+      operationId: controller.info.task_list
+      responses:
+        200:
+          description: ok
+# @author: Wang Qianxiang
+  /project/{project_id}:
+    get:
+      summary: api
+      operationId: controller.project.project_info
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: number
+      responses:
+        200:
+          description: ok
+  /project/{project_id}:
+    put:
+      summary: api
+      operationId: controller.project.project_update
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: number
+      responses:
+        200:
+          description: ok
+  /userlist:
+    get:
+      summary: api
+      operationId: controller.project.user_list
+      responses:
+        200:
+          description: ok
+  /project/{project_id}/user:
+    get:
+      summary: api
+      operationId: controller.project.project_user
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: number
+      responses:
+        200:
+          description: ok
+  /project/{project_id}/user:
+    put:
+      summary: api
+      operationId: controller.project.project_user_update
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: number
+      responses:
+        200:
+          description: ok
+# @author: Xing Dong
+  /project/demand:
+    post:
+      summary: api
+      operationId: controller.task.demand_add
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: number
+      responses:
+        200:
+          description: ok
+  /project/demand/detail/{demand_id}:
+    get:
+      summary: api
+      operationId: controller.task.demand_info
+      parameters:
+        - name: demand_id
+          in: path
+          required: true
+          type: number
+      responses:
+        200:
+          description: ok
+  /project/demand/update:
+    put:
+      summary: api
+      operationId: controller.task.demand_update
+      responses:
+        200:
+          description: ok
+  /demand/{demand_title}:
+    get:
+      summary: api
+      operationId: controller.task.demand_search
+      parameters:
+        - name: demand_title
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: ok
+  /demand/list:
+    get:
+      summary: api
+      operationId: controller.task.demand_lists
+      responses:
+        200:
+          description: ok
+  /task/list:
+    get:
+      summary: api
+      operationId: controller.task.task_list
+      responses:
+        200:
+          description: ok
+  /demand/task:
+    post:
+      summary: api
+      operationId: controller.task.task_add
+      responses:
+        200:
+          description: ok
+  /member/{projectId}:
+    get:
+      summary: api
+      operationId: controller.task.getMemberInfo
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          type: number
+      responses:
+        200:
+          description: ok
+  /demand/task/update:
+    put:
+      summary: api
+      operationId: controller.task.update_task
+      responses:
+        200:
+          description: ok
+  /demand/{demand_id}/task/{task_id}:
+    get:
+      summary: api
+      operationId: controller.task.task_info
+      parameters:
+        - name: demand_id
+          in: path
+          required: true
+          type: number
+        - name: task_id
+          in: path
+          required: true
+          type: number
+      responses:
+        200:
+          description: ok
+  /demand/{demand_id}/task/{task_id}:
+    put:
+      summary: api
+      operationId: controller.task.task_update
+      parameters:
+        - name: demand_id
+          in: path
+          required: true
+          type: number
+        - name: task_id
+          in: path
+          required: true
+          type: number
+      responses:
+        200:
+          description: ok
+
