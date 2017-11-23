@@ -1,16 +1,21 @@
 import { Component, OnInit } from '@angular/core';
+import { PmDashboardService } from './pm-dashboard.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'pm-dashboard',
   templateUrl: './pm-dashboard.component.html',
-  styleUrls: ['./pm-dashboard.component.scss']
+  styleUrls: ['./pm-dashboard.component.scss'],
+  providers: [
+    PmDashboardService
+  ]
 })
 
 export class PmDashboardComponent implements OnInit {
 
   public data1: any[] = [{
     listName: '全部需求',
-    listData: [ {
+    listData: [{
       itemName: 'aaa',
       itemTime: '2017-11-21',
       itemlabel: '',
@@ -51,7 +56,7 @@ export class PmDashboardComponent implements OnInit {
 
   public data2: any[] = [{
     listName: '全部任务',
-    listData: [ {
+    listData: [{
       itemName: 'AAA',
       itemTime: '2017-11-21',
       itemlabel: '',
@@ -90,9 +95,32 @@ export class PmDashboardComponent implements OnInit {
     }]
   }];
 
-  constructor() { }
+  constructor(private router: Router, private service: PmDashboardService) { }
 
-  ngOnInit() { }
+  // 项目ID
+  projectId: string;
+
+  ngOnInit() {
+    this.projectId = sessionStorage.getItem('projectId');
+    if (!this.projectId) {
+      this.router.navigate(['/welcome']);
+    } else {
+      this.initData();
+    }
+  }
+
+  // 初始化数据 调用三个接口
+  initData() {
+    this.getUserlist();
+  }
+
+  // 获取全部用户
+  getUserlist() {
+    this.service.getUserlist()
+      .then(res => {
+        console.log(res);
+      }).catch(err => console.log(err));
+  }
 
   addItem() {
     console.log('add');
