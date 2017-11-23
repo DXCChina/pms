@@ -40,36 +40,43 @@ export class TaskDetailDialogComponent {
   }
 
   selectRoles(role,event){
-    this.selectList(role, event, this.selectRoleList, this.removeRole)
+    this.selectList(role, event, this.selectRoleList);
+    if(event.checked === false){
+      this.remove(role, this.roleList, this.selectRoleList);
+    }
   }
 
   selectUsers(user, event){
-    this.selectList(user, event, this.selectUserList, this.removeUser);
+    this.selectList(user, event, this.selectUserList);
+    if(event.checked === false){
+      this.remove(user, this.userList, this.selectUserList);
+    }
   }
 
-  selectList(user, event, selectUserList, fn){
+  selectList(user, event, selectUserList){
     if(event.checked === true){
       user.checked = true;
       selectUserList.push(user);
-    }else{
-      fn(user);
     }
   }
 
   removeRole(role:any){
-    this.remove(role, this.roleList);
+    this.remove(role, this.roleList, this.selectRoleList);
   }
 
   removeUser(role: any): void {
-    this.remove(role, this.userList);
+    this.remove(role, this.userList, this.selectUserList);
   }
 
-  remove(role, selectList){
-    selectList.forEach(user => {
+  remove(role, arrlist, selectList){
+    arrlist.forEach(user => {
       if (user == role) {
         user.checked = false;
       }
     });
+
+    let index = selectList.indexOf(role);
+    selectList.splice(index, 1);
   }
 
   addDemandToTask(demand){
