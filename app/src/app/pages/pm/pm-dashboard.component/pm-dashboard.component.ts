@@ -1,8 +1,7 @@
 import {Component} from "@angular/core";
-import {DemandDetailDialogComponent} from "../../../theme/components/demand-detail-dialog/demand-detail-dialog.component";
-import {TaskDetailDialogComponent} from "../../../theme/components/task-detail-dialog/task-detail-dialog.component";
-
 import {MatDialog} from "@angular/material";
+import {TaskDetailDialogComponent} from "../task-detail-dialog/task-detail-dialog.component";
+import {DemandDetailDialogComponent} from "../demand-detail-dialog/demand-detail-dialog.component";
 
 @Component({
   selector: 'pm-dashboard',
