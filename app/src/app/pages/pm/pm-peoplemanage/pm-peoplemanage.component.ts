@@ -69,7 +69,6 @@ export class PmPeoplemanageComponent implements AfterViewInit {
   modifyStyle() {
     let width = (100 / this.dataListModel.length).toString().substr(0, 4) + '%';
     let cellList = this.ref.nativeElement.querySelectorAll('.item-cell');
-    console.log(cellList.length);
     cellList.forEach(cell => {
       this.Renderer.setStyle(cell, 'width', width);
     });
