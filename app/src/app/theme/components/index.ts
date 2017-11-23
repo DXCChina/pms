@@ -1,4 +1,4 @@
-import {from} from "rxjs/observable/from";
+import {from} from 'rxjs/observable/from';
 export * from './baMsgCenter';
 export * from './baSidebar';
 export * from './baMenu/components/baMenuItem';
@@ -16,3 +16,4 @@ export * from './baFileUploader';
 export * from './baWelTop';
 export * from './waSortList';
 export * from './waSearch';
+export * from './list-card';

@@ -1,0 +1,26 @@
+<mat-card class="list-card">
+    <mat-card-header class="list-card-header">
+        <mat-card-title>
+            <button mat-button [matMenuTriggerFor]="menu">{{activeData?.listName}}</button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item *ngFor="let list of data" (click)="changeCardData(list)">{{list?.listName}}</button>
+            </mat-menu>
+        </mat-card-title>
+        <button mat-icon-button (click)="addEmit()">+</button>
+    </mat-card-header>
+    <mat-card-content class="list-card-content">
+        <mat-card class="item-card" *ngFor="let item of activeData?.listData" (click)="detailEmit(activeData)">
+            <mat-card-header class="item-card-header">
+                <div mat-card-avatar [style.background]="item?.itemAvatar">{{item?.itemfrom | name2avatar}}</div>
+                <mat-card-title>{{item?.itemName}}</mat-card-title>
+                <mat-card-subtitle>{{item?.itemfrom}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-chip-list>
+                    <mat-chip color="accent">{{item?.itemTime}}</mat-chip>
+                </mat-chip-list>
+            </mat-card-content>
+        </mat-card>
+    </mat-card-content>
+    <!-- <mat-card-actions></mat-card-actions> -->
+</mat-card>

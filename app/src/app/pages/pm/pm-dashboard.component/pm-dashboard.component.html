@@ -1,4 +1,4 @@
-<div>pm-dashboard</div>
-
-<button mat-raised-button (click)="initDemand()">需求详情</button>
-<button mat-raised-button (click)="initActivity()">活动详情</button>
+<div class="card-container">
+    <app-list-card [data]="data1" (addItem)="addItem()" (showDetail)="showDetail($event)"></app-list-card>
+    <app-list-card [data]="data2" (addItem)="addItem()" (showDetail)="showDetail($event)"></app-list-card>
+</div>

@@ -1,1 +1,14 @@
-
+.card-container {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin: 0 auto;
+    padding: 24px;
+    width: 100%;
+    min-width: 800px;
+    height: calc(100% + 34px);
+    margin-bottom: -34px;
+    min-height: 350px;
+    background: #fafafa;
+    overflow: auto;
+}

@@ -1,0 +1,84 @@
+<mat-list>
+  <mat-list-item style="border-bottom: 1px solid rgba(0, 0, 0, .12)">
+     <div class="people-item-header">
+       <div class="people-item-title">
+          <p *ngFor="let item of dataListModel" class="item-cell">
+          {{item.name}}
+        </p>
+       </div>
+       <div class="people-item-control">
+          <p>操作</p>
+       </div>
+     </div>
+  </mat-list-item>
+</mat-list>
+
+<mat-nav-list>
+  <div [@peopleList]="datas.length">
+    <mat-list-item *ngFor="let data of datas" [ngClass]="{'people-part': true}">
+       <div class="people-item-body">
+          <p *ngFor="let item of dataListModel" class="item-cell">
+            {{data[item.value]}}
+          </p>
+       </div>
+       <button mat-icon-button (click)="delete(data)">
+          <svg fill="#757575" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+              <path d="M0 0h24v24H0z" fill="none"/>
+          </svg>
+       </button>
+    </mat-list-item>
+  </div>
+</mat-nav-list>
+
+<mat-list>
+
+  <mat-list-item class="people-add-item" [@add]="state">
+    <div class="add-item-wrap">
+      <button mat-icon-button class="add-btn" (click)="changeState()"  matTooltip="添加" [matTooltipPosition]="'above'" *ngIf="state === 'inactive' ? true : false">
+        <svg fill="#757575" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
+            <path d="M0 0h24v24H0z" fill="none"/>
+        </svg>
+      </button>
+      <div class="add-item-content" *ngIf="state === 'active' ? true : false">
+        <div class="add-item-main">
+
+          <demand-search style="width: 35%; margin-top: 13px"
+            [placeholder]="'人员搜索'"
+            [showField]="showField"
+            [name]="inputName"
+            [demandList]="searchList"
+            [showDemandList]="showList"
+            [demand_showNoItem]="showNoItem"
+            (searchDemand)="emitSearch($event)"
+            (chooseData)="chooseData($event)">
+
+          </demand-search>
+
+          <mat-form-field>
+            <mat-select placeholder="职位" [(ngModel)]="post" name="post">
+              <mat-option *ngFor="let position of positions" [value]="position.value">
+                {{ position.name }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div class="add-item-btn">
+          <button mat-icon-button (click)="create()" disabled="{{inputName === ''}}">
+            <svg fill="rgba(75, 177, 52, 0.9)" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 0h24v24H0z" fill="none"/>
+                <path d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4L9 16.2z"/>
+            </svg>
+          </button>
+          <button mat-icon-button (click)="closeAdd()">
+            <svg fill="#f44336" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                <path d="M0 0h24v24H0z" fill="none"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </mat-list-item>
+</mat-list>

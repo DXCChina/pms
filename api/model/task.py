@@ -3,22 +3,35 @@
 
 @author: Xing Dong
 '''
-from flask import request, jsonify
-from model.db import db
-import traceback
+from flask import jsonify
+from .db import db
+from .role import identity
+
+
+@identity.check_permission("create", 'demand')
 def createDemand(demand):
     '''新建需求'''
     with db.cursor() as cursor:
         sql = "INSERT INTO demand (ownerId, projectId, title, detail, level, status, startDate, endDate, progress, cost) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        cursor.execute(sql, (demand['ownerId'], demand['projectId'], demand['title'], demand['detail'],
-                             demand['level'], demand['status'], demand['startDate'], demand['endDate'],
-                             demand['progress'], demand['cost'],))
+        cursor.execute(sql, (
+            demand['ownerId'],
+            demand['projectId'],
+            demand['title'],
+            demand['detail'],
+            demand['level'],
+            demand['status'],
+            demand['startDate'],
+            demand['endDate'],
+            demand['progress'],
+            demand['cost'],
+        ))
         db.commit()
     with db.cursor() as cursor:
         sql = "SELECT * FROM demand WHERE title=%s"
         cursor.execute(sql, (demand['title']))
         result = cursor.fetchone()
     return result
+
 
 def findDemandTitle(title):
     '''查询需求标题'''
@@ -27,6 +40,7 @@ def findDemandTitle(title):
         cursor.execute(sql, (title))
         result = cursor.fetchone()
     return result
+
 
 def findMember(projectId):
     '''按照项目ID查询成员'''
@@ -40,19 +54,25 @@ def findMember(projectId):
 def demandList(args):
     '''获取需求列表'''
     with db.cursor() as cursor:
-        sql = "SELECT * FROM `demand` WHERE `projectId`=%s AND status!='delete' ORDER BY %s %s LIMIT %s, %s" % (args['projectId'], args['sortField'], args['sortOrder'], (int(args['page']) - 1) * int(args['size']) , int(args['page']) * int(args['size']))
+        sql = "SELECT * FROM `demand` WHERE `projectId`=%s AND status!='delete' ORDER BY %s %s LIMIT %s, %s" % (
+            args['projectId'], args['sortField'], args['sortOrder'],
+            (int(args['page']) - 1) * int(args['size']),
+            int(args['page']) * int(args['size']))
         cursor.execute(sql)
         data = cursor.fetchall()
 
     return {"data": data, "total": len(data)}
 
+
+@identity.check_permission("update", 'demand')
 def updateDemands(params):
     '''更新需求'''
     with db.cursor() as cursor:
         sql = "UPDATE demand SET `status`=%s, `level`=%s, `endDate`=%s, `title`=%s, `detail`=%s, `progress`=%s, `cost`=%s  WHERE `id`=%s"
         cursor.executemany(sql, params)
         db.commit()
-    return jsonify({"message": "ok" if bool(cursor.rowcount > 0) else "" })
+    return jsonify({"message": "ok" if bool(cursor.rowcount > 0) else ""})
+
 
 def demandDetail(demandId):
     '''获取需求详情'''
@@ -62,21 +82,25 @@ def demandDetail(demandId):
         result = cursor.fetchone()
     return result
 
+
 def demandSearch(title):
     '''模糊查询需求'''
     with db.cursor() as cursor:
         sql = "SELECT * FROM demand WHERE `status`!='delete' AND `title` LIKE %s"
-        cursor.execute(sql, ('%'+title+'%'))
+        cursor.execute(sql, ('%' + title + '%'))
         result = cursor.fetchall()
     return result
 
+
+@identity.check_permission("create", 'task')
 def createTask(task):
     '''新建任务'''
     with db.cursor() as cursor:
         sql = "INSERT INTO task (ownerId, memberId, demandId, title, detail, level, status, startDate, endDate, progress, cost) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
-        cursor.execute(sql, (task['ownerId'], task['memberId'], task['demandId'], task['title'], task['detail'],
-                             task['level'], task['status'], task['startDate'], task['endDate'],
-                             task['progress'], task['cost']))
+        cursor.execute(sql, (task['ownerId'], task['memberId'],
+                             task['demandId'], task['title'], task['detail'],
+                             task['level'], task['status'], task['startDate'],
+                             task['endDate'], task['progress'], task['cost']))
         db.commit()
     with db.cursor() as cursor:
         sql = "SELECT * FROM task WHERE title=%s"
@@ -84,18 +108,24 @@ def createTask(task):
         result = cursor.fetchone()
     return result
 
+
 def taskList(args):
     '''任务列表查询'''
     with db.cursor() as cursor:
         sql = "SELECT * FROM `task` WHERE (`ownerId`=%s OR `memberId`=%s) AND `demandId`=%s AND status!='delete'"
-        cursor.execute(sql, (args['ownerId'], args['ownerId'], args['demandId']))
+        cursor.execute(sql,
+                       (args['ownerId'], args['ownerId'], args['demandId']))
         data = cursor.fetchall()
     return {"data": data, "total": len(data)}
 
+
+@identity.check_permission("update", 'task')
 def updateTask(task):
     '''任务信息更新'''
     with db.cursor() as cursor:
         sql = "UPDATE task SET `status`=%s, `memberId`=%s, `level`=%s, `endDate`=%s, `title`=%s, `detail`=%s, `progress`=%s, `cost`=%s  WHERE `id`=%s"
-        cursor.execute(sql, (task["status"], task['memberId'], task["level"], task["endDate"], task["title"], task["detail"], task["progress"], task["cost"], task["id"]))
+        cursor.execute(sql, (task["status"], task['memberId'], task["level"],
+                             task["endDate"], task["title"], task["detail"],
+                             task["progress"], task["cost"], task["id"]))
         db.commit()
     return jsonify({"message": "ok" if bool(cursor.rowcount > 0) else ""})
