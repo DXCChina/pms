@@ -15,12 +15,8 @@ export class PmPeoplemanageComponent implements AfterViewInit {
   dataListModel: PeopleManageModel[] = [];
   post: any = 'pm';
   datas: any[] = [];
-  showField: string = 'name';
-  inputName: string = '';
 
   searchList: any[] = [];
-  showNoItem: boolean = false;
-  showList: boolean = false;
   state: string;
   positions: any[];
 
@@ -37,22 +33,22 @@ export class PmPeoplemanageComponent implements AfterViewInit {
     ];
     this.datas = [
       {
-        name: 'jerry',
-        job: 'PM',
+        name: 'pm',
+        job: 'pm',
         email: 'jerry@hpe.com',
         date: '2017/11/22',
         id: 'sdfasfsf',
       },
       {
         name: 'tom',
-        job: 'DEV',
+        job: 'dev',
         email: 'tom@hpe.com',
         date: '2017/11/23',
         id: 'sfaswe',
       },
       {
         name: 'diner',
-        job: 'TEST',
+        job: 'test',
         email: 'diner@hpe.com',
         date: '2017/11/21',
         id: 'sfaswe',
@@ -73,14 +69,12 @@ export class PmPeoplemanageComponent implements AfterViewInit {
   modifyStyle() {
     let width = (100 / this.dataListModel.length).toString().substr(0, 4) + '%';
     let cellList = this.ref.nativeElement.querySelectorAll('.item-cell');
-    console.log(cellList.length);
     cellList.forEach(cell => {
       this.Renderer.setStyle(cell, 'width', width);
     });
   }
 
   delete(item: any) {
-    console.log('delete: ', item);
     this.datas = this.datas.filter(data => data !== item);
   }
 
@@ -92,8 +86,6 @@ export class PmPeoplemanageComponent implements AfterViewInit {
       this.modifyStyle();
     }, 0);
     this.searchList = [];
-    this.showList = false;
-    this.inputName = '';
   }
 
   changeState() {
@@ -103,20 +95,15 @@ export class PmPeoplemanageComponent implements AfterViewInit {
   closeAdd() {
     this.state = this.state === 'active' ? 'inactive' : 'active';
     this.searchList = [];
-    this.showList = false;
-    this.inputName = '';
   }
 
   emitSearch(str: any) {
-    console.log('search: ', str);
 
     if(str === 'qwer') {
-      this.showList = true;
-      this.showNoItem = false;
       this.searchList = [
         {
           name: 'qwer',
-          job: 'PM',
+          job: 'pm',
           email: 'qwer@hpe.com',
           date: '2017/11/23',
           id: 'sdfsdfsafas',
@@ -130,14 +117,11 @@ export class PmPeoplemanageComponent implements AfterViewInit {
         }
       ];
     } else {
-      this.showList = false;
-      this.showNoItem = false;
       this.searchList = [];
     }
   }
 
-  chooseData(data: any) {
+  select(data: any) {
     this.choosedData = data;
-    this.inputName = data.name;
   }
 }

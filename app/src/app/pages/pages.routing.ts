@@ -8,10 +8,6 @@ export const routes: Routes = [
     component: Pages,
     children: [
       {
-        path: 'project',
-        loadChildren: "app/pages/engineering/engineering.module#EngineeringModule"
-      },
-      {
         path: 'welcome',
         loadChildren: "app/pages/welcome/welcome.module#WelcomeModule"
       },

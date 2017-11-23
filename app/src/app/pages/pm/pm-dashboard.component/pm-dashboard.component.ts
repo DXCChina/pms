@@ -93,7 +93,7 @@ export class PmDashboardComponent implements OnInit {
     }]
   }];
 
-  constructor() { }
+  constructor(private dialog:MatDialog) { }
 
   ngOnInit() { }
 
@@ -103,9 +103,10 @@ export class PmDashboardComponent implements OnInit {
 
   showDetail(item) {
     console.log('show:', item);
+
   }
-  
-   initDemand(){
+
+  showDemandDetail(){
     let dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
       height:'70vh',
@@ -117,7 +118,7 @@ export class PmDashboardComponent implements OnInit {
     });
   }
 
-  initActivity(){
+  showTaskDetail(){
     let dialogRef = this.dialog.open(TaskDetailDialogComponent, {
       width: '750px',
       height:'70vh',
