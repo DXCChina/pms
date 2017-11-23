@@ -75,7 +75,6 @@ export class PmPeoplemanageComponent implements AfterViewInit {
   }
 
   delete(item: any) {
-    console.log('delete: ', item);
     this.datas = this.datas.filter(data => data !== item);
   }
 
@@ -99,7 +98,6 @@ export class PmPeoplemanageComponent implements AfterViewInit {
   }
 
   emitSearch(str: any) {
-    console.log('search: ', str);
 
     if(str === 'qwer') {
       this.searchList = [
