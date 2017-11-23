@@ -8,6 +8,9 @@
   overflow: hidden;
 }
 
+input {
+  background: transparent;
+}
 #header {
   /*background-image: url(../login/img/bk-Img.png);*/
   background-image: url(../../assets/img/app/login&register/bk-Img.png);

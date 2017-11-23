@@ -22,7 +22,9 @@
   top:0;
   /*overflow: hidden;*/
 }
-
+input {
+  background: transparent;
+}
 #content{
   width: 1200px;
   height: 686px;
