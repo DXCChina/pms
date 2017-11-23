@@ -32,6 +32,7 @@ acl.add_resource("demand", ["project"])  # demand 继承 project 权限
 acl.add_resource("task", ["project"])
 acl.add_resource("bug", ["project"])
 acl.add_resource("case", ["project"])
+acl.add_resource("project_member", ["project"])
 
 # 注册 pm 规则
 acl.allow("pm", "update", "project")
