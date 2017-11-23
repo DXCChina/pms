@@ -18,7 +18,7 @@
     <mat-list-item *ngFor="let data of datas" [ngClass]="{'people-part': true}">
        <div class="people-item-body">
           <p *ngFor="let item of dataListModel" class="item-cell">
-            {{data[item.value] | positionSwitch}}
+            {{item.value === 'job' ? (data[item.value] | positionSwitch) : data[item.value]}}
           </p>
        </div>
        <button mat-icon-button (click)="delete(data)">

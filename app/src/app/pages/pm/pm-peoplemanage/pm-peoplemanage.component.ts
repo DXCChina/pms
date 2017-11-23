@@ -33,7 +33,7 @@ export class PmPeoplemanageComponent implements AfterViewInit {
     ];
     this.datas = [
       {
-        name: 'jerry',
+        name: 'pm',
         job: 'pm',
         email: 'jerry@hpe.com',
         date: '2017/11/22',
