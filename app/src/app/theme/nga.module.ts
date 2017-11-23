@@ -64,7 +64,7 @@ import { BaPagination } from './components/waPagination/waPagination.component';
 
 import {
   MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
-  MatSelectModule, MatTabsModule, MatCardModule, MatChipsModule, MatProgressBarModule, MatToolbarModule, MatChipsModule
+  MatSelectModule, MatTabsModule, MatCardModule, MatProgressBarModule, MatToolbarModule, MatChipsModule
 } from '@angular/material';
 
 import {WaDataList} from "./components/waDataList/waDataList.component";
@@ -118,8 +118,9 @@ const NGA_COMPONENTS = [
   WaDatableComponent,
   DeviceManageComponent,
   DeviceItemComponent,
-  ChipListComponent
+  ChipListComponent,
   ListCardComponent,
+  DemandSearchComponent
 ];
 
 const NGA_DIRECTIVES = [
@@ -179,7 +180,6 @@ const NGA_VALIDATORS = [
     ContextMenuModule,
     NgxDatatableModule,
     MatToolbarModule,
-    MatChipsModule
   ],
   exports: [
     ...NGA_PIPES,

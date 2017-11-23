@@ -32,7 +32,7 @@ import {DemandDetailDialogComponent} from "./demand-detail-dialog/demand-detail-
     D_tComponent,
     CreateDemandComponent,
     DemandDetailDialogComponent,
-    TaskDetailDialogComponent
+    TaskDetailDialogComponent,
   ],
   imports: [
     CommonModule,
