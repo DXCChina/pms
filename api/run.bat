@@ -6,9 +6,9 @@ set startdir=%cd%
 cd %~dp0
 REM rd /s/q docs\rst docs\_build
 REM sphinx-apidoc -o docs/rst .
-cd docs
-call make html
-cd ..
+REM cd docs
+REM call make html
+REM cd ..
 call python app.py
 cd %startdir%
 REM set path=%tmppath%
