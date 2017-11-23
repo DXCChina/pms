@@ -1,0 +1,68 @@
+.mat-card.list-card {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 0;
+    margin-right: 24px;
+    padding: 0;
+    width: 344px;
+    max-height: 100%;
+    overflow: hidden;
+    .mat-card-header.list-card-header {
+        flex: 0 0 56px;
+        justify-content: space-between;
+        padding: 8px 16px;
+        box-sizing: border-box;
+        width: 100%;
+        height: 56px;
+        background-color: rgba(0, 0, 0, 0.06);
+        .mat-card-title {
+            line-height: 40px;
+            .mat-button {
+                margin-left: -8px;
+                font-size: 16px;
+                color: rgba(0,0,0,.54);
+            }
+        }
+        .mat-icon-button {
+            float: right;
+            font-weight: normal;
+            font-size: 24px;
+            color: rgba(0, 0, 0, 0.54);
+        }
+    }
+    .mat-card-content.list-card-content {
+        flex: 1 1 auto;
+        margin: 0;
+        padding: 16px;
+        overflow: auto;
+        background: #fafafa;
+        .mat-card.item-card {
+            margin-bottom: 16px;
+            padding: 16px;
+            cursor: pointer;
+            .mat-card-header.item-card-header {
+                .mat-card-avatar {
+                    line-height: 40px;
+                    text-align: center;
+                    color: #fff;
+                    background: #ccc;
+                    font-size: 24px;
+                }
+                .mat-card-subtitle {
+                    // margin-bottom: 0;
+                }
+            }
+            .mat-card-content {
+                // padding: 0;
+                // margin-top: 8px;
+            }
+        }
+    }
+    // .mat-card-actions {
+    //     flex: 0 0 auto;
+    //     margin: 0;
+    //     padding: 8px;
+    //     width: 100%;
+    // }
+}

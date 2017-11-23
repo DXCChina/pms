@@ -1,1 +1,4 @@
-<div>pm-dashboard</div>
+<div class="card-container">
+    <app-list-card [data]="data1" (addItem)="addItem()" (showDetail)="showDetail($event)"></app-list-card>
+    <app-list-card [data]="data2" (addItem)="addItem()" (showDetail)="showDetail($event)"></app-list-card>
+</div>

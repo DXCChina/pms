@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 
 @Component({
   selector: 'pm',
-  templateUrl: './pm.component.html',
-  styleUrls: ['./pm.component.scss']
+  styleUrls: ['./pm.component.scss'],
+  template: `<router-outlet></router-outlet>`
 })
 export class PmComponent { }

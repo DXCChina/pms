@@ -1,0 +1,94 @@
+button:focus {
+  outline: none;
+}
+
+.mat-list-item {
+  border-bottom: 1px solid rgb(238, 238, 238);
+}
+p {
+  text-align: center;
+  margin: 6px auto;
+}
+.people-item-body {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: center;
+}
+
+.people-item-header {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  .people-item-title {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    .item-cell {
+      font-size: 14px;
+    }
+  }
+  .people-item-control {
+    width: 40px;
+    height:100%;
+    font-size: 15px;
+    font-weight: 600;
+  }
+}
+
+
+.people-add-item {
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
+  margin: 10px auto;
+  background: rgba(0, 0, 0, .2);
+  &:hover {
+    background: rgba(0, 0, 0, .12);
+  }
+
+  .add-item-wrap {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+
+    .add-item-content {
+      margin-top: 15px;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+
+      .add-item-main {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-around;
+        align-items: center;
+        .mat-form-field {
+          width: 35%;
+          margin-top: 13px;
+        }
+      }
+      .add-item-btn {
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        width: 80px;
+      }
+    }
+  }
+}
