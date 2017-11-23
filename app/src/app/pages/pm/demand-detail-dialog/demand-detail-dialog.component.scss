@@ -1,0 +1,19 @@
+.demand-detail-header{
+  background: #8847dc;
+  color:#fefefe;
+  padding: 0 24px;
+}
+.dialog-content{
+  padding: 24px;
+}
+.demand-detail-content{
+  display: flex;
+  flex-direction: column;
+}
+.demand-detail-content > *{
+  width: 100%;
+}
+
+.demand-detail-footer{
+  text-align: center;
+}

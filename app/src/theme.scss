@@ -6,3 +6,10 @@ $custom-accent: mat-palette($mat-indigo);
 
 $custom-theme: mat-light-theme($custom-primary, $custom-accent);
 @include angular-material-theme($custom-theme);
+
+.mat-dialog-container{
+  padding: 0px !important;
+}
+.mat-dialog-container{
+  overflow-y: hidden !important;
+}

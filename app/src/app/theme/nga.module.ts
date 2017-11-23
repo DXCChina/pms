@@ -64,7 +64,7 @@ import { BaPagination } from './components/waPagination/waPagination.component';
 
 import {
   MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
-  MatSelectModule, MatTabsModule, MatCardModule, MatChipsModule, MatProgressBarModule
+  MatSelectModule, MatTabsModule, MatCardModule, MatChipsModule, MatProgressBarModule, MatToolbarModule, MatChipsModule
 } from '@angular/material';
 
 import {WaDataList} from "./components/waDataList/waDataList.component";
@@ -83,7 +83,8 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {WaDatableComponent} from "./components/wa-datatable/wa-datatable.component";
 import {DeviceManageComponent} from "./components/device_manage/device-manage.component";
 import {DeviceItemComponent} from "./components/device_manage/device-item/device-item.component";
-import {DemandSearchComponent} from "../pages/common/demandSearch/demandSearch.component";
+import {DemandSearchComponent} from "./components/demandSearch/demandSearch.component";
+import {ChipListComponent} from "./components/chip-list/chip-lsit.component";
 
 const NGA_COMPONENTS = [
   BaAmChart,
@@ -117,8 +118,8 @@ const NGA_COMPONENTS = [
   WaDatableComponent,
   DeviceManageComponent,
   DeviceItemComponent,
+  ChipListComponent
   ListCardComponent,
-  DemandSearchComponent
 ];
 
 const NGA_DIRECTIVES = [
@@ -176,12 +177,16 @@ const NGA_VALIDATORS = [
     MatChipsModule,
     TreeModule,
     ContextMenuModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    MatToolbarModule,
+    MatChipsModule
   ],
   exports: [
     ...NGA_PIPES,
     ...NGA_DIRECTIVES,
     ...NGA_COMPONENTS
+  ],
+  entryComponents:[
   ]
 })
 export class NgaModule {
