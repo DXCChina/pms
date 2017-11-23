@@ -12,7 +12,7 @@ from marshmallow import Schema, fields
 from passlib.hash import argon2
 
 from model import user
-app = Blueprint('user', __name__, url_prefix='/api')  # pylint: disable=c0103
+# app = Blueprint('user', __name__, url_prefix='/api')  # pylint: disable=c0103
 
 
 class UserLoginSchema(Schema):
@@ -40,7 +40,7 @@ class PasswordChangeSchema(Schema):
     old_password = fields.String(required=True)
 
 
-@app.route("/user", methods=['POST'])
+# @app.route("/user", methods=['POST'])
 def reg():
     '''用户注册
 
@@ -76,7 +76,7 @@ def reg():
     return jsonify(result=True)
 
 
-@app.route("/login", methods=['POST'])
+# @app.route("/login", methods=['POST'])
 def login():
     '''用户登录
 
@@ -111,7 +111,7 @@ def login():
         return jsonify({"msg": "用户名或密码错误"}), 403
 
 
-@app.route("/user", methods=['GET'])
+# @app.route("/user", methods=['GET'])
 @fresh_jwt_required
 def user_info():
     '''获取用户信息
@@ -125,7 +125,7 @@ def user_info():
     return jsonify(get_jwt_claims())
 
 
-@app.route("/user", methods=['PUT'])
+# @app.route("/user", methods=['PUT'])
 @fresh_jwt_required
 def user_update():
     '''更新用户信息
@@ -159,7 +159,7 @@ def user_update():
     return resp
 
 
-@app.route("/password", methods=['PUT'])
+# @app.route("/password", methods=['PUT'])
 @fresh_jwt_required
 def change_password():
     '''修改密码
@@ -181,7 +181,7 @@ def change_password():
         return jsonify({"msg": "密码错误"}), 403
 
 
-@app.route("/logout", methods=['GET'])
+# @app.route("/logout", methods=['GET'])
 def logout():
     '''退出登录
 
