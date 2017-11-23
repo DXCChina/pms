@@ -1,9 +1,9 @@
-import {NgModule, ModuleWithProviders}      from '@angular/core';
-import {CommonModule}  from '@angular/common';
-import {ReactiveFormsModule, FormsModule} from '@angular/forms';
-import {RouterModule} from '@angular/router';
-import {NgUploaderModule} from 'ngx-uploader';
-import {AppTranslationModule} from '../app.translation.module';
+import { NgModule, ModuleWithProviders } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { NgUploaderModule } from 'ngx-uploader';
+import { AppTranslationModule } from '../app.translation.module';
 
 import {
   BaThemeConfig
@@ -29,10 +29,11 @@ import {
   BaSidebar,
   BaFileUploader,
   BaWelTop,
-  WaSortListComponent
+  WaSortListComponent,
+  ListCardComponent
 } from './components';
 
-import {BaCardBlur} from './components/baCard/baCardBlur.directive';
+import { BaCardBlur } from './components/baCard/baCardBlur.directive';
 
 import {
   BaScrollPosition,
@@ -43,7 +44,8 @@ import {
 import {
   BaAppPicturePipe,
   BaKameleonPicturePipe,
-  BaProfilePicturePipe
+  BaProfilePicturePipe,
+  Name2AvatarPipe
 } from './pipes';
 
 import {
@@ -57,10 +59,14 @@ import {
   EmailValidator,
   EqualPasswordsValidator
 } from './validators';
-import {BaPagination} from "./components/waPagination/waPagination.component";
+
+import { BaPagination } from './components/waPagination/waPagination.component';
+
 import {
-  MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule,
-  MatSelectModule, MatTabsModule } from "@angular/material";
+  MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
+  MatSelectModule, MatTabsModule, MatCardModule, MatProgressBarModule, MatToolbarModule, MatChipsModule
+} from '@angular/material';
+
 import {WaDataList} from "./components/waDataList/waDataList.component";
 import {WaFilter} from "./components/waFilter/waFilter.component";
 import {WaSort} from "./components/waSort/waSort.component";
@@ -77,9 +83,11 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {WaDatableComponent} from "./components/wa-datatable/wa-datatable.component";
 import {DeviceManageComponent} from "./components/device_manage/device-manage.component";
 import {DeviceItemComponent} from "./components/device_manage/device-item/device-item.component";
-import {DemandSearchComponent} from "../pages/common/demandSearch/demandSearch.component";
+
 import {CommonSearchComponent} from "./components/commonSearch/commonSearch.component";
 import {PositionSwitchPipe} from "./pipes/positionSwitch/positionSwitch.pipe";
+
+import {ChipListComponent} from "./components/chip-list/chip-lsit.component";
 
 const NGA_COMPONENTS = [
   BaAmChart,
@@ -113,8 +121,10 @@ const NGA_COMPONENTS = [
   WaDatableComponent,
   DeviceManageComponent,
   DeviceItemComponent,
-  DemandSearchComponent,
-  CommonSearchComponent
+
+  CommonSearchComponent,
+  ChipListComponent,
+  ListCardComponent,
 ];
 
 const NGA_DIRECTIVES = [
@@ -128,7 +138,8 @@ const NGA_PIPES = [
   BaAppPicturePipe,
   BaKameleonPicturePipe,
   BaProfilePicturePipe,
-  PositionSwitchPipe
+  PositionSwitchPipe,
+  Name2AvatarPipe
 ];
 
 const NGA_SERVICES = [
@@ -168,19 +179,24 @@ const NGA_VALIDATORS = [
     MatCheckboxModule,
     MatProgressBarModule,
     MatTabsModule,
+    MatCardModule,
+    MatChipsModule,
     TreeModule,
     ContextMenuModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    MatToolbarModule,
   ],
   exports: [
     ...NGA_PIPES,
     ...NGA_DIRECTIVES,
     ...NGA_COMPONENTS
+  ],
+  entryComponents:[
   ]
 })
 export class NgaModule {
   static forRoot(): ModuleWithProviders {
-    return <ModuleWithProviders> {
+    return <ModuleWithProviders>{
       ngModule: NgaModule,
       providers: [
         BaThemeConfigProvider,

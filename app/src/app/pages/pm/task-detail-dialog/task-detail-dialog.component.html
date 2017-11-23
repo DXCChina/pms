@@ -1,0 +1,108 @@
+<div>
+  <mat-toolbar class="demand-detail-header">
+    <!--<span>项目名称</span><span> > </span>-->
+    <span>任务名称</span>
+    <div style="margin-left: 10px;">
+      <button mat-button [matMenuTriggerFor]="menu">
+      labels
+    </button>
+
+      <button mat-button [matMenuTriggerFor]="userMenu">
+        users
+      </button>
+    </div>
+  </mat-toolbar>
+</div>
+
+<mat-menu [overlapTrigger]="true" #userMenu="matMenu" panelClass="'user-role-panel'" #userTrigger>
+  <div class="role-list">
+    <div *ngFor="let user of userList" class="role">
+      <mat-checkbox (change)="selectUsers(user, $event)" [checked]="user.checked">{{user.name}}</mat-checkbox>
+    </div>
+  </div>
+</mat-menu>
+
+<mat-menu [overlapTrigger]="true" #menu="matMenu" panelClass="'user-role-panel'" #trigger>
+  <div class="role-list">
+    <div *ngFor="let role of roleList" class="role">
+      <mat-checkbox (change)="selectRoles(role, $event)" [checked]="role.checked">{{role.name}}</mat-checkbox>
+    </div>
+  </div>
+</mat-menu>
+
+<div class="dialog-content">
+  <div class="mat-container">
+    <mat-form-field>
+      <input matInput placeholder="名称">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="描述">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="状态">
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="优先级">
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      label
+      <chip-list [chipList]="selectRoleList" (removeChip)="removeRole($event)"></chip-list>
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12">
+      member
+      <div>
+        <chip-list [chipList]="selectUserList" (removeChip)="removeUser($event)"></chip-list>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div>
+    <span>包含需求</span>
+    <div class="demand-progress-bar">
+      <span>{{demandListCompletedInTask?.length}}/{{demandListInTask.length}}</span>
+      <mat-progress-bar mode="determinate" value="{{progressValue}}"></mat-progress-bar>
+    </div>
+    <div class="demand-in-task">
+      <div *ngFor="let demand of demandListInTask">
+        <mat-checkbox (change)="toggleDemandStatus(demand, $event)"></mat-checkbox>
+        <mat-form-field>
+          <input matInput value="{{demand?.name}}">
+        </mat-form-field>
+        <button mat-button (click)="deleteDemandInTask(demand)">X</button>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <div>
+    <span>未指派的需求</span>
+    <div class="demand-search">
+      <mat-form-field>
+        <input matInput placeholder="搜索需求">
+      </mat-form-field>
+    </div>
+    <div class="demand-list-not-assigned">
+      <div *ngFor="let demand of demandListNotAssigned">
+        <mat-form-field>
+          <input matInput value="{{demand?.name}}" disabled>
+        </mat-form-field>
+        <button mat-button (click)="addDemandToTask(demand)">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="demand-detail-footer">
+    <button mat-button>取消</button>
+    <button mat-button>修改</button>
+  </div>
+</div>
+

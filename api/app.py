@@ -8,9 +8,8 @@ from datetime import timedelta
 from os import environ
 from flask import Flask  #, jsonify
 from flask_jwt_extended import (JWTManager)
-from peewee import InternalError
 from controller import bps
-from model.db import database
+from model.db import database,Demand
 from model.user import User
 
 app = Flask(__name__)  # pylint:disable=c0103
@@ -51,11 +50,8 @@ for bp in bps:
     app.register_blueprint(bp)
 
 if __name__ == "__main__":
-    try:
-        print('初始化数据库')
-        database.create_tables([User])
-    except InternalError:
-        pass
+    print('初始化数据库')
+    database.create_tables([User,Demand], safe=True)
 
     app.run(
         host='PY_IP' in environ and environ['PY_IP'] or "0.0.0.0",
