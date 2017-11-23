@@ -4,17 +4,23 @@
 @author: Wang Jianhui
 '''
 
-from datetime import datetime
-from peewee import DateTimeField, FixedCharField
+from peewee import DateTimeField, FixedCharField, IntegerField, SQL
 from model.db import MySQLModel
 
 
+#用户表
 class User(MySQLModel):
-    createat = DateTimeField(db_column='createAt', default=datetime.now)
-    email = FixedCharField(unique=True)
+    id = IntegerField(primary_key=True, constraints=[SQL('AUTO_INCREMENT')])
+    username = FixedCharField(unique=True, max_length=50)
     password = FixedCharField(max_length=100)
-    status = FixedCharField(default='active')
-    username = FixedCharField(unique=True)
+    email = FixedCharField(unique=True, max_length=50)
+    status = FixedCharField(
+        max_length=50,
+        constraints=[
+            SQL(" DEFAULT 'active' COMMENT '用户状态:active(默认)/delete(已删除)'")
+        ])
+    createat = DateTimeField(
+        db_column='createAt', constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')])
 
     class Meta:
         db_table = 'user'
