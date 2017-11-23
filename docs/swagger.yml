@@ -1,18 +1,11 @@
 swagger: "2.0"
 
 info:
-  title: "{{title}}"
+  title: "pms api"
   version: "1.0"
-
+basePath: "/api"
 paths:
 # @author: Wang Jianhui
-  /user:
-    post:
-      summary: api
-      operationId: controller.user.reg
-      responses:
-        200:
-          description: ok
   /login:
     post:
       summary: api
@@ -21,13 +14,18 @@ paths:
         200:
           description: ok
   /user:
+    post:
+      summary: api
+      operationId: controller.user.reg
+      responses:
+        200:
+          description: ok
     get:
       summary: api
       operationId: controller.user.user_info
       responses:
         200:
           description: ok
-  /user:
     put:
       summary: api
       operationId: controller.user.user_update
@@ -56,7 +54,6 @@ paths:
       responses:
         200:
           description: ok
-  /project:
     post:
       summary: api
       operationId: controller.info.project_add
