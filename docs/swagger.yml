@@ -80,7 +80,6 @@ paths:
       responses:
         200:
           description: ok
-  /project/{project_id}:
     put:
       summary: api
       operationId: controller.project.project_update
@@ -111,7 +110,6 @@ paths:
       responses:
         200:
           description: ok
-  /project/{project_id}/user:
     post:
       summary: 更新项目成员
       operationId: controller.project.project_user_update
@@ -223,7 +221,6 @@ paths:
       responses:
         200:
           description: ok
-  /demand/{demand_id}/task/{task_id}:
     put:
       summary: api
       operationId: controller.task.task_update
