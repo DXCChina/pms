@@ -78,6 +78,7 @@ import {WaDatableComponent} from "./components/wa-datatable/wa-datatable.compone
 import {DeviceManageComponent} from "./components/device_manage/device-manage.component";
 import {DeviceItemComponent} from "./components/device_manage/device-item/device-item.component";
 import {DemandSearchComponent} from "../pages/common/demandSearch/demandSearch.component";
+import {CommonSearchComponent} from "./components/commonSearch/commonSearch.component";
 
 const NGA_COMPONENTS = [
   BaAmChart,
@@ -111,7 +112,8 @@ const NGA_COMPONENTS = [
   WaDatableComponent,
   DeviceManageComponent,
   DeviceItemComponent,
-  DemandSearchComponent
+  DemandSearchComponent,
+  CommonSearchComponent
 ];
 
 const NGA_DIRECTIVES = [

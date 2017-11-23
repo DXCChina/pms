@@ -47,6 +47,15 @@
 
         </div>
 
+          <common-search
+            [placeHolder]="'人员搜索'"
+            [field]="'name'"
+            [searchList]="searchList"
+            (search)="search($event)"
+            (select)="select($event)">
+
+          </common-search>
+
         <hr />
           <h3 class="manage-title">人员管理</h3>
         <hr />
