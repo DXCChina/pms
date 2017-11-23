@@ -8,7 +8,7 @@ import logging
 from os import environ
 from pymysql import cursors, connect
 from playhouse.pool import PooledMySQLDatabase
-from peewee import Model, DoesNotExist
+from peewee import Model, DoesNotExist, DateTimeField, FixedCharField, IntegerField, TextField, SQL
 
 logger = logging.getLogger('peewee')
 logger.setLevel(
@@ -55,28 +55,38 @@ class MySQLModel(Model):
             return None
 
 
-# class Demand(MySQLModel):
-#     cost = IntegerField(null=True)
-#     createat = DateTimeField(db_column='createAt')
-#     detail = TextField(null=True)
-#     enddate = CharField(db_column='endDate', null=True)
-#     level = CharField()
-#     ownerid = IntegerField(db_column='ownerId')
-#     progress = IntegerField(null=True)
-#     projectid = IntegerField(db_column='projectId')
-#     startdate = CharField(db_column='startDate')
-#     status = CharField()
-#     title = CharField()
+# 需求表
+class Demand(MySQLModel):
+    id = IntegerField(primary_key=True, constraints=[SQL('AUTO_INCREMENT')])
+    ownerid = IntegerField(db_column='ownerId')
+    projectid = IntegerField(db_column='projectId')
+    title = FixedCharField(max_length=50)
+    detail = TextField(null=True)
+    level = FixedCharField(
+        max_length=50,
+        constraints=[
+            SQL("DEFAULT 'normal' COMMENT 'low(低)/high(高)/normal(中,默认)'")
+        ])
+    status = FixedCharField(
+        max_length=50,
+        constraints=[SQL("DEFAULT 'active' COMMENT 'active(默认)/done/delete'")])
+    createat = DateTimeField(
+        db_column='createAt', constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')])
+    startdate = FixedCharField(db_column='startDate', max_length=50)
+    enddate = FixedCharField(db_column='endDate', max_length=50, null=True)
+    progress = IntegerField(null=True)
+    cost = IntegerField(null=True)
 
-#     class Meta:
-#         db_table = 'demand'
+    class Meta:
+        db_table = 'demand'
+
 
 # class Project(MySQLModel):
 #     createat = DateTimeField(db_column='createAt')
 #     detail = TextField(null=True)
-#     name = CharField(unique=True)
+#     name = FixedCharField(unique=True)
 #     ownerid = IntegerField(db_column='ownerId')
-#     status = CharField()
+#     status = FixedCharField()
 
 #     class Meta:
 #         db_table = 'project'
@@ -93,14 +103,14 @@ class MySQLModel(Model):
 #     createat = DateTimeField(db_column='createAt')
 #     demandid = IntegerField(db_column='demandId')
 #     detail = TextField(null=True)
-#     enddate = CharField(db_column='endDate', null=True)
-#     level = CharField()
+#     enddate = FixedCharField(db_column='endDate', null=True)
+#     level = FixedCharField()
 #     memberid = IntegerField(db_column='memberId')
 #     ownerid = IntegerField(db_column='ownerId')
 #     progress = IntegerField(null=True)
-#     startdate = CharField(db_column='startDate')
-#     status = CharField()
-#     title = CharField()
+#     startdate = FixedCharField(db_column='startDate')
+#     status = FixedCharField()
+#     title = FixedCharField()
 
 #     class Meta:
 #         db_table = 'task'
