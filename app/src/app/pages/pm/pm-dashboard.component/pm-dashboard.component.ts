@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PmDashboardService } from './pm-dashboard.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { TaskDetailDialogComponent } from '../task-detail-dialog/task-detail-dialog.component';
+import { DemandDetailDialogComponent } from '../demand-detail-dialog/demand-detail-dialog.component';
 
 @Component({
   selector: 'pm-dashboard',
@@ -94,8 +97,8 @@ export class PmDashboardComponent implements OnInit {
       itemfrom: 'Wang Qianxiang'
     }]
   }];
-
-  constructor(private router: Router, private service: PmDashboardService) { }
+  
+  constructor(private router: Router, private service: PmDashboardService, private dialog:MatDialog) { }
 
   // 项目ID
   projectId: string;
@@ -126,8 +129,27 @@ export class PmDashboardComponent implements OnInit {
     console.log('add');
   }
 
-  showDetail(item) {
-    console.log('show:', item);
+  showDemandDetail(){
+    let dialogRef = this.dialog.open(DemandDetailDialogComponent, {
+      width: '750px',
+      height:'70vh',
+      data: { name: 'dd', animal: 'dd' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 
+  showTaskDetail(){
+    let dialogRef = this.dialog.open(TaskDetailDialogComponent, {
+      width: '750px',
+      height:'70vh',
+      data: { name: 'dd', animal: 'dd' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
 }

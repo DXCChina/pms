@@ -26,6 +26,15 @@ export class WelcomeComponent implements OnInit {
     this.getTaskList();
   }
 
+  getFish(){
+    console.log("#top", "fish");
+  }
+
+  getAccdent(){
+    console.log("#top", "getAccdent");
+  }
+
+
   getProjectList() {
     this._service.getProjectList()
       .then(res => {

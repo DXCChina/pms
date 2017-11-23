@@ -66,6 +66,13 @@
         </path>
       </svg>
       <p>所有项目</p>
+      <div class="project-variety">
+        <mat-chip-list>
+          <mat-chip>全部</mat-chip>
+          <mat-chip color="primary" selected="true" (click)="getFish()">我创建的</mat-chip>
+          <mat-chip color="accent" selected="true" (click)="getAccdent()">我参与的</mat-chip>
+        </mat-chip-list>
+      </div>
     </div>
     <div [style.width]="'100%'">
       <ul>

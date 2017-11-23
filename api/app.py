@@ -8,13 +8,15 @@ from datetime import timedelta
 from os import environ
 from flask import Flask  #, jsonify
 from flask_jwt_extended import (JWTManager)
-from peewee import InternalError
-from controller import bps
-from model.db import database
+# from controller import bps
+from model.db import database, Demand
 from model.user import User
+import connexion
 
-app = Flask(__name__)  # pylint:disable=c0103
-
+application = connexion.App(__name__, specification_dir='../docs')
+application.add_api('swagger.yml')
+# app = Flask(__name__)  # pylint:disable=c0103
+app = application.app
 app.config['USE_X_SENDFILE'] = True
 app.config['SECRET_KEY'] = environ['JWT_SECRET_KEY']
 app.config['JSON_AS_ASCII'] = False
@@ -47,17 +49,14 @@ def add_claims_to_access_token(user):
 #     '''自定义404提示信息'''
 #     return jsonify({'msg': 'NotFound'}), 404
 
-for bp in bps:
-    app.register_blueprint(bp)
+# for bp in bps:
+#     app.register_blueprint(bp)
 
 if __name__ == "__main__":
-    try:
-        print('初始化数据库')
-        database.create_tables([User])
-    except InternalError:
-        pass
+    print('初始化数据库')
+    database.create_tables([User, Demand], safe=True)
 
-    app.run(
+    application.run(
         host='PY_IP' in environ and environ['PY_IP'] or "0.0.0.0",
         port='PY_PORT' in environ and environ['PY_PORT'] or 5000,
         debug=app.config['DEBUG'])

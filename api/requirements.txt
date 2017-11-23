@@ -10,7 +10,7 @@ passlib
 argon2_cffi
 bcrypt
 
-simple-rbac
+git+https://github.com/tonyseek/simple-rbac.git
 
 hypothesis
 pytest
