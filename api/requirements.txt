@@ -10,5 +10,7 @@ passlib
 argon2_cffi
 bcrypt
 
+simple-rbac
+
 hypothesis
 pytest

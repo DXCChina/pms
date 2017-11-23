@@ -4,56 +4,52 @@
 @author: Wang Jianhui
 '''
 
-from model.db import db
+from datetime import datetime
+from peewee import DateTimeField, FixedCharField
+from model.db import MySQLModel
+
+
+class User(MySQLModel):
+    createat = DateTimeField(db_column='createAt', default=datetime.now)
+    email = FixedCharField(unique=True)
+    password = FixedCharField(max_length=100)
+    status = FixedCharField(default='active')
+    username = FixedCharField(unique=True)
+
+    class Meta:
+        db_table = 'user'
 
 
 def findOneById(userid):
     '''按 id 查询用户'''
-    with db.cursor() as cursor:
-        sql = "SELECT * FROM user WHERE id=%s"
-        cursor.execute(sql, (userid))
-        result = cursor.fetchone()
-    return result
+    return User.getOne(User.id == userid)
 
 
 def findOneByName(username):
     '''按 username 查询用户'''
-    with db.cursor() as cursor:
-        sql = "SELECT * FROM user WHERE username=%s"
-        cursor.execute(sql, (username))
-        result = cursor.fetchone()
-    return result
+    return User.getOne(User.username == username)
 
 
 def findOneByEmail(email):
     '''按 email 查询用户'''
-    with db.cursor() as cursor:
-        sql = "SELECT * FROM user WHERE email=%s"
-        cursor.execute(sql, (email))
-        result = cursor.fetchone()
-    return result
+    return User.getOne(User.email == email)
 
 
 def save(user):
     '''添加用户并返回用户信息'''
-    with db.cursor() as cursor:
-        sql = "INSERT INTO user (username,email,password) VALUES (%s, %s, %s)"
-        cursor.execute(sql,
-                       (user['username'], user['email'], user['password']))
-    db.commit()
+    User.create(
+        username=user['username'],
+        email=user['email'],
+        password=user['password'])
 
 
 def update(user):
     '''更新用户信息'''
-    with db.cursor() as cursor:
-        sql = "UPDATE user SET username=%s,email = %s WHERE id = %s"
-        cursor.execute(sql, (user['username'], user['email'], user['id']))
-    db.commit()
+    User.update(
+        username=user['username'],
+        email=user['email']).where(User.id == user['id'])
 
 
 def change_password(userid, password):
     '''更新用户密码'''
-    with db.cursor() as cursor:
-        sql = "UPDATE user SET password=%s WHERE id = %s"
-        cursor.execute(sql, (password, userid))
-    db.commit()
+    User.update(password=password).where(User.id == userid)

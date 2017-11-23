@@ -12,7 +12,8 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        component: PmDashboardComponent
+        component: PmDashboardComponent,
+        data:{isShowNav:true}
       },
       {
         path: 'demand',
@@ -20,7 +21,8 @@ export const routes: Routes = [
       },
       {
         path: 'activity',
-        component: PmActivityComponent
+        component: PmActivityComponent,
+        data:{isShowNav:true}
       },
       {
         path: '',

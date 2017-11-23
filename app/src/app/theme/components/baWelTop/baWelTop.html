@@ -3,19 +3,21 @@
   <a routerLink="welcome" class="al-logo clearfix">
     Pms
   </a>
+  <span class="project-name" *ngIf="showLevel2Menu==true&&projectName">{{projectName}}</span>
 
   <div class="level_1_menu">
 
     <div class="level_2_menu" *ngIf="showLevel2Menu==true">
+
       <li class="segmentation"></li>
       <nav class="navbar navbar-toggleable-md navbar-light">
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item ">
-              <a class="nav-link" routerLink="project/dashboard" routerLinkActive="active">项目</a>
+              <a class="nav-link" routerLink="{{userRoleInProject+'/dashboard'}}" routerLinkActive="active">我的工作台</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" routerLink="project/demand" routerLinkActive="active">需求</a>
+              <a class="nav-link" routerLink="{{userRoleInProject+'/activity'}}" routerLinkActive="active">项目管理</a>
             </li>
           </ul>
         </div>

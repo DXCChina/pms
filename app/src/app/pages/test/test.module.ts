@@ -5,6 +5,8 @@ import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {NgaModule} from "../../theme/nga.module";
 import {TestActivityComponent} from "./test-activity/test-activity.component";
+import {routing} from "./test.routing";
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -16,6 +18,8 @@ import {TestActivityComponent} from "./test-activity/test-activity.component";
     CommonModule,
     FormsModule,
     NgaModule,
+    // RouterModule,
+    routing
   ],
   providers: [
 

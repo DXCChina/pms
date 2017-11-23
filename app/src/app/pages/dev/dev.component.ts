@@ -2,7 +2,7 @@ import {Component} from "@angular/core";
 
 @Component({
   selector: 'dev',
-  templateUrl: './dev.component.html',
-  styleUrls: ['./dev.component.scss']
+  styleUrls: ['./dev.component.scss'],
+  template: `<router-outlet></router-outlet>`
 })
 export class DevComponent {}

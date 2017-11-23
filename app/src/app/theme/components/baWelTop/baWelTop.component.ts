@@ -15,6 +15,8 @@ export class BaWelTop {
   public isScrolled: boolean = false;
   public isMenuCollapsed: boolean = false;
   public showLevel2Menu: boolean = false;
+  public userRoleInProject: string = '';
+  public projectName: string = '';
 
   constructor(private _state: GlobalState, private _service: BaWelTopService,
               private router: Router, private activatedRoute: ActivatedRoute) {
@@ -40,6 +42,8 @@ export class BaWelTop {
       .mergeMap(route => route.data)
       .subscribe((event) => {
         // example: NavigationStart, RoutesRecognized, NavigationEnd
+        this.userRoleInProject = window.sessionStorage.getItem('userRoleInProject');
+        this.projectName = window.sessionStorage.getItem('projectName');
         if (event && event.isShowNav === true) {
           this.showLevel2Menu = true;
         } else {

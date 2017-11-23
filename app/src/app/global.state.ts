@@ -9,7 +9,7 @@ export class GlobalState {
   jwtRefreshCode: number = -5;
   headers = new Headers({'Content-Type': 'application/json'});
   options = new RequestOptions({headers: this.headers});
-  userRoleInPro: string = '';
+  userRoleInProject: string = '';
   createJudge: any = {position: false, title: false, projectId: '', members: [], description: '', projectName: ''};
 
   private _data = new Subject<Object>();

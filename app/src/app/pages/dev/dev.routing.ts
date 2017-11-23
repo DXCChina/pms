@@ -11,11 +11,13 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        component: DevDashboardComponent
+        component: DevDashboardComponent,
+        data:{isShowNav:true}
       },
       {
         path: 'activity',
-        component: DevActivityComponent
+        component: DevActivityComponent,
+        data:{isShowNav:true}
       }
     ]
   }

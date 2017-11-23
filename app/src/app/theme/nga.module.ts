@@ -59,27 +59,31 @@ import {
   EmailValidator,
   EqualPasswordsValidator
 } from './validators';
+
 import { BaPagination } from './components/waPagination/waPagination.component';
+
 import {
-  MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule, MatProgressBarModule,
-  MatSelectModule, MatTabsModule, MatCardModule, MatChipsModule
+  MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
+  MatSelectModule, MatTabsModule, MatCardModule, MatChipsModule, MatProgressBarModule
 } from '@angular/material';
-import { WaDataList } from './components/waDataList/waDataList.component';
-import { WaFilter } from './components/waFilter/waFilter.component';
-import { WaSort } from './components/waSort/waSort.component';
-import { WaDataListItemComponent } from './components/waDataList/waDataListitem/waDataListItem.component';
-import { FileUploadComponent } from './components/uploadFile/file-upload.component';
-import { WColumnComponent, WDataListComponent } from './components/w-dataList/w-dataList.component';
-import { WSidebarComponent } from './components/w-sidebar/w-sidebar.component';
-import { SortableModule, BsDropdownModule } from 'ngx-bootstrap';
-import { WaSearchComponent } from './components/waSearch/wa-search.component';
-import { NgxTreeComponent } from './components/ngx-tree/ngx-tree.component';
-import { TreeModule } from 'angular-tree-component';
-import { ContextMenuModule } from 'ngx-contextmenu';
-import { NgxDatatableModule } from '@swimlane/ngx-datatable';
-import { WaDatableComponent } from './components/wa-datatable/wa-datatable.component';
-import { DeviceManageComponent } from './components/device_manage/device-manage.component';
-import { DeviceItemComponent } from './components/device_manage/device-item/device-item.component';
+
+import {WaDataList} from "./components/waDataList/waDataList.component";
+import {WaFilter} from "./components/waFilter/waFilter.component";
+import {WaSort} from "./components/waSort/waSort.component";
+import {WaDataListItemComponent} from "./components/waDataList/waDataListitem/waDataListItem.component";
+import {FileUploadComponent} from "./components/uploadFile/file-upload.component";
+import {WColumnComponent, WDataListComponent} from "./components/w-dataList/w-dataList.component";
+import {WSidebarComponent} from "./components/w-sidebar/w-sidebar.component";
+import {SortableModule, BsDropdownModule} from "ngx-bootstrap";
+import {WaSearchComponent} from "./components/waSearch/wa-search.component";
+import {NgxTreeComponent} from "./components/ngx-tree/ngx-tree.component";
+import {TreeModule} from "angular-tree-component";
+import {ContextMenuModule} from "ngx-contextmenu";
+import {NgxDatatableModule} from "@swimlane/ngx-datatable";
+import {WaDatableComponent} from "./components/wa-datatable/wa-datatable.component";
+import {DeviceManageComponent} from "./components/device_manage/device-manage.component";
+import {DeviceItemComponent} from "./components/device_manage/device-item/device-item.component";
+import {DemandSearchComponent} from "../pages/common/demandSearch/demandSearch.component";
 
 const NGA_COMPONENTS = [
   BaAmChart,
@@ -113,8 +117,8 @@ const NGA_COMPONENTS = [
   WaDatableComponent,
   DeviceManageComponent,
   DeviceItemComponent,
-
-  ListCardComponent
+  ListCardComponent,
+  DemandSearchComponent
 ];
 
 const NGA_DIRECTIVES = [

@@ -36,6 +36,15 @@
     line-height: 60px;
 
   }
+
+  .project-name{
+    float: left;
+    display: block;
+    position: absolute;
+    top: 24px;
+    left: 200px;
+    font-size: 24px;
+  }
   a.resource {
     color: $sidebar-text;
     display: block;
@@ -145,7 +154,7 @@
   }
 
   .nav-item {
-    width: 80px;
+    //width: 0px;
     border: 1px solid transparent;
     text-align: center;
     margin-left: 30px;
@@ -162,7 +171,7 @@
     color: #ffffff;
     font-size: 16px;
     //background: rgba(255, 255, 255, 0.3);
-    width: 80px;
+    //width: 80px;
     text-align: center;
     border: 1px solid #ffffff;
     -webkit-border-radius: 5px;

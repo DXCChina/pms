@@ -4,7 +4,8 @@
 @author: Wang Qianxiang
 '''
 
-from model.db import db
+from .db import db
+from .role import identity
 
 
 def find_project(project_id):
@@ -15,13 +16,17 @@ def find_project(project_id):
         result = cursor.fetchone()
     return result
 
+
+@identity.check_permission("update", 'project')
 def update_project(project_id, request):
     '''更新项目信息'''
     with db.cursor() as cursor:
         sql = "UPDATE project SET name=%s, detail=%s WHERE id=%s"
-        cursor.execute(sql, (str(request['name']), str(request['detail']), project_id))
+        cursor.execute(
+            sql, (str(request['name']), str(request['detail']), project_id))
         db.commit()
     return find_project(project_id)
+
 
 def find_users():
     '''查询所有用户列表'''
@@ -31,6 +36,7 @@ def find_users():
         result = cursor.fetchall()
     return result
 
+
 def find_project_users(project_id):
     '''查询项目用户列表'''
     with db.cursor() as cursor:
@@ -38,10 +44,13 @@ def find_project_users(project_id):
         FROM projectmember INNER JOIN user \
         ON projectmember.memberId=user.id \
         WHERE projectmember.projectId=%s AND user.status='active'"
+
         cursor.execute(sql, (project_id))
         result = cursor.fetchall()
     return result
 
+
+@identity.check_permission("update", 'project')
 def update_project_users(project_id, request):
     '''更新项目成员'''
     with db.cursor() as cursor:
@@ -50,7 +59,10 @@ def update_project_users(project_id, request):
             cursor.execute(sql, (project_id))
 
             sql = "INSERT INTO projectmember (projectId,memberId) VALUES (%s, %s)"
-            cursor.executemany(sql, tuple((project_id, member) for member in request['memberIdArr']))
+            cursor.executemany(
+                sql,
+                tuple(
+                    (project_id, member) for member in request['memberIdArr']))
             db.commit()
         except:
             db.rollback()
