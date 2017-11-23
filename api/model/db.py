@@ -10,7 +10,7 @@ from pymysql import cursors, connect
 from playhouse.pool import PooledMySQLDatabase
 from peewee import Model, DoesNotExist, DateTimeField, FixedCharField, IntegerField, TextField, SQL
 
-logger = logging.getLogger('peewee')
+logger = logging.getLogger('peewee')    
 logger.setLevel(
     'PY_ENV' in environ and environ['PY_ENV'] == 'dev' and logging.DEBUG
     or logging.WARNING)
