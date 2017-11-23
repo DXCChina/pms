@@ -14,7 +14,7 @@ from model import project
 app = Blueprint('project', __name__, url_prefix='/api')  # pylint: disable=c0103
 
 
-@app.route("/project/<int:project_id>", methods=['GET'])
+# @app.route("/project/<int:project_id>", methods=['GET'])
 @fresh_jwt_required
 def project_info(project_id):
     '''获取项目信息
@@ -24,7 +24,7 @@ def project_info(project_id):
     return jsonify(project.find_project(project_id))
 
 
-@app.route("/project/<int:project_id>", methods=['PUT'])
+# @app.route("/project/<int:project_id>", methods=['PUT'])
 @fresh_jwt_required
 def project_update(project_id):
     '''更新项目信息
@@ -43,7 +43,7 @@ def project_update(project_id):
         return jsonify({'msg': 'PermissionDenied'})
 
 
-@app.route("/userlist", methods=['GET'])
+# @app.route("/userlist", methods=['GET'])
 @fresh_jwt_required
 def user_list():
     '''获取所有用户列表
@@ -53,7 +53,7 @@ def user_list():
     return jsonify(project.find_users())
 
 
-@app.route("/project/<int:project_id>/user", methods=['GET'])
+# @app.route("/project/<int:project_id>/user", methods=['GET'])
 @fresh_jwt_required
 def project_user(project_id):
     '''获取项目成员
@@ -63,7 +63,7 @@ def project_user(project_id):
     return jsonify(project.find_project_users(project_id))
 
 
-@app.route("/project/<int:project_id>/user", methods=['PUT'])
+# @app.route("/project/<int:project_id>/user", methods=['PUT'])
 @fresh_jwt_required
 def project_user_update(project_id):
     '''更新项目成员

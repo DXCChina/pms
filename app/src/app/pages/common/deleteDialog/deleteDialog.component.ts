@@ -4,9 +4,9 @@ import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material";
 @Component({
   selector:'delete',
   template:`
-    <h1 md-dialog-title></h1>
-  <div md-dialog-content style="margin: 27px auto;text-align: center;font-size: 1.2em">确定删除该{{data}}?</div>
-  <div md-dialog-actions style="margin-left:33px"> 
+    <h1 mat-dialog-title></h1>
+  <div mat-dialog-content style="margin: 27px auto;text-align: center;font-size: 1.2em">确定删除该{{data}}?</div>
+  <div mat-dialog-actions style="margin-left:33px"> 
     <button mat-button (click)="closeDialog()">取消</button>
     <button mat-button (click)="cancelDialog()">删除</button>
   </div>

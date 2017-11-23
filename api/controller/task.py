@@ -45,18 +45,18 @@ class TaskSchema(Schema):
     endDate = fields.String(required=True)
 
 
-@app.route("/project/<int:project_id>/demand", methods=['GET'])
-@fresh_jwt_required
-def demand_list(project_id):
-    '''获取指定项目需求列表
+# @app.route("/project/<int:project_id>/demand", methods=['GET'])
+# @fresh_jwt_required
+# def demand_list(project_id):
+#     '''获取指定项目需求列表
 
-    GET /api/project/<int:project_id>/demand
-    '''
-    return 'developing'
+#     GET /api/project/<int:project_id>/demand
+#     '''
+#     return 'developing'
 
 
 # @app.route("/project/<int:project_id>/demand", methods=['POST'])
-@app.route("/project/demand", methods=['POST'])
+# @app.route("/project/demand", methods=['POST'])
 @fresh_jwt_required
 def demand_add():
     '''添加需求
@@ -78,7 +78,7 @@ def demand_add():
         return jsonify({'msg': 'PermissionDenied'})
 
 
-@app.route("/project/demand/detail/<int:demand_id>", methods=['GET'])
+# @app.route("/project/demand/detail/<int:demand_id>", methods=['GET'])
 @fresh_jwt_required
 def demand_info(demand_id):
     '''获取需求详情
@@ -89,7 +89,7 @@ def demand_info(demand_id):
 
 
 # @app.route("/project/<int:project_id>/demand/<int:demand_id>", methods=['PUT'])
-@app.route("/project/demand/update", methods=['PUT'])
+# @app.route("/project/demand/update", methods=['PUT'])
 @fresh_jwt_required
 def demand_update():
     '''更新需求信息
@@ -112,7 +112,7 @@ def demand_update():
         return jsonify({'msg': 'PermissionDenied'})
 
 
-@app.route("/demand/<string:demand_title>", methods=['GET'])
+# @app.route("/demand/<string:demand_title>", methods=['GET'])
 @fresh_jwt_required
 def demand_search(demand_title):
     '''模糊查询需求
@@ -128,7 +128,7 @@ def demand_search(demand_title):
 
 
 # @app.route("/demand/<int:demand_id>/task", methods=['GET'])
-@app.route("/demand/list", methods=['GET'])
+# @app.route("/demand/list", methods=['GET'])
 @fresh_jwt_required
 def demand_lists():
     '''获取需求列表
@@ -142,7 +142,7 @@ def demand_lists():
     })
 
 
-@app.route("/task/list", methods=['GET'])
+# @app.route("/task/list", methods=['GET'])
 @fresh_jwt_required
 def task_list():
     '''获取任务列表
@@ -158,7 +158,7 @@ def task_list():
 
 
 # @app.route("/demand/<int:demand_id>/task", methods=['POST'])
-@app.route("/demand/task", methods=['POST'])
+# @app.route("/demand/task", methods=['POST'])
 @fresh_jwt_required
 def task_add():
     '''添加任务
@@ -178,7 +178,7 @@ def task_add():
         return jsonify({'msg': 'PermissionDenied'})
 
 
-@app.route("/member/<int:projectId>", methods=["GET"])
+# @app.route("/member/<int:projectId>", methods=["GET"])
 @fresh_jwt_required
 def getMemberInfo(projectId):
     '''获取成员信息
@@ -195,7 +195,7 @@ def getMemberInfo(projectId):
     return jsonify(res)
 
 
-@app.route("/demand/task/update", methods=["PUT"])
+# @app.route("/demand/task/update", methods=["PUT"])
 @fresh_jwt_required
 def update_task():
     '''更新、删除任务
@@ -213,7 +213,7 @@ def update_task():
         return jsonify({'msg': 'PermissionDenied'})
 
 
-@app.route("/demand/<int:demand_id>/task/<int:task_id>", methods=['GET'])
+# @app.route("/demand/<int:demand_id>/task/<int:task_id>", methods=['GET'])
 @fresh_jwt_required
 def task_info(demand_id, task_id):
     '''获取任务详情
@@ -223,7 +223,7 @@ def task_info(demand_id, task_id):
     return 'developing'
 
 
-@app.route("/demand/<int:demand_id>/task/<int:task_id>", methods=['PUT'])
+# @app.route("/demand/<int:demand_id>/task/<int:task_id>", methods=['PUT'])
 @fresh_jwt_required
 def task_update(demand_id, task_id):
     '''更新指定任务信息

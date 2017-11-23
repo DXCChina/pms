@@ -1,19 +1,24 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialog} from "@angular/material";
-import {TaskDetailDialogComponent} from "../task-detail-dialog/task-detail-dialog.component";
-import {DemandDetailDialogComponent} from "../demand-detail-dialog/demand-detail-dialog.component";
+import { PmDashboardService } from './pm-dashboard.service';
+import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
+import { TaskDetailDialogComponent } from '../task-detail-dialog/task-detail-dialog.component';
+import { DemandDetailDialogComponent } from '../demand-detail-dialog/demand-detail-dialog.component';
 
 @Component({
   selector: 'pm-dashboard',
   templateUrl: './pm-dashboard.component.html',
-  styleUrls: ['./pm-dashboard.component.scss']
+  styleUrls: ['./pm-dashboard.component.scss'],
+  providers: [
+    PmDashboardService
+  ]
 })
 
 export class PmDashboardComponent implements OnInit {
 
   public data1: any[] = [{
     listName: '全部需求',
-    listData: [ {
+    listData: [{
       itemName: 'aaa',
       itemTime: '2017-11-21',
       itemlabel: '',
@@ -54,7 +59,7 @@ export class PmDashboardComponent implements OnInit {
 
   public data2: any[] = [{
     listName: '全部任务',
-    listData: [ {
+    listData: [{
       itemName: 'AAA',
       itemTime: '2017-11-21',
       itemlabel: '',
@@ -92,18 +97,36 @@ export class PmDashboardComponent implements OnInit {
       itemfrom: 'Wang Qianxiang'
     }]
   }];
+  
+  constructor(private router: Router, private service: PmDashboardService, private dialog:MatDialog) { }
 
-  constructor(private dialog:MatDialog) { }
+  // 项目ID
+  projectId: string;
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.projectId = sessionStorage.getItem('projectId');
+    if (!this.projectId) {
+      this.router.navigate(['/welcome']);
+    } else {
+      this.initData();
+    }
+  }
+
+  // 初始化数据 调用三个接口
+  initData() {
+    this.getUserlist();
+  }
+
+  // 获取全部用户
+  getUserlist() {
+    this.service.getUserlist()
+      .then(res => {
+        console.log(res);
+      }).catch(err => console.log(err));
+  }
 
   addItem() {
     console.log('add');
-  }
-
-  showDetail(item) {
-    console.log('show:', item);
-
   }
 
   showDemandDetail(){

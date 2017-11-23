@@ -13,11 +13,9 @@ import {
 
 import {PmComponent} from "./pm.component";
 import {PmDashboardComponent} from "./pm-dashboard.component/pm-dashboard.component";
-import {PmDemandComponent} from "./pm-demand.component/pm-demand.component";
 import {PmActivityComponent} from "./pm-activity.component/pm-activity.component";
 import {PmPeoplemanageComponent} from "./pm-peoplemanage/pm-peoplemanage.component";
-import {D_tComponent} from "./pm-demand.component/demand_task.model/d_t.component";
-import {CreateDemandComponent} from "./pm-demand.component/create_demand/create_demand.component";
+
 
 import {TaskDetailDialogComponent} from "./task-detail-dialog/task-detail-dialog.component";
 import {DemandDetailDialogComponent} from "./demand-detail-dialog/demand-detail-dialog.component";
@@ -26,11 +24,8 @@ import {DemandDetailDialogComponent} from "./demand-detail-dialog/demand-detail-
   declarations: [
     PmComponent,
     PmDashboardComponent,
-    PmDemandComponent,
     PmActivityComponent,
     PmPeoplemanageComponent,
-    D_tComponent,
-    CreateDemandComponent,
     DemandDetailDialogComponent,
     TaskDetailDialogComponent,
   ],
@@ -68,7 +63,6 @@ import {DemandDetailDialogComponent} from "./demand-detail-dialog/demand-detail-
 
   ],
   entryComponents:[
-    CreateDemandComponent,
     DemandDetailDialogComponent,
     TaskDetailDialogComponent
   ]

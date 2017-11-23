@@ -38,7 +38,7 @@ export class PmActivityComponent {
       ];
       this.showList = true;
     } else {
-      // this.searchList = [];
+      this.searchList = [];
       // this.showList = true;
       // this.showNoItem = true;
     }
@@ -46,5 +46,9 @@ export class PmActivityComponent {
   choose(data: any) {
     console.log('choose: ', data);
     this.inputName = data.name;
+  }
+
+  select(data: any) {
+    console.log('select: ', data)
   }
 }
