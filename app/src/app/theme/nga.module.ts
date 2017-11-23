@@ -79,6 +79,7 @@ import {DeviceManageComponent} from "./components/device_manage/device-manage.co
 import {DeviceItemComponent} from "./components/device_manage/device-item/device-item.component";
 import {DemandSearchComponent} from "../pages/common/demandSearch/demandSearch.component";
 import {CommonSearchComponent} from "./components/commonSearch/commonSearch.component";
+import {PositionSwitchPipe} from "./pipes/positionSwitch/positionSwitch.pipe";
 
 const NGA_COMPONENTS = [
   BaAmChart,
@@ -126,7 +127,8 @@ const NGA_DIRECTIVES = [
 const NGA_PIPES = [
   BaAppPicturePipe,
   BaKameleonPicturePipe,
-  BaProfilePicturePipe
+  BaProfilePicturePipe,
+  PositionSwitchPipe
 ];
 
 const NGA_SERVICES = [

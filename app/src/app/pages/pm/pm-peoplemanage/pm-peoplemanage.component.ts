@@ -15,12 +15,8 @@ export class PmPeoplemanageComponent implements AfterViewInit {
   dataListModel: PeopleManageModel[] = [];
   post: any = 'pm';
   datas: any[] = [];
-  showField: string = 'name';
-  inputName: string = '';
 
   searchList: any[] = [];
-  showNoItem: boolean = false;
-  showList: boolean = false;
   state: string;
   positions: any[];
 
@@ -38,21 +34,21 @@ export class PmPeoplemanageComponent implements AfterViewInit {
     this.datas = [
       {
         name: 'jerry',
-        job: 'PM',
+        job: 'pm',
         email: 'jerry@hpe.com',
         date: '2017/11/22',
         id: 'sdfasfsf',
       },
       {
         name: 'tom',
-        job: 'DEV',
+        job: 'dev',
         email: 'tom@hpe.com',
         date: '2017/11/23',
         id: 'sfaswe',
       },
       {
         name: 'diner',
-        job: 'TEST',
+        job: 'test',
         email: 'diner@hpe.com',
         date: '2017/11/21',
         id: 'sfaswe',
@@ -92,8 +88,6 @@ export class PmPeoplemanageComponent implements AfterViewInit {
       this.modifyStyle();
     }, 0);
     this.searchList = [];
-    this.showList = false;
-    this.inputName = '';
   }
 
   changeState() {
@@ -103,20 +97,16 @@ export class PmPeoplemanageComponent implements AfterViewInit {
   closeAdd() {
     this.state = this.state === 'active' ? 'inactive' : 'active';
     this.searchList = [];
-    this.showList = false;
-    this.inputName = '';
   }
 
   emitSearch(str: any) {
     console.log('search: ', str);
 
     if(str === 'qwer') {
-      this.showList = true;
-      this.showNoItem = false;
       this.searchList = [
         {
           name: 'qwer',
-          job: 'PM',
+          job: 'pm',
           email: 'qwer@hpe.com',
           date: '2017/11/23',
           id: 'sdfsdfsafas',
@@ -130,14 +120,11 @@ export class PmPeoplemanageComponent implements AfterViewInit {
         }
       ];
     } else {
-      this.showList = false;
-      this.showNoItem = false;
       this.searchList = [];
     }
   }
 
-  chooseData(data: any) {
+  select(data: any) {
     this.choosedData = data;
-    this.inputName = data.name;
   }
 }
