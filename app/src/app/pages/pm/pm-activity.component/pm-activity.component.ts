@@ -1,5 +1,8 @@
 import {Component} from "@angular/core";
-import {PeopleManageModel} from "../pm-peoplemanage/pm-peoplemanage.model";
+import {PeopleManageModel} from "../../../theme/components/pm-peoplemanage/pm-peoplemanage.model";
+import {MatDialog} from "@angular/material";
+import {CommonDeleteDialog} from "../../../theme/components/deleteDialog/deleteDialog.component";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'pm-activity',
@@ -8,22 +11,63 @@ import {PeopleManageModel} from "../pm-peoplemanage/pm-peoplemanage.model";
 })
 export class PmActivityComponent {
   dataListModel: PeopleManageModel[];
-  mockData: any[];
+  datas: any[];
   searchList: any[] = [];
-  showList: boolean = false;
-  showNoItem: boolean = false;
-  inputName: string = '';
-  constructor() {
 
+  constructor(public dialog: MatDialog, private router: Router) {
+    this.dataListModel = [
+      { name: '姓名', value: 'name' },
+      { name: '职位', value: 'job' },
+      { name: '邮箱', value: 'email' },
+      { name: '时间', value: 'date' },
+    ];
+    this.datas = [
+      {
+        name: 'pm',
+        job: 'pm',
+        email: 'jerry@hpe.com',
+        date: '2017/11/22',
+        id: 'sdfasfsf',
+      },
+      {
+        name: 'tom',
+        job: 'dev',
+        email: 'tom@hpe.com',
+        date: '2017/11/23',
+        id: 'sfaswe',
+      },
+      {
+        name: 'diner',
+        job: 'test',
+        email: 'diner@hpe.com',
+        date: '2017/11/21',
+        id: 'sfaswe',
+      }
+    ];
+  }
+
+  deleteProject() {
+    let deleteDialog = this.dialog.open(CommonDeleteDialog, {
+      height: '250px',
+      width: '450px',
+      data: '项目'
+    });
+    deleteDialog.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('delete project');
+        this.router.navigate(['/pages/welcome']);
+      } else {
+        console.log('cancel delete');
+      }
+    })
   }
 
   search(str: any) {
-    console.log(str);
-    if (str === 'qwer') {
+    if(str === 'qwer') {
       this.searchList = [
         {
           name: 'qwer',
-          job: 'PM',
+          job: 'pm',
           email: 'qwer@hpe.com',
           date: '2017/11/23',
           id: 'sdfsdfsafas',
@@ -36,19 +80,16 @@ export class PmActivityComponent {
           id: 'sddfsffsdd',
         }
       ];
-      this.showList = true;
     } else {
       this.searchList = [];
-      // this.showList = true;
-      // this.showNoItem = true;
     }
   }
-  choose(data: any) {
-    console.log('choose: ', data);
-    this.inputName = data.name;
+
+  delete(data: any) {
+    console.log('delete: ',data)
   }
 
-  select(data: any) {
-    console.log('select: ', data)
+  create(data: any) {
+    console.log('create: ', data)
   }
 }

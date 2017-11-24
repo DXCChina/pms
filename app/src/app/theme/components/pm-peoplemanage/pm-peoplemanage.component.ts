@@ -6,57 +6,36 @@ import {PeopleManageModel} from "./pm-peoplemanage.model";
 import {add} from "./pm-peoplemanage.animation";
 
 @Component({
-  selector: 'pm-people-manage',
+  selector: 'people-manage',
   templateUrl: './pm-peoplemanage.component.html',
   styleUrls: ['./pm-peoplemanage.component.scss'],
   animations: [add]
 })
 export class PmPeoplemanageComponent implements AfterViewInit {
-  dataListModel: PeopleManageModel[] = [];
-  post: any = 'pm';
-  datas: any[] = [];
+  @Input() dataListModel: PeopleManageModel[] = [];
+  @Input() searchList: any[] = [];
+  @Input() roleField: string;
+  @Input() displayOnly: boolean = true;
 
-  searchList: any[] = [];
+  @Input() datas: any[] = [];
+  @Output() datasChange = new EventEmitter();
+
+  @Output() outSearch: EventEmitter<string> = new EventEmitter<string>();
+  @Output() outCreate: EventEmitter<any> = new EventEmitter<any>();
+  @Output() outDelete: EventEmitter<any> = new EventEmitter<any>();
+
+
+  post: any = 'dev';
   state: string;
   positions: any[];
-
-  choosedData: any;
+  choosedData: any = '';
 
   @ViewChild('search')
   search: ElementRef;
   constructor(private ref: ElementRef, private Renderer: Renderer2) {
-        this.dataListModel = [
-      { name: '姓名', value: 'name' },
-      { name: '职位', value: 'job' },
-      { name: '邮箱', value: 'email' },
-      { name: '时间', value: 'date' },
-    ];
-    this.datas = [
-      {
-        name: 'pm',
-        job: 'pm',
-        email: 'jerry@hpe.com',
-        date: '2017/11/22',
-        id: 'sdfasfsf',
-      },
-      {
-        name: 'tom',
-        job: 'dev',
-        email: 'tom@hpe.com',
-        date: '2017/11/23',
-        id: 'sfaswe',
-      },
-      {
-        name: 'diner',
-        job: 'test',
-        email: 'diner@hpe.com',
-        date: '2017/11/21',
-        id: 'sfaswe',
-      }
-    ];
+
     this.state = 'inactive';
     this.positions = [
-      { name: '项目经理', value: 'pm' },
       { name: '开发人员', value: 'dev' },
       { name: '测试人员', value: 'test' }
     ];
@@ -76,16 +55,21 @@ export class PmPeoplemanageComponent implements AfterViewInit {
 
   delete(item: any) {
     this.datas = this.datas.filter(data => data !== item);
+    this.outDelete.emit(item);
+    this.datasChange.emit(this.datas);
   }
 
   create() {
     this.state = this.state === 'active' ? 'inactive' : 'active';
-    this.choosedData.job = this.post;
+    this.choosedData[this.roleField] = this.post;
+    this.outCreate.emit(this.choosedData);
     this.datas.push(this.choosedData);
+    this.datasChange.emit(this.datas);
     setTimeout( () => {
       this.modifyStyle();
     }, 0);
     this.searchList = [];
+    this.choosedData = '';
   }
 
   changeState() {
@@ -98,27 +82,7 @@ export class PmPeoplemanageComponent implements AfterViewInit {
   }
 
   emitSearch(str: any) {
-
-    if(str === 'qwer') {
-      this.searchList = [
-        {
-          name: 'qwer',
-          job: 'pm',
-          email: 'qwer@hpe.com',
-          date: '2017/11/23',
-          id: 'sdfsdfsafas',
-        },
-        {
-          name: 'QWER',
-          job: 'dev',
-          email: 'QWER@hpe.com',
-          date: '2017/11/22',
-          id: 'sddfsffsdd',
-        }
-      ];
-    } else {
-      this.searchList = [];
-    }
+    this.outSearch.emit(str);
   }
 
   select(data: any) {
