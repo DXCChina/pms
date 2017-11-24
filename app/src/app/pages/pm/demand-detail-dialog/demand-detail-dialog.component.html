@@ -5,26 +5,32 @@
 </div>
 
 <div class="dialog-content">
-  <div class="demand-detail-content">
-    <mat-form-field>
-      <input matInput placeholder="名称">
-    </mat-form-field>
+  <form action="" [formGroup]="demandForm" (ngSubmit)="onSubmit(demandForm)">
+    <div class="demand-detail-content">
+      <mat-form-field>
+        <input matInput placeholder="需求名称" formControlName="name">
+        <!--<mat-error *ngIf="name.invalid">{{getNameError()}}</mat-error>-->
+      </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="描述">
-    </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="需求描述" formControlName="detail">
+        <!--<mat-error *ngIf="name.invalid"></mat-error>-->
+      </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="状态">
-    </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="需求状态" formControlName="status">
+        <!--<mat-error *ngIf="name.invalid"></mat-error>-->
+      </mat-form-field>
 
-    <mat-form-field>
-      <input matInput placeholder="优先级">
-    </mat-form-field>
-  </div>
+      <mat-form-field>
+        <input matInput placeholder="优先级" formControlName="level">
+        <!--<mat-error *ngIf="name.invalid"></mat-error>-->
+      </mat-form-field>
+    </div>
 
-  <div class="demand-detail-footer">
-    <button mat-button>取消</button>
-    <button mat-button>修改</button>
-  </div>
+    <div class="demand-detail-footer">
+      <button mat-button mat-dialog-close>取消</button>
+      <button mat-button type="submit">提交</button>
+    </div>
+  </form>
 </div>

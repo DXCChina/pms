@@ -8,7 +8,7 @@ import {
   MatButtonModule, MatCommonModule, MatDialogModule, MatSelectModule, MatInputModule,
   MatTabsModule, MatCardModule, MatExpansionModule, MatCheckboxModule, MatSliderModule, MatListModule,
   MatProgressSpinnerModule, MatChipsModule, MatGridListModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule,
-  MatProgressBarModule, MatToolbarModule,  MatTooltipModule
+  MatProgressBarModule, MatToolbarModule, MatTooltipModule, MatFormFieldModule
 } from "@angular/material";
 
 import {PmComponent} from "./pm.component";
@@ -57,7 +57,8 @@ import {DemandDetailDialogComponent} from "./demand-detail-dialog/demand-detail-
     MatNativeDateModule,
     MatMenuModule,
     MatProgressBarModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatFormFieldModule
   ],
   providers: [
 
