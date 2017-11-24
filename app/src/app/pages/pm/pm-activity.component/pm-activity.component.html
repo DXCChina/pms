@@ -24,31 +24,40 @@
         </div>
       </div>
 
-      <!--<button mat-raised-button color="warn" (click)="deleteProject()">删除</button>-->
       <button mat-button color="warn" (click)="deleteProject()">删除</button>
+
     </div>
 
     <div class="pm-activity-body">
       <mat-card>
-        <div class="pm-activity-body-title">
-          <p>信息修改</p>
-          <div class="pm-activity-btnGroup">
-            <button mat-button color="primary">取消</button>
-            <button mat-button color="primary">保存</button>
+        <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+
+          <div class="pm-activity-body-title">
+            <p>信息修改</p>
+            <div class="pm-activity-btnGroup">
+              <button mat-button color="primary">取消</button>
+              <button mat-button [disabled]="!form.valid" color="primary">保存</button>
+            </div>
           </div>
-        </div>
-        <div class="pm-activity-body-content">
+          <div class="pm-activity-body-content">
           <mat-form-field>
-            <input matInput #input placeholder="项目名称">
+            <input matInput formControlName="name" name="project" #input placeholder="项目名称">
             <mat-hint align="end">{{input.value?.length || 0}}</mat-hint>
+            <mat-error *ngIf="form.controls['name'].hasError('required')">
+              项目名称必填
+            </mat-error>
+            <mat-error *ngIf="form.controls['name'].hasError('minlength')">
+              项目名称不少于2个字符
+            </mat-error>
           </mat-form-field>
 
-          <mat-form-field hintLabel="输入描述数量不限">
-              <textarea matInput #textarea placeholder="项目描述"></textarea>
+          <mat-form-field hintLabel="描述字符数量不限">
+              <textarea matInput formControlName="description" name="detail" #textarea placeholder="项目描述"></textarea>
               <mat-hint align="end">{{textarea.value?.length || 0}}</mat-hint>
           </mat-form-field>
-
         </div>
+
+        </form>
 
         <hr />
           <h3 class="manage-title">人员管理</h3>
@@ -67,13 +76,6 @@
             (outSearch)="search($event)">
 
           </people-manage>
-
-
-          <!--<people-manage-->
-            <!--[dataListModel]="dataListModel"-->
-            <!--[(datas)]="datas">-->
-
-          <!--</people-manage>-->
 
         </mat-card>
 
