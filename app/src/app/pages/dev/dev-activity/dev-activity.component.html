@@ -1,1 +1,66 @@
-<div>dev-activity</div>
+
+<div class="pm-activity-wrap-header">
+
+</div>
+
+<div class="pm-activity-wrap">
+
+  <mat-card>
+
+    <div class="pm-activity-header">
+      <div class="wa-title" style="margin-top: 0">
+        <svg fill="#757575" style="margin: 1px -7px" height="48" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M3 5v6h5L7 7l4 1V3H5c-1.1 0-2 .9-2 2zm5 8H3v6c0 1.1.9 2 2 2h6v-5l-4 1 1-4zm9 4l-4-1v5h6c1.1 0 2-.9 2-2v-6h-5l1 4zm2-14h-6v5l4-1-1 4h5V5c0-1.1-.9-2-2-2z"/>
+        </svg>
+        <div class="wa-title-info">
+          <div>
+            <h3>projectDetail?.name</h3>
+            <p mat-line>projectDetail?.createAt | date: 'yyyy-MM-dd'</p>
+          </div>
+          <mat-chip-list class="wa-titleChips">
+            <mat-chip>projectDetail?.status</mat-chip>
+          </mat-chip-list>
+        </div>
+      </div>
+    </div>
+
+    <div class="pm-activity-body">
+      <mat-card>
+        <div class="pm-activity-body-title">
+          <p>基础信息</p>
+        </div>
+        <div class="pm-activity-body-content">
+          <mat-form-field>
+            <input matInput #input placeholder="项目名称" readonly>
+            <mat-hint align="end">{{input.value?.length || 0}}</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field>
+              <textarea matInput #textarea placeholder="项目描述" readonly></textarea>
+              <mat-hint align="end">{{textarea.value?.length || 0}}</mat-hint>
+          </mat-form-field>
+
+        </div>
+
+        <hr />
+          <h3 class="manage-title">人员信息</h3>
+        <hr />
+
+        <mat-card>
+
+          <people-manage
+            [dataListModel]="dataListModel"
+            [(datas)]="datas">
+
+          </people-manage>
+
+        </mat-card>
+
+      </mat-card>
+
+    </div>
+
+  </mat-card>
+
+</div>
