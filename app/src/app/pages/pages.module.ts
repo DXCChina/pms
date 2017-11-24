@@ -7,7 +7,6 @@ import {AppTranslationModule} from "../app.translation.module";
 
 import {Pages} from "./pages.component";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {CommonDeleteDialog} from "./common/deleteDialog/deleteDialog.component";
 import {NgJhipsterModule} from "ng-jhipster";
 import {MatButtonModule} from "@angular/material";
 
@@ -26,10 +25,8 @@ import {MatButtonModule} from "@angular/material";
   ],
   declarations: [
     Pages,
-    CommonDeleteDialog,
   ],
   entryComponents:[
-    CommonDeleteDialog
   ]
 })
 export class PagesModule {
