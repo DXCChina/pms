@@ -97,7 +97,7 @@ export class PmDashboardComponent implements OnInit {
       itemfrom: 'Wang Qianxiang'
     }]
   }];
-  
+
   constructor(private router: Router, private service: PmDashboardService, private dialog:MatDialog) { }
 
   // 项目ID
@@ -132,7 +132,7 @@ export class PmDashboardComponent implements OnInit {
   showDemandDetail(){
     let dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
-      height:'70vh',
+      height:'61vh',
       data: { name: 'dd', animal: 'dd' }
     });
 

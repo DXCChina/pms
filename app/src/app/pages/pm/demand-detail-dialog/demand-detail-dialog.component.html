@@ -1,36 +1,42 @@
 <div>
   <mat-toolbar class="demand-detail-header">
     <!--<span>项目名称</span><span> > </span>-->
-    <span>需求名称</span></mat-toolbar>
+    <span>{{name}}</span></mat-toolbar>
 </div>
 
 <div class="dialog-content">
   <form action="" [formGroup]="demandForm" (ngSubmit)="onSubmit(demandForm)">
     <div class="demand-detail-content">
       <mat-form-field>
-        <input matInput placeholder="需求名称" formControlName="name">
-        <!--<mat-error *ngIf="name.invalid">{{getNameError()}}</mat-error>-->
+        <input matInput placeholder="需求名称" [formControl]="name">
+        <mat-error *ngIf="name.invalid">{{formErrors.name}}</mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="需求描述" formControlName="detail">
-        <!--<mat-error *ngIf="name.invalid"></mat-error>-->
+        <input matInput placeholder="需求描述" [formControl]="detail">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="需求状态" formControlName="status">
-        <!--<mat-error *ngIf="name.invalid"></mat-error>-->
+        <input matInput placeholder="任务指定(创建需求时不可指定任务)" [formControl]="assignTask" readonly>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="优先级" formControlName="level">
-        <!--<mat-error *ngIf="name.invalid"></mat-error>-->
+        <mat-select placeholder="优先级" [formControl]="level">
+          <mat-option value="low">低</mat-option>
+          <mat-option value="normal" aria-selected="true">中</mat-option>
+          <mat-option value="high">高</mat-option>
+        </mat-select>
+        <mat-error *ngIf="level.invalid">{{formErrors.level}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="创建时间(创建时间不可设置)" [formControl]="createAt" readonly>
       </mat-form-field>
     </div>
 
     <div class="demand-detail-footer">
       <button mat-button mat-dialog-close>取消</button>
-      <button mat-button type="submit">提交</button>
+      <button mat-button type="submit" [disabled]="!demandForm.valid">提交</button>
     </div>
   </form>
 </div>

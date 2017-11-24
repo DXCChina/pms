@@ -12,7 +12,7 @@ export class PmDashboardService {
   constructor(private _global: GlobalState, private http: Http) { }
 
   newDemand(demandInfo:any): Promise<any> {
-    return this.http.post(`${this.getUserListUrl}`, JSON.stringify(demandInfo), this._global.options)
+    return this.http.post(``, JSON.stringify(demandInfo), this._global.options)
       .toPromise()
       .then(this._global.extractData)
       .catch(this._global.handleError);
