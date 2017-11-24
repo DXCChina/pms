@@ -4,26 +4,8 @@
 @author: Wang Jianhui
 '''
 
-from peewee import DateTimeField, FixedCharField, IntegerField, SQL
-from model.db import MySQLModel
+from .db import User
 
-
-#用户表
-class User(MySQLModel):
-    id = IntegerField(primary_key=True, constraints=[SQL('AUTO_INCREMENT')])
-    username = FixedCharField(unique=True, max_length=50)
-    password = FixedCharField(max_length=100)
-    email = FixedCharField(unique=True, max_length=50)
-    status = FixedCharField(
-        max_length=50,
-        constraints=[
-            SQL(" DEFAULT 'active' COMMENT '用户状态:active(默认)/delete(已删除)'")
-        ])
-    createat = DateTimeField(
-        db_column='createAt', constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')])
-
-    class Meta:
-        db_table = 'user'
 
 
 def findOneById(userid):

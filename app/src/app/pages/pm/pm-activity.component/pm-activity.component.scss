@@ -1,3 +1,5 @@
+a:focus, button:focus {}
+
 .pm-activity-wrap-header {
   position: absolute;
   top: -10%;
@@ -24,6 +26,10 @@
   padding-left: 5px;
 }
 .pm-activity-header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
   height: 60px;
   border-bottom: 1px solid rgba(0, 0, 0, .12);
 }
@@ -34,9 +40,10 @@
   .pm-activity-body-title {
     display: flex;
     flex-flow: row nowrap;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-content: center;
     padding: 5px;
+    border-top: 1px solid rgba(0, 0, 0, .12);
     border-bottom: 1px solid rgba(0, 0, 0, .12);
     .pm-activity-btnGroup {
 
@@ -44,7 +51,7 @@
     p {
       font-size: 16px;
       font-weight:600;
-      margin:12px 0 0;
+      margin: 10px 20px 0 0;
     }
   }
   .pm-activity-body-content {

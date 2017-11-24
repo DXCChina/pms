@@ -49,13 +49,13 @@ paths:
 # @author: Gao Le
   /project:
     get:
-      summary: api
+      summary: 获取项目列表
       operationId: controller.info.project_list
       responses:
         200:
           description: ok
     post:
-      summary: api
+      summary: 创建项目
       operationId: controller.info.project_add
       responses:
         200:
@@ -80,7 +80,6 @@ paths:
       responses:
         200:
           description: ok
-  /project/{project_id}:
     put:
       summary: api
       operationId: controller.project.project_update
@@ -101,7 +100,7 @@ paths:
           description: ok
   /project/{project_id}/user:
     get:
-      summary: api
+      summary: 查询项目成员
       operationId: controller.project.project_user
       parameters:
         - name: project_id
@@ -111,9 +110,8 @@ paths:
       responses:
         200:
           description: ok
-  /project/{project_id}/user:
-    put:
-      summary: api
+    post:
+      summary: 更新项目成员
       operationId: controller.project.project_user_update
       parameters:
         - name: project_id
@@ -223,7 +221,6 @@ paths:
       responses:
         200:
           description: ok
-  /demand/{demand_id}/task/{task_id}:
     put:
       summary: api
       operationId: controller.task.task_update

@@ -14,7 +14,7 @@ import {
 import {PmComponent} from "./pm.component";
 import {PmDashboardComponent} from "./pm-dashboard.component/pm-dashboard.component";
 import {PmActivityComponent} from "./pm-activity.component/pm-activity.component";
-import {PmPeoplemanageComponent} from "./pm-peoplemanage/pm-peoplemanage.component";
+import {PmPeoplemanageComponent} from "../../theme/components/pm-peoplemanage/pm-peoplemanage.component";
 
 
 import {TaskDetailDialogComponent} from "./task-detail-dialog/task-detail-dialog.component";
@@ -25,7 +25,6 @@ import {DemandDetailDialogComponent} from "./demand-detail-dialog/demand-detail-
     PmComponent,
     PmDashboardComponent,
     PmActivityComponent,
-    PmPeoplemanageComponent,
     DemandDetailDialogComponent,
     TaskDetailDialogComponent,
   ],

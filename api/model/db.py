@@ -8,9 +8,9 @@ import logging
 from os import environ
 from pymysql import cursors, connect
 from playhouse.pool import PooledMySQLDatabase
-from peewee import Model, DoesNotExist, DateTimeField, FixedCharField, IntegerField, TextField, SQL
+from peewee import Model, DoesNotExist, DateTimeField, FixedCharField, IntegerField, TextField, SQL, BooleanField
 
-logger = logging.getLogger('peewee')    
+logger = logging.getLogger('peewee')
 logger.setLevel(
     'PY_ENV' in environ and environ['PY_ENV'] == 'dev' and logging.DEBUG
     or logging.WARNING)
@@ -42,6 +42,32 @@ DB_CONF['cursorclass'] = cursors.DictCursor
 db = connect(**DB_CONF)
 
 
+def db_autoId():
+    return IntegerField(primary_key=True, constraints=[SQL('AUTO_INCREMENT')])
+
+
+def db_id():
+    return IntegerField()
+
+
+def db_char(length=50,null=False):
+    return FixedCharField(max_length=length, null=null)
+def db_autoDate():
+    return DateTimeField(constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')])
+def db_date():
+    return DateTimeField(null=True)
+def db_option(default='',comment=''):
+    return FixedCharField(
+    max_length=10,
+    constraints=[
+        SQL("DEFAULT '%s' COMMENT '%s'"%(default,comment))
+    ])
+def db_bool(default=0,comment=''):
+    return BooleanField(
+        constraints=[
+        SQL("DEFAULT '%s' COMMENT '%s'"%(default,comment))])
+
+
 class MySQLModel(Model):
     class Meta:
         database = database
@@ -55,62 +81,111 @@ class MySQLModel(Model):
             return None
 
 
+# 用户表
+class User(MySQLModel):
+    id = db_autoId()
+    username = FixedCharField(unique=True, max_length=50)
+    password = FixedCharField(max_length=100)
+    email = FixedCharField(unique=True, max_length=50)
+    status = db_option(default='active',comment='用户状态:active(默认)/delete(已删除)')
+    createAt = db_autoDate()
+
+    class Meta:
+        db_table = 'user'
+
+
 # 需求表
 class Demand(MySQLModel):
-    id = IntegerField(primary_key=True, constraints=[SQL('AUTO_INCREMENT')])
-    ownerid = IntegerField(db_column='ownerId')
-    projectid = IntegerField(db_column='projectId')
-    title = FixedCharField(max_length=50)
+    id = db_autoId()
+    title = db_char()
     detail = TextField(null=True)
-    level = FixedCharField(
-        max_length=50,
-        constraints=[
-            SQL("DEFAULT 'normal' COMMENT 'low(低)/high(高)/normal(中,默认)'")
-        ])
-    status = FixedCharField(
-        max_length=50,
-        constraints=[SQL("DEFAULT 'active' COMMENT 'active(默认)/done/delete'")])
-    createat = DateTimeField(
-        db_column='createAt', constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')])
-    startdate = FixedCharField(db_column='startDate', max_length=50)
-    enddate = FixedCharField(db_column='endDate', max_length=50, null=True)
-    progress = IntegerField(null=True)
-    cost = IntegerField(null=True)
+    level = db_option(            default= 'normal',comment= 'low(低)/high(高)/normal(中,默认)')
+    projectId = db_id()
+    activityId = db_id()
+    status = db_bool(default= 0, comment= '0(未完成)/1(已完成)')
+    createAt = db_autoDate()
 
     class Meta:
         db_table = 'demand'
 
 
-# class Project(MySQLModel):
-#     createat = DateTimeField(db_column='createAt')
-#     detail = TextField(null=True)
-#     name = FixedCharField(unique=True)
-#     ownerid = IntegerField(db_column='ownerId')
-#     status = FixedCharField()
+# 活动表
+class Activity(MySQLModel):
+    id = db_autoId()
+    title = db_char()
+    detail = TextField(null=True)
+    memberId = db_id()
+    projectId = db_id()
+    progress = IntegerField(null=True)
+    cost = IntegerField(null=True)
+    status = db_option(
+            default= 'new' ,comment= 'new(新建,未分配),dev-ing(开发中),needtest(开发完待测试),test-ing(测试中),fix-ing(修复中),finish(已完成),close(已关闭)'
+        )
+    createAt = db_autoDate()
+    startDate = db_autoDate()
+    endDate = db_date()
 
-#     class Meta:
-#         db_table = 'project'
+    class Meta:
+        db_table = 'activity'
 
-# class Projectmember(MySQLModel):
-#     memberid = IntegerField(db_column='memberId')
-#     projectid = IntegerField(db_column='projectId')
 
-#     class Meta:
-#         db_table = 'projectmember'
+# 项目表
+class Project(MySQLModel):
+    id = db_autoId()
+    name = FixedCharField(unique=True, max_length=50)
+    detail = TextField(null=True)
+    ownerId = db_id()
+    status = db_option(default= 'active', comment= 'active(默认)/done/delete')
+    createAt = db_autoDate()
+    startDate = db_autoDate()
+    endDate = db_date()
+    type = db_char(length=10,null=True)
 
-# class Task(MySQLModel):
-#     cost = FloatField(null=True)
-#     createat = DateTimeField(db_column='createAt')
-#     demandid = IntegerField(db_column='demandId')
-#     detail = TextField(null=True)
-#     enddate = FixedCharField(db_column='endDate', null=True)
-#     level = FixedCharField()
-#     memberid = IntegerField(db_column='memberId')
-#     ownerid = IntegerField(db_column='ownerId')
-#     progress = IntegerField(null=True)
-#     startdate = FixedCharField(db_column='startDate')
-#     status = FixedCharField()
-#     title = FixedCharField()
+    class Meta:
+        db_table = 'project'
 
-#     class Meta:
-#         db_table = 'task'
+
+# 项目成员
+class ProjectMember(MySQLModel):
+    id = db_autoId()
+    memberId = db_id()
+    projectId = db_id()
+    role = db_option(
+        default= 'dev', comment= '用户角色:dev/test')
+
+    class Meta:
+        db_table = 'project_member'
+
+
+# 测试用例表
+class TestCase(MySQLModel):
+    id = db_autoId()
+    name = db_char()
+    detail = TextField(null=True)
+    demandId = db_id()
+    projectId = db_id()
+    type = db_char(length=10,null=True)
+    input = db_char()
+    expect = db_char()
+
+    class Meta:
+        db_table = 'test_case'
+
+
+# 测试结果表
+class TestResult(MySQLModel):
+    id = db_autoId()
+    name = db_char()
+    detail = TextField(null=True)
+    caseId = db_id()
+    output = db_char()
+    result = db_bool(
+        default= 0, comment= '0(bug)/1(正常)')
+    status = db_option(
+        default= 'close', comment= 'tofix,tocheck,close(默认)')
+    level = db_option('normal','优先级:low(低)/high(高)/normal(中,默认)')
+    devId = db_id()
+    priority = db_option('normal','严重程度:low(低)/high(高)/normal(中,默认)')
+
+    class Meta:
+        db_table = 'test_result'
