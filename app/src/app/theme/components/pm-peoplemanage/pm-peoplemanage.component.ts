@@ -62,14 +62,19 @@ export class PmPeoplemanageComponent implements AfterViewInit {
   create() {
     this.state = this.state === 'active' ? 'inactive' : 'active';
     this.choosedData[this.roleField] = this.post;
-    this.outCreate.emit(this.choosedData);
-    this.datas.push(this.choosedData);
-    this.datasChange.emit(this.datas);
-    setTimeout( () => {
-      this.modifyStyle();
-    }, 0);
-    this.searchList = [];
-    this.choosedData = '';
+    if (!this.datas.some(item => item.name === this.choosedData.name)) {
+      this.outCreate.emit(this.choosedData);
+      this.datas.push(this.choosedData);
+      this.datasChange.emit(this.datas);
+      setTimeout( () => {
+        this.modifyStyle();
+      }, 0);
+      this.searchList = [];
+      this.choosedData = '';
+    } else {
+      alert('人员添加重复');
+    }
+
   }
 
   changeState() {
