@@ -23,7 +23,7 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit() {
     this.getProjectList();
-    this.getTaskList();
+    // this.getTaskList();
   }
 
   getFish(){
@@ -48,7 +48,7 @@ export class WelcomeComponent implements OnInit {
 
   createPro() {
     let dialogRef = this.dialog.open(DialogCreateProjectComponent, {
-      width: '400px',
+      width: '700px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

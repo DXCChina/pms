@@ -2,7 +2,11 @@ import {NgModule} from "@angular/core";
 import {routing} from "./welcome.routing";
 import {WelcomeComponent} from "./welcome.component";
 import {NgaModule} from "../../theme/nga.module";
-import {MatButtonModule, MatCardModule, MatChipsModule} from "@angular/material";
+import {
+  MAT_DATE_LOCALE,
+  MatButtonModule, MatCardModule, MatChipsModule, MatDatepickerModule, MatFormFieldModule, MatNativeDateModule,
+  MatSelectModule
+} from "@angular/material";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {ToasterModule} from "angular2-toaster";
@@ -21,6 +25,10 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     ToasterModule,
     NgxDatatableModule,
     MatChipsModule
@@ -33,7 +41,9 @@ import {NgxDatatableModule} from "@swimlane/ngx-datatable";
     DialogCreateProjectComponent
   ],
 
-  providers: []
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'zh-cn'},
+  ]
 })
 
 export class WelcomeModule {
