@@ -58,8 +58,6 @@ class MySQLModel(Model):
 # 需求表
 class Demand(MySQLModel):
     id = IntegerField(primary_key=True, constraints=[SQL('AUTO_INCREMENT')])
-    ownerid = IntegerField(db_column='ownerId')
-    projectid = IntegerField(db_column='projectId')
     title = FixedCharField(max_length=50)
     detail = TextField(null=True)
     level = FixedCharField(
@@ -67,50 +65,72 @@ class Demand(MySQLModel):
         constraints=[
             SQL("DEFAULT 'normal' COMMENT 'low(低)/high(高)/normal(中,默认)'")
         ])
-    status = FixedCharField(
-        max_length=50,
-        constraints=[SQL("DEFAULT 'active' COMMENT 'active(默认)/done/delete'")])
+    projectid = IntegerField(db_column='projectId')
+    taskid = IntegerField(db_column='ownerId')
+    # status=boolen
     createat = DateTimeField(
         db_column='createAt', constraints=[SQL('DEFAULT CURRENT_TIMESTAMP')])
-    startdate = FixedCharField(db_column='startDate', max_length=50)
-    enddate = FixedCharField(db_column='endDate', max_length=50, null=True)
-    progress = IntegerField(null=True)
-    cost = IntegerField(null=True)
 
     class Meta:
         db_table = 'demand'
 
+# 活动表
+class Activity(MySQLModel):
+    id = IntegerField(primary_key=True, constraints=[SQL('AUTO_INCREMENT')])
+    title=FixedCharField(max_length=50)
+    # detail
+    memberId=IntegerField()
+    projectid =IntegerField()
+    progress = IntegerField(null=True)
+    cost = IntegerField(null=True)
+    # status= new,dev-ing,needtest,test-end,fix-ing,finish,close
+    createat = FixedCharField(db_column='startDate', max_length=50)
+    endat = FixedCharField(db_column='endDate', max_length=50, null=True)
 
+# 项目表
 # class Project(MySQLModel):
-#     createat = DateTimeField(db_column='createAt')
-#     detail = TextField(null=True)
+#     id
 #     name = FixedCharField(unique=True)
+#     detail = TextField(null=True)
 #     ownerid = IntegerField(db_column='ownerId')
 #     status = FixedCharField()
+#     createat = DateTimeField(db_column='createAt')
+#     endat
+#     type
 
 #     class Meta:
 #         db_table = 'project'
 
-# class Projectmember(MySQLModel):
-#     memberid = IntegerField(db_column='memberId')
-#     projectid = IntegerField(db_column='projectId')
+# 项目成员
+class Projectmember(MySQLModel):
+    memberid = IntegerField(db_column='memberId')
+    projectid = IntegerField(db_column='projectId')
+    role=FixedCharField(
+        constraints=[
+            SQL(" DEFAULT 'dev' COMMENT '用户状态:dev/test'")
+        ])
 
 #     class Meta:
 #         db_table = 'projectmember'
 
-# class Task(MySQLModel):
-#     cost = FloatField(null=True)
-#     createat = DateTimeField(db_column='createAt')
-#     demandid = IntegerField(db_column='demandId')
-#     detail = TextField(null=True)
-#     enddate = FixedCharField(db_column='endDate', null=True)
-#     level = FixedCharField()
-#     memberid = IntegerField(db_column='memberId')
-#     ownerid = IntegerField(db_column='ownerId')
-#     progress = IntegerField(null=True)
-#     startdate = FixedCharField(db_column='startDate')
-#     status = FixedCharField()
-#     title = FixedCharField()
+# 测试用例表
+# id
+# name
+# detail
+# Demandid
+# projectId
+# type
+# input
+# expect
 
-#     class Meta:
-#         db_table = 'task'
+# test-result表
+# id
+# name
+# detail
+# caseId
+# output
+# result
+# status:tofix,tocheck,close
+# level
+# devId
+# priority
