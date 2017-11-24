@@ -21,39 +21,45 @@ export class PmDashboardComponent implements OnInit {
     listData: [{
       itemName: 'aaa',
       itemTime: '2017-11-21',
-      itemlabel: '',
-      itemfrom: 'Wang Qianxiang'
+      itemfrom: 'Wang Qianxiang',
+      itemToDo: '',
+      itemLevel: 3
     }, {
       itemName: 'bbb',
       itemTime: '2017-11-21',
-      itemlabel: '',
-      itemfrom: 'Wang Qianxiang'
+      itemfrom: 'Wang Qianxiang',
+      itemToDo: '',
+      itemLevel: 1
     }, {
       itemName: 'ccc',
       itemTime: '2017-11-21',
-      itemlabel: '',
-      itemfrom: 'Wang Qianxiang'
+      itemfrom: 'Wang Qianxiang',
+      itemToDo: '',
+      itemLevel: 2
     }]
   }, {
     listName: '已分配需求',
     listData: [{
       itemName: 'aaa',
       itemTime: '2017-11-21',
-      itemlabel: '',
-      itemfrom: 'Wang Qianxiang'
+      itemfrom: 'Wang Qianxiang',
+      itemToDo: '',
+      itemLevel: 3
     }, {
       itemName: 'ccc',
       itemTime: '2017-11-21',
-      itemlabel: '',
-      itemfrom: 'Wang Qianxiang'
+      itemfrom: 'Wang Qianxiang',
+      itemToDo: '',
+      itemLevel: 2
     }]
   }, {
     listName: '待处理需求',
     listData: [{
       itemName: 'bbb',
       itemTime: '2017-11-21',
-      itemlabel: '',
-      itemfrom: 'Wang Qianxiang'
+      itemfrom: 'Wang Qianxiang',
+      itemToDo: '',
+      itemLevel: 1
     }]
   }];
 
@@ -62,42 +68,42 @@ export class PmDashboardComponent implements OnInit {
     listData: [{
       itemName: 'AAA',
       itemTime: '2017-11-21',
-      itemlabel: '',
-      itemfrom: 'Wang Qianxiang'
+      itemfrom: 'Wang Qianxiang',
+      itemToDo: '6/6'
     }, {
       itemName: 'BBB',
       itemTime: '2017-11-21',
-      itemlabel: '',
-      itemfrom: 'Wang Qianxiang'
+      itemfrom: 'Wang Qianxiang',
+      itemToDo: '3/6'
     }, {
       itemName: 'CCC',
       itemTime: '2017-11-21',
-      itemlabel: '',
-      itemfrom: 'Wang Qianxiang'
+      itemfrom: 'Wang Qianxiang',
+      itemToDo: '1/6'
     }]
   }, {
-    listName: '已完成任务',
+    listName: '进行中任务',
     listData: [{
       itemName: 'BBB',
       itemTime: '2017-11-21',
-      itemlabel: '',
-      itemfrom: 'Wang Qianxiang'
+      itemfrom: 'Wang Qianxiang',
+      itemToDo: '3/6'
     }, {
       itemName: 'CCC',
       itemTime: '2017-11-21',
-      itemlabel: '',
-      itemfrom: 'Wang Qianxiang'
+      itemfrom: 'Wang Qianxiang',
+      itemToDo: '1/6'
     }]
   }, {
     listName: '待测试任务',
     listData: [{
       itemName: 'AAA',
       itemTime: '2017-11-21',
-      itemlabel: '',
-      itemfrom: 'Wang Qianxiang'
+      itemfrom: 'Wang Qianxiang',
+      itemToDo: '6/6'
     }]
   }];
-  
+
   constructor(private router: Router, private service: PmDashboardService, private dialog:MatDialog) { }
 
   // 项目ID
@@ -114,25 +120,40 @@ export class PmDashboardComponent implements OnInit {
 
   // 初始化数据 调用三个接口
   initData() {
-    this.getUserlist();
+    this.getProjectActivity();
+    // this.getProjectDemand();
+    // this.getProjectTestResult();
   }
 
-  // 获取全部用户
-  getUserlist() {
-    this.service.getUserlist()
+  getProjectActivity() {
+    this.service.getProjectActivity(this.projectId)
       .then(res => {
         console.log(res);
       }).catch(err => console.log(err));
   }
 
+  // getProjectDemand() {
+  //   this.service.getProjectDemand(this.projectId)
+  //     .then(res => {
+  //       console.log(res);
+  //     }).catch(err => console.log(err));
+  // }
+
+  // getProjectTestResult() {
+  //   this.service.getProjectTestResult(this.projectId)
+  //     .then(res => {
+  //       console.log(res);
+  //     }).catch(err => console.log(err));
+  // }
+
   addItem() {
     console.log('add');
   }
 
-  showDemandDetail(){
+  showDemandDetail() {
     let dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
-      height:'70vh',
+      height: '70vh',
       data: { name: 'dd', animal: 'dd' }
     });
 
@@ -141,10 +162,10 @@ export class PmDashboardComponent implements OnInit {
     });
   }
 
-  showTaskDetail(){
+  showTaskDetail() {
     let dialogRef = this.dialog.open(TaskDetailDialogComponent, {
       width: '750px',
-      height:'70vh',
+      height: '70vh',
       data: { name: 'dd', animal: 'dd' }
     });
 

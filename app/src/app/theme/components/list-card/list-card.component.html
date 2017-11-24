@@ -17,7 +17,13 @@
             </mat-card-header>
             <mat-card-content>
                 <mat-chip-list>
-                    <mat-chip color="accent">{{item?.itemTime}}</mat-chip>
+                    <mat-chip class="item-time">{{item?.itemTime}}</mat-chip>&nbsp;                
+                    <span [ngSwitch]="item.itemLevel">
+                        <mat-chip *ngSwitchCase="1" [style.background]="'#f44336'">low</mat-chip>
+                        <mat-chip *ngSwitchCase="2" [style.background]="'#2196f3'">normal</mat-chip>
+                        <mat-chip *ngSwitchCase="3" [style.background]="'#8bc34a'">high</mat-chip>
+                    </span>
+                    <mat-chip *ngIf="item.itemToDo!=''">{{"&#10003;&nbsp;" + item.itemToDo}}</mat-chip>
                 </mat-chip-list>
             </mat-card-content>
         </mat-card>

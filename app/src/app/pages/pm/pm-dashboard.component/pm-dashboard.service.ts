@@ -4,43 +4,26 @@ import { Http } from '@angular/http';
 
 @Injectable()
 export class PmDashboardService {
-    getUserListUrl: string = this._global.baseURL + '/api/userlist';
-    projectUrl: string = this._global.baseURL + '/api/project';
+    pmUrl: string = this._global.baseURL + '/api/dashboard';
 
     constructor(private _global: GlobalState, private http: Http) { }
 
-    getUserlist(): Promise<any> {
-        return this.http.get(`${this.getUserListUrl}`)
+    getProjectActivity(pId: string): Promise<any> {
+        return this.http.get(`${this.pmUrl}/${pId}/activity`)
             .toPromise()
             .then(this._global.extractData)
             .catch(this._global.handleError);
     }
 
-    getProjectDetail(id: string): Promise<any> {
-        return this.http.get(`${this.projectUrl}/${id}`)
+    getProjectDemand(pId: string): Promise<any> {
+        return this.http.get(`${this.pmUrl}/${pId}/demand`)
             .toPromise()
             .then(this._global.extractData)
             .catch(this._global.handleError);
     }
 
-    putProjectDetail(id: string, data: any[]): Promise<any[]> {
-        const body = JSON.stringify({ data });
-        return this.http.put(`${this.projectUrl}/${id}`, body, this._global.options)
-            .toPromise()
-            .then(this._global.extractData)
-            .catch(this._global.handleError);
-    }
-
-    getProjectUser(id: string): Promise<any> {
-        return this.http.get(`${this.projectUrl}/${id}/user`)
-            .toPromise()
-            .then(this._global.extractData)
-            .catch(this._global.handleError);
-    }
-
-    putProjectUser(id: string, data: any[]): Promise<any[]> {
-        const body = JSON.stringify({ data });
-        return this.http.put(`${this.projectUrl}/${id}/user`, body, this._global.options)
+    getProjectTestResult(pId: string): Promise<any> {
+        return this.http.get(`${this.pmUrl}/${pId}/testResult`)
             .toPromise()
             .then(this._global.extractData)
             .catch(this._global.handleError);

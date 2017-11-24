@@ -3,6 +3,8 @@ interface ItemMetrics {
   itemTime: string;
   itemlabel: string;
   itemfrom: string;
+  itemTodo: string;
+  itemLevel: number;
 }
 
 export interface ListMetrics {
