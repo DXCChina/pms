@@ -6,11 +6,10 @@ API入口
 '''
 from datetime import timedelta
 from os import environ
-from flask import Flask  #, jsonify
+# from flask import Flask  #, jsonify
 from flask_jwt_extended import (JWTManager)
 # from controller import bps
-from model.db import database, Demand
-from model.user import User
+from model.db import database, User, Demand, Activity, Project, ProjectMember, TestCase, TestResult
 import connexion
 
 application = connexion.App(__name__, specification_dir='../docs')
@@ -54,7 +53,9 @@ def add_claims_to_access_token(user):
 
 if __name__ == "__main__":
     print('初始化数据库')
-    database.create_tables([User, Demand], safe=True)
+    database.create_tables(
+        [User, Demand, Activity, Project, ProjectMember, TestCase, TestResult],
+        safe=True)
 
     application.run(
         host='PY_IP' in environ and environ['PY_IP'] or "0.0.0.0",
