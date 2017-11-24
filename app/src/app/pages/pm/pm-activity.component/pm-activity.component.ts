@@ -3,6 +3,8 @@ import {PeopleManageModel} from "../../../theme/components/pm-peoplemanage/pm-pe
 import {MatDialog} from "@angular/material";
 import {CommonDeleteDialog} from "../../../theme/components/deleteDialog/deleteDialog.component";
 import {Router} from "@angular/router";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {validate} from "codelyzer/walkerFactory/walkerFn";
 
 @Component({
   selector: 'pm-activity',
@@ -13,8 +15,14 @@ export class PmActivityComponent {
   dataListModel: PeopleManageModel[];
   datas: any[];
   searchList: any[] = [];
+  form: FormGroup;
 
   constructor(public dialog: MatDialog, private router: Router) {
+    this.form = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.minLength(2)]),
+      description: new FormControl('')
+    });
+
     this.dataListModel = [
       { name: '姓名', value: 'name' },
       { name: '职位', value: 'job' },
@@ -44,6 +52,10 @@ export class PmActivityComponent {
         id: 'sfaswe',
       }
     ];
+  }
+
+  onSubmit(form: any) {
+    console.log(form)
   }
 
   deleteProject() {
