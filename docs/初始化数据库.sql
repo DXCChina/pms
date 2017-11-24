@@ -110,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `password` char(100) NOT NULL,
   `email` char(50) NOT NULL,
   `status` char(10) NOT NULL DEFAULT 'active' COMMENT '用户状态:active(默认)/delete(已删除)',
+  `createAt` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_username` (`username`),
   UNIQUE KEY `user_email` (`email`)
