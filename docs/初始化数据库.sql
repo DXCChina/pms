@@ -16,64 +16,92 @@
 CREATE DATABASE IF NOT EXISTS `pms` /*!40100 DEFAULT CHARACTER SET utf8 */;
 USE `pms`;
 
+-- 导出  表 pms.activity 结构
+CREATE TABLE IF NOT EXISTS `activity` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` char(50) NOT NULL,
+  `detail` longtext DEFAULT NULL,
+  `memberId` int(11) NOT NULL,
+  `projectId` int(11) NOT NULL,
+  `progress` int(11) DEFAULT NULL,
+  `cost` int(11) DEFAULT NULL,
+  `status` char(10) NOT NULL DEFAULT 'new' COMMENT 'new(新建,未分配),dev-ing(开发中),needtest(开发完待测试),test-ing(测试中),fix-ing(修复中),finish(已完成),close(已关闭)',
+  `createAt` char(50) NOT NULL DEFAULT current_timestamp(),
+  `startDate` char(50) NOT NULL DEFAULT current_timestamp(),
+  `endDate` char(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
 -- 导出  表 pms.demand 结构
 CREATE TABLE IF NOT EXISTS `demand` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `ownerId` int(11) NOT NULL,
-  `projectId` int(11) NOT NULL,
   `title` char(50) NOT NULL,
   `detail` longtext DEFAULT NULL,
   `level` char(50) NOT NULL DEFAULT 'normal' COMMENT 'low(低)/high(高)/normal(中,默认)',
-  `status` char(50) NOT NULL DEFAULT 'active' COMMENT 'active(默认)/done/delete',
+  `projectId` int(11) NOT NULL,
+  `activityId` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0(未完成)/1(已完成)',
   `createAt` datetime NOT NULL DEFAULT current_timestamp(),
-  `startDate` char(50) NOT NULL,
-  `endDate` char(50) DEFAULT NULL,
-  `progress` int(11) DEFAULT NULL,
-  `cost` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 数据导出被取消选择。
 -- 导出  表 pms.project 结构
 CREATE TABLE IF NOT EXISTS `project` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` char(50) NOT NULL,
-  `detail` tinytext DEFAULT NULL,
-  `ownerId` int(10) unsigned NOT NULL,
-  `status` char(50) NOT NULL DEFAULT 'active' COMMENT 'active(默认)/done/delete',
-  `createAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COMMENT='项目表';
-
--- 数据导出被取消选择。
--- 导出  表 pms.projectmember 结构
-CREATE TABLE IF NOT EXISTS `projectmember` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `projectId` int(10) unsigned NOT NULL,
-  `memberId` int(10) unsigned NOT NULL,
-  `role` char(10) NOT NULL COMMENT 'pm/dev/test',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='项目与成员关系表';
-
--- 数据导出被取消选择。
--- 导出  表 pms.task 结构
-CREATE TABLE IF NOT EXISTS `task` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `ownerId` int(10) unsigned NOT NULL,
-  `memberId` int(10) unsigned NOT NULL,
-  `demandId` int(10) unsigned NOT NULL,
-  `title` char(50) NOT NULL,
-  `detail` tinytext DEFAULT NULL,
-  `level` char(50) NOT NULL DEFAULT 'normal' COMMENT 'low(低)/high(高)/normal(中,默认)',
-  `status` char(50) NOT NULL DEFAULT 'active' COMMENT 'active(进行中,默认)/test(测试中)/fix(修复中)/done(已完成)/delete(已删除)',
-  `createAt` timestamp NOT NULL DEFAULT current_timestamp(),
-  `startDate` char(50) NOT NULL,
+  `detail` longtext DEFAULT NULL,
+  `ownerId` int(11) NOT NULL,
+  `status` char(10) NOT NULL DEFAULT 'active' COMMENT 'active(默认)/done/delete',
+  `createAt` char(50) NOT NULL DEFAULT current_timestamp(),
+  `startDate` char(50) NOT NULL DEFAULT current_timestamp(),
   `endDate` char(50) DEFAULT NULL,
-  `progress` int(10) DEFAULT NULL,
-  `cost` float DEFAULT NULL,
+  `type` char(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `project_name` (`name`),
+  UNIQUE KEY `project_type` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+-- 导出  表 pms.project_member 结构
+CREATE TABLE IF NOT EXISTS `project_member` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `memberId` int(11) NOT NULL,
+  `projectId` int(11) NOT NULL,
+  `role` char(50) NOT NULL DEFAULT 'dev' COMMENT '用户角色:dev/test',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8 COMMENT='任务表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+-- 导出  表 pms.test_case 结构
+CREATE TABLE IF NOT EXISTS `test_case` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(50) NOT NULL,
+  `detail` longtext DEFAULT NULL,
+  `demandId` int(11) NOT NULL,
+  `projectId` int(11) NOT NULL,
+  `type` char(50) DEFAULT NULL,
+  `input` char(50) NOT NULL,
+  `expect` char(50) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- 数据导出被取消选择。
+-- 导出  表 pms.test_result 结构
+CREATE TABLE IF NOT EXISTS `test_result` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` char(50) NOT NULL,
+  `detail` longtext DEFAULT NULL,
+  `caseId` int(11) NOT NULL,
+  `output` char(50) NOT NULL,
+  `result` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0(bug)/1(正常)',
+  `status` char(10) NOT NULL DEFAULT 'close' COMMENT 'tofix,tocheck,close(默认)',
+  `level` char(50) NOT NULL DEFAULT 'normal' COMMENT 'low(低)/high(高)/normal(中,默认)',
+  `devId` int(11) NOT NULL,
+  `priority` char(50) NOT NULL DEFAULT 'normal' COMMENT 'low(低)/high(高)/normal(中,默认)',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 数据导出被取消选择。
 -- 导出  表 pms.user 结构
