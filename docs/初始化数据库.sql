@@ -54,13 +54,12 @@ CREATE TABLE IF NOT EXISTS `project` (
   `detail` longtext DEFAULT NULL,
   `ownerId` int(11) NOT NULL,
   `status` char(10) NOT NULL DEFAULT 'active' COMMENT 'active(默认)/done/delete',
-  `createAt` char(50) NOT NULL DEFAULT current_timestamp(),
-  `startDate` char(50) NOT NULL DEFAULT current_timestamp(),
-  `endDate` char(50) DEFAULT NULL,
-  `type` char(50) NOT NULL,
+  `createAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `startDate` datetime NOT NULL DEFAULT current_timestamp(),
+  `endDate` datetime DEFAULT NULL,
+  `type` char(50) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `project_name` (`name`),
-  UNIQUE KEY `project_type` (`type`)
+  UNIQUE KEY `project_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- 数据导出被取消选择。
