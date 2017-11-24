@@ -64,7 +64,8 @@ import { BaPagination } from './components/waPagination/waPagination.component';
 
 import {
   MatButtonModule, MatCheckboxModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
-  MatSelectModule, MatTabsModule, MatCardModule, MatProgressBarModule, MatToolbarModule, MatChipsModule
+  MatSelectModule, MatTabsModule, MatCardModule, MatProgressBarModule, MatToolbarModule, MatChipsModule,
+  MatTooltipModule, MatDialogModule
 } from '@angular/material';
 
 import {WaDataList} from "./components/waDataList/waDataList.component";
@@ -88,6 +89,8 @@ import {CommonSearchComponent} from "./components/commonSearch/commonSearch.comp
 import {PositionSwitchPipe} from "./pipes/positionSwitch/positionSwitch.pipe";
 
 import {ChipListComponent} from "./components/chip-list/chip-lsit.component";
+import {PmPeoplemanageComponent} from "./components/pm-peoplemanage/pm-peoplemanage.component";
+import {CommonDeleteDialog} from "./components/deleteDialog/deleteDialog.component";
 
 const NGA_COMPONENTS = [
   BaAmChart,
@@ -125,6 +128,8 @@ const NGA_COMPONENTS = [
   CommonSearchComponent,
   ChipListComponent,
   ListCardComponent,
+  PmPeoplemanageComponent,
+  CommonDeleteDialog
 ];
 
 const NGA_DIRECTIVES = [
@@ -177,6 +182,8 @@ const NGA_VALIDATORS = [
     MatMenuModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatTooltipModule,
+    MatDialogModule,
     MatProgressBarModule,
     MatTabsModule,
     MatCardModule,
@@ -192,6 +199,7 @@ const NGA_VALIDATORS = [
     ...NGA_COMPONENTS
   ],
   entryComponents:[
+    CommonDeleteDialog
   ]
 })
 export class NgaModule {
