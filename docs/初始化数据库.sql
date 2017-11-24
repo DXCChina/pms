@@ -26,9 +26,9 @@ CREATE TABLE IF NOT EXISTS `activity` (
   `progress` int(11) DEFAULT NULL,
   `cost` int(11) DEFAULT NULL,
   `status` char(10) NOT NULL DEFAULT 'new' COMMENT 'new(新建,未分配),dev-ing(开发中),needtest(开发完待测试),test-ing(测试中),fix-ing(修复中),finish(已完成),close(已关闭)',
-  `createAt` char(50) NOT NULL DEFAULT current_timestamp(),
-  `startDate` char(50) NOT NULL DEFAULT current_timestamp(),
-  `endDate` char(50) DEFAULT NULL,
+  `createAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `startDate` datetime NOT NULL DEFAULT current_timestamp(),
+  `endDate` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `demand` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` char(50) NOT NULL,
   `detail` longtext DEFAULT NULL,
-  `level` char(50) NOT NULL DEFAULT 'normal' COMMENT 'low(低)/high(高)/normal(中,默认)',
+  `level` char(10) NOT NULL DEFAULT 'normal' COMMENT 'low(低)/high(高)/normal(中,默认)',
   `projectId` int(11) NOT NULL,
   `activityId` int(11) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0(未完成)/1(已完成)',
@@ -57,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `project` (
   `createAt` datetime NOT NULL DEFAULT current_timestamp(),
   `startDate` datetime NOT NULL DEFAULT current_timestamp(),
   `endDate` datetime DEFAULT NULL,
-  `type` char(50) DEFAULT NULL,
+  `type` char(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `project_name` (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -68,7 +68,7 @@ CREATE TABLE IF NOT EXISTS `project_member` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `memberId` int(11) NOT NULL,
   `projectId` int(11) NOT NULL,
-  `role` char(50) NOT NULL DEFAULT 'dev' COMMENT '用户角色:dev/test',
+  `role` char(10) NOT NULL DEFAULT 'dev' COMMENT '用户角色:dev/test',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -80,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `test_case` (
   `detail` longtext DEFAULT NULL,
   `demandId` int(11) NOT NULL,
   `projectId` int(11) NOT NULL,
-  `type` char(50) DEFAULT NULL,
+  `type` char(10) DEFAULT NULL,
   `input` char(50) NOT NULL,
   `expect` char(50) NOT NULL,
   PRIMARY KEY (`id`)
@@ -96,9 +96,9 @@ CREATE TABLE IF NOT EXISTS `test_result` (
   `output` char(50) NOT NULL,
   `result` tinyint(1) NOT NULL DEFAULT 0 COMMENT '0(bug)/1(正常)',
   `status` char(10) NOT NULL DEFAULT 'close' COMMENT 'tofix,tocheck,close(默认)',
-  `level` char(50) NOT NULL DEFAULT 'normal' COMMENT 'low(低)/high(高)/normal(中,默认)',
+  `level` char(10) NOT NULL DEFAULT 'normal' COMMENT '优先级:low(低)/high(高)/normal(中,默认)',
   `devId` int(11) NOT NULL,
-  `priority` char(50) NOT NULL DEFAULT 'normal' COMMENT 'low(低)/high(高)/normal(中,默认)',
+  `priority` char(10) NOT NULL DEFAULT 'normal' COMMENT '严重程度:low(低)/high(高)/normal(中,默认)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -109,8 +109,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` char(50) NOT NULL,
   `password` char(100) NOT NULL,
   `email` char(50) NOT NULL,
-  `status` char(50) NOT NULL DEFAULT 'active' COMMENT '用户状态:active(默认)/delete(已删除)',
-  `createAt` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` char(10) NOT NULL DEFAULT 'active' COMMENT '用户状态:active(默认)/delete(已删除)',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_username` (`username`),
   UNIQUE KEY `user_email` (`email`)
