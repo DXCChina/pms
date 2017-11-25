@@ -1,0 +1,69 @@
+a:focus, button:focus {}
+
+.pm-activity-wrap-header {
+  position: absolute;
+  top: -10%;
+  left: 0;
+  height: 400px;
+  width: 100vw;
+  background: #8847dc;
+  transform: skewY(6deg);
+}
+.pm-activity-wrap {
+  max-width: 1250px;
+  width: 100%;
+  margin: 50px auto;
+  position: relative;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-content: center;
+  border-radius: 2px;
+}
+.manage-title {
+  font-size: 16px;
+  font-weight: 600;
+  padding-left: 5px;
+}
+.pm-activity-header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  border-bottom: 1px solid rgba(0, 0, 0, .12);
+}
+
+.pm-activity-body {
+  margin: 30px auto;
+
+  .pm-activity-body-title {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-start;
+    align-content: center;
+    padding: 5px;
+    border-top: 1px solid rgba(0, 0, 0, .12);
+    border-bottom: 1px solid rgba(0, 0, 0, .12);
+    .pm-activity-btnGroup {
+
+    }
+    p {
+      font-size: 16px;
+      font-weight:600;
+      margin: 10px 20px 0 0;
+    }
+  }
+  .pm-activity-body-content {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    margin: 30px 0;
+    padding: 20px;
+    background: whitesmoke;
+    .mat-form-field {
+      width: 100%;
+    }
+  }
+
+}
