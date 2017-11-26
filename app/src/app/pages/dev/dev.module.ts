@@ -6,6 +6,12 @@ import {NgaModule} from "../../theme/nga.module";
 import {FormsModule} from "@angular/forms";
 import {DevActivityComponent} from "./dev-activity/dev-activity.component";
 import {routing} from "./dev.routing";
+import {
+  MatButtonModule, MatCommonModule, MatDialogModule, MatSelectModule, MatInputModule,
+  MatTabsModule, MatCardModule, MatExpansionModule, MatCheckboxModule, MatSliderModule, MatListModule,
+  MatProgressSpinnerModule, MatChipsModule, MatGridListModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule,
+  MatProgressBarModule, MatToolbarModule,  MatTooltipModule
+} from "@angular/material";
 
 @NgModule({
   declarations: [
@@ -17,7 +23,30 @@ import {routing} from "./dev.routing";
     CommonModule,
     FormsModule,
     NgaModule,
-    routing
+    routing,
+
+    MatCommonModule,
+    MatDialogModule,
+    MatInputModule,
+    MatSelectModule,
+    MatCardModule,
+    MatTabsModule,
+    MatListModule,
+    MatSliderModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatTooltipModule,
+    MatExpansionModule,
+    MatProgressSpinnerModule,
+    MatChipsModule,
+    MatGridListModule,
+    MatCommonModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatMenuModule,
+    MatProgressBarModule,
+    MatToolbarModule
   ],
   providers: [
 
