@@ -236,6 +236,7 @@ paths:
       responses:
         200:
           description: ok
+# @author: Wang Qianxiang
   /dashboard/{project_id}/demand:
     get:
       summary: 获取项目需求
@@ -244,7 +245,7 @@ paths:
         - name: project_id
           in: path
           required: true
-          type: number
+          type: integer
       responses:
         200:
           description: ok
@@ -256,7 +257,7 @@ paths:
         - name: project_id
           in: path
           required: true
-          type: number
+          type: integer
       responses:
         200:
           description: ok
@@ -268,7 +269,7 @@ paths:
         - name: project_id
           in: path
           required: true
-          type: number
+          type: integer
       responses:
         200:
           description: ok
@@ -280,7 +281,7 @@ paths:
         - name: project_id
           in: path
           required: true
-          type: number
+          type: integer
       responses:
         200:
           description: ok
