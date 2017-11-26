@@ -104,7 +104,11 @@ export class PmDashboardComponent implements OnInit {
     }]
   }];
 
-  constructor(private router: Router, private service: PmDashboardService, private dialog:MatDialog) { }
+  public demandData: any[] = [];
+  public activityData: any[] = [];
+  public testResultData: any[] = [];
+
+  constructor(private router: Router, private service: PmDashboardService, private dialog: MatDialog) { }
 
   // 项目ID
   projectId: string;
@@ -121,30 +125,98 @@ export class PmDashboardComponent implements OnInit {
   // 初始化数据 调用三个接口
   initData() {
     this.getProjectActivity();
-    // this.getProjectDemand();
-    // this.getProjectTestResult();
+    this.getProjectDemand();
+    this.getProjectTestResult();
   }
 
   getProjectActivity() {
     this.service.getProjectActivity(this.projectId)
       .then(res => {
-        console.log(res);
+        res = res;
+        this.activityData.push(
+          {
+            listName: '待处理需求',
+            listData: res.filter(el => {
+              return !el.activityId;
+            })
+          }
+        );
+        this.activityData.push(
+          {
+            listName: '已分配需求',
+            listData: res.filter(el => {
+              return el.activityId;
+            })
+          }
+        );
+        this.activityData.push(
+          {
+            listName: '全部需求',
+            listData: res
+          }
+        );
       }).catch(err => console.log(err));
   }
 
-  // getProjectDemand() {
-  //   this.service.getProjectDemand(this.projectId)
-  //     .then(res => {
-  //       console.log(res);
-  //     }).catch(err => console.log(err));
-  // }
+  getProjectDemand() {
+    this.service.getProjectDemand(this.projectId)
+      .then(res => {
+        res = res;
+        this.activityData.push(
+          {
+            listName: '进行中活动',
+            listData: res.filter(el => {
+              return el.status === 'dev-ing';
+            })
+          }
+        );
+        this.activityData.push(
+          {
+            listName: '待测试活动',
+            listData: res.filter(el => {
+              return el.status === 'needtest';
+            })
+          }
+        );
+        this.activityData.push(
+          {
+            listName: '全部活动',
+            listData: res
+          }
+        );
+      }).catch(err => console.log(err));
+  }
 
-  // getProjectTestResult() {
-  //   this.service.getProjectTestResult(this.projectId)
-  //     .then(res => {
-  //       console.log(res);
-  //     }).catch(err => console.log(err));
-  // }
+  getProjectTestResult() {
+    this.service.getProjectTestResult(this.projectId)
+      .then(res => {
+        res = res;
+        this.activityData.push(
+          {
+            listName: '待修复测试结果',
+            listData: res.filter(el => {
+              return el.status === 'tofix';
+            })
+          }
+        );
+        this.activityData.push(
+          {
+            listName: '待审核测试结果',
+            listData: res.filter(el => {
+              return el.status === 'tocheck';
+            })
+          }
+        );
+        this.activityData.push(
+          {
+            listName: '已通过测试结果',
+            listData: res.filter(el => {
+              return el.status === 'close';
+            })
+          }
+        );
+      }).catch(err => console.log(err));
+  }
 
   addItem() {
     console.log('add');

@@ -37,6 +37,13 @@
         padding: 16px;
         overflow: auto;
         background: #fafafa;
+        .list-card-no-data {
+            height: 120px;
+            line-height: 120px;
+            text-align: center;
+            color: rgba(0,0,0,0.54);
+            font-weight: bold;
+        }
         .mat-card.item-card {
             margin-bottom: 16px;
             padding: 16px;

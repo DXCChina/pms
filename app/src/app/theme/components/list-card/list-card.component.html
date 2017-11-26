@@ -9,6 +9,7 @@
         <button mat-icon-button (click)="addEmit()">+</button>
     </mat-card-header>
     <mat-card-content class="list-card-content">
+        <div class="list-card-no-data" *ngIf="activeData.listData.length === 0">暂无内容</div>
         <mat-card class="item-card" *ngFor="let item of activeData?.listData" (click)="detailEmit(activeData)">
             <mat-card-header class="item-card-header">
                 <div mat-card-avatar [style.background]="item?.itemAvatar">{{item?.itemfrom | name2avatar}}</div>
