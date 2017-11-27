@@ -6,7 +6,7 @@ from rbac.context import IdentityContext
 from flask import session
 
 from flask_jwt_extended import (get_jwt_identity)
-from model.db import db
+from model.db import db,Project
 
 acl = Registry()
 identity = IdentityContext(acl)
@@ -33,11 +33,11 @@ acl.add_resource("task", ["project"])
 acl.add_resource("bug", ["project"])
 acl.add_resource("case", ["project"])
 acl.add_resource("project_member", ["project"])
+acl.add_resource("activity", ["project"])
 
 # 注册 pm 规则
 acl.allow("pm", "update", "project")
-acl.allow("pm", "create", "demand")
-acl.allow("pm", "create", "task")
+acl.allow("pm", "create", "project")
 
 # 注册 dev 规则
 acl.allow(
@@ -55,7 +55,7 @@ acl.allow(
 def _():
     with db.cursor() as cursor:
         sql = "SELECT role \
-        FROM projectmember \
+        FROM project_member \
         WHERE projectId=%s and memberId=%s"
 
         cursor.execute(sql, (session['project_id'], get_jwt_identity()))
@@ -63,4 +63,7 @@ def _():
     if result:
         print(get_jwt_identity(), '=====user-role======', result['role'])
         yield result['role']
-    yield ''
+    result=Project.find(Project.id==session['project_id'])
+    if result and result['ownerId']==get_jwt_identity():
+        print(result['ownerId'], '=====user-role======', 'pm')
+        yield 'pm'

@@ -126,7 +126,7 @@ class Demand(MySQLModel):
 
 
 # 活动表
-class ActivityDB(MySQLModel):
+class ActivityBase(MySQLModel):
     title = db_char()
     detail = TextField(null=True)
     memberId = IntegerField(null=True)
@@ -144,7 +144,7 @@ class ActivityDB(MySQLModel):
 
     class Meta:
         db_table = 'activity'
-class Activity(ActivityDB):
+class Activity(ActivityBase):
     id = db_autoId()
 
 
