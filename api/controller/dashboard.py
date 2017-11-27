@@ -3,8 +3,9 @@
 
 @author: Wang Qianxiang
 '''
+import json
+
 from flask_jwt_extended import (get_jwt_identity, fresh_jwt_required)
-from flask import jsonify
 
 from model import dashboard
 
@@ -20,8 +21,8 @@ def project_demand(project_id):
     elif dashboard.find_role(project_id, get_jwt_identity()).role:
         res = dashboard.find_demand(project_id, get_jwt_identity())
     else:
-        return jsonify({"msg": "No permission!"}), 403
-    return jsonify(res)
+        return json.dumps({"msg": "No permission!"}), 403
+    return res
 
 
 @fresh_jwt_required
@@ -35,8 +36,8 @@ def project_activity(project_id):
     elif dashboard.find_role(project_id, get_jwt_identity()):
         res = dashboard.find_activity(project_id, get_jwt_identity())
     else:
-        return jsonify({"msg": "No permission!"}), 403
-    return jsonify(res)
+        return json.dumps({"msg": "No permission!"}), 403
+    return res
 
 
 @fresh_jwt_required
@@ -45,13 +46,11 @@ def project_test_case(project_id):
 
     GET /api/dashboard/<int:project_id>/case
     '''
-    if dashboard.find_owner(project_id) == get_jwt_identity():
-        res = dashboard.find_all_test_case(project_id)
-    elif dashboard.find_role(project_id, get_jwt_identity()):
+    if dashboard.find_role(project_id, get_jwt_identity()).role == 'test':
         res = dashboard.find_test_case(project_id, get_jwt_identity())
     else:
-        return jsonify({"msg": "No permission!"}), 403
-    return jsonify(res)
+        return json.dumps({"msg": "No permission!"}), 403
+    return res
 
 
 @fresh_jwt_required
@@ -67,5 +66,5 @@ def project_test_result(project_id):
     elif dashboard.find_role(project_id, get_jwt_identity()).role == 'test':
         res = dashboard.find_test_result_for_test(project_id, get_jwt_identity())
     else:
-        return jsonify({"msg": "No permission!"}), 403
-    return jsonify(res)
+        return json.dumps({"msg": "No permission!"}), 403
+    return res

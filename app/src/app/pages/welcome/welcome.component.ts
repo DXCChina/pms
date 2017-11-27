@@ -23,7 +23,7 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit() {
     this.getProjectList();
-    this.getTaskList();
+    // this.getTaskList();
   }
 
   getFish(){
@@ -72,13 +72,13 @@ export class WelcomeComponent implements OnInit {
     //todo 获取用户在项目中的权限
     let projectId = project.id;
 
-    this._service.getUserRoleInProject(projectId)
-      .then(res => {
+    // this._service.getUserRoleInProject(projectId)
+    //   .then(res => {
         // this.userRoleInProject = res.data
         this.userRoleInProject = 'pm';
         this.router.navigate([`/pages/${this.userRoleInProject}/dashboard`]);
         sessionStorage.setItem("userRoleInProject", this.userRoleInProject);
-      });
+      // });
 
     sessionStorage.setItem("projectId", projectId);
     sessionStorage.setItem("projectName", project.name);

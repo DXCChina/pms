@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { PmDashboardService } from './pm-dashboard.service';
 import { Router } from '@angular/router';
+
+import { ListMetrics, ItemMetrics } from './card-data.Entity';
 import { MatDialog } from '@angular/material';
 import { TaskDetailDialogComponent } from '../task-detail-dialog/task-detail-dialog.component';
 import { DemandDetailDialogComponent } from '../demand-detail-dialog/demand-detail-dialog.component';
 
 @Component({
-  selector: 'pm-dashboard',
+  selector: 'app-pm-dashboard',
   templateUrl: './pm-dashboard.component.html',
   styleUrls: ['./pm-dashboard.component.scss'],
   providers: [
@@ -124,44 +126,57 @@ export class PmDashboardComponent implements OnInit {
 
   // 初始化数据 调用三个接口
   initData() {
-    this.getProjectActivity();
     this.getProjectDemand();
+    this.getProjectActivity();
     this.getProjectTestResult();
-  }
-
-  getProjectActivity() {
-    this.service.getProjectActivity(this.projectId)
-      .then(res => {
-        res = res;
-        this.activityData.push(
-          {
-            listName: '待处理需求',
-            listData: res.filter(el => {
-              return !el.activityId;
-            })
-          }
-        );
-        this.activityData.push(
-          {
-            listName: '已分配需求',
-            listData: res.filter(el => {
-              return el.activityId;
-            })
-          }
-        );
-        this.activityData.push(
-          {
-            listName: '全部需求',
-            listData: res
-          }
-        );
-      }).catch(err => console.log(err));
   }
 
   getProjectDemand() {
     this.service.getProjectDemand(this.projectId)
       .then(res => {
-        res = res;
+
+        this.demandData.push(
+          new ListMetrics(
+            '待处理需求',
+            res
+              .filter(i => {
+                return !i.activityId;
+              })
+              .map(i => {
+                return new ItemMetrics(i.id, i.title, i.createAt, '', i.detail, '', i.level);
+              })
+          )
+        );
+
+        this.demandData.push(
+          new ListMetrics(
+            '已分配需求',
+            res
+              .filter(i => {
+                return i.activityId;
+              })
+              .map(i => {
+                return new ItemMetrics(i.id, i.title, i.createAt, '', i.detail, '', i.level);
+              })
+          )
+        );
+
+        this.demandData.push(
+          new ListMetrics(
+            '全部需求',
+            res
+              .map(i => {
+                return new ItemMetrics(i.id, i.title, i.createAt, '', i.detail, '', i.level);
+              })
+          )
+        );
+
+      }).catch(err => console.log(err));
+  }
+
+  getProjectActivity() {
+    this.service.getProjectActivity(this.projectId)
+      .then(res => {
         this.activityData.push(
           {
             listName: '进行中活动',
@@ -191,7 +206,7 @@ export class PmDashboardComponent implements OnInit {
     this.service.getProjectTestResult(this.projectId)
       .then(res => {
         res = res;
-        this.activityData.push(
+        this.testResultData.push(
           {
             listName: '待修复测试结果',
             listData: res.filter(el => {
@@ -199,7 +214,7 @@ export class PmDashboardComponent implements OnInit {
             })
           }
         );
-        this.activityData.push(
+        this.testResultData.push(
           {
             listName: '待审核测试结果',
             listData: res.filter(el => {
@@ -207,7 +222,7 @@ export class PmDashboardComponent implements OnInit {
             })
           }
         );
-        this.activityData.push(
+        this.testResultData.push(
           {
             listName: '已通过测试结果',
             listData: res.filter(el => {
@@ -223,7 +238,7 @@ export class PmDashboardComponent implements OnInit {
   }
 
   showDemandDetail() {
-    let dialogRef = this.dialog.open(DemandDetailDialogComponent, {
+    const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
       height: '70vh',
       data: { name: 'dd', animal: 'dd' }
@@ -235,7 +250,7 @@ export class PmDashboardComponent implements OnInit {
   }
 
   showTaskDetail() {
-    let dialogRef = this.dialog.open(TaskDetailDialogComponent, {
+    const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
       width: '750px',
       height: '70vh',
       data: { name: 'dd', animal: 'dd' }
