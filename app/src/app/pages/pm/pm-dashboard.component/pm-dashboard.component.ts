@@ -129,11 +129,23 @@ export class PmDashboardComponent implements OnInit {
     console.log('add');
   }
 
-  showDemandDetail(){
+  addDemand(){
     let dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
       height:'61vh',
-      data: { name: 'dd', animal: 'dd' }
+      data: {mode:'create'}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  showDemandDetail(demand){
+    let dialogRef = this.dialog.open(DemandDetailDialogComponent, {
+      width: '750px',
+      height:'61vh',
+      data: {mode:'update', demandId:demand.id}
     });
 
     dialogRef.afterClosed().subscribe(result => {

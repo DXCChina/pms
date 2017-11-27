@@ -1,14 +1,18 @@
 import {Component, Inject} from "@angular/core";
 import {MatDialogRef, MAT_DIALOG_DATA} from "@angular/material";
-import {FormControl, Validators, AbstractControl, FormGroup, FormBuilder} from "@angular/forms";
+import {Validators, AbstractControl, FormGroup, FormBuilder} from "@angular/forms";
+import {PmDemandDetailService} from "./demand-detail-dialog.service";
+import {ToasterService, ToasterConfig} from "angular2-toaster";
+import {Demand} from "./demand.model";
 
 @Component({
   selector: 'demand-detail-dialog',
   templateUrl: 'demand-detail-dialog.component.html',
-  styleUrls: ['demand-detail-dialog.component.scss']
+  styleUrls: ['demand-detail-dialog.component.scss'],
+  providers: [PmDemandDetailService]
 })
 export class DemandDetailDialogComponent {
-  name: AbstractControl;
+  title: AbstractControl;
   detail: AbstractControl;
   assignTask: AbstractControl;
   level: AbstractControl;
@@ -16,50 +20,76 @@ export class DemandDetailDialogComponent {
   demandForm: FormGroup;
 
   formErrors = {
-    'name': '',
+    'title': '',
     'detail': '',
     'assignTask': '',
     'level': ''
   };
   validationMessages = {
-    'name': {
+    'title': {
       'required': '请输入需求名称',
       'minlength': '需求名称最少4个字符长'
     },
-    'assignTask': {
-    },
+    'assignTask': {},
     'level': {
       'required': '请输入需求优先级'
     }
   };
 
-  constructor(public dialogRef: MatDialogRef<DemandDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public fb: FormBuilder) {
+  mode: string = "";
+  projectId: string = "";
+  demandId: string = "";
+
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    tapToDismiss: false,
+    showCloseButton: true
+  });
+
+  demandInfo: Demand = new Demand();
+
+  constructor(public dialogRef: MatDialogRef<DemandDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
+              public fb: FormBuilder, private _service: PmDemandDetailService, private toasterService: ToasterService) {
+    this.mode = this.data.mode;
+    //todo uncomment
+    // this.demandId = this.data.demandId;
+    this.demandId = "1";
+    this.projectId = sessionStorage.getItem('projectId');
   }
 
-  ngOnInit(){
+  ngOnInit() {
+    if (this.mode == 'update') {
+      this.reviewDetail(this.demandId);
+    }
     this.buildForm();
   }
 
-  buildForm(){
+  reviewDetail(demandId) {
+    this._service.reviewDemandDetail(demandId)
+      .then(res => {
+        this.demandInfo = res.data;
+      })
+  }
+
+  buildForm() {
     this.demandForm = this.fb.group({
-      'name': ['', Validators.compose([Validators.required,Validators.minLength(4)])],
-      'detail': ['', Validators.compose([])],
-      'assignTask': ['', Validators.compose([])],
-      'level': ['', Validators.compose([Validators.required])],
-      'createAt': ['', Validators.compose([])]
+      'title': [this.demandInfo.title, Validators.compose([Validators.required, Validators.minLength(4)])],
+      'detail': [this.demandInfo.detail, Validators.compose([])],
+      'assignTask': [this.demandInfo.activityId, Validators.compose([])],
+      'level': [this.demandInfo.level, Validators.compose([Validators.required])],
+      'createAt': [this.demandInfo.createAt, Validators.compose([])]
     });
 
-    this.name = this.demandForm.controls['name'];
+    this.title = this.demandForm.controls['title'];
     this.detail = this.demandForm.controls['detail'];
     this.assignTask = this.demandForm.controls['assignTask'];
     this.level = this.demandForm.controls['level'];
     this.createAt = this.demandForm.controls['createAt'];
 
     this.demandForm.valueChanges
-      .subscribe(data=>this.onValueChanged(data));
+      .subscribe(data => this.onValueChanged(data));
   }
 
-  onValueChanged(data?: any) {
+  onValueChanged(data ?: any) {
     if (!this.demandForm) {
       return;
     }
@@ -79,8 +109,30 @@ export class DemandDetailDialogComponent {
   }
 
 
-  onSubmit(demandForm){
-    console.log('demandForm', this.demandForm.value);
-    this.dialogRef.close();
+  onSubmit() {
+    let demandInfo = Object.assign(this.demandForm.value, {projectId: this.projectId});
+    if(this.mode === 'create'){
+      this._service.newDemand(demandInfo)
+        .then(res => {
+          if (res.msg === 'ok') {
+            this.toasterService.pop('ok', '新建需求成功');
+            this.dialogRef.close();
+          } else {
+            this.toasterService.pop('error', res.msg);
+          }
+        });
+    }else if(this.mode === 'update'){
+      demandInfo = Object.assign(demandInfo, {id: this.demandId});
+      this._service.updateDemand(demandInfo)
+        .then(res => {
+          if (res.msg === 'ok') {
+            this.toasterService.pop('ok', '需求修改成功');
+            this.dialogRef.close();
+          } else {
+            this.toasterService.pop('error', res.msg);
+          }
+        });
+
+    }
   }
 }

@@ -19,6 +19,7 @@ import {PmPeoplemanageComponent} from "../../theme/components/pm-peoplemanage/pm
 
 import {TaskDetailDialogComponent} from "./task-detail-dialog/task-detail-dialog.component";
 import {DemandDetailDialogComponent} from "./demand-detail-dialog/demand-detail-dialog.component";
+import {ToasterModule} from "angular2-toaster";
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import {DemandDetailDialogComponent} from "./demand-detail-dialog/demand-detail-
     MatMenuModule,
     MatProgressBarModule,
     MatToolbarModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    ToasterModule
   ],
   providers: [
 

@@ -1,42 +1,47 @@
 <div>
   <mat-toolbar class="demand-detail-header">
     <!--<span>项目名称</span><span> > </span>-->
-    <span>{{name}}</span></mat-toolbar>
+    <span *ngIf="mode === 'update'">{{demandInfo.title}}</span>
+    <span *ngIf="mode === 'create'">新建需求</span>
+  </mat-toolbar>
 </div>
 
 <div class="dialog-content">
   <form action="" [formGroup]="demandForm" (ngSubmit)="onSubmit(demandForm)">
     <div class="demand-detail-content">
       <mat-form-field>
-        <input matInput placeholder="需求名称" [formControl]="name">
-        <mat-error *ngIf="name.invalid">{{formErrors.name}}</mat-error>
+        <input matInput placeholder="需求名称" [formControl]="title" [(ngModel)]="demandInfo.title" name="title">
+        <mat-error >{{formErrors.title}}</mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="需求描述" [formControl]="detail">
+        <input matInput placeholder="需求描述" [formControl]="detail" [(ngModel)]="demandInfo.detail" name="detail">
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="任务指定(创建需求时不可指定任务)" [formControl]="assignTask" readonly>
+        <input matInput *ngIf="mode=='create'" placeholder="任务指定(创建需求时不可指定任务)" [formControl]="assignTask" readonly>
+        <input matInput *ngIf="mode=='update'" placeholder="任务指定" [formControl]="assignTask" [(ngModel)]="demandInfo.activityTittle" name="activityTittle" readonly>
       </mat-form-field>
 
       <mat-form-field>
-        <mat-select placeholder="优先级" [formControl]="level">
+        <mat-select placeholder="优先级" [formControl]="level" [(ngModel)]="demandInfo.level" name="level">
           <mat-option value="low">低</mat-option>
           <mat-option value="normal" aria-selected="true">中</mat-option>
           <mat-option value="high">高</mat-option>
         </mat-select>
-        <mat-error *ngIf="level.invalid">{{formErrors.level}}</mat-error>
+        <mat-error>{{formErrors.level}}</mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="创建时间(创建时间不可设置)" [formControl]="createAt" readonly>
+        <input matInput placeholder="创建时间(创建时间不可设置)" [formControl]="createAt" [(ngModel)]="demandInfo.createAt" name="createAt" readonly>
       </mat-form-field>
     </div>
 
     <div class="demand-detail-footer">
       <button mat-button mat-dialog-close>取消</button>
-      <button mat-button type="submit" [disabled]="!demandForm.valid">提交</button>
+      <button mat-button type="submit" [disabled]="!demandForm?.valid">{{mode == 'create' ?  '提交' : '修改'}}</button>
     </div>
   </form>
 </div>
+
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
