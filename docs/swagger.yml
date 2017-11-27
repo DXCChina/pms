@@ -125,31 +125,26 @@ paths:
   /project/demand:
     post:
       summary: api
-      operationId: controller.task.demand_add
-      parameters:
-        - name: project_id
-          in: path
-          required: true
-          type: number
+      operationId: controller.demand.demand_add
       responses:
         200:
           description: ok
   /project/demand/detail/{demand_id}:
     get:
       summary: api
-      operationId: controller.task.demand_info
+      operationId: controller.demand.demand_info
       parameters:
         - name: demand_id
           in: path
           required: true
-          type: number
+          type: integer
       responses:
         200:
           description: ok
   /project/demand/update:
     put:
       summary: api
-      operationId: controller.task.demand_update
+      operationId: controller.demand.demand_update
       responses:
         200:
           description: ok
