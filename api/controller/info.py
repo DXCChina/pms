@@ -29,8 +29,10 @@ def project_list():
 
     GET /api/project
     '''
-    # return make_response(jsonify(message="success", data=info.project_list(), status=200), 200)
-    return jsonify(info.project_list())
+    if 'user_id' in session:
+        ownerId = session['user_id']
+
+    return jsonify(info.project_list(ownerId))
 
 
 # @app.route("/project", methods=['POST'])
@@ -59,6 +61,10 @@ def project_add():
 
     return info.project_add(data), 201
 
+
+@fresh_jwt_required
+def set_role():
+    pass
 
 # @app.route("/task", methods=['GET'])
 @fresh_jwt_required

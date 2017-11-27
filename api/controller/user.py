@@ -106,6 +106,7 @@ def login():
         resp = jsonify({'access_token': access_token})
         set_access_cookies(resp, access_token)
         session['user_id'] = account.id
+        print(session['user_id'])
         return resp
     else:
         return jsonify({"msg": "用户名或密码错误"}), 403

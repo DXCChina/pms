@@ -51,7 +51,10 @@
 #
 #     return result
 
+from model.db import db
+
 from .db import Project
+from .db import ProjectMember
 from playhouse.shortcuts import model_to_dict, dict_to_model
 
 def project_add(project):
@@ -65,6 +68,14 @@ def project_add(project):
             )
     return model_to_dict(Project.get(Project.name == project['name']))
 
-def find_one_project_by_name(name):
+def find_one_project_by_name(project_name):
+    return model_to_dict(Project.get(Project.name == project_name))
 
-    return model_to_dict(Project.get(Project.name == name))
+def project_list(ownerId):
+    with db.cursor() as cursor:
+        sql = "select tab.* from ( (select p.*, 'pm' as role from `project` as p where p.ownerId=%s) "\
+              "union (select p.*, pm.role from `project` as p left join `project_member` as pm on p.id = pm.projectId where pm.memberId=%s) ) as tab"
+        cursor.execute(sql, (ownerId, ownerId))
+        data = cursor.fetchall()
+
+    return {'data': data, 'total': len(data)}
