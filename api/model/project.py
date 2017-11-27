@@ -40,11 +40,12 @@ def find_users():
 def find_project_users(project_id):
     '''查询项目用户列表'''
     with db.cursor() as cursor:
-        sql = "SELECT projectmember.projectId, projectmember.memberId, user.username \
-        FROM projectmember INNER JOIN user \
-        ON projectmember.memberId=user.id \
-        WHERE projectmember.projectId=%s AND user.status='active'"
-
+        # sql = "SELECT projectmember.projectId, projectmember.memberId, user.username \
+        # FROM projectmember INNER JOIN user \
+        # ON projectmember.memberId=user.id \
+        # WHERE projectmember.projectId=%s AND user.status='active'"
+        sql = "select u.id, u.username, u.email, pm.role from `user` as u \
+               left join `project_member` as pm on u.id = pm.memberId where pm.projectId = %s AND u.status='active';"
         cursor.execute(sql, (project_id))
         result = cursor.fetchall()
     return result

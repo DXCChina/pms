@@ -60,6 +60,7 @@ def project_user(project_id):
     
     GET /api/project/<int:project_id>/user
     '''
+    print(project_id)
     return jsonify(project.find_project_users(project_id))
 
 
