@@ -47,6 +47,10 @@ export class DialogCreateProjectComponent implements OnInit {
 
   onSubmit(form: any) {
     console.log(form);
+    this._service.newProject(form)
+      .then(res => {
+        console.log(res);
+      });
     this.dialogRef.close();
   }
 

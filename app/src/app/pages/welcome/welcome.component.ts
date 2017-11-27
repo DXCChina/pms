@@ -22,7 +22,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getProjectList();
+    // this.getProjectList();
     // this.getTaskList();
   }
 
@@ -53,7 +53,7 @@ export class WelcomeComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       // this.animal = result;
-      this.getProjectList();
+      // this.getProjectList();
     });
   }
 
