@@ -84,6 +84,17 @@ class MySQLModel(Model):
             return cls.get(*query, **kwargs)
         except DoesNotExist:
             return None
+    @classmethod
+    def select(cls, *select):
+        """Support read slaves."""
+        return super(MySQLModel, cls).select(*select).dicts()
+    @classmethod
+    def find(cls, *where):
+        """Support read slaves."""
+        try:
+            return cls.select().where(*where).get()
+        except DoesNotExist:
+            return {}
 
 
 # 用户表
@@ -106,7 +117,7 @@ class Demand(MySQLModel):
     detail = TextField(null=True)
     level = db_option(default='normal', comment='low(低)/high(高)/normal(中,默认)')
     projectId = db_id()
-    activityId = db_id()
+    activityId = IntegerField(null=True)
     status = db_bool(default=0, comment='0(未完成)/1(已完成)')
     createAt = db_autoDate()
 
@@ -115,11 +126,10 @@ class Demand(MySQLModel):
 
 
 # 活动表
-class Activity(MySQLModel):
-    id = db_autoId()
+class ActivityDB(MySQLModel):
     title = db_char()
     detail = TextField(null=True)
-    memberId = db_id()
+    memberId = IntegerField(null=True)
     projectId = db_id()
     progress = IntegerField(null=True)
     cost = IntegerField(null=True)
@@ -134,6 +144,8 @@ class Activity(MySQLModel):
 
     class Meta:
         db_table = 'activity'
+class Activity(ActivityDB):
+    id = db_autoId()
 
 
 # 项目表
