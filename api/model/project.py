@@ -21,14 +21,17 @@ def find_project(project_id):
 @identity.check_permission("update", 'project')
 def update_project(project_id, request):
     '''更新项目信息'''
-    # with db.cursor() as cursor:
-    #     sql = "UPDATE project SET name=%s, detail=%s WHERE id=%s"
-    #     cursor.execute(
-    #         sql, (str(request['name']), str(request['detail']), project_id))
-    #     db.commit()
-    # return find_project(project_id)
     print(request, project_id)
-    return model_to_dict(Project.update(Project.name == request['name']).where(Project.id == project_id))
+    query = Project.update(
+                 name = request['name'],
+                 detail = request['detail'],
+                 type = request['type'],
+                 status = request['status'],
+                 startDate = request['startDate'],
+                 endDate = request['endDate']).where(Project.id == project_id)
+    query.execute()
+    result = Project.select().where(Project.id == project_id)
+    return list(result.dicts())
 
 
 def find_users():

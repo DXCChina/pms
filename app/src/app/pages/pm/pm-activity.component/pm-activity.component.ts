@@ -25,7 +25,7 @@ export class PmActivityComponent implements OnInit {
   constructor(public dialog: MatDialog, private router: Router, private service: PmActivityService) {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(2)]),
-      description: new FormControl(''),
+      detail: new FormControl(''),
       type: new FormControl('', [Validators.required]),
       startDate: new FormControl('', [Validators.required]),
       endDate: new FormControl('', [Validators.required])
@@ -33,8 +33,8 @@ export class PmActivityComponent implements OnInit {
 
 
     this.projectType = [
-      { name: '长期项目', value: 'long-term'},
       { name: '短期项目', value: 'short-term'},
+      { name: '长期项目', value: 'long-term'},
       { name: '运维项目', value: 'operation'},
     ];
     this.dataListModel = [
@@ -74,7 +74,20 @@ export class PmActivityComponent implements OnInit {
   }
 
   onSubmit(form: any) {
-    console.log(form)
+    form.status = 'active';
+    form.startDate = this.dateSwitch(form.startDate);
+    form.endDate = this.dateSwitch(form.endDate);
+    console.log(form);
+    this.service.updateProject(form)
+      .then(res => {
+        console.log(res)
+      }, err => {
+        console.log(err);
+      });
+  }
+
+  dateSwitch(date: string) {
+    return date.replace(/[A-Z]/g, ' ');
   }
 
   getMember() {

@@ -31,16 +31,19 @@ def project_update(project_id):
 
     PUT /api/project/<int:project_id>
     '''
-    print(request.json)
-    print(project_id)
     if not request.json or\
     not 'name' in request.json or\
     not 'detail' in request.json:
         abort(400)
     session['project_id'] = project_id
+    # try:
+    return {
+        "message": "项目更新成功",
+        "data": project.update_project(project_id, request.json)
+    }
+    # except Exception as err:
+    #     return {'message': '项目更新失败'}
 
-    # print(project.update_project(project_id, request.json))
-    return project.update_project(project_id, request.json)
     # try:
     #     return jsonify(
     #         project.update_project(project_id, request.json))
