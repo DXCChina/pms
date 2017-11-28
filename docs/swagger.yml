@@ -299,6 +299,55 @@ paths:
       responses:
         200:
           description: ok
+# @author: Wang Qianxiang
+  /dashboard/{project_id}/demand:
+    get:
+      summary: 获取项目需求
+      operationId: controller.dashboard.project_demand
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+  /dashboard/{project_id}/activity:
+    get:
+      summary: 获取项目活动
+      operationId: controller.dashboard.project_activity
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+  /dashboard/{project_id}/testCase:
+    get:
+      summary: 获取项目测试案例
+      operationId: controller.dashboard.project_test_case
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+  /dashboard/{project_id}/testResult:
+    get:
+      summary: 获取项目测试结果
+      operationId: controller.dashboard.project_test_result
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
 definitions:
   Activity:
     type: object
