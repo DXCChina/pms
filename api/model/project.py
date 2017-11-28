@@ -27,7 +27,8 @@ def update_project(project_id, request):
     #         sql, (str(request['name']), str(request['detail']), project_id))
     #     db.commit()
     # return find_project(project_id)
-    return model_to_dict(Project.update().where(Project.id == project_id))
+    print(request, project_id)
+    return model_to_dict(Project.update(Project.name == request['name']).where(Project.id == project_id))
 
 
 def find_users():

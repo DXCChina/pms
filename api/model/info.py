@@ -73,7 +73,7 @@ def find_one_project_by_name(project_name):
 
 def project_list(ownerId):
     with db.cursor() as cursor:
-        sql = "select tab.* from ( (select p.*, 'pm' as role from `project` as p where p.ownerId=%s) "\
+        sql = "select tab.* from ( (select p.*, 'pm' as role from `project` as p where p.ownerId=%s AND p.status='active') "\
               "union (select p.*, pm.role from `project` as p left join `project_member` as pm on p.id = pm.projectId where pm.memberId=%s) ) as tab"
         cursor.execute(sql, (ownerId, ownerId))
         data = cursor.fetchall()
