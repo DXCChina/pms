@@ -80,3 +80,15 @@ def demand_update():
         return jsonify({'msg': 'ok', 'data': data})
     except PermissionDenied:
         return jsonify({'msg': 'PermissionDenied'})
+
+
+def find_demand_list_match_str(title):
+    '''模糊查询需求列表
+
+    GET /api/project/demand/<str:title>
+    '''
+
+    return jsonify({
+        'msg': 'ok',
+        'data': list(demand.find_demand_list_match_str(title))
+    })

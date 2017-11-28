@@ -167,6 +167,19 @@ paths:
       responses:
         200:
           description: ok
+  /project/demand/{title}:
+    get:
+      summary: api
+      operationId: controller.demand.find_demand_list_match_str
+
+      parameters:
+        - name: title
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: ok
   /task/list:
     get:
       summary: api
@@ -228,6 +241,31 @@ paths:
           in: path
           required: true
           type: number
+      responses:
+        200:
+          description: ok
+  /project/case:
+    post:
+      summary: api
+      operationId: controller.case.case_add
+      responses:
+        200:
+          description: ok
+    put:
+      summary: api
+      operationId: controller.case.case_update
+      responses:
+        200:
+          description: ok
+  /project/case/detail/{case_id}:
+    get:
+      summary: api
+      operationId: controller.case.case_detail
+      parameters:
+        - name: case_id
+          in: path
+          required: true
+          type: integer
       responses:
         200:
           description: ok

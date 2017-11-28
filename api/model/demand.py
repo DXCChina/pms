@@ -41,3 +41,8 @@ def update_demands(demand):
 
 def find_one_demand_by_title(title):
     return Demand.getOne(Demand.title == title)
+
+
+def find_demand_list_match_str(title):
+    '''模糊查询需求'''
+    return Demand.select().where(Demand.title.contains(title)).dicts()
