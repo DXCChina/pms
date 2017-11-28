@@ -6,6 +6,56 @@ info:
 basePath: "/api"
 paths:
 # @author: Wang Jianhui
+  /project/{project_id}/users:
+    get:
+      summary: 查询项目成员
+      operationId: controller.activity.project_user
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+  /demand:
+    get:
+      summary: 查询需求
+      operationId: controller.activity.demand_search
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: title
+          in: query
+          required: true
+          type: string
+        - name: projectId
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+  /activity:
+    post:
+      summary: 创建活动
+      operationId: controller.activity.activity_add
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: activity
+          in: body
+          description: user to add to the system
+          required: true
+          schema:
+            $ref: '#/definitions/Activity'
+      responses:
+        200:
+          description: 活动创建成功
   /login:
     post:
       summary: api
@@ -236,4 +286,19 @@ paths:
       responses:
         200:
           description: ok
-
+definitions:
+  Activity:
+    type: object
+    properties:
+      title:
+        type: string
+      projectId:
+        type: integer
+      demand:
+        type: array
+        items:
+          type: integer
+    required:
+    - title
+    - projectId
+    - demand
