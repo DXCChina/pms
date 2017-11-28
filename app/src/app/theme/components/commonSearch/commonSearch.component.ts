@@ -11,10 +11,11 @@ export class CommonSearchComponent implements OnInit, OnChanges {
   @Input() placeHolder: string;
   @Input() field: string;
   @Input() searchList: any[];
+  @Input() value: string;
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
   @Output() select: EventEmitter<any> = new EventEmitter<any>();
   form: FormGroup;
-  value: string;
+  // value: string;
   display: string = '';
   searchStr: string = '';
   constructor(private ref: ElementRef) {
