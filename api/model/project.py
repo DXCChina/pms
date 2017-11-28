@@ -6,7 +6,8 @@
 
 from .db import db
 from .role import identity
-
+from .db import Project
+from playhouse.shortcuts import model_to_dict, dict_to_model
 
 def find_project(project_id):
     '''查询项目信息'''
@@ -20,12 +21,13 @@ def find_project(project_id):
 @identity.check_permission("update", 'project')
 def update_project(project_id, request):
     '''更新项目信息'''
-    with db.cursor() as cursor:
-        sql = "UPDATE project SET name=%s, detail=%s WHERE id=%s"
-        cursor.execute(
-            sql, (str(request['name']), str(request['detail']), project_id))
-        db.commit()
-    return find_project(project_id)
+    # with db.cursor() as cursor:
+    #     sql = "UPDATE project SET name=%s, detail=%s WHERE id=%s"
+    #     cursor.execute(
+    #         sql, (str(request['name']), str(request['detail']), project_id))
+    #     db.commit()
+    # return find_project(project_id)
+    return model_to_dict(Project.update().where(Project.id == project_id))
 
 
 def find_users():
@@ -38,7 +40,7 @@ def find_users():
 
 
 def find_project_users(project_id):
-    '''查询项目用户列表'''
+    '''查询项目用户列表 '''
     with db.cursor() as cursor:
         # sql = "SELECT projectmember.projectId, projectmember.memberId, user.username \
         # FROM projectmember INNER JOIN user \

@@ -94,7 +94,7 @@ paths:
         200:
           description: ok
     put:
-      summary: api
+      summary: 项目信息更新
       operationId: controller.project.project_update
       parameters:
         - name: project_id

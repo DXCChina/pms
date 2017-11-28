@@ -60,7 +60,15 @@ def project_user(project_id):
     
     GET /api/project/<int:project_id>/user
     '''
-    return jsonify(project.find_project_users(project_id))
+    try:
+        return jsonify({
+            "message": "ok",
+            "data": project.find_project_users(project_id)
+        })
+    except PermissionDenied:
+        return jsonify({
+            "message": "PermissionDenied"
+        })
 
 
 # @app.route("/project/<int:project_id>/user", methods=['PUT'])

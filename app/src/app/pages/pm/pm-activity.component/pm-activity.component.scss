@@ -64,6 +64,17 @@ a:focus, button:focus {}
     .mat-form-field {
       width: 100%;
     }
+    .date-picker {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      .mat-form-field {
+        width: 48%;
+      }
+    }
   }
 
 }
+
+
