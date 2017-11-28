@@ -1,10 +1,10 @@
 interface ItemMetrics {
+  itemObj: any;
   itemName: string;
   itemTime: string;
-  itemlabel: string;
   itemfrom: string;
   itemTodo: string;
-  itemLevel: number;
+  itemLevel: string;
 }
 
 export interface ListMetrics {

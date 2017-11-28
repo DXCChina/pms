@@ -164,6 +164,7 @@ class TestCase(MySQLModel):
     detail = TextField(null=True)
     demandId = db_id()
     projectId = db_id()
+    ownerId = db_id()
     type = db_char(length=10,null=True)
     input = db_char()
     expect = db_char()

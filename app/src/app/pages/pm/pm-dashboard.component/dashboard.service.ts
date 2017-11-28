@@ -3,10 +3,17 @@ import { GlobalState } from '../../../global.state';
 import { Http } from '@angular/http';
 
 @Injectable()
-export class PmDashboardService {
+export class DashboardService {
     pmUrl: string = this._global.baseURL + '/api/dashboard';
 
     constructor(private _global: GlobalState, private http: Http) { }
+
+    getProjectDemand(pId: string): Promise<any> {
+        return this.http.get(`${this.pmUrl}/${pId}/demand`)
+            .toPromise()
+            .then(this._global.extractData)
+            .catch(this._global.handleError);
+    }
 
     getProjectActivity(pId: string): Promise<any> {
         return this.http.get(`${this.pmUrl}/${pId}/activity`)
@@ -15,8 +22,8 @@ export class PmDashboardService {
             .catch(this._global.handleError);
     }
 
-    getProjectDemand(pId: string): Promise<any> {
-        return this.http.get(`${this.pmUrl}/${pId}/demand`)
+    getProjectTestCase(pId: string): Promise<any> {
+        return this.http.get(`${this.pmUrl}/${pId}/testCase`)
             .toPromise()
             .then(this._global.extractData)
             .catch(this._global.handleError);
