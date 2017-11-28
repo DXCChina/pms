@@ -6,7 +6,8 @@
 
 from .db import db
 from .role import identity
-
+from .db import Project
+from playhouse.shortcuts import model_to_dict, dict_to_model
 
 def find_project(project_id):
     '''查询项目信息'''
@@ -20,12 +21,14 @@ def find_project(project_id):
 @identity.check_permission("update", 'project')
 def update_project(project_id, request):
     '''更新项目信息'''
-    with db.cursor() as cursor:
-        sql = "UPDATE project SET name=%s, detail=%s WHERE id=%s"
-        cursor.execute(
-            sql, (str(request['name']), str(request['detail']), project_id))
-        db.commit()
-    return find_project(project_id)
+    # with db.cursor() as cursor:
+    #     sql = "UPDATE project SET name=%s, detail=%s WHERE id=%s"
+    #     cursor.execute(
+    #         sql, (str(request['name']), str(request['detail']), project_id))
+    #     db.commit()
+    # return find_project(project_id)
+    print(request, project_id)
+    return model_to_dict(Project.update(Project.name == request['name']).where(Project.id == project_id))
 
 
 def find_users():
@@ -38,13 +41,14 @@ def find_users():
 
 
 def find_project_users(project_id):
-    '''查询项目用户列表'''
+    '''查询项目用户列表 '''
     with db.cursor() as cursor:
-        sql = "SELECT projectmember.projectId, projectmember.memberId, user.username \
-        FROM projectmember INNER JOIN user \
-        ON projectmember.memberId=user.id \
-        WHERE projectmember.projectId=%s AND user.status='active'"
-
+        # sql = "SELECT projectmember.projectId, projectmember.memberId, user.username \
+        # FROM projectmember INNER JOIN user \
+        # ON projectmember.memberId=user.id \
+        # WHERE projectmember.projectId=%s AND user.status='active'"
+        sql = "select u.id, u.username, u.email, pm.role from `user` as u \
+               left join `project_member` as pm on u.id = pm.memberId where pm.projectId = %s AND u.status='active';"
         cursor.execute(sql, (project_id))
         result = cursor.fetchall()
     return result
