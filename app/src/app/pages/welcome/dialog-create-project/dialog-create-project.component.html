@@ -1,22 +1,58 @@
-<div>
-  <div>
-    <h1>创建项目</h1>
-  </div>
-  <div class="project-new-form">
-    <form  [formGroup]="projectForm" (ngSubmit)="onSubmit(projectForm.value)">
-      <mat-form-field class="">
-        <input matInput placeholder="项目名称" formControlName="name">
-      </mat-form-field>
-    
-      <mat-form-field class="">
-        <input matInput placeholder="项目描述" formControlName="detail">
-      </mat-form-field>
-    
-      <div class="handle">
-        <span style="color: red">{{errorMessage}}</span>
-        <button mat-button (click)="closeDialog()">取消</button>
-        <button mat-button [disabled]="!projectForm.valid" type="submit">创建</button>
+<div class="dialog-warp">
+  <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+
+    <div class="dialog-title">
+      <h3>新建项目</h3>
+    </div>
+    <div class="dialog-content">
+      <div class="dialog-content-columnItem">
+
+        <mat-form-field [ngClass]="'form-field-item'">
+          <input matInput [formControl]="name" name="projectName" #proName placeholder="项目名称">
+          <mat-hint align="end">{{proName.value?.length || 0}}</mat-hint>
+          <mat-error *ngIf="name.hasError('required')">
+            项目名称必填
+          </mat-error>
+        </mat-form-field>
+
       </div>
-    </form>
-  </div>
+      <div class="dialog-content-columnItem">
+        <mat-form-field>
+          <textarea matInput [formControl]="detail" name="detail" #proDetail placeholder="项目描述"></textarea>
+          <mat-hint align="end">{{proDetail.value?.length || 0}}</mat-hint>
+        </mat-form-field>
+      </div>
+      <div class="dialog-content-columnItem">
+
+        <mat-form-field>
+          <mat-select [formControl]="type" placeholder="项目类型">
+            <mat-option *ngFor="let type of projectType" [value]="type.value">
+              {{ type.name }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="type.hasError('required')">
+            项目类型必选
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+      <div class="dialog-content-rowItem">
+        <mat-form-field>
+          <input matInput [formControl]="startDate"  [matDatepicker]="startPicker" placeholder="创建时间" (dateChange)="startEvent($event)">
+          <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+          <mat-datepicker #startPicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput [formControl]="endDate"  [matDatepicker]="endPicker" placeholder="结束时间" (dateChange)="endEvent($event)">
+          <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+          <mat-datepicker #endPicker></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="dialog-action">
+      <button mat-button mat-dialog-close>取消</button>
+      <button mat-button type="submit" [disabled]="!form.valid">确定</button>
+    </div>
+
+  </form>
 </div>
