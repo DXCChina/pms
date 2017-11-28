@@ -85,16 +85,13 @@ class MySQLModel(Model):
         except DoesNotExist:
             return None
     @classmethod
-    def select(cls, *select):
+    def find(cls, *select):
         """Support read slaves."""
         return super(MySQLModel, cls).select(*select).dicts()
     @classmethod
-    def find(cls, *where):
+    def findOne(cls, *where):
         """Support read slaves."""
-        try:
-            return cls.select().where(*where).get()
-        except DoesNotExist:
-            return {}
+        return cls.find().where(*where).get()
 
 
 # 用户表

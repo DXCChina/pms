@@ -13,6 +13,7 @@ from model.db import database, User, Demand, Activity, Project, ProjectMember, T
 import connexion
 from flask import request, session, jsonify
 from rbac.context import PermissionDenied
+from peewee import DoesNotExist
 
 application = connexion.App(__name__, specification_dir='../docs')
 application.add_api('swagger.yml')
@@ -47,17 +48,23 @@ def add_claims_to_access_token(user):
 
 @app.before_request
 def check():
-    if not request.is_json:
-        return jsonify({"msg": "Missing JSON in request"}), 400
-    if 'projectId' in request.json:
-        session['project_id'] = request.json['projectId']
-
+    if request.method == 'POST' or request.method == 'PUT':
+        if not request.is_json:
+            return jsonify({"msg": "Missing JSON in request"}), 400
+        if 'projectId' in request.json:
+            session['project_id'] = request.json['projectId']
 
 @app.errorhandler(PermissionDenied)
 def deny(msg):
-    '''自定义404提示信息'''
+    '''无权限'''
     print(msg,'PermissionDenied')
     return jsonify({'msg': 'PermissionDenied'}), 400
+
+@app.errorhandler(DoesNotExist)
+def does_not_exist(msg):
+    '''数据库数据不存在'''
+    print(msg,'DoesNotExist')
+    return jsonify({'msg': 'DoesNotExist'}), 404
 
 # for bp in bps:
 #     app.register_blueprint(bp)

@@ -6,7 +6,7 @@ from rbac.context import IdentityContext
 from flask import session
 
 from flask_jwt_extended import (get_jwt_identity)
-from model.db import db,Project
+from model.db import db, Project
 
 acl = Registry()
 identity = IdentityContext(acl)
@@ -53,6 +53,7 @@ acl.allow(
 
 @identity.set_roles_loader
 def _():
+    print('set_roles_loader')
     with db.cursor() as cursor:
         sql = "SELECT role \
         FROM project_member \
@@ -63,7 +64,7 @@ def _():
     if result:
         print(get_jwt_identity(), '=====user-role======', result['role'])
         yield result['role']
-    result=Project.find(Project.id==session['project_id'])
-    if result and result['ownerId']==get_jwt_identity():
+    result = Project.findOne(Project.id == session['project_id'])
+    if result['ownerId'] == get_jwt_identity():
         print(result['ownerId'], '=====user-role======', 'pm')
         yield 'pm'
