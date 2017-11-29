@@ -38,6 +38,7 @@ def case_add():
         return jsonify({"msg": "Missing JSON in request"}), 400
     schema = TestCaseSchema()
     data, errors = schema.load(request.json)
+    data['ownerId'] = get_jwt_identity()
     if (errors):
         return jsonify({"msg": errors}), 400
     try:
@@ -62,7 +63,7 @@ def case_update():
         return jsonify({'msg': '该测试用例已存在'})
     try:
         data = case.case_update(request.json)
-        return jsonify({'msg': 'ok', 'data': data})
+        return jsonify({'msg': 'ok', 'data': model_to_dict(data)})
     except PermissionDenied:
         return jsonify({'msg': 'PermissionDenied'})
 

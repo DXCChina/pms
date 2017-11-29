@@ -10,7 +10,7 @@ from .role import identity
 # @identity.check_permission("create", 'task')
 def create_case(case):
     '''新建案例'''
-
+    print("case", case)
     return TestCase.get_or_create(
         name=case['name'],
         defaults={
@@ -20,13 +20,14 @@ def create_case(case):
             'input': case['input'],
             'expect': case['expect'],
             'projectId': case['projectId'],
+            'ownerId': case['ownerId']
         })
 
 
 def case_detail(id):
     '''获取测试用例详情'''
 
-    return TestCase.select(TestCase, Demand.title.alias('demandTittle')).join(
+    return TestCase.sfind(TestCase, Demand.title.alias('demandTittle')).join(
         Demand,
         on=(TestCase.demandId == Demand.id)).where(TestCase.id == id).get()
 

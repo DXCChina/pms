@@ -19,6 +19,9 @@ a:focus, button:focus {}
   justify-content: flex-start;
   align-content: center;
   border-radius: 2px;
+  .wrap-card {
+    background: #fafafa;
+  }
 }
 .manage-title {
   font-size: 16px;
@@ -43,7 +46,7 @@ a:focus, button:focus {}
     justify-content: flex-start;
     align-content: center;
     padding: 5px;
-    border-top: 1px solid rgba(0, 0, 0, .12);
+    //border-top: 1px solid rgba(0, 0, 0, .12);
     border-bottom: 1px solid rgba(0, 0, 0, .12);
     .pm-activity-btnGroup {
 
@@ -89,4 +92,6 @@ a:focus, button:focus {}
     margin-right: 10px;
   }
 }
-
+.owner-card {
+  margin-bottom: 30px;
+}

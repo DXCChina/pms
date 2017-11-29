@@ -79,6 +79,7 @@ def project_list(ownerId):
     #           union (select p.*, pm.role from `project` as p left join `project_member` as pm on p.id = pm.projectId where pm.memberId=%s) ) as tab"
     #     cursor.execute(sql, (ownerId, ownerId))
     #     data = cursor.fetchall()
+    print(ownerId)
     result = (
         Project.select(
             Project.name,
@@ -91,7 +92,7 @@ def project_list(ownerId):
             Project.createAt,
             Project.type,
             SQL(" 'pm' As 'role' ")
-        ).where(Project.ownerId == ownerId & Project.status == 'active')
+        ).where(Project.status == 'active' and Project.ownerId == ownerId)
         |
         Project.select(
             Project.name,
