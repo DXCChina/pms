@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { ListMetrics, ItemMetrics } from './card-data.Entity';
-import { DashboardService } from './dashboard.service';
-import { MatDialog } from '@angular/material';
-import { TaskDetailDialogComponent } from '../task-detail-dialog/task-detail-dialog.component';
-import { DemandDetailDialogComponent } from '../demand-detail-dialog/demand-detail-dialog.component';
+import {ListMetrics, ItemMetrics} from './card-data.Entity';
+import {DashboardService} from './dashboard.service';
+import {MatDialog} from '@angular/material';
+import {TaskDetailDialogComponent} from '../task-detail-dialog/task-detail-dialog.component';
+import {DemandDetailDialogComponent} from '../demand-detail-dialog/demand-detail-dialog.component';
+import {Subscription} from "rxjs";
+import {JhiEventManager} from "ng-jhipster";
 
 @Component({
   selector: 'app-pm-dashboard',
@@ -13,12 +15,16 @@ import { DemandDetailDialogComponent } from '../demand-detail-dialog/demand-deta
   styleUrls: ['./pm-dashboard.component.scss']
 })
 
-export class PmDashboardComponent implements OnInit {
+export class PmDashboardComponent implements OnInit, OnDestroy {
   public demandData: any[] = [];
   public activityData: any[] = [];
   public testResultData: any[] = [];
 
-  constructor(private router: Router, private service: DashboardService, private dialog: MatDialog) { }
+  private eventSubscriber: Subscription;
+  private subscription: Subscription;
+
+  constructor(private router: Router, private service: DashboardService, private dialog: MatDialog, private eventManager: JhiEventManager) {
+  }
 
   // 项目ID
   projectId: string;
@@ -37,12 +43,14 @@ export class PmDashboardComponent implements OnInit {
     this.getProjectDemand();
     this.getProjectActivity();
     this.getProjectTestResult();
+
+    this.registerChangeInDemand();
   }
 
   getProjectDemand() {
     this.service.getProjectDemand(this.projectId)
       .then(res => {
-
+        this.demandData = [];
         this.demandData.push(
           new ListMetrics(
             '待处理需求',
@@ -168,6 +176,18 @@ export class PmDashboardComponent implements OnInit {
       }).catch(err => console.log(err));
   }
 
+  registerChangeInDemand() {
+    this.eventSubscriber = this.eventManager.subscribe(
+      'DemandListModification',
+      () => this.getProjectDemand()
+    );
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+    this.eventManager.destroy(this.eventSubscriber);
+  }
+
   addItem() {
     console.log('add');
   }
@@ -176,7 +196,7 @@ export class PmDashboardComponent implements OnInit {
     const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
       height: '61vh',
-      data: { mode: 'create' }
+      data: {mode: 'create'}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -190,7 +210,7 @@ export class PmDashboardComponent implements OnInit {
     const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
       height: '61vh',
-      data: { mode: 'update', data: data }
+      data: {mode: 'update', info: data}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -204,7 +224,7 @@ export class PmDashboardComponent implements OnInit {
     const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
       width: '750px',
       height: '70vh',
-      data: { name: 'dd', animal: 'dd' }
+      data: {name: 'dd', demandId: data.id}
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -4,6 +4,7 @@ import {Validators, AbstractControl, FormGroup, FormBuilder} from "@angular/form
 import {PmDemandDetailService} from "./demand-detail-dialog.service";
 import {ToasterService, ToasterConfig} from "angular2-toaster";
 import {Demand} from "./demand.model";
+import {JhiEventManager} from "ng-jhipster";
 
 @Component({
   selector: 'demand-detail-dialog',
@@ -38,7 +39,6 @@ export class DemandDetailDialogComponent {
 
   mode: string = "";
   projectId: string = "";
-  demandId: string = "";
 
   toasterconfig: ToasterConfig = new ToasterConfig({
     tapToDismiss: false,
@@ -48,27 +48,26 @@ export class DemandDetailDialogComponent {
   demandInfo: Demand = new Demand();
 
   constructor(public dialogRef: MatDialogRef<DemandDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
-              public fb: FormBuilder, private _service: PmDemandDetailService, private toasterService: ToasterService) {
+              public fb: FormBuilder, private _service: PmDemandDetailService, private toasterService: ToasterService,
+              private eventManager: JhiEventManager) {
     this.mode = this.data.mode;
-    //todo uncomment
-    // this.demandId = this.data.demandId;
-    this.demandId = "1";
     this.projectId = sessionStorage.getItem('projectId');
   }
 
   ngOnInit() {
     if (this.mode == 'update') {
-      this.reviewDetail(this.demandId);
+      this.demandInfo = this.data.info;
+      // this.reviewDetail(this.demandId);
     }
     this.buildForm();
   }
 
-  reviewDetail(demandId) {
-    this._service.reviewDemandDetail(demandId)
-      .then(res => {
-        this.demandInfo = res.data;
-      })
-  }
+  // reviewDetail(demandId) {
+  //   this._service.reviewDemandDetail(demandId)
+  //     .then(res => {
+  //       this.demandInfo = res.data;
+  //     })
+  // }
 
   buildForm() {
     this.demandForm = this.fb.group({
@@ -115,6 +114,7 @@ export class DemandDetailDialogComponent {
       this._service.newDemand(demandInfo)
         .then(res => {
           if (res.msg === 'ok') {
+            this.eventManager.broadcast({name: 'DemandListModification', content: 'OK'});
             this.toasterService.pop('ok', '新建需求成功');
             this.dialogRef.close();
           } else {
@@ -122,10 +122,11 @@ export class DemandDetailDialogComponent {
           }
         });
     }else if(this.mode === 'update'){
-      demandInfo = Object.assign(demandInfo, {id: this.demandId});
+      demandInfo = Object.assign(demandInfo, {id: this.demandInfo.id});
       this._service.updateDemand(demandInfo)
         .then(res => {
           if (res.msg === 'ok') {
+            this.eventManager.broadcast({name: 'DemandListModification', content: 'OK'});
             this.toasterService.pop('ok', '需求修改成功');
             this.dialogRef.close();
           } else {
