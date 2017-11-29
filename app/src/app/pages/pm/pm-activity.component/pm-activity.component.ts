@@ -16,10 +16,10 @@ import * as moment from 'moment';
 export class PmActivityComponent implements OnInit {
   dataListModel: PeopleManageModel[];
   members: any;
-  searchList: any[] = [];
   form: FormGroup;
   projectType: any[];
   projectDetail: any;
+  searchList: any[] = [];
 
   constructor(public dialog: MatDialog, private router: Router, private service: PmActivityService) {
     this.form = new FormGroup({
@@ -52,12 +52,7 @@ export class PmActivityComponent implements OnInit {
     form.startDate = this.dateSwitch(form.startDate);
     form.endDate = this.dateSwitch(form.endDate);
     console.log(form);
-    this.service.updateProject(form)
-      .then(res => {
-        console.log(res)
-      }, err => {
-        console.log(err);
-      });
+    this.updateProject(form);
   }
 
   dateSwitch(date: any) {
@@ -68,7 +63,6 @@ export class PmActivityComponent implements OnInit {
     this.service.getMember()
       .then(res => {
         this.members = res;
-        console.log('members: ', this.members)
       }, err => {
         console.log(err);
       })
@@ -78,7 +72,6 @@ export class PmActivityComponent implements OnInit {
     this.service.getProjectDetail()
       .then(res => {
         this.projectDetail = res;
-        console.log(res);
       }, err => {
         console.log(err);
       })
@@ -92,7 +85,15 @@ export class PmActivityComponent implements OnInit {
     });
     deleteDialog.afterClosed().subscribe(result => {
       if (result) {
-        console.log('delete project');
+        const deleteProject = {
+          detail: this.projectDetail.detail,
+          endDate: this.dateSwitch(this.projectDetail.endDate),
+          startDate: this.dateSwitch(this.projectDetail.startDate),
+          name: this.projectDetail.name,
+          type: this.projectDetail.type,
+          status: 'delete'
+        };
+        this.updateProject(deleteProject);
         this.router.navigate(['/pages/welcome']);
       } else {
         console.log('cancel delete');
@@ -100,34 +101,61 @@ export class PmActivityComponent implements OnInit {
     })
   }
 
-  search(str: any) {
-    if(str === 'qwer') {
-      this.searchList = [
-        {
-          name: 'qwer',
-          job: 'pm',
-          email: 'qwer@hpe.com',
-          date: '2017/11/23',
-          id: 'sdfsdfsafas',
-        },
-        {
-          name: 'QWER',
-          job: 'dev',
-          email: 'QWER@hpe.com',
-          date: '2017/11/22',
-          id: 'sddfsffsdd',
-        }
-      ];
-    } else {
-      this.searchList = [];
+  updateProject(project: any) {
+    this.service.updateProject(project)
+      .then(res => {
+        console.log(res)
+      }, err => {
+        console.log(err);
+    });
+  }
+
+  fuzzyQuery(search: string) {
+    this.service.fuzzyQuery(search)
+      .then(res => {
+        this.searchList = res.data;
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  memberAdd(id: string, role: string) {
+    this.service.memberAdd(id, role)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  memberDelete(id: string) {
+    this.service.memberDelete(id)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  search(search: any) {
+    if(search !== '') {
+      this.fuzzyQuery(search);
     }
   }
 
   delete(data: any) {
-    console.log('delete: ',data)
+    console.log('delete: ',data);
+    this.memberDelete(data.id);
+    this.getMember();
   }
 
   create(data: any) {
-    console.log('create: ', data)
+    console.log('create: ', data);
+    this.memberAdd(data.id, data.role);
+    this.getMember();
   }
+
 }

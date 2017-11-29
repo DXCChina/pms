@@ -5,8 +5,7 @@
 
 <div class="pm-activity-wrap">
 
-  <mat-card>
-
+  <mat-card class="wrap-card">
     <div class="pm-activity-header">
       <div class="wa-title" style="margin-top: 0">
         <svg fill="#757575" style="margin: 1px -7px" height="48" viewBox="0 0 24 24" width="48" xmlns="http://www.w3.org/2000/svg">
@@ -15,17 +14,35 @@
         </svg>
         <div class="wa-title-info">
           <div>
-            <h3>projectDetail?.name</h3>
-            <p mat-line>projectDetail?.createAt | date: 'yyyy-MM-dd'</p>
+            <h3>{{projectDetail?.name}}</h3>
+            <p mat-line>{{projectDetail?.createAt | date: 'yyyy-MM-dd'}}</p>
           </div>
           <mat-chip-list class="wa-titleChips">
-            <mat-chip>projectDetail?.status</mat-chip>
+            <mat-chip>{{projectDetail?.status}}</mat-chip>
           </mat-chip-list>
         </div>
       </div>
     </div>
 
     <div class="pm-activity-body">
+
+      <mat-card class="owner-card">
+        <h3 class="manage-title">归属信息</h3>
+        <hr />
+
+        <div class="project-owner-info" *ngIf="projectDetail">
+          <div class="owener-info-item">
+            <p><b>拥有者:</b>{{projectDetail?.username}}</p>
+          </div>
+             <div class="owener-info-item">
+            <p><b>职位:</b>{{projectDetail?.role === 'pm' ? '项目经理' : projectDetail?.role}}</p>
+          </div>
+             <div class="owener-info-item">
+            <p><b>邮箱:</b>{{projectDetail?.email}}</p>
+          </div>
+        </div>
+      </mat-card>
+
       <mat-card>
         <div class="pm-activity-body-title">
           <p>基础信息</p>
@@ -52,12 +69,12 @@
           <div class="date-picker">
             <mat-form-field>
               <input matInput [(ngModel)]="projectDetail.startDate" [matDatepicker]="startPicker" placeholder="创建时间" (dateChange)="startEvent($event)">
-              <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+              <mat-datepicker-toggle [disabled]="true" matSuffix [for]="startPicker"></mat-datepicker-toggle>
               <mat-datepicker #startPicker></mat-datepicker>
             </mat-form-field>
             <mat-form-field>
               <input matInput [(ngModel)]="projectDetail.endDate" [matDatepicker]="endPicker" placeholder="结束时间" (dateChange)="endEvent($event)">
-              <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+              <mat-datepicker-toggle [disabled]="true" matSuffix [for]="endPicker"></mat-datepicker-toggle>
               <mat-datepicker #endPicker></mat-datepicker>
             </mat-form-field>
           </div>
@@ -70,8 +87,9 @@
         <mat-card>
 
           <people-manage
+            *ngIf="memberList"
             [dataListModel]="dataListModel"
-            [(datas)]="datas">
+            [(datas)]="memberList.data">
 
           </people-manage>
 
