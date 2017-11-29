@@ -25,6 +25,9 @@ export class ListCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  ngOnChanges(){
     this.changeCardData(this.data[0]);
   }
 
