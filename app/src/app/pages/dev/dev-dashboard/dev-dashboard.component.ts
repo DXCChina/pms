@@ -4,13 +4,13 @@ import { Router } from '@angular/router';
 import { ListMetrics, ItemMetrics } from '../../pm/pm-dashboard.component/card-data.Entity';
 import { DashboardService } from '../../pm/pm-dashboard.component/dashboard.service';
 import { MatDialog } from '@angular/material';
-import { TaskDetailDialogComponent } from '../../pm/task-detail-dialog/task-detail-dialog.component';
-import { DemandDetailDialogComponent } from '../../pm/demand-detail-dialog/demand-detail-dialog.component';
+import {DemandDetailModalComponent} from "../demand-detail-modal/demand-detail-modal.component";
 
 @Component({
   selector: 'app-dev-dashboard',
   templateUrl: './dev-dashboard.component.html',
-  styleUrls: ['./dev-dashboard.component.scss']
+  styleUrls: ['./dev-dashboard.component.scss'],
+  providers:[DashboardService]
 })
 
 export class DevDashboardComponent implements OnInit {
@@ -176,28 +176,17 @@ export class DevDashboardComponent implements OnInit {
   showDemandDetail(data) {
     console.log(data);
 
-    const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
-      width: '750px',
-      height: '70vh',
-      data: { name: 'dd', animal: 'dd' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+     let dialogRef = this.dialog.open(DemandDetailModalComponent, {
+          width: '750px',
+          height:'61vh',
+          data:data
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log('The dialog was closed');
+        });
   }
 
   showTaskDetail(data) {
     console.log(data);
-
-    const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
-      width: '750px',
-      height: '70vh',
-      data: { name: 'dd', animal: 'dd' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
   }
 }

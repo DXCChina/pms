@@ -49,6 +49,7 @@ acl.allow(
     "test", "update", "task",
     assertion=is_task_member)  # 规则多余,直接 is_task_member 进行认证
 # acl.deny("test", "update", "project")
+acl.allow("test", "create", "case", assertion=is_task_member)
 
 
 @identity.set_roles_loader
