@@ -6,13 +6,14 @@ from rbac.context import IdentityContext
 from flask import session
 
 from flask_jwt_extended import (get_jwt_identity)
-from model.db import db, Project
+from model.db import db, Project, ProjectMember
 
 acl = Registry()
 identity = IdentityContext(acl)
 
 
 def is_task_member(_, role, operation, resource):
+    '''判断是否是活动成员'''
     print("操作:", role, operation, resource)
     with db.cursor() as cursor:
         sql = "SELECT memberId FROM task WHERE id=%s"
@@ -49,22 +50,20 @@ acl.allow(
     "test", "update", "task",
     assertion=is_task_member)  # 规则多余,直接 is_task_member 进行认证
 # acl.deny("test", "update", "project")
+acl.allow("test", "create", "case", assertion=is_task_member)
 
 
 @identity.set_roles_loader
 def _():
-    print('set_roles_loader')
-    with db.cursor() as cursor:
-        sql = "SELECT role \
-        FROM project_member \
-        WHERE projectId=%s and memberId=%s"
-
-        cursor.execute(sql, (session['project_id'], get_jwt_identity()))
-        result = cursor.fetchone()
+    '''判断用户角色'''
+    result = ProjectMember.sget(
+        ProjectMember.projectId == session['project_id'],
+        ProjectMember.memberId == get_jwt_identity()
+    )
     if result:
-        print(get_jwt_identity(), '=====user-role======', result['role'])
-        yield result['role']
-    result = Project.findOne(Project.id == session['project_id'])
-    if result['ownerId'] == get_jwt_identity():
-        print(result['ownerId'], '=====user-role======', 'pm')
+        print(get_jwt_identity(), '=====user-role======', result.role)
+        yield result.role
+    result = Project.sget(Project.id == session['project_id'])
+    if result and result.ownerId == get_jwt_identity():
+        print(result.ownerId, '=====user-role======', 'pm')
         yield 'pm'

@@ -7,20 +7,19 @@
 from .db import User
 
 
-
 def findOneById(userid):
     '''按 id 查询用户'''
-    return User.getOne(User.id == userid)
+    return User.sget(User.id == userid)
 
 
 def findOneByName(username):
     '''按 username 查询用户'''
-    return User.getOne(User.username == username)
+    return User.sget(User.username == username)
 
 
 def findOneByEmail(email):
     '''按 email 查询用户'''
-    return User.getOne(User.email == email)
+    return User.sget(User.email == email)
 
 
 def save(user):
@@ -35,9 +34,10 @@ def update(user):
     '''更新用户信息'''
     User.update(
         username=user['username'],
-        email=user['email']).where(User.id == user['id'])
+        email=user['email']
+    ).where(User.id == user['id']).execute()
 
 
 def change_password(userid, password):
     '''更新用户密码'''
-    User.update(password=password).where(User.id == userid)
+    User.update(password=password).where(User.id == userid).execute()

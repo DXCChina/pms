@@ -4,7 +4,7 @@
 @author: Wang Jianhui
 '''
 
-from flask import jsonify, request, Blueprint, session
+from flask import jsonify, request, session
 from flask_jwt_extended import (create_access_token, get_jwt_identity,
                                 get_jwt_claims, fresh_jwt_required,
                                 set_access_cookies, unset_jwt_cookies)

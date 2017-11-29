@@ -8,7 +8,7 @@ import logging
 from os import environ
 from pymysql import cursors, connect
 from playhouse.pool import PooledMySQLDatabase
-from peewee import Model, DoesNotExist, DateTimeField, FixedCharField, IntegerField, TextField, SQL, BooleanField
+from peewee import Model, DoesNotExist, DateTimeField, FixedCharField, IntegerField, TextField, SQL, BooleanField, ForeignKeyField
 
 logger = logging.getLogger('peewee')
 logger.setLevel(
@@ -84,14 +84,32 @@ class MySQLModel(Model):
             return cls.get(*query, **kwargs)
         except DoesNotExist:
             return None
+
     @classmethod
     def find(cls, *select):
-        """Support read slaves."""
+        """封装 peewee select 接口,返回 dict"""
         return super(MySQLModel, cls).select(*select).dicts()
+
     @classmethod
     def findOne(cls, *where):
-        """Support read slaves."""
+        """封装 peewee get 接口,返回 dict"""
         return cls.find().where(*where).get()
+
+    @classmethod
+    def sget(cls, *query):
+        '''数据不存在返回None，而不是抛出异常'''
+        try:
+            return cls.get(*query)
+        except DoesNotExist:
+            return None
+
+    @classmethod
+    def sfind(cls, *select):
+        '''数据不存在返回空字典，而不是抛出异常'''
+        try:
+            return cls.find(*select)
+        except DoesNotExist:
+            return {}
 
 
 # 用户表
@@ -132,8 +150,7 @@ class ActivityBase(MySQLModel):
     cost = IntegerField(null=True)
     status = db_option(
         default='new',
-        comment=
-        'new(新建,未分配),dev-ing(开发中),needtest(开发完待测试),test-ing(测试中),fix-ing(修复中),finish(已完成),close(已关闭)'
+        comment='new(新建,未分配),dev-ing(开发中),needtest(开发完待测试),test-ing(测试中),fix-ing(修复中),finish(已完成),close(已关闭)'
     )
     createAt = db_autoDate()
     startDate = db_autoDate()
@@ -141,6 +158,8 @@ class ActivityBase(MySQLModel):
 
     class Meta:
         db_table = 'activity'
+
+
 class Activity(ActivityBase):
     id = db_autoId()
 
@@ -164,7 +183,7 @@ class Project(MySQLModel):
 # 项目成员
 class ProjectMember(MySQLModel):
     id = db_autoId()
-    memberId = db_id()
+    memberId = ForeignKeyField(User, related_name='project')
     projectId = db_id()
     role = db_option(default='dev', comment='用户角色:dev/test')
 
@@ -179,6 +198,7 @@ class TestCase(MySQLModel):
     detail = TextField(null=True)
     demandId = db_id()
     projectId = db_id()
+    ownerId = db_id()
     type = db_char(length=10, null=True)
     input = db_char()
     expect = db_char()
@@ -194,7 +214,8 @@ class TestResult(MySQLModel):
     detail = TextField(null=True)
     caseId = db_id()
     output = db_char()
-    result = db_bool(default=0, comment='0(bug)/1(正常)')
+    result = db_bool(
+        default=0, comment='0(bug)/1(正常)')
     status = db_option(default='close', comment='tofix,tocheck,close(默认)')
     level = db_option('normal', '优先级:low(低)/high(高)/normal(中,默认)')
     devId = db_id()
