@@ -17,8 +17,6 @@ import {
 } from '@angular/material';
 
 import { DashboardService } from './pm/pm-dashboard.component/dashboard.service';
-import { TaskDetailDialogComponent } from './pm/task-detail-dialog/task-detail-dialog.component';
-import { DemandDetailDialogComponent } from './pm/demand-detail-dialog/demand-detail-dialog.component';
 
 @NgModule({
   imports: [
@@ -58,12 +56,9 @@ import { DemandDetailDialogComponent } from './pm/demand-detail-dialog/demand-de
   ],
   declarations: [
     Pages,
-    DemandDetailDialogComponent,
-    TaskDetailDialogComponent
   ],
   entryComponents: [
-    DemandDetailDialogComponent,
-    TaskDetailDialogComponent
+
   ],
   providers: [
     DashboardService

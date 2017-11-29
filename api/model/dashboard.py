@@ -14,7 +14,7 @@ def find_owner(p_id):
 
 def find_role(p_id, m_id):
     '''查询项目成员权限'''
-    return ProjectMember.get(ProjectMember.projectId == p_id & ProjectMember.memberId == m_id).role
+    return ProjectMember.get(ProjectMember.projectId == p_id & ProjectMember.memberId == m_id)
 
 
 def find_demand(p_id, m_id):
