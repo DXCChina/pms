@@ -23,7 +23,7 @@ export class WelcomeComponent implements OnInit {
 
   ngOnInit() {
     this.getProjectList();
-    this.getTaskList();
+    // this.getTaskList();
   }
 
   getFish(){
@@ -40,6 +40,7 @@ export class WelcomeComponent implements OnInit {
       .then(res => {
         this.projects.data = res.data;
         this.projects.total = res.total;
+        console.log(res);
         // if (this.projects.length > 6) {
         //   this.projects = this.projects.slice(0, 7);
         // }
@@ -48,7 +49,7 @@ export class WelcomeComponent implements OnInit {
 
   createPro() {
     let dialogRef = this.dialog.open(DialogCreateProjectComponent, {
-      width: '400px',
+      width: '700px',
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -72,14 +73,16 @@ export class WelcomeComponent implements OnInit {
     //todo 获取用户在项目中的权限
     let projectId = project.id;
 
-    this._service.getUserRoleInProject(projectId)
-      .then(res => {
-        // this.userRoleInProject = res.data
-        this.userRoleInProject = 'pm';
-        this.router.navigate([`/pages/${this.userRoleInProject}/dashboard`]);
-        sessionStorage.setItem("userRoleInProject", this.userRoleInProject);
-      });
+    // this._service.getUserRoleInProject(projectId)
+    //   .then(res => {
+    //     // this.userRoleInProject = res.data
+    //     this.userRoleInProject = 'pm';
+    //     this.router.navigate([`/pages/${this.userRoleInProject}/dashboard`]);
+    //     sessionStorage.setItem("userRoleInProject", this.userRoleInProject);
+    //   });
 
+    this.router.navigate([`/pages/${project.role}/dashboard`]);
+    sessionStorage.setItem("userRoleInProject", project.role);
     sessionStorage.setItem("projectId", projectId);
     sessionStorage.setItem("projectName", project.name);
   }

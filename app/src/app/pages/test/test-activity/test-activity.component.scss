@@ -51,7 +51,7 @@ a:focus, button:focus {}
     p {
       font-size: 16px;
       font-weight:600;
-      margin: 10px 20px 0 0;
+      margin: 10px 20px 10px 0;
     }
   }
   .pm-activity-body-content {
@@ -63,6 +63,15 @@ a:focus, button:focus {}
     background: whitesmoke;
     .mat-form-field {
       width: 100%;
+    }
+    .date-picker {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+      align-items: center;
+      .mat-form-field {
+        width: 48%;
+      }
     }
   }
 

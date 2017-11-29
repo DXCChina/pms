@@ -138,6 +138,19 @@ paths:
       responses:
         200:
           description: ok
+
+  /project/name/{project_name}:
+    get:
+      summary: 查找项目名称
+      operationId: controller.info.find_one_project_by_name
+      parameters:
+        - name: project_name
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: ok
   /task:
     get:
       summary: api
@@ -154,18 +167,18 @@ paths:
         - name: project_id
           in: path
           required: true
-          type: number
+          type: integer
       responses:
         200:
           description: ok
     put:
-      summary: api
+      summary: 项目信息更新
       operationId: controller.project.project_update
       parameters:
         - name: project_id
           in: path
           required: true
-          type: number
+          type: integer
       responses:
         200:
           description: ok
@@ -184,7 +197,7 @@ paths:
         - name: project_id
           in: path
           required: true
-          type: number
+          type: integer
       responses:
         200:
           description: ok
@@ -195,7 +208,7 @@ paths:
         - name: project_id
           in: path
           required: true
-          type: number
+          type: integer
       responses:
         200:
           description: ok
