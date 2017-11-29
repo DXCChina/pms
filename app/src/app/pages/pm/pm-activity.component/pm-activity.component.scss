@@ -77,4 +77,16 @@ a:focus, button:focus {}
 
 }
 
+.project-owner-info {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 24px;
+
+  b {
+    margin-right: 10px;
+  }
+}
 
