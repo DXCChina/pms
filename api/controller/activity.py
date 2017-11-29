@@ -4,14 +4,31 @@
 @author: Wang Jianhui
 '''
 
-from flask import jsonify, request, abort, Blueprint, session
-from model.db import Activity, Demand, ActivityBase
+from flask import request
+from model.db import database, Activity, Demand, ActivityBase, ProjectMember, User
 from model.role import identity
 
-from flask_jwt_extended import (create_access_token, get_jwt_identity,
-                                get_jwt_claims, fresh_jwt_required,
-                                set_access_cookies, unset_jwt_cookies)
-from rbac.context import PermissionDenied
+from flask_jwt_extended import (fresh_jwt_required)
+
+
+def demand_activity_add(activity_id, data):
+    '''添加活动需求'''
+    for demand_id in data:
+        demand = Demand.get(Demand.id == demand_id)
+        if not demand.activityId:
+            demand.activityId = activity_id
+            # Demand.update(activityId=activity_id).where(Demand.id == demand_id).execute()
+            demand.save()
+
+
+def demand_activity_del(activity_id, data):
+    '''删除活动需求'''
+    for demand_id in data:
+        demand = Demand.get(Demand.id == demand_id)
+        if demand.activityId == activity_id:
+            demand.activityId = None
+            # Demand.update(activityId=activity_id).where(Demand.id == demand_id).execute()
+            demand.save()
 
 
 @fresh_jwt_required
@@ -19,15 +36,38 @@ from rbac.context import PermissionDenied
 def activity_add():
     '''创建项目活动'''
     data = request.json
-    activity_id = ActivityBase.create(**data).id
-    for demand_id in data['demand']:
-        demand = Demand.get(Demand.id == demand_id)
-        if demand.activityId:
-            return jsonify({"msg": '需求\'%s\'已分配' % (demand.title)}), 400
-        demand.activityId = activity_id
-        # Demand.update(activityId=activity_id).where(Demand.id == demand_id).execute()
-        demand.save()
+    if 'memberId' in data:
+        data['status'] = 'dev-ing'
+    with database.atomic():
+        activity_id = ActivityBase.create(**data).id
+        demand_activity_add(activity_id, data['demand'])
     return {"msg": 'ok'}
+
+
+@fresh_jwt_required
+@identity.check_permission("update", 'activity')
+def activity_update():
+    '''更新项目活动'''
+    data = request.json
+    activity_id = data.pop('activityId')
+    if 'memberId' in data:
+        data['status'] = 'dev-ing'
+    with database.atomic():
+        demand_activity_add(activity_id, data.pop('demand'))
+        demand_activity_del(activity_id, data.pop('del_demand'))
+        Activity.update(**data).where(Activity.id == activity_id).execute()
+    return {"msg": 'ok'}
+
+
+@fresh_jwt_required
+def activity_list():
+    '''项目活动列表'''
+
+    return {
+        "data": list(Activity.find().where(
+            Activity.projectId == request.args.get('projectId')
+        ))
+    }
 
 
 @fresh_jwt_required
@@ -49,5 +89,7 @@ def project_user(project_id):
         GET /api/project/<int:project_id>/users
     '''
     return {
-        "data": list(Demand.find().where(Demand.projectId == project_id, Demand.title % ('%' + demand_title + '%')))
+        "data": list(ProjectMember.find(ProjectMember.role, User).join(User).where(
+            ProjectMember.projectId == project_id
+        ))
     }
