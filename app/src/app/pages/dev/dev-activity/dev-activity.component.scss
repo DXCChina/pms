@@ -19,6 +19,9 @@ a:focus, button:focus {}
   justify-content: flex-start;
   align-content: center;
   border-radius: 2px;
+  .wrap-card {
+    background: #fafafa;
+  }
 }
 .manage-title {
   font-size: 16px;
