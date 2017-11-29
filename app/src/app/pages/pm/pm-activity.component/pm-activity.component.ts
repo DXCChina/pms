@@ -16,10 +16,10 @@ import * as moment from 'moment';
 export class PmActivityComponent implements OnInit {
   dataListModel: PeopleManageModel[];
   members: any;
-  searchList: any[] = [];
   form: FormGroup;
   projectType: any[];
   projectDetail: any;
+  searchList: any[] = [];
 
   constructor(public dialog: MatDialog, private router: Router, private service: PmActivityService) {
     this.form = new FormGroup({
@@ -110,26 +110,19 @@ export class PmActivityComponent implements OnInit {
     });
   }
 
-  search(str: any) {
-    if(str === 'qwer') {
-      this.searchList = [
-        {
-          name: 'qwer',
-          job: 'pm',
-          email: 'qwer@hpe.com',
-          date: '2017/11/23',
-          id: 'sdfsdfsafas',
-        },
-        {
-          name: 'QWER',
-          job: 'dev',
-          email: 'QWER@hpe.com',
-          date: '2017/11/22',
-          id: 'sddfsffsdd',
-        }
-      ];
-    } else {
-      this.searchList = [];
+  fuzzyQuery(search: string) {
+    this.service.fuzzyQuery(search)
+      .then(res => {
+        this.searchList = res.data;
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  search(search: any) {
+    if(search !== '') {
+      this.fuzzyQuery(search);
     }
   }
 

@@ -47,7 +47,7 @@
           <common-search
             [ngStyle]="{width: '35%', marginTop: '12px'}"
             [placeHolder]="'人员搜索'"
-            [field]="'name'"
+            [field]="roleField"
             [searchList]="searchList"
             (search)="emitSearch($event)"
             (select)="select($event)">

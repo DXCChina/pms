@@ -212,6 +212,18 @@ paths:
       responses:
         200:
           description: ok
+  /project/name:
+    get:
+      summary: 更新项目成员
+      operationId: controller.project.fuzzy_query_member
+      parameters:
+        - name: name
+          in: query
+          required: true
+          type: string
+      responses:
+        200:
+          description: ok
 # @author: Xing Dong
   /project/demand:
     post:

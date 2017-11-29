@@ -71,3 +71,8 @@ def update_project_users(project_id, request):
         except:
             db.rollback()
     return find_project_users(project_id)
+
+def fuzzy_query(query):
+    name = '%' + query['name'] +'%'
+    query = User.select().where(User.username % name)
+    return list(query.dicts())
