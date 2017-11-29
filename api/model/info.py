@@ -79,7 +79,6 @@ def project_list(ownerId):
     #           union (select p.*, pm.role from `project` as p left join `project_member` as pm on p.id = pm.projectId where pm.memberId=%s) ) as tab"
     #     cursor.execute(sql, (ownerId, ownerId))
     #     data = cursor.fetchall()
-    print(ownerId)
     result = (
         Project.select(
             Project.name,
@@ -92,7 +91,7 @@ def project_list(ownerId):
             Project.createAt,
             Project.type,
             SQL(" 'pm' As 'role' ")
-        ).where(Project.status == 'active' and Project.ownerId == ownerId)
+        ).where((Project.status == "active") & (Project.ownerId == ownerId))
         |
         Project.select(
             Project.name,
@@ -108,5 +107,4 @@ def project_list(ownerId):
         ).join(ProjectMember, on=(Project.id == ProjectMember.projectId)).where(ProjectMember.memberId == ownerId)
     )
     result = list(result.dicts())
-    print(result)
     return {'data': result, 'total': len(result)}

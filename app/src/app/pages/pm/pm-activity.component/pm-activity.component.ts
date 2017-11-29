@@ -52,12 +52,7 @@ export class PmActivityComponent implements OnInit {
     form.startDate = this.dateSwitch(form.startDate);
     form.endDate = this.dateSwitch(form.endDate);
     console.log(form);
-    this.service.updateProject(form)
-      .then(res => {
-        console.log(res)
-      }, err => {
-        console.log(err);
-      });
+    this.updateProject(form);
   }
 
   dateSwitch(date: any) {
@@ -68,7 +63,6 @@ export class PmActivityComponent implements OnInit {
     this.service.getMember()
       .then(res => {
         this.members = res;
-        console.log('members: ', this.members)
       }, err => {
         console.log(err);
       })
@@ -78,7 +72,6 @@ export class PmActivityComponent implements OnInit {
     this.service.getProjectDetail()
       .then(res => {
         this.projectDetail = res;
-        console.log(res);
       }, err => {
         console.log(err);
       })
@@ -92,12 +85,29 @@ export class PmActivityComponent implements OnInit {
     });
     deleteDialog.afterClosed().subscribe(result => {
       if (result) {
-        console.log('delete project');
+        const deleteProject = {
+          detail: this.projectDetail.detail,
+          endDate: this.dateSwitch(this.projectDetail.endDate),
+          startDate: this.dateSwitch(this.projectDetail.startDate),
+          name: this.projectDetail.name,
+          type: this.projectDetail.type,
+          status: 'delete'
+        };
+        this.updateProject(deleteProject);
         this.router.navigate(['/pages/welcome']);
       } else {
         console.log('cancel delete');
       }
     })
+  }
+
+  updateProject(project: any) {
+    this.service.updateProject(project)
+      .then(res => {
+        console.log(res)
+      }, err => {
+        console.log(err);
+    });
   }
 
   search(str: any) {
