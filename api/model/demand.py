@@ -24,9 +24,9 @@ def create_demand(demand):
 
 def demand_detail(demandId):
     '''获取需求详情'''
-    return Demand.select(Demand, Activity.title.alias('activityTittle')).join(
-        Activity,
-        on=(Demand.activityId == Activity.id)).where(Demand.id == demandId).get()
+    return Demand.sfind(Demand, Activity.title.alias('activityTittle')).join(
+        Activity, on=(Demand.activityId == Activity.id
+                      )).where(Demand.id == demandId).get()
 
 
 # @identity.check_permission("update", 'demand')
@@ -45,4 +45,4 @@ def find_one_demand_by_title(title):
 
 def find_demand_list_match_str(title):
     '''模糊查询需求'''
-    return Demand.select().where(Demand.title.contains(title)).dicts()
+    return Demand.sfind().where(Demand.title.contains(title)).dicts()
