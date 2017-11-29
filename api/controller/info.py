@@ -29,10 +29,8 @@ def project_list():
 
     GET /api/project
     '''
-    if 'user_id' in session:
-        ownerId = session['user_id']
-
-    return jsonify(info.project_list(ownerId))
+    print(get_jwt_identity())
+    return jsonify(info.project_list(get_jwt_identity()))
 
 
 # @app.route("/project", methods=['POST'])

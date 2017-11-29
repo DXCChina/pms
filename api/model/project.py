@@ -7,28 +7,35 @@
 from .db import db
 from .role import identity
 from .db import Project
+from .db import User
+from .db import ProjectMember
+from peewee import SQL
 from playhouse.shortcuts import model_to_dict, dict_to_model
 
 def find_project(project_id):
     '''查询项目信息'''
-    with db.cursor() as cursor:
-        sql = "SELECT * FROM project WHERE id=%s"
-        cursor.execute(sql, (project_id))
-        result = cursor.fetchone()
-    return result
-
+    result = Project.select(
+        Project,
+        User.username,
+        User.email,
+        SQL(" '项目经理' AS 'role' ")
+    ).join(User, on=(Project.ownerId == User.id)).where(Project.id == project_id)
+    return list(result.dicts())[0]
 
 @identity.check_permission("update", 'project')
 def update_project(project_id, request):
     '''更新项目信息'''
-    # with db.cursor() as cursor:
-    #     sql = "UPDATE project SET name=%s, detail=%s WHERE id=%s"
-    #     cursor.execute(
-    #         sql, (str(request['name']), str(request['detail']), project_id))
-    #     db.commit()
-    # return find_project(project_id)
     print(request, project_id)
-    return model_to_dict(Project.update(Project.name == request['name']).where(Project.id == project_id))
+    query = Project.update(
+                 name = request['name'],
+                 detail = request['detail'],
+                 type = request['type'],
+                 status = request['status'],
+                 startDate = request['startDate'],
+                 endDate = request['endDate']).where(Project.id == project_id)
+    query.execute()
+    result = Project.select().where(Project.id == project_id)
+    return list(result.dicts())
 
 
 def find_users():
@@ -42,16 +49,9 @@ def find_users():
 
 def find_project_users(project_id):
     '''查询项目用户列表 '''
-    with db.cursor() as cursor:
-        # sql = "SELECT projectmember.projectId, projectmember.memberId, user.username \
-        # FROM projectmember INNER JOIN user \
-        # ON projectmember.memberId=user.id \
-        # WHERE projectmember.projectId=%s AND user.status='active'"
-        sql = "select u.id, u.username, u.email, pm.role from `user` as u \
-               left join `project_member` as pm on u.id = pm.memberId where pm.projectId = %s AND u.status='active';"
-        cursor.execute(sql, (project_id))
-        result = cursor.fetchall()
-    return result
+    query = User.select(ProjectMember.id, User.username, User.email, ProjectMember.role, ProjectMember.projectId)\
+                .join(ProjectMember, on=(User.id == ProjectMember.memberId)).where(User.status == 'active' and ProjectMember.projectId == project_id)
+    return list(query.dicts())
 
 
 @identity.check_permission("update", 'project')
