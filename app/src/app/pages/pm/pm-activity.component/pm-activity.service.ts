@@ -8,11 +8,15 @@ export class PmActivityService {
   projectDetailUrl: string;
   updateProjectUrl: string;
   fuzzyQueryUrl: string;
+  memberAddUrl: string;
+  memberdeleteUrl: string;
   constructor(private http: Http, private Global: GlobalState) {
     this.memberUrl = '/api/project/' + sessionStorage.getItem('projectId') + '/user';
     this.projectDetailUrl = '/api/project/' + sessionStorage.getItem('projectId');
     this.updateProjectUrl = '/api/project/' + sessionStorage.getItem('projectId');
-    this.fuzzyQueryUrl = '/api/project/name'
+    this.fuzzyQueryUrl = '/api/project/member';
+    this.memberAddUrl = '/api/project/member';
+    this.memberdeleteUrl = '/api/project/member';
   }
 
   getMember(): Promise<any> {
@@ -39,8 +43,30 @@ export class PmActivityService {
   fuzzyQuery(search: string): Promise<any> {
     const params = {
       name: search
-    }
+    };
     return this.http.get(this.fuzzyQueryUrl, {params})
+      .toPromise()
+      .then(this.Global.extractData)
+      .catch(this.Global.handleError);
+  }
+
+  memberAdd(id: string, role: string): Promise<any> {
+    const body = {
+      id: id,
+      role: role,
+      projectId: sessionStorage.getItem('projectId')
+    };
+    return this.http.post(this.memberAddUrl, body)
+      .toPromise()
+      .then(this.Global.extractData)
+      .catch(this.Global.handleError);
+  }
+
+  memberDelete(id: string): Promise<any> {
+    const params = {
+      id: id,
+    };
+    return this.http.delete(this.memberdeleteUrl, {params})
       .toPromise()
       .then(this.Global.extractData)
       .catch(this.Global.handleError);

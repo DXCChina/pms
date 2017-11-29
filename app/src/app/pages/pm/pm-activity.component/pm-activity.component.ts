@@ -120,6 +120,26 @@ export class PmActivityComponent implements OnInit {
       })
   }
 
+  memberAdd(id: string, role: string) {
+    this.service.memberAdd(id, role)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
+  memberDelete(id: string) {
+    this.service.memberDelete(id)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
   search(search: any) {
     if(search !== '') {
       this.fuzzyQuery(search);
@@ -127,10 +147,15 @@ export class PmActivityComponent implements OnInit {
   }
 
   delete(data: any) {
-    console.log('delete: ',data)
+    console.log('delete: ',data);
+    this.memberDelete(data.id);
+    this.getMember();
   }
 
   create(data: any) {
-    console.log('create: ', data)
+    console.log('create: ', data);
+    this.memberAdd(data.id, data.role);
+    this.getMember();
   }
+
 }

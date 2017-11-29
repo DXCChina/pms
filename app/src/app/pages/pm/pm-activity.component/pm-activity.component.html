@@ -39,7 +39,7 @@
             <p><b>拥有者:</b>{{projectDetail?.username}}</p>
           </div>
              <div class="owener-info-item">
-            <p><b>职位:</b>{{projectDetail?.role}}</p>
+            <p><b>职位:</b>{{projectDetail?.role === 'pm' ? '项目经理' : projectDetail?.role}}</p>
           </div>
              <div class="owener-info-item">
             <p><b>邮箱:</b>{{projectDetail?.email}}</p>

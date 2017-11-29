@@ -18,7 +18,7 @@ def find_project(project_id):
         Project,
         User.username,
         User.email,
-        SQL(" '项目经理' AS 'role' ")
+        SQL(" 'pm' AS 'role' ")
     ).join(User, on=(Project.ownerId == User.id)).where(Project.id == project_id)
     return list(result.dicts())[0]
 
@@ -73,6 +73,25 @@ def update_project_users(project_id, request):
     return find_project_users(project_id)
 
 def fuzzy_query(query):
+    '''模糊查询人员'''
     name = '%' + query['name'] +'%'
     query = User.select().where(User.username % name)
     return list(query.dicts())
+
+
+def member_add(request):
+    '''添加成员'''
+    ProjectMember.create(
+        memberId=request['id'],
+        projectId=request['projectId'],
+        role=request['role']
+    )
+    result = ProjectMember.select().where(ProjectMember.projectId == request['projectId'])
+    return list(result.dicts())
+
+def member_delete(query):
+    '''删除人员'''
+    result = ProjectMember.delete().where(ProjectMember.id == query['id'])
+    result.execute()
+    print(result)
+    return None
