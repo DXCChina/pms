@@ -40,7 +40,6 @@ export class WelcomeComponent implements OnInit {
       .then(res => {
         this.projects.data = res.data;
         this.projects.total = res.total;
-        console.log(res);
         // if (this.projects.length > 6) {
         //   this.projects = this.projects.slice(0, 7);
         // }

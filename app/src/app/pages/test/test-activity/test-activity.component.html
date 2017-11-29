@@ -15,11 +15,11 @@
         </svg>
         <div class="wa-title-info">
           <div>
-            <h3>projectDetail?.name</h3>
-            <p mat-line>projectDetail?.createAt | date: 'yyyy-MM-dd'</p>
+            <h3>{{projectDetail?.name}}</h3>
+            <p mat-line>{{projectDetail?.createAt | date: 'yyyy-MM-dd'}}</p>
           </div>
           <mat-chip-list class="wa-titleChips">
-            <mat-chip>projectDetail?.status</mat-chip>
+            <mat-chip>{{projectDetail?.status}}</mat-chip>
           </mat-chip-list>
         </div>
       </div>
