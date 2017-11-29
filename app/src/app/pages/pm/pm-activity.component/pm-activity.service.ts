@@ -9,14 +9,14 @@ export class PmActivityService {
   updateProjectUrl: string;
   fuzzyQueryUrl: string;
   memberAddUrl: string;
-  memberdeleteUrl: string;
+  memberDeleteUrl: string;
   constructor(private http: Http, private Global: GlobalState) {
     this.memberUrl = '/api/project/' + sessionStorage.getItem('projectId') + '/user';
     this.projectDetailUrl = '/api/project/' + sessionStorage.getItem('projectId');
     this.updateProjectUrl = '/api/project/' + sessionStorage.getItem('projectId');
     this.fuzzyQueryUrl = '/api/project/member';
     this.memberAddUrl = '/api/project/member';
-    this.memberdeleteUrl = '/api/project/member';
+    this.memberDeleteUrl = '/api/project/member';
   }
 
   getMember(): Promise<any> {
@@ -66,7 +66,7 @@ export class PmActivityService {
     const params = {
       id: id,
     };
-    return this.http.delete(this.memberdeleteUrl, {params})
+    return this.http.delete(this.memberDeleteUrl, {params})
       .toPromise()
       .then(this.Global.extractData)
       .catch(this.Global.handleError);
