@@ -42,7 +42,7 @@ def case_add():
     if (errors):
         return jsonify({"msg": errors}), 400
     try:
-        data = case.create_case(request.json)
+        data = case.create_case(data)
         if data[1] == False:
             return jsonify({"msg": "测试用例名称重复"}), 200
         elif data[1] == True:
@@ -59,7 +59,9 @@ def case_update():
 
     if not request.json:
         abort(400)
-    if case.find_one_case_by_title(request.json["name"]):
+    if case.find_name_by_id(request.json["id"]) == request.json['name']:
+        pass
+    elif case.find_one_case_by_title(request.json["name"]):
         return jsonify({'msg': '该测试用例已存在'})
     try:
         data = case.case_update(request.json)
