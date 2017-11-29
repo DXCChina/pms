@@ -103,6 +103,13 @@ class MySQLModel(Model):
         except DoesNotExist:
             return None
 
+    def select(cls, *select):
+        # 数据不存在返回None，而不是抛出异常
+        try:
+            return super(MySQLModel, cls).select(*select).dicts()
+        except DoesNotExist:
+            return {}
+
 
 # 用户表
 class User(MySQLModel):
@@ -190,6 +197,7 @@ class TestCase(MySQLModel):
     detail = TextField(null=True)
     demandId = db_id()
     projectId = db_id()
+    ownerId = db_id()
     type = db_char(length=10, null=True)
     input = db_char()
     expect = db_char()
@@ -205,7 +213,8 @@ class TestResult(MySQLModel):
     detail = TextField(null=True)
     caseId = db_id()
     output = db_char()
-    result = db_bool(default=0, comment='0(bug)/1(正常)')
+    result = db_bool(
+        default=0, comment='0(bug)/1(正常)')
     status = db_option(default='close', comment='tofix,tocheck,close(默认)')
     level = db_option('normal', '优先级:low(低)/high(高)/normal(中,默认)')
     devId = db_id()

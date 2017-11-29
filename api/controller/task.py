@@ -12,22 +12,19 @@ from flask_jwt_extended import (create_access_token, get_jwt_identity,
                                 set_access_cookies, unset_jwt_cookies)
 from marshmallow import Schema, fields
 from rbac.context import PermissionDenied
+from playhouse.shortcuts import model_to_dict
 
 app = Blueprint('task', __name__, url_prefix='/api')  # pylint: disable=c0103
 
 
 class DemandSchema(Schema):
-    '''注册信息'''
-    ownerId = fields.Number(required=True)
-    projectId = fields.Number(required=True)
-    progress = fields.Number(required=True)
-    cost = fields.Number(required=True)
+    '''添加需求信息'''
     title = fields.String(required=True)
     detail = fields.String(required=True)
     level = fields.String(required=True)
-    status = fields.String(required=True)
-    startDate = fields.String(required=True)
-    endDate = fields.String(required=True)
+    projectId = fields.Integer(required=True)
+    activityId = fields.Integer(required=True)
+    status = fields.Integer(required=True)
 
 
 class TaskSchema(Schema):
@@ -69,11 +66,14 @@ def demand_add():
     data, errors = schema.load(request.json)
     if errors:
         return jsonify({"msg": errors}), 400
-    if task.findDemandTitle(data['title']):
-        return jsonify({"msg": {'title': '主题已存在'}}), 400
+    # if task.findDemandTitle(data['title']):
+    #     return jsonify({"msg": {'title': '主题已存在'}}), 400
 
     try:
-        return handleData(task.createDemand(request.json))
+        return jsonify({
+            'msg':'ok',
+            'data':model_to_dict(task.createDemand(request.json))
+        })
     except PermissionDenied:
         return jsonify({'msg': 'PermissionDenied'})
 
@@ -85,31 +85,60 @@ def demand_info(demand_id):
 
     GET /api/project/demand/detail/<int:demand_id>
     '''
-    return handleData(task.demandDetail(demand_id))
+    data = task.demandDetail(demand_id)
+
+    return jsonify({'msg': 'ok', 'data': model_to_dict(data)})
 
 
 # @app.route("/project/<int:project_id>/demand/<int:demand_id>", methods=['PUT'])
 # @app.route("/project/demand/update", methods=['PUT'])
-@fresh_jwt_required
+# @fresh_jwt_required
 def demand_update():
     '''更新需求信息
 
     PUT /api/project/demand/update
     '''
+
     if not request.json or not 'data' in request.json:
         print('request:', request.json)
         abort(400)
-
-    params = []
-    for item in request.json["data"]:
-        params.append(
-            (item['status'], item['level'], item['endDate'], item['title'],
-             item['detail'], item['progress'], item['cost'], item['id']))
-
     try:
-        return task.updateDemands(tuple(params))
+        data = task.update_demands(request.json["data"])
+        return jsonify({'msg': 'ok', 'data': DemandDataFormat(data)})
     except PermissionDenied:
         return jsonify({'msg': 'PermissionDenied'})
+
+
+# @app.route("/demand/<int:demand_id>/task", methods=['GET'])
+# @app.route("/demand/list", methods=['GET'])
+@fresh_jwt_required
+def demand_lists():
+    '''获取需求列表
+
+    GET /api/demand/list
+    '''
+    demand_list = task.demand_list()
+    return list(demand_list)
+    # return jsonify({
+    #     "message": "ok",
+    #     "data": task.demandList(request.args.to_dict())["data"],
+    #     "total": task.demandList(request.args.to_dict())["total"]
+    # })
+
+
+def DemandDataFormat(demand_info):
+    demand_data = {}
+
+    demand_data["id"] = demand_info.id
+    demand_data["title"] = demand_info.title
+    demand_data["detail"] = demand_info.detail
+    demand_data["level"] = demand_info.level
+    demand_data["projectId"] = demand_info.projectId
+    demand_data["activityId"] = demand_info.activityId
+    demand_data["status"] = demand_info.status
+    demand_data["createAt"] = demand_info.createAt
+
+    return demand_data
 
 
 # @app.route("/demand/<string:demand_title>", methods=['GET'])
@@ -126,20 +155,6 @@ def demand_search(demand_title):
 
     return jsonify(res)
 
-
-# @app.route("/demand/<int:demand_id>/task", methods=['GET'])
-# @app.route("/demand/list", methods=['GET'])
-@fresh_jwt_required
-def demand_lists():
-    '''获取需求列表
-
-    GET /api/demand/list
-    # '''
-    return jsonify({
-        "message": "ok",
-        "data": task.demandList(request.args.to_dict())["data"],
-        "total": task.demandList(request.args.to_dict())["total"]
-    })
 
 
 # @app.route("/task/list", methods=['GET'])
@@ -188,7 +203,6 @@ def getMemberInfo(projectId):
     print(projectId)
     res = {"message": "ok", "data": {}}
 
-    print(task.findMember(projectId))
     if task.findMember(projectId) != None:
         res["data"] = task.findMember(projectId)
 
@@ -238,9 +252,9 @@ def handleData(data):
     if data == None:
         res["message"] = "Missing data"
         res["data"] = {}
-    elif 'errMsg' in data:
-        res['message'] = data['errMsg']
-        res["data"] = {}
+    # elif 'errMsg' in data:
+    #     res['message'] = data['errMsg']
+    #     res["data"] = {}
     else:
         res["message"] = "ok"
         res["data"] = data

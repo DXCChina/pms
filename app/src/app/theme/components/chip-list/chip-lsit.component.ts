@@ -23,6 +23,6 @@ export class ChipListComponent{
       this.removeChipEle = this.chipList.splice(index, 1);
     }
 
-    this.removeChip.emit(this.removeChipEle[0]);
+    this.removeChip.emit(this.chipList);
   }
 }
