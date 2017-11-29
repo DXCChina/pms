@@ -91,11 +91,12 @@
         <mat-card>
 
           <people-manage
+            *ngIf="members"
             [dataListModel]="dataListModel"
             [searchList]="searchList"
             [displayOnly]="false"
             [roleField]="'job'"
-            [(datas)]="datas"
+            [(datas)]="members.data"
             (outDelete)="delete($event)"
             (outCreate)="create($event)"
             (outSearch)="search($event)">

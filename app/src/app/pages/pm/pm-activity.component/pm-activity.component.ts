@@ -4,8 +4,8 @@ import {MatDialog} from "@angular/material";
 import {CommonDeleteDialog} from "../../../theme/components/deleteDialog/deleteDialog.component";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {validate} from "codelyzer/walkerFactory/walkerFn";
 import {PmActivityService} from "./pm-activity.service";
+import * as moment from 'moment';
 
 @Component({
   selector: 'pm-activity',
@@ -15,12 +15,11 @@ import {PmActivityService} from "./pm-activity.service";
 })
 export class PmActivityComponent implements OnInit {
   dataListModel: PeopleManageModel[];
-  datas: any[];
+  members: any;
   searchList: any[] = [];
   form: FormGroup;
   projectType: any[];
   projectDetail: any;
-  member: any;
 
   constructor(public dialog: MatDialog, private router: Router, private service: PmActivityService) {
     this.form = new FormGroup({
@@ -31,40 +30,15 @@ export class PmActivityComponent implements OnInit {
       endDate: new FormControl('', [Validators.required])
     });
 
-
     this.projectType = [
       { name: '短期项目', value: 'short-term'},
       { name: '长期项目', value: 'long-term'},
       { name: '运维项目', value: 'operation'},
     ];
     this.dataListModel = [
-      { name: '姓名', value: 'name' },
-      { name: '职位', value: 'job' },
+      { name: '姓名', value: 'username' },
+      { name: '职位', value: 'role' },
       { name: '邮箱', value: 'email' },
-      { name: '时间', value: 'date' },
-    ];
-    this.datas = [
-      {
-        name: 'pm',
-        job: 'pm',
-        email: 'jerry@hpe.com',
-        date: '2017/11/22',
-        id: 'sdfasfsf',
-      },
-      {
-        name: 'tom',
-        job: 'dev',
-        email: 'tom@hpe.com',
-        date: '2017/11/23',
-        id: 'sfaswe',
-      },
-      {
-        name: 'diner',
-        job: 'test',
-        email: 'diner@hpe.com',
-        date: '2017/11/21',
-        id: 'sfaswe',
-      }
     ];
   }
 
@@ -86,15 +60,15 @@ export class PmActivityComponent implements OnInit {
       });
   }
 
-  dateSwitch(date: string) {
-    return date.replace(/[A-Z]/g, ' ');
+  dateSwitch(date: any) {
+    return moment(new Date(date)).format('YYYY-MM-D h:mm:ss')
   }
 
   getMember() {
     this.service.getMember()
       .then(res => {
-        this.member = res;
-        console.log(res)
+        this.members = res;
+        console.log('members: ', this.members)
       }, err => {
         console.log(err);
       })

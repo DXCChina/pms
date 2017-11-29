@@ -21,7 +21,7 @@ def project_info(project_id):
 
     GET /api/project/<int:project_id>
     '''
-    return jsonify(project.find_project(project_id))
+    return project.find_project(project_id)
 
 
 # @app.route("/project/<int:project_id>", methods=['PUT'])
@@ -41,15 +41,6 @@ def project_update(project_id):
         "message": "项目更新成功",
         "data": project.update_project(project_id, request.json)
     }
-    # except Exception as err:
-    #     return {'message': '项目更新失败'}
-
-    # try:
-    #     return jsonify(
-    #         project.update_project(project_id, request.json))
-    # except PermissionDenied:
-    #     return jsonify({'msg': 'PermissionDenied'})
-
 
 # @app.route("/userlist", methods=['GET'])
 @fresh_jwt_required
@@ -68,15 +59,10 @@ def project_user(project_id):
     
     GET /api/project/<int:project_id>/user
     '''
-    try:
-        return jsonify({
-            "message": "ok",
-            "data": project.find_project_users(project_id)
-        })
-    except PermissionDenied:
-        return jsonify({
-            "message": "PermissionDenied"
-        })
+    return jsonify({
+        "message": "ok",
+        "data": project.find_project_users(project_id)
+    })
 
 
 # @app.route("/project/<int:project_id>/user", methods=['PUT'])
