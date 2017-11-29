@@ -8,7 +8,7 @@ import logging
 from os import environ
 from pymysql import cursors, connect
 from playhouse.pool import PooledMySQLDatabase
-from peewee import Model, DoesNotExist, DateTimeField, FixedCharField, IntegerField, TextField, SQL, BooleanField
+from peewee import Model, DoesNotExist, DateTimeField, FixedCharField, IntegerField, TextField, SQL, BooleanField, ForeignKeyField
 
 logger = logging.getLogger('peewee')
 logger.setLevel(
@@ -84,14 +84,24 @@ class MySQLModel(Model):
             return cls.get(*query, **kwargs)
         except DoesNotExist:
             return None
+
     @classmethod
     def find(cls, *select):
-        """Support read slaves."""
+        """封装 peewee select 接口,返回 dict"""
         return super(MySQLModel, cls).select(*select).dicts()
+
     @classmethod
     def findOne(cls, *where):
-        """Support read slaves."""
+        """封装 peewee get 接口,返回 dict"""
         return cls.find().where(*where).get()
+
+    @classmethod
+    def sget(cls, *query):
+        '''数据不存在返回None，而不是抛出异常'''
+        try:
+            return cls.get(*query)
+        except DoesNotExist:
+            return None
 
 
 # 用户表
@@ -132,8 +142,7 @@ class ActivityBase(MySQLModel):
     cost = IntegerField(null=True)
     status = db_option(
         default='new',
-        comment=
-        'new(新建,未分配),dev-ing(开发中),needtest(开发完待测试),test-ing(测试中),fix-ing(修复中),finish(已完成),close(已关闭)'
+        comment='new(新建,未分配),dev-ing(开发中),needtest(开发完待测试),test-ing(测试中),fix-ing(修复中),finish(已完成),close(已关闭)'
     )
     createAt = db_autoDate()
     startDate = db_autoDate()
@@ -141,6 +150,8 @@ class ActivityBase(MySQLModel):
 
     class Meta:
         db_table = 'activity'
+
+
 class Activity(ActivityBase):
     id = db_autoId()
 
@@ -164,7 +175,7 @@ class Project(MySQLModel):
 # 项目成员
 class ProjectMember(MySQLModel):
     id = db_autoId()
-    memberId = db_id()
+    memberId = ForeignKeyField(User, related_name='project')
     projectId = db_id()
     role = db_option(default='dev', comment='用户角色:dev/test')
 
