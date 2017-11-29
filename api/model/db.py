@@ -103,10 +103,11 @@ class MySQLModel(Model):
         except DoesNotExist:
             return None
 
-    def select(cls, *select):
-        # 数据不存在返回None，而不是抛出异常
+    @classmethod
+    def sfind(cls, *select):
+        '''数据不存在返回空字典，而不是抛出异常'''
         try:
-            return super(MySQLModel, cls).select(*select).dicts()
+            return cls.find(*select)
         except DoesNotExist:
             return {}
 
