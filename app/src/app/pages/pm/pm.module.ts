@@ -1,8 +1,8 @@
-import {NgModule} from "@angular/core";
-import {NgaModule} from "../../theme/nga.module";
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {CommonModule} from "@angular/common";
-import {routing} from "./pm.routing";
+import { NgModule } from '@angular/core';
+import { NgaModule } from '../../theme/nga.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { routing } from './pm.routing';
 
 import {
   MatButtonModule, MatCommonModule, MatDialogModule, MatSelectModule, MatInputModule,
@@ -25,9 +25,7 @@ import {ToasterModule} from "angular2-toaster";
   declarations: [
     PmComponent,
     PmDashboardComponent,
-    PmActivityComponent,
-    DemandDetailDialogComponent,
-    TaskDetailDialogComponent,
+    PmActivityComponent
   ],
   imports: [
     CommonModule,
@@ -64,9 +62,8 @@ import {ToasterModule} from "angular2-toaster";
   providers: [
 
   ],
-  entryComponents:[
-    DemandDetailDialogComponent,
-    TaskDetailDialogComponent
+  entryComponents: [
+
   ]
 })
 export class PmModule { }

@@ -84,6 +84,14 @@ class MySQLModel(Model):
             return cls.get(*query, **kwargs)
         except DoesNotExist:
             return None
+    @classmethod
+    def find(cls, *select):
+        """Support read slaves."""
+        return super(MySQLModel, cls).select(*select).dicts()
+    @classmethod
+    def findOne(cls, *where):
+        """Support read slaves."""
+        return cls.find().where(*where).get()
 
     @classmethod
     def select(cls, *select):
@@ -123,11 +131,10 @@ class Demand(MySQLModel):
 
 
 # 活动表
-class Activity(MySQLModel):
-    id = db_autoId()
+class ActivityBase(MySQLModel):
     title = db_char()
     detail = TextField(null=True)
-    memberId = db_id()
+    memberId = IntegerField(null=True)
     projectId = db_id()
     progress = IntegerField(null=True)
     cost = IntegerField(null=True)
@@ -142,6 +149,8 @@ class Activity(MySQLModel):
 
     class Meta:
         db_table = 'activity'
+class Activity(ActivityBase):
+    id = db_autoId()
 
 
 # 项目表
@@ -150,7 +159,7 @@ class Project(MySQLModel):
     name = FixedCharField(unique=True, max_length=50)
     detail = TextField(null=True)
     ownerId = db_id()
-    status = db_option(default= 'active', comment= 'active(默认)/done/delete')
+    status = db_option(default='active', comment='active(默认)/done/delete')
     createAt = db_autoDate()
     startDate = db_autoDate()
     endDate = db_date()
@@ -165,8 +174,7 @@ class ProjectMember(MySQLModel):
     id = db_autoId()
     memberId = db_id()
     projectId = db_id()
-    role = db_option(
-        default= 'dev', comment= '用户角色:dev/test')
+    role = db_option(default='dev', comment='用户角色:dev/test')
 
     class Meta:
         db_table = 'project_member'
@@ -179,6 +187,7 @@ class TestCase(MySQLModel):
     detail = TextField(null=True)
     demandId = db_id()
     projectId = db_id()
+    ownerId = db_id()
     type = db_char(length=10,null=True)
     input = db_char()
     expect = db_char()
@@ -199,7 +208,7 @@ class TestResult(MySQLModel):
     status = db_option(default='close', comment='tofix,tocheck,close(默认)')
     level = db_option('normal','优先级:low(低)/high(高)/normal(中,默认)')
     devId = db_id()
-    priority = db_option('normal','严重程度:low(低)/high(高)/normal(中,默认)')
+    priority = db_option('normal', '严重程度:low(低)/high(高)/normal(中,默认)')
 
     class Meta:
         db_table = 'test_result'
