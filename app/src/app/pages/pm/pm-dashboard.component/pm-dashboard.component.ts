@@ -172,11 +172,11 @@ export class PmDashboardComponent implements OnInit {
     console.log('add');
   }
 
-  addDemand(){
-    let dialogRef = this.dialog.open(DemandDetailDialogComponent, {
+  addDemand() {
+    const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
-      height:'61vh',
-      data: {mode:'create'}
+      height: '61vh',
+      data: { mode: 'create' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -186,11 +186,11 @@ export class PmDashboardComponent implements OnInit {
 
   showDemandDetail(data) {
     console.log(data);
-      
-    let dialogRef = this.dialog.open(DemandDetailDialogComponent, {
+
+    const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
-      height:'61vh',
-      data: {mode:'update',data:data}
+      height: '61vh',
+      data: { mode: 'update', data: data }
     });
 
     dialogRef.afterClosed().subscribe(result => {

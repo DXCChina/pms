@@ -39,8 +39,19 @@ paths:
         200:
           description: ok
   /activity:
+    get:
+      summary: 项目活动列表
+      operationId: controller.activity.activity_list
+      parameters:
+        - name: projectId
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
     post:
-      summary: 创建活动
+      summary: 创建项目活动
       operationId: controller.activity.activity_add
       consumes:
       - "application/json"
@@ -49,13 +60,30 @@ paths:
       parameters:
         - name: activity
           in: body
-          description: user to add to the system
+          description: 活动初始信息
+          required: true
+          schema:
+            $ref: '#/definitions/ActivityInit'
+      responses:
+        200:
+          description: 活动创建成功
+    put:
+      summary: 更新项目活动
+      operationId: controller.activity.activity_update
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: activity
+          in: body
+          description: 更新活动信息
           required: true
           schema:
             $ref: '#/definitions/Activity'
       responses:
         200:
-          description: 活动创建成功
+          description: 活动更新成功
   /login:
     post:
       summary: api
@@ -326,7 +354,7 @@ paths:
       operationId: controller.case.case_detail
       parameters:
         - name: case_id
-         in: path
+          in: path
           required: true
           type: integer
       responses:
@@ -382,7 +410,7 @@ paths:
         200:
           description: ok
 definitions:
-  Activity:
+  ActivityInit:
     type: object
     properties:
       title:
@@ -397,3 +425,24 @@ definitions:
     - title
     - projectId
     - demand
+  Activity:
+    type: object
+    properties:
+      activityId:
+        type: integer
+      title:
+        type: string
+      del_demand:
+        type: array
+        items:
+          type: integer
+      demand:
+        type: array
+        items:
+          type: integer
+      memberId:
+        type: integer
+    required:
+    - title
+    - demand
+

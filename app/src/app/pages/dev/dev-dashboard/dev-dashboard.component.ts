@@ -4,18 +4,16 @@ import { Router } from '@angular/router';
 import { ListMetrics, ItemMetrics } from '../../pm/pm-dashboard.component/card-data.Entity';
 import { DashboardService } from '../../pm/pm-dashboard.component/dashboard.service';
 import { MatDialog } from '@angular/material';
-import {DemandDetailModalComponent} from "../demand-detail-modal/demand-detail-modal.component";
+// import { DemandDetailModalComponent } from '../demand-detail-modal/demand-detail-modal.component';
 
 @Component({
   selector: 'app-dev-dashboard',
   templateUrl: './dev-dashboard.component.html',
-  styleUrls: ['./dev-dashboard.component.scss'],
-  providers:[DashboardService]
+  styleUrls: ['./dev-dashboard.component.scss']
 })
 
 export class DevDashboardComponent implements OnInit {
 
-  public demandData: any[] = [];
   public activityData: any[] = [];
   public testResultData: any[] = [];
 
@@ -35,52 +33,8 @@ export class DevDashboardComponent implements OnInit {
 
   // 初始化数据 调用三个接口
   initData() {
-    this.getProjectDemand();
     this.getProjectActivity();
     this.getProjectTestResult();
-  }
-
-  getProjectDemand() {
-    this.service.getProjectDemand(this.projectId)
-      .then(res => {
-
-        this.demandData.push(
-          new ListMetrics(
-            '待处理需求',
-            res
-              .filter(i => {
-                return !i.activityId;
-              })
-              .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', i.level);
-              })
-          )
-        );
-
-        this.demandData.push(
-          new ListMetrics(
-            '已分配需求',
-            res
-              .filter(i => {
-                return i.activityId;
-              })
-              .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', i.level);
-              })
-          )
-        );
-
-        this.demandData.push(
-          new ListMetrics(
-            '全部需求',
-            res
-              .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', i.level);
-              })
-          )
-        );
-
-      }).catch(err => console.log(err));
   }
 
   getProjectActivity() {
@@ -173,20 +127,22 @@ export class DevDashboardComponent implements OnInit {
     console.log('add');
   }
 
-  showDemandDetail(data) {
+  // showDemandDetail(data) {
+  //   const dialogRef = this.dialog.open(DemandDetailModalComponent, {
+  //     width: '750px',
+  //     height: '61vh',
+  //     data: data
+  //   });
+
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log('The dialog was closed');
+  //   });
+  // }
+
+  showActivityDetail(data) {
     console.log(data);
-
-     let dialogRef = this.dialog.open(DemandDetailModalComponent, {
-          width: '750px',
-          height:'61vh',
-          data:data
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          console.log('The dialog was closed');
-        });
   }
-
-  showTaskDetail(data) {
+  showResultDetail(data) {
     console.log(data);
   }
 }
