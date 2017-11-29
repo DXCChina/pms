@@ -77,7 +77,7 @@ def demand_update():
         return jsonify({'msg': '该需求已存在'})
     try:
         data = demand.update_demands(request.json)
-        return jsonify({'msg': 'ok', 'data': data})
+        return jsonify({'msg': 'ok', 'data': model_to_dict(data)})
     except PermissionDenied:
         return jsonify({'msg': 'PermissionDenied'})
 
