@@ -55,10 +55,11 @@ from model.db import db
 
 from .db import Project
 from .db import ProjectMember
+from peewee import SQL
 from playhouse.shortcuts import model_to_dict, dict_to_model
 
 def project_add(project):
-    Project.create(
+    result = Project.create(
                 name=project['name'],
                 detail=project['detail'],
                 ownerId=project['ownerId'],
@@ -72,10 +73,39 @@ def find_one_project_by_name(project_name):
     return model_to_dict(Project.get(Project.name == project_name))
 
 def project_list(ownerId):
-    with db.cursor() as cursor:
-        sql = "select tab.* from ( (select p.*, 'pm' as role from `project` as p where p.ownerId=%s AND p.status='active') "\
-              "union (select p.*, pm.role from `project` as p left join `project_member` as pm on p.id = pm.projectId where pm.memberId=%s) ) as tab"
-        cursor.execute(sql, (ownerId, ownerId))
-        data = cursor.fetchall()
-
-    return {'data': data, 'total': len(data)}
+    # db.commit()
+    # with db.cursor() as cursor:
+    #     sql = "select tab.* from ( (select p.*, 'pm' as role from `project` as p where p.ownerId=%s AND p.status='active') \
+    #           union (select p.*, pm.role from `project` as p left join `project_member` as pm on p.id = pm.projectId where pm.memberId=%s) ) as tab"
+    #     cursor.execute(sql, (ownerId, ownerId))
+    #     data = cursor.fetchall()
+    result = (
+        Project.select(
+            Project.name,
+            Project.id,
+            Project.detail,
+            Project.status,
+            Project.startDate,
+            Project.endDate,
+            Project.ownerId,
+            Project.createAt,
+            Project.type,
+            SQL(" 'pm' As 'role' ")
+        ).where(Project.ownerId == ownerId & Project.status == 'active')
+        |
+        Project.select(
+            Project.name,
+            Project.id,
+            Project.detail,
+            Project.status,
+            Project.startDate,
+            Project.endDate,
+            Project.ownerId,
+            Project.createAt,
+            Project.type,
+            ProjectMember.role
+        ).join(ProjectMember, on=(Project.id == ProjectMember.projectId)).where(ProjectMember.memberId == ownerId)
+    )
+    result = list(result.dicts())
+    print(result)
+    return {'data': result, 'total': len(result)}
