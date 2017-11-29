@@ -9,12 +9,18 @@ from .role import identity
 from .db import Project
 from .db import User
 from .db import ProjectMember
+from peewee import SQL
 from playhouse.shortcuts import model_to_dict, dict_to_model
 
 def find_project(project_id):
     '''查询项目信息'''
-    result = Project.get(Project.id == project_id)
-    return model_to_dict(result)
+    result = Project.select(
+        Project,
+        User.username,
+        User.email,
+        SQL(" '项目经理' AS 'role' ")
+    ).join(User, on=(Project.ownerId == User.id)).where(Project.id == project_id)
+    return list(result.dicts())[0]
 
 @identity.check_permission("update", 'project')
 def update_project(project_id, request):

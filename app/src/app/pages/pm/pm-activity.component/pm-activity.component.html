@@ -29,7 +29,26 @@
     </div>
 
     <div class="pm-activity-body">
+
       <mat-card>
+        <h3 class="manage-title">归属信息</h3>
+        <hr />
+
+        <div class="project-owner-info">
+          <div class="owener-info-item">
+            <p><b>拥有者:</b>{{projectDetail?.username}}</p>
+          </div>
+             <div class="owener-info-item">
+            <p><b>职位:</b>{{projectDetail?.role}}</p>
+          </div>
+             <div class="owener-info-item">
+            <p><b>邮箱:</b>{{projectDetail?.email}}</p>
+          </div>
+        </div>
+      </mat-card>
+
+      <mat-card>
+
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" *ngIf="projectDetail">
 
           <div class="pm-activity-body-title">
