@@ -1,22 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { ListMetrics, ItemMetrics } from '../../pm/pm-dashboard.component/card-data.Entity';
 import { DashboardService } from '../../pm/pm-dashboard.component/dashboard.service';
 import { MatDialog } from '@angular/material';
-import { TaskDetailDialogComponent } from '../../pm/task-detail-dialog/task-detail-dialog.component';
-import { DemandDetailDialogComponent } from '../../pm/demand-detail-dialog/demand-detail-dialog.component';
+import { CaseDetailModalComponent } from "../case-detail-modal/case-detail-modal.component";
+import { TestCaseDetailService } from "./test-dashboard.service";
 
 @Component({
   selector: 'app-test-dashboard',
   templateUrl: './test-dashboard.component.html',
-  styleUrls: ['./test-dashboard.component.scss']
+  styleUrls: ['./test-dashboard.component.scss'],
+  providers: [TestCaseDetailService]
 })
 
 export class TestDashboardComponent implements OnInit {
 
-  public demandData: any[] = [];
   public activityData: any[] = [];
+  public testCaseData: any[] = [];
   public testResultData: any[] = [];
 
   constructor(private router: Router, private service: DashboardService, private dialog: MatDialog) { }
@@ -35,52 +35,9 @@ export class TestDashboardComponent implements OnInit {
 
   // 初始化数据 调用三个接口
   initData() {
-    this.getProjectDemand();
     this.getProjectActivity();
+    this.getProjectTestCase();
     this.getProjectTestResult();
-  }
-
-  getProjectDemand() {
-    this.service.getProjectDemand(this.projectId)
-      .then(res => {
-
-        this.demandData.push(
-          new ListMetrics(
-            '待处理需求',
-            res
-              .filter(i => {
-                return !i.activityId;
-              })
-              .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', i.level);
-              })
-          )
-        );
-
-        this.demandData.push(
-          new ListMetrics(
-            '已分配需求',
-            res
-              .filter(i => {
-                return i.activityId;
-              })
-              .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', i.level);
-              })
-          )
-        );
-
-        this.demandData.push(
-          new ListMetrics(
-            '全部需求',
-            res
-              .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', i.level);
-              })
-          )
-        );
-
-      }).catch(err => console.log(err));
   }
 
   getProjectActivity() {
@@ -119,6 +76,23 @@ export class TestDashboardComponent implements OnInit {
             res
               .map(i => {
                 return new ItemMetrics(i, i.title, i.createAt, i.memberName, '', '');
+              })
+          )
+        );
+
+      }).catch(err => console.log(err));
+  }
+
+  getProjectTestCase() {
+    this.service.getProjectTestCase(this.projectId)
+      .then(res => {
+
+        this.testCaseData.push(
+          new ListMetrics(
+            '全部测试案例',
+            res
+              .map(i => {
+                return new ItemMetrics(i, i.name, '', i.detail, '', '');
               })
           )
         );
@@ -172,28 +146,26 @@ export class TestDashboardComponent implements OnInit {
   addItem() {
     console.log('add');
   }
+  
+  showTaskDetail(data) {}
 
-  showDemandDetail(data) {
-    console.log(data);
-
-    const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
+  addCase() {
+    let dialogRef = this.dialog.open(CaseDetailModalComponent, {
       width: '750px',
-      height: '70vh',
-      data: { name: 'dd', animal: 'dd' }
-    });
+      height: '61vh',
+      data: {mode: 'create'}
+      });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
   }
-
-  showTaskDetail(data) {
-    console.log(data);
-
-    const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
+    
+  showCaseDetail(data) {
+    let dialogRef = this.dialog.open(CaseDetailModalComponent, {
       width: '750px',
-      height: '70vh',
-      data: { name: 'dd', animal: 'dd' }
+      height: '61vh',
+      data: {mode: 'update', caseInfo: data}
     });
 
     dialogRef.afterClosed().subscribe(result => {

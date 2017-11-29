@@ -14,7 +14,6 @@ import { DemandDetailDialogComponent } from '../demand-detail-dialog/demand-deta
 })
 
 export class PmDashboardComponent implements OnInit {
-
   public demandData: any[] = [];
   public activityData: any[] = [];
   public testResultData: any[] = [];
@@ -173,13 +172,25 @@ export class PmDashboardComponent implements OnInit {
     console.log('add');
   }
 
+  addDemand(){
+    let dialogRef = this.dialog.open(DemandDetailDialogComponent, {
+      width: '750px',
+      height:'61vh',
+      data: {mode:'create'}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
   showDemandDetail(data) {
     console.log(data);
-
-    const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
+      
+    let dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
-      height: '70vh',
-      data: { name: 'dd', animal: 'dd' }
+      height:'61vh',
+      data: {mode:'update',data:data}
     });
 
     dialogRef.afterClosed().subscribe(result => {

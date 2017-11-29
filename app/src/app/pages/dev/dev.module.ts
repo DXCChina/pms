@@ -12,12 +12,14 @@ import {
   MatProgressSpinnerModule, MatChipsModule, MatGridListModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule,
   MatProgressBarModule, MatToolbarModule,  MatTooltipModule
 } from "@angular/material";
+import { DemandDetailModalComponent } from './demand-detail-modal/demand-detail-modal.component';
 
 @NgModule({
   declarations: [
     DevComponent,
     DevDashboardComponent,
-    DevActivityComponent
+    DevActivityComponent,
+    DemandDetailModalComponent
   ],
   imports: [
     CommonModule,
@@ -50,6 +52,9 @@ import {
   ],
   providers: [
 
+  ],
+  entryComponents:[
+    DemandDetailModalComponent
   ]
 })
 export class DevModule {}
