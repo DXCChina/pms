@@ -67,7 +67,6 @@ def project_add(project):
                 endDate=project['endDate'],
                 type=project['type']
             )
-    result.execute()
     return model_to_dict(Project.get(Project.name == project['name']))
 
 def find_one_project_by_name(project_name):
@@ -80,7 +79,7 @@ def project_list(ownerId):
     #           union (select p.*, pm.role from `project` as p left join `project_member` as pm on p.id = pm.projectId where pm.memberId=%s) ) as tab"
     #     cursor.execute(sql, (ownerId, ownerId))
     #     data = cursor.fetchall()
-
+    print(ownerId)
     result = (
         Project.select(
             Project.name,
@@ -93,7 +92,7 @@ def project_list(ownerId):
             Project.createAt,
             Project.type,
             SQL(" 'pm' As 'role' ")
-        ).where(Project.ownerId == ownerId & Project.status == 'active')
+        ).where(Project.status == 'active' and Project.ownerId == ownerId)
         |
         Project.select(
             Project.name,
@@ -109,4 +108,5 @@ def project_list(ownerId):
         ).join(ProjectMember, on=(Project.id == ProjectMember.projectId)).where(ProjectMember.memberId == ownerId)
     )
     result = list(result.dicts())
+    print(result)
     return {'data': result, 'total': len(result)}
