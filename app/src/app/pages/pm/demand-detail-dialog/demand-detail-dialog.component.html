@@ -1,7 +1,7 @@
 <div>
   <mat-toolbar class="demand-detail-header">
     <!--<span>项目名称</span><span> > </span>-->
-    <span *ngIf="mode === 'update'">{{demandInfo.title}}</span>
+    <span *ngIf="mode === 'update'">{{demandInfo?.title}}</span>
     <span *ngIf="mode === 'create'">新建需求</span>
   </mat-toolbar>
 </div>
@@ -20,7 +20,7 @@
 
       <mat-form-field>
         <input matInput *ngIf="mode=='create'" placeholder="任务指定(创建需求时不可指定任务)" [formControl]="assignTask" readonly>
-        <input matInput *ngIf="mode=='update'" placeholder="任务指定" [formControl]="assignTask" [(ngModel)]="demandInfo.activityTittle" name="activityTittle" readonly>
+        <input matInput *ngIf="mode=='update'" placeholder="任务指定(编辑需求时不可指定任务)" [formControl]="assignTask" [(ngModel)]="demandInfo.activityTittle" name="activityTittle" readonly>
       </mat-form-field>
 
       <mat-form-field>
