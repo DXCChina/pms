@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 import { ListMetrics, ItemMetrics } from '../../pm/pm-dashboard.component/card-data.Entity';
 import { DashboardService } from '../../pm/pm-dashboard.component/dashboard.service';
 import { MatDialog } from '@angular/material';
-import { CaseDetailModalComponent } from "../case-detail-modal/case-detail-modal.component";
-import { TestCaseDetailService } from "./test-dashboard.service";
+import { CaseDetailModalComponent } from '../case-detail-modal/case-detail-modal.component';
 
 @Component({
   selector: 'app-test-dashboard',
   templateUrl: './test-dashboard.component.html',
-  styleUrls: ['./test-dashboard.component.scss'],
-  providers: [TestCaseDetailService]
+  styleUrls: ['./test-dashboard.component.scss']
 })
-
 export class TestDashboardComponent implements OnInit {
 
   public activityData: any[] = [];
@@ -146,26 +144,32 @@ export class TestDashboardComponent implements OnInit {
   addItem() {
     console.log('add');
   }
-  
-  showTaskDetail(data) {}
+
+  showActivityDetail(data) {
+    console.log(data);
+  }
+
+  showResultDetail(data) {
+    console.log(data);
+  }
 
   addCase() {
-    let dialogRef = this.dialog.open(CaseDetailModalComponent, {
+    const dialogRef = this.dialog.open(CaseDetailModalComponent, {
       width: '750px',
       height: '61vh',
-      data: {mode: 'create'}
-      });
+      data: { mode: 'create' }
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
     });
   }
-    
+
   showCaseDetail(data) {
-    let dialogRef = this.dialog.open(CaseDetailModalComponent, {
+    const dialogRef = this.dialog.open(CaseDetailModalComponent, {
       width: '750px',
       height: '61vh',
-      data: {mode: 'update', caseInfo: data}
+      data: { mode: 'update', caseInfo: data }
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -9,23 +9,24 @@ import {
   MatTabsModule, MatCardModule, MatExpansionModule, MatCheckboxModule, MatSliderModule, MatListModule,
   MatProgressSpinnerModule, MatChipsModule, MatGridListModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule,
   MatProgressBarModule, MatToolbarModule, MatTooltipModule, MatFormFieldModule
-} from "@angular/material";
+} from '@angular/material';
+import { ToasterModule } from 'angular2-toaster';
 
-import {PmComponent} from "./pm.component";
-import {PmDashboardComponent} from "./pm-dashboard.component/pm-dashboard.component";
-import {PmActivityComponent} from "./pm-activity.component/pm-activity.component";
-import {PmPeoplemanageComponent} from "../../theme/components/pm-peoplemanage/pm-peoplemanage.component";
+import { PmComponent } from './pm.component';
+import { PmDashboardComponent } from './pm-dashboard.component/pm-dashboard.component';
+import { PmActivityComponent } from './pm-activity.component/pm-activity.component';
+import { PmPeoplemanageComponent } from '../../theme/components/pm-peoplemanage/pm-peoplemanage.component';
 
-
-import {TaskDetailDialogComponent} from "./task-detail-dialog/task-detail-dialog.component";
-import {DemandDetailDialogComponent} from "./demand-detail-dialog/demand-detail-dialog.component";
-import {ToasterModule} from "angular2-toaster";
+import { TaskDetailDialogComponent } from './task-detail-dialog/task-detail-dialog.component';
+import { DemandDetailDialogComponent } from './demand-detail-dialog/demand-detail-dialog.component';
 
 @NgModule({
   declarations: [
     PmComponent,
     PmDashboardComponent,
-    PmActivityComponent
+    PmActivityComponent,
+    TaskDetailDialogComponent,
+    DemandDetailDialogComponent
   ],
   imports: [
     CommonModule,
@@ -63,7 +64,8 @@ import {ToasterModule} from "angular2-toaster";
 
   ],
   entryComponents: [
-
+    TaskDetailDialogComponent,
+    DemandDetailDialogComponent
   ]
 })
 export class PmModule { }
