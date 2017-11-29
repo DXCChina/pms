@@ -1,3 +1,5 @@
+# local:http://localhost:81/docs/swagger?url=http://localhost:81/docs/swagger.yml
+# remote:https://dxcchina.github.io/pms/swagger?url=https://dxcchina.github.io/pms/swagger.yml
 swagger: "2.0"
 
 info:
