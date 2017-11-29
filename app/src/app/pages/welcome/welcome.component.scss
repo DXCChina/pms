@@ -106,7 +106,8 @@ ul {
   width: auto;
   height: 115px;
   //background: rgba(75, 177, 52, 1) ;
-  background: #8847dc;
+  //background: #8847dc;
+  background: rgba(136 ,71 ,220, 1);
   border-radius: 3px;
   h3 {
     margin: 26px 0 10px 30px;
@@ -117,6 +118,10 @@ ul {
     margin: 0 0 10px 30px;
     color: #ffffff;
   }
+}
+
+.join {
+  background: rgba(63, 81, 181, 1)
 }
 
 .proItem-addMain {
@@ -137,7 +142,14 @@ ul li .proItem-addMain:hover {
 
 ul li .proItem-Content:hover {
   //background: rgba(75, 177, 52, 0.9);
-  background: #8847dc;
+    background: rgba(136,71,220, .9);
+  //background: #8847dc;
+}
+
+ul li .proItem-Content.join:hover {
+  //background: rgba(75, 177, 52, 0.9);
+  background: rgba(63, 81, 181, .9)
+  //background: #8847dc;
 }
 
 @media screen and (max-width: 990px) {

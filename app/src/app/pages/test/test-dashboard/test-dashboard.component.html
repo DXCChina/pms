@@ -1,4 +1,5 @@
-<div>dev-dashboard</div>
-<button (click)="addCase()">new case</button>
-<button (click)="showCaseDetail()">review case</button>
-
+<div class="card-container">
+    <app-list-card *ngIf="activityData.length" [data]="activityData" (addItem)="addItem()" (showDetail)="showTaskDetail($event)"></app-list-card>
+    <app-list-card *ngIf="testCaseData.length" [data]="testCaseData" (addItem)="addCase()" (showDetail)="showCaseDetail($event)"></app-list-card>
+    <app-list-card *ngIf="testResultData.length" [data]="testResultData" (addItem)="addItem()" (showDetail)="showTaskDetail($event)"></app-list-card>
+</div>

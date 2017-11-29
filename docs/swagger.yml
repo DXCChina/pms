@@ -6,6 +6,56 @@ info:
 basePath: "/api"
 paths:
 # @author: Wang Jianhui
+  /project/{project_id}/users:
+    get:
+      summary: 查询项目成员
+      operationId: controller.activity.project_user
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+  /demand:
+    get:
+      summary: 查询需求
+      operationId: controller.activity.demand_search
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: title
+          in: query
+          required: true
+          type: string
+        - name: projectId
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+  /activity:
+    post:
+      summary: 创建活动
+      operationId: controller.activity.activity_add
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: activity
+          in: body
+          description: user to add to the system
+          required: true
+          schema:
+            $ref: '#/definitions/Activity'
+      responses:
+        200:
+          description: 活动创建成功
   /login:
     post:
       summary: api
@@ -60,6 +110,19 @@ paths:
       responses:
         200:
           description: ok
+
+  /project/name/{project_name}:
+    get:
+      summary: 查找项目名称
+      operationId: controller.info.find_one_project_by_name
+      parameters:
+        - name: project_name
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: ok
   /task:
     get:
       summary: api
@@ -76,18 +139,18 @@ paths:
         - name: project_id
           in: path
           required: true
-          type: number
+          type: integer
       responses:
         200:
           description: ok
     put:
-      summary: api
+      summary: 项目信息更新
       operationId: controller.project.project_update
       parameters:
         - name: project_id
           in: path
           required: true
-          type: number
+          type: integer
       responses:
         200:
           description: ok
@@ -106,7 +169,7 @@ paths:
         - name: project_id
           in: path
           required: true
-          type: number
+          type: integer
       responses:
         200:
           description: ok
@@ -117,7 +180,7 @@ paths:
         - name: project_id
           in: path
           required: true
-          type: number
+          type: integer
       responses:
         200:
           description: ok
@@ -263,10 +326,74 @@ paths:
       operationId: controller.case.case_detail
       parameters:
         - name: case_id
+         in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+# @author: Wang Qianxiang
+  /dashboard/{project_id}/demand:
+    get:
+      summary: 获取项目需求
+      operationId: controller.dashboard.project_demand
+      parameters:
+        - name: project_id
           in: path
           required: true
           type: integer
       responses:
         200:
           description: ok
-
+  /dashboard/{project_id}/activity:
+    get:
+      summary: 获取项目活动
+      operationId: controller.dashboard.project_activity
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+  /dashboard/{project_id}/testCase:
+    get:
+      summary: 获取项目测试案例
+      operationId: controller.dashboard.project_test_case
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+  /dashboard/{project_id}/testResult:
+    get:
+      summary: 获取项目测试结果
+      operationId: controller.dashboard.project_test_result
+      parameters:
+        - name: project_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+definitions:
+  Activity:
+    type: object
+    properties:
+      title:
+        type: string
+      projectId:
+        type: integer
+      demand:
+        type: array
+        items:
+          type: integer
+    required:
+    - title
+    - projectId
+    - demand
