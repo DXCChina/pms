@@ -79,7 +79,7 @@ class MySQLModel(Model):
 
     @classmethod
     def getOne(cls, *query, **kwargs):
-        # 数据不存在返回None，而不是抛出异常
+        '''数据不存在返回None，而不是抛出异常,use "sget" instead'''
         try:
             return cls.get(*query, **kwargs)
         except DoesNotExist:
