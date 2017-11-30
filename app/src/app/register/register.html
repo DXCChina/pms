@@ -11,14 +11,14 @@
     <div id="RegisterPart">
 
       <div id="re-Email" class="baseline" [ngClass]="{'has-error': (!email.valid && email.touched), 'has-success': (email.valid && email.touched)}">
-        <input type="email" [formControl]="email" name="" id="emailInput"  placeholder="注册邮箱"/>
+        <input type="email" [formControl]="email" autocomplete="off" name="" id="emailInput"  placeholder="注册邮箱"/>
         <span class="email-Img"></span>
         <!--<div class="line"></div>-->
         <span *ngIf="email.invalid && email.touched" class="help-block sub-little-text">邮箱格式不正确</span>
       </div>
 
       <div id="re-Name" class="baseline" [ngClass]="{'has-error': (!name.valid && name.touched), 'has-success': (name.valid && name.touched)}">
-        <input type="text" [formControl]="name" name="" id="nameInput" value="" placeholder="用户名"/>
+        <input type="text" [formControl]="name" autocomplete="off" name="" id="nameInput" value="" placeholder="用户名"/>
         <span class="name-Img"></span>
         <!--<div class="line"></div>-->
         <span *ngIf="name.invalid && name.touched" class="help-block sub-little-text">用户名不能少于四位</span>

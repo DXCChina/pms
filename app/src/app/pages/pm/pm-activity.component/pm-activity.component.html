@@ -30,7 +30,7 @@
 
     <div class="pm-activity-body">
 
-      <mat-card class="owner-card">
+      <mat-card>
         <h3 class="manage-title">归属信息</h3>
         <hr />
 
@@ -47,7 +47,7 @@
         </div>
       </mat-card>
 
-      <mat-card>
+      <mat-card class="owner-card">
 
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" *ngIf="projectDetail">
 
@@ -103,26 +103,25 @@
 
         </form>
 
+      </mat-card>
+
+      <mat-card>
+
+        <h3 class="manage-title">人员管理</h3>
         <hr />
-          <h3 class="manage-title">人员管理</h3>
-        <hr />
 
-        <mat-card>
+        <people-manage
+          *ngIf="members"
+          [dataListModel]="dataListModel"
+          [searchList]="searchList"
+          [displayOnly]="false"
+          [roleField]="'username'"
+          [(datas)]="members.data"
+          (outDelete)="delete($event)"
+          (outCreate)="create($event)"
+          (outSearch)="search($event)">
 
-          <people-manage
-            *ngIf="members"
-            [dataListModel]="dataListModel"
-            [searchList]="searchList"
-            [displayOnly]="false"
-            [roleField]="'username'"
-            [(datas)]="members.data"
-            (outDelete)="delete($event)"
-            (outCreate)="create($event)"
-            (outSearch)="search($event)">
-
-          </people-manage>
-
-        </mat-card>
+        </people-manage>
 
       </mat-card>
 
