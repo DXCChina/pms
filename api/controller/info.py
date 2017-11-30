@@ -29,7 +29,6 @@ def project_list():
 
     GET /api/project
     '''
-    print(get_jwt_identity())
     return jsonify(info.project_list(get_jwt_identity()))
 
 
@@ -40,7 +39,6 @@ def project_add():
 
     POST /api/project
     '''
-    print(request.json)
     if not request.json or\
         not 'name' in request.json:
         return jsonify({"msg": "Missing json in request"}), 400
@@ -55,7 +53,6 @@ def project_add():
 
     if 'user_id' in session:
         data['ownerId'] = session['user_id']
-    print(data)
 
     return info.project_add(data), 201
 

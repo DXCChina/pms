@@ -61,8 +61,9 @@ export class PmPeoplemanageComponent implements AfterViewInit {
 
   create() {
     this.state = this.state === 'active' ? 'inactive' : 'active';
-    this.choosedData[this.roleField] = this.post;
-    if (!this.datas.some(item => item.name === this.choosedData.name)) {
+    this.choosedData['role'] = this.post;
+    console.log(this.choosedData);
+    if (!this.datas.some(item => item[this.roleField] === this.choosedData[this.roleField])) {
       this.outCreate.emit(this.choosedData);
       this.datas.push(this.choosedData);
       this.datasChange.emit(this.datas);

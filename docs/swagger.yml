@@ -214,6 +214,35 @@ paths:
       responses:
         200:
           description: ok
+  /project/member:
+    get:
+      summary: 模糊查询成员
+      operationId: controller.project.fuzzy_query_member
+      parameters:
+        - name: name
+          in: query
+          required: true
+          type: string
+      responses:
+        200:
+          description: ok
+    post:
+      summary: 添加项目成员
+      operationId: controller.project.project_member_add
+      responses:
+        200:
+          description: ok
+    delete:
+      summary: 删除项目成员
+      operationId: controller.project.project_member_delete
+      parameters:
+        - name: id
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
 # @author: Xing Dong
   /project/demand:
     post:

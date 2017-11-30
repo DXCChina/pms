@@ -1,5 +1,7 @@
 import {Component} from "@angular/core";
 import {PeopleManageModel} from "../../../theme/components/pm-peoplemanage/pm-peoplemanage.model";
+import {Detail_memberService} from "../../detail_member.service";
+import {GlobalState} from "../../../global.state";
 
 @Component({
   selector: 'test-activity',
@@ -7,39 +9,41 @@ import {PeopleManageModel} from "../../../theme/components/pm-peoplemanage/pm-pe
   styleUrls: ['./test-activity.component.scss']
 })
 export class TestActivityComponent {
-  dataListModel: PeopleManageModel[];
-  datas: any[];
+ dataListModel: PeopleManageModel[];
+  projectDetail: any;
+  memberList: any;
 
-  constructor() {
+  constructor(private service: Detail_memberService, private Global: GlobalState) {
     this.dataListModel = [
-      { name: '姓名', value: 'name' },
-      { name: '职位', value: 'job' },
+      { name: '姓名', value: 'username' },
+      { name: '职位', value: 'role' },
       { name: '邮箱', value: 'email' },
-      { name: '时间', value: 'date' },
     ];
-    this.datas = [
-      {
-        name: 'pm',
-        job: 'pm',
-        email: 'jerry@hpe.com',
-        date: '2017/11/22',
-        id: 'sdfasfsf',
-      },
-      {
-        name: 'tom',
-        job: 'dev',
-        email: 'tom@hpe.com',
-        date: '2017/11/23',
-        id: 'sfaswe',
-      },
-      {
-        name: 'diner',
-        job: 'test',
-        email: 'diner@hpe.com',
-        date: '2017/11/21',
-        id: 'sfaswe',
-      }
-    ];
+  }
+
+  ngOnInit() {
+    this.getProjectDetail();
+    this.getMember();
+  }
+
+  getProjectDetail() {
+    this.service.getProjectDetail()
+      .then(res => {
+        this.projectDetail = res;
+      })
+      .catch(err => {
+        console.log(err)
+      });
+  }
+
+  getMember() {
+    this.service.getMember()
+      .then(res => {
+        this.memberList = res;
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
 }
