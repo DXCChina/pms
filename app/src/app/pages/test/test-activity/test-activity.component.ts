@@ -10,6 +10,7 @@ import {GlobalState} from "../../../global.state";
 })
 export class TestActivityComponent {
  dataListModel: PeopleManageModel[];
+ projectType: any[];
   projectDetail: any;
   memberList: any;
 
@@ -18,6 +19,11 @@ export class TestActivityComponent {
       { name: '姓名', value: 'username' },
       { name: '职位', value: 'role' },
       { name: '邮箱', value: 'email' },
+    ];
+    this.projectType = [
+      { name: '短期项目', value: 'short-term'},
+      { name: '长期项目', value: 'long-term'},
+      { name: '运维项目', value: 'operation'},
     ];
   }
 

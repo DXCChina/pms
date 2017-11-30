@@ -51,7 +51,6 @@ export class PmActivityComponent implements OnInit {
     form.status = 'active';
     form.startDate = this.dateSwitch(form.startDate);
     form.endDate = this.dateSwitch(form.endDate);
-    console.log(form);
     this.updateProject(form);
   }
 
@@ -108,6 +107,10 @@ export class PmActivityComponent implements OnInit {
       }, err => {
         console.log(err);
     });
+  }
+
+  cancelModify() {
+    this.getProjectDetail();
   }
 
   fuzzyQuery(search: string) {

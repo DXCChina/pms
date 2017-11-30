@@ -27,7 +27,7 @@
 
     <div class="pm-activity-body">
 
-      <mat-card class="owner-card">
+      <mat-card>
         <h3 class="manage-title">归属信息</h3>
         <hr />
 
@@ -44,23 +44,25 @@
         </div>
       </mat-card>
 
-      <mat-card>
-        <div class="pm-activity-body-title">
-          <p>基础信息</p>
-        </div>
+      <mat-card class="owner-card">
+        <!--<div class="pm-activity-body-title">-->
+          <!--<p>基础信息</p>-->
+        <!--</div>-->
+        <h3 class="manage-title">基础信息</h3>
+        <hr />
         <div class="pm-activity-body-content" *ngIf="projectDetail">
           <mat-form-field>
-            <input matInput #input placeholder="项目名称" readonly>
+            <input matInput #input placeholder="项目名称" readonly [(ngModel)]="projectDetail.name" name="projectName">
             <mat-hint align="end">{{input.value?.length || 0}}</mat-hint>
           </mat-form-field>
 
           <mat-form-field>
-            <textarea matInput #textarea placeholder="项目描述" readonly></textarea>
+            <textarea matInput #textarea placeholder="项目描述" readonly [(ngModel)]="projectDetail.detail" name="projectDetail"></textarea>
             <mat-hint align="end">{{textarea.value?.length || 0}}</mat-hint>
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select placeholder="项目类型">
+            <mat-select placeholder="项目类型" disabled [(ngModel)]="projectDetail.type" name="projectType">
               <mat-option *ngFor="let type of projectType" [value]="type.value">
                 {{ type.name }}
               </mat-option>
@@ -69,32 +71,32 @@
 
           <div class="date-picker">
             <mat-form-field>
-              <input matInput [(ngModel)]="projectDetail.startDate" [matDatepicker]="startPicker" placeholder="创建时间" (dateChange)="startEvent($event)">
+              <input matInput readonly [(ngModel)]="projectDetail.startDate" [matDatepicker]="startPicker" placeholder="创建时间" (dateChange)="startEvent($event)">
               <mat-datepicker-toggle [disabled]="true" matSuffix [for]="startPicker"></mat-datepicker-toggle>
               <mat-datepicker #startPicker></mat-datepicker>
             </mat-form-field>
             <mat-form-field>
-              <input matInput [(ngModel)]="projectDetail.endDate" [matDatepicker]="endPicker" placeholder="结束时间" (dateChange)="endEvent($event)">
+              <input matInput readonly [(ngModel)]="projectDetail.endDate" [matDatepicker]="endPicker" placeholder="结束时间" (dateChange)="endEvent($event)">
               <mat-datepicker-toggle [disabled]="true" matSuffix [for]="endPicker"></mat-datepicker-toggle>
               <mat-datepicker #endPicker></mat-datepicker>
             </mat-form-field>
           </div>
         </div>
 
-        <hr />
+      </mat-card>
+
+      <mat-card>
+
           <h3 class="manage-title">人员信息</h3>
         <hr />
 
-        <mat-card>
 
-          <people-manage
-            *ngIf="memberList"
-            [dataListModel]="dataListModel"
-            [(datas)]="memberList.data">
+        <people-manage
+          *ngIf="memberList"
+          [dataListModel]="dataListModel"
+          [(datas)]="memberList.data">
 
-          </people-manage>
-
-        </mat-card>
+        </people-manage>
 
       </mat-card>
 

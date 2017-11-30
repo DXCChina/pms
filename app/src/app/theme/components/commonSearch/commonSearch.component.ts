@@ -1,19 +1,21 @@
-import {Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output} from "@angular/core";
+import {Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output} from "@angular/core";
 import {FormControl, FormGroup} from "@angular/forms";
-import {Observable} from "rxjs/Observable";
+import {Observable, Subscribable} from "rxjs/Observable";
+import {Subscription} from "rxjs/Subscription";
 
 @Component({
   selector: 'common-search',
   templateUrl: './commonSearch.component.html',
   styleUrls: ['./commonSearch.component.scss']
 })
-export class CommonSearchComponent implements OnInit, OnChanges {
+export class CommonSearchComponent implements OnInit, OnChanges, OnDestroy {
   @Input() placeHolder: string;
   @Input() field: string;
   @Input() searchList: any[];
   @Input() value: string;
   @Output() search: EventEmitter<string> = new EventEmitter<string>();
   @Output() select: EventEmitter<any> = new EventEmitter<any>();
+  searchObservable: Subscription;
   form: FormGroup;
   // value: string;
   display: string = '';
@@ -27,7 +29,7 @@ export class CommonSearchComponent implements OnInit, OnChanges {
       search: new FormControl('')
     });
 
-    Observable.fromEvent(this.ref.nativeElement, 'keyup')
+    this.searchObservable = Observable.fromEvent(this.ref.nativeElement, 'keyup')
       .map( (e: any) =>  e.target.value )
       .debounceTime(500)
       .subscribe((search: any) => {
@@ -47,11 +49,17 @@ export class CommonSearchComponent implements OnInit, OnChanges {
       this.display = 'show';
     }
   }
+
+  ngOnDestroy() {
+    this.searchObservable.unsubscribe();
+  }
+
   choose(data: any) {
     this.value = data[this.field];
     this.display = '';
     this.select.emit(data);
   }
+
   clear() {
     this.value = '';
     this.display = '';
