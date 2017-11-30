@@ -19,6 +19,9 @@ a:focus, button:focus {}
   justify-content: flex-start;
   align-content: center;
   border-radius: 2px;
+  .wrap-card {
+    background: #fafafa;
+  }
 }
 .manage-title {
   font-size: 16px;
@@ -43,7 +46,7 @@ a:focus, button:focus {}
     justify-content: flex-start;
     align-content: center;
     padding: 5px;
-    border-top: 1px solid rgba(0, 0, 0, .12);
+    //border-top: 1px solid rgba(0, 0, 0, .12);
     border-bottom: 1px solid rgba(0, 0, 0, .12);
     .pm-activity-btnGroup {
 
@@ -58,9 +61,7 @@ a:focus, button:focus {}
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-around;
-    margin: 30px 0;
     padding: 20px;
-    background: whitesmoke;
     .mat-form-field {
       width: 100%;
     }
@@ -75,4 +76,20 @@ a:focus, button:focus {}
     }
   }
 
+}
+
+.project-owner-info {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 0 20px;
+
+  b {
+    margin-right: 10px;
+  }
+}
+.owner-card {
+  margin: 30px 0;
 }

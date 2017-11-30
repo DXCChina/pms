@@ -30,7 +30,7 @@
 
     <div class="pm-activity-body">
 
-      <mat-card class="owner-card">
+      <mat-card>
         <h3 class="manage-title">归属信息</h3>
         <hr />
 
@@ -39,7 +39,7 @@
             <p><b>拥有者:</b>{{projectDetail?.username}}</p>
           </div>
              <div class="owener-info-item">
-            <p><b>职位:</b>{{projectDetail?.role}}</p>
+            <p><b>职位:</b>{{projectDetail?.role === 'pm' ? '项目经理' : projectDetail?.role}}</p>
           </div>
              <div class="owener-info-item">
             <p><b>邮箱:</b>{{projectDetail?.email}}</p>
@@ -47,15 +47,15 @@
         </div>
       </mat-card>
 
-      <mat-card>
+      <mat-card class="owner-card">
 
         <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)" *ngIf="projectDetail">
 
           <div class="pm-activity-body-title">
             <p>信息修改</p>
             <div class="pm-activity-btnGroup">
-              <button mat-button color="primary">取消</button>
-              <button mat-button [disabled]="!form.valid" color="primary">保存</button>
+              <button mat-button color="primary" (click)="cancelModify()">取消</button>
+              <button mat-button type="submit" [disabled]="!form.valid" color="primary">保存</button>
             </div>
           </div>
           <div class="pm-activity-body-content">
@@ -103,26 +103,25 @@
 
         </form>
 
+      </mat-card>
+
+      <mat-card>
+
+        <h3 class="manage-title">人员管理</h3>
         <hr />
-          <h3 class="manage-title">人员管理</h3>
-        <hr />
 
-        <mat-card>
+        <people-manage
+          *ngIf="members"
+          [dataListModel]="dataListModel"
+          [searchList]="searchList"
+          [displayOnly]="false"
+          [roleField]="'username'"
+          [(datas)]="members.data"
+          (outDelete)="delete($event)"
+          (outCreate)="create($event)"
+          (outSearch)="search($event)">
 
-          <people-manage
-            *ngIf="members"
-            [dataListModel]="dataListModel"
-            [searchList]="searchList"
-            [displayOnly]="false"
-            [roleField]="'job'"
-            [(datas)]="members.data"
-            (outDelete)="delete($event)"
-            (outCreate)="create($event)"
-            (outSearch)="search($event)">
-
-          </people-manage>
-
-        </mat-card>
+        </people-manage>
 
       </mat-card>
 

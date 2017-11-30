@@ -42,6 +42,14 @@ DB_CONF['cursorclass'] = cursors.DictCursor
 db = connect(**DB_CONF)
 
 
+class ListField(FixedCharField):
+    def db_value(self, value):
+        return ','.join(str(v) for v in value)  # convert list to str
+
+    def python_value(self, value):
+        return value.split(',')  # convert str to list
+
+
 def db_autoId():
     return IntegerField(primary_key=True, constraints=[SQL('AUTO_INCREMENT')])
 
@@ -79,7 +87,7 @@ class MySQLModel(Model):
 
     @classmethod
     def getOne(cls, *query, **kwargs):
-        # 数据不存在返回None，而不是抛出异常
+        '''数据不存在返回None，而不是抛出异常,use "sget" instead'''
         try:
             return cls.get(*query, **kwargs)
         except DoesNotExist:
@@ -97,7 +105,7 @@ class MySQLModel(Model):
 
     @classmethod
     def sget(cls, *query):
-        '''数据不存在返回None，而不是抛出异常'''
+        '''封装 peewee get 接口,数据不存在返回None，而不是抛出异常'''
         try:
             return cls.get(*query)
         except DoesNotExist:
@@ -105,15 +113,15 @@ class MySQLModel(Model):
 
     @classmethod
     def sfind(cls, *select):
-        '''数据不存在返回空字典，而不是抛出异常'''
+        '''封装 peewee select 接口,数据不存在返回空字典，而不是抛出异常'''
         try:
             return cls.find(*select)
         except DoesNotExist:
             return {}
 
 
-# 用户表
 class User(MySQLModel):
+    '''用户表'''
     id = db_autoId()
     username = FixedCharField(unique=True, max_length=50)
     password = FixedCharField(max_length=100)
@@ -125,8 +133,8 @@ class User(MySQLModel):
         db_table = 'user'
 
 
-# 需求表
 class Demand(MySQLModel):
+    '''需求表'''
     id = db_autoId()
     title = db_char()
     detail = TextField(null=True)
@@ -140,11 +148,11 @@ class Demand(MySQLModel):
         db_table = 'demand'
 
 
-# 活动表
 class ActivityBase(MySQLModel):
+    '''活动表基类'''
     title = db_char()
     detail = TextField(null=True)
-    memberId = IntegerField(null=True)
+    memberId = ListField(max_length=10, null=True)
     projectId = db_id()
     progress = IntegerField(null=True)
     cost = IntegerField(null=True)
@@ -161,11 +169,12 @@ class ActivityBase(MySQLModel):
 
 
 class Activity(ActivityBase):
+    '''活动表'''
     id = db_autoId()
 
 
-# 项目表
 class Project(MySQLModel):
+    '''项目表'''
     id = db_autoId()
     name = FixedCharField(unique=True, max_length=50)
     detail = TextField(null=True)
@@ -180,8 +189,8 @@ class Project(MySQLModel):
         db_table = 'project'
 
 
-# 项目成员
 class ProjectMember(MySQLModel):
+    '''项目成员'''
     id = db_autoId()
     memberId = ForeignKeyField(User, related_name='project')
     projectId = db_id()
@@ -191,8 +200,8 @@ class ProjectMember(MySQLModel):
         db_table = 'project_member'
 
 
-# 测试用例表
 class TestCase(MySQLModel):
+    '''测试用例表'''
     id = db_autoId()
     name = db_char()
     detail = TextField(null=True)
@@ -207,8 +216,8 @@ class TestCase(MySQLModel):
         db_table = 'test_case'
 
 
-# 测试结果表
 class TestResult(MySQLModel):
+    '''测试结果表'''
     id = db_autoId()
     name = db_char()
     detail = TextField(null=True)

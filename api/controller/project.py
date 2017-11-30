@@ -81,3 +81,26 @@ def project_user_update(project_id):
             project.update_project_users(project_id, request.json['data']))
     except PermissionDenied:
         return jsonify({'msg': 'PermissionDenied'})
+
+@fresh_jwt_required
+def fuzzy_query_member():
+    '''模糊查询用户'''
+    return {
+        "message": "ok",
+        "data": project.fuzzy_query(request.args.to_dict())
+    }
+
+@fresh_jwt_required
+def project_member_add():
+    '''添加项目成员'''
+    return {
+        "message": "ok",
+        "data": project.member_add(request.json)
+    }
+@fresh_jwt_required
+def project_member_delete():
+    '''删除项目成员'''
+    return {
+        "message": "ok",
+        "data": project.member_delete(request.args.to_dict())
+    }
