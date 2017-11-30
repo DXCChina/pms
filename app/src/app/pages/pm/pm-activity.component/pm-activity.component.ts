@@ -109,6 +109,10 @@ export class PmActivityComponent implements OnInit {
     });
   }
 
+  cancelModify() {
+    this.getProjectDetail();
+  }
+
   fuzzyQuery(search: string) {
     this.service.fuzzyQuery(search)
       .then(res => {
