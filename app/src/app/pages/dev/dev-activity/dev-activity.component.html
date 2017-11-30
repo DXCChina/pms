@@ -44,9 +44,11 @@
       </mat-card>
 
       <mat-card class="owner-card">
-        <div class="pm-activity-body-title">
-          <p>基础信息</p>
-        </div>
+        <!--<div class="pm-activity-body-title">-->
+          <!--<p>基础信息</p>-->
+        <!--</div>-->
+        <h3 class="manage-title">基础信息</h3>
+        <hr />
         <div class="pm-activity-body-content" *ngIf="projectDetail">
           <mat-form-field>
             <input matInput #input placeholder="项目名称" readonly [(ngModel)]="projectDetail.name" name="projectName">

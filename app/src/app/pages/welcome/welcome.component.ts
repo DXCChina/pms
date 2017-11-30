@@ -13,7 +13,8 @@ import {GlobalState} from "../../global.state";
 })
 
 export class WelcomeComponent implements OnInit {
-
+  personalNum: number;
+  participatingNum: number;
   projects = { data: [], total: 0 };
   taskList = {data: [], total: 0};
   userRoleInProject: string = '';
@@ -40,6 +41,8 @@ export class WelcomeComponent implements OnInit {
       .then(res => {
         this.projects.data = res.data;
         this.projects.total = res.total;
+        this.personalNum = res.data.filter(item => item.role == 'pm').length;
+        this.participatingNum = res.data.length - this.personalNum;
         // if (this.projects.length > 6) {
         //   this.projects = this.projects.slice(0, 7);
         // }
@@ -79,7 +82,7 @@ export class WelcomeComponent implements OnInit {
     //     this.router.navigate([`/pages/${this.userRoleInProject}/dashboard`]);
     //     sessionStorage.setItem("userRoleInProject", this.userRoleInProject);
     //   });
-
+    // this.userRoleInProject = project.role;
     this.router.navigate([`/pages/${project.role}/dashboard`]);
     sessionStorage.setItem("userRoleInProject", project.role);
     sessionStorage.setItem("projectId", projectId);
