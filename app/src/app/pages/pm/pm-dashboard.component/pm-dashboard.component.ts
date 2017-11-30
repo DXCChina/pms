@@ -21,7 +21,6 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
   public testResultData: any[] = [];
 
   private eventSubscriber: Subscription;
-  private subscription: Subscription;
 
   constructor(private router: Router, private service: DashboardService, private dialog: MatDialog, private eventManager: JhiEventManager) {
   }
@@ -184,7 +183,6 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // this.subscription.unsubscribe();
     this.eventManager.destroy(this.eventSubscriber);
   }
 

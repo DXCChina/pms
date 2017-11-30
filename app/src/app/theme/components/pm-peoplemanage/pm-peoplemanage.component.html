@@ -18,7 +18,7 @@
     <mat-list-item *ngFor="let data of datas" [ngClass]="{'people-part': true}">
        <div class="people-item-body">
           <p *ngFor="let item of dataListModel" class="item-cell">
-            {{item.value === 'job' ? (data[item.value] | positionSwitch) : data[item.value]}}
+            {{item.value === 'role' ? (data[item.value] | positionSwitch) : data[item.value]}}
           </p>
        </div>
        <button *ngIf="!displayOnly" mat-icon-button (click)="delete(data)">
@@ -47,7 +47,7 @@
           <common-search
             [ngStyle]="{width: '35%', marginTop: '12px'}"
             [placeHolder]="'人员搜索'"
-            [field]="'name'"
+            [field]="roleField"
             [searchList]="searchList"
             (search)="emitSearch($event)"
             (select)="select($event)">

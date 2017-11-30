@@ -7,35 +7,26 @@
 .welcome-title {
   max-width: 1250px;
   margin: 15px auto;
-  .countProject {
+  .countPart {
     height: 100px;
     margin:15px auto;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
     p {
-      margin:-10px auto;
-      font-weight: 400;
-      font-size:14px;
-      text-align: center;
-      width: 200px;
+      //color: rgba(0,0,0,.54);
+      color: #8847dc;
+      font-size: 16px;
+      font-weight: 500;
     }
-  }
-  .countProject:hover {
-    cursor: pointer;
-    outline: none;
-  }
-  .countDevice {
-    height:100px;
-    margin:15px auto;
-    p {
-      margin:-10px auto;
+    h3 {
+      font-size: 54px;
       font-weight: 400;
-      font-size:14px;
-      text-align: center;
-      width: 200px;
+      color: #922FD3;
+      //color: rgba(0,0,0,.54);
     }
-  }
-  .countDevice:hover {
-    cursor: pointer;
-    outline: none;
   }
   .welcome-svg {
     width: 120px;
@@ -102,21 +93,25 @@ ul {
   }
 }
 .proItem-Content {
-  padding:4px;
   width: auto;
   height: 115px;
   //background: rgba(75, 177, 52, 1) ;
   //background: #8847dc;
   background: rgba(136 ,71 ,220, 1);
   border-radius: 3px;
-  h3 {
-    margin: 26px 0 10px 30px;
-    font-size: 20px;
-    color: #ffffff;
-  }
-  p {
-    margin: 0 0 10px 30px;
-    color: #ffffff;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: white;
+  box-sizing: border-box;
+  padding: 22px;
+  .proItem-Content-footer {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    box-sizing: border-box;
   }
 }
 

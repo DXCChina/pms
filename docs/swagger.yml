@@ -1,3 +1,5 @@
+# local:http://localhost:81/docs/swagger?url=http://localhost:81/docs/swagger.yml
+# remote:https://dxcchina.github.io/pms/swagger?url=https://dxcchina.github.io/pms/swagger.yml
 swagger: "2.0"
 
 info:
@@ -207,6 +209,35 @@ paths:
       parameters:
         - name: project_id
           in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+  /project/member:
+    get:
+      summary: 模糊查询成员
+      operationId: controller.project.fuzzy_query_member
+      parameters:
+        - name: name
+          in: query
+          required: true
+          type: string
+      responses:
+        200:
+          description: ok
+    post:
+      summary: 添加项目成员
+      operationId: controller.project.project_member_add
+      responses:
+        200:
+          description: ok
+    delete:
+      summary: 删除项目成员
+      operationId: controller.project.project_member_delete
+      parameters:
+        - name: id
+          in: query
           required: true
           type: integer
       responses:
@@ -424,7 +455,6 @@ definitions:
     required:
     - title
     - projectId
-    - demand
   Activity:
     type: object
     properties:
@@ -441,8 +471,8 @@ definitions:
         items:
           type: integer
       memberId:
-        type: integer
+        type: array
+        items:
+          type: integer
     required:
     - title
-    - demand
-
