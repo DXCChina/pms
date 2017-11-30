@@ -152,7 +152,7 @@ class ActivityBase(MySQLModel):
     '''活动表基类'''
     title = db_char()
     detail = TextField(null=True)
-    memberId = ListField(max_length=10, null=True)
+    # memberId = IntegerField(null=True)
     projectId = db_id()
     progress = IntegerField(null=True)
     cost = IntegerField(null=True)
@@ -198,6 +198,17 @@ class ProjectMember(MySQLModel):
 
     class Meta:
         db_table = 'project_member'
+
+
+class ActivityMember(MySQLModel):
+    '''活动成员'''
+    id = db_autoId()
+    activityId = ForeignKeyField(Activity, related_name='user')
+    memberId = ForeignKeyField(User, related_name='activity')
+    role = db_option(default='dev', comment='用户角色:dev/test')
+
+    class Meta:
+        db_table = 'activity_member'
 
 
 class TestCase(MySQLModel):

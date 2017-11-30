@@ -7,7 +7,7 @@ API入口
 from datetime import timedelta
 from os import environ
 from flask_jwt_extended import (JWTManager)
-from model.db import database, User, Demand, Activity, Project, ProjectMember, TestCase, TestResult
+from model.db import database, User, Demand, Activity, ActivityMember, Project, ProjectMember, TestCase, TestResult
 import connexion
 from flask import request, session, jsonify
 from rbac.context import PermissionDenied
@@ -72,7 +72,8 @@ def does_not_exist(msg):
 if __name__ == "__main__":
     print('初始化数据库')
     database.create_tables(
-        [User, Demand, Activity, Project, ProjectMember, TestCase, TestResult],
+        [User, Demand, Activity, ActivityMember, Project,
+            ProjectMember, TestCase, TestResult],
         safe=True)
 
     application.run(
