@@ -36,7 +36,7 @@ def demand_activity_del(activity_id, data):
 def activity_add():
     '''创建项目活动'''
     data = request.json
-    if 'memberId' in data:
+    if 'memberId' in data and data['memberId']:
         data['status'] = 'dev-ing'
     with database.atomic():
         activity_id = ActivityBase.create(**data).id
@@ -50,7 +50,7 @@ def activity_update():
     '''更新项目活动'''
     data = request.json
     activity_id = data.pop('activityId')
-    if 'memberId' in data:
+    if 'memberId' in data and (not 'status' in data or not data['status']):
         data['status'] = 'dev-ing'
     with database.atomic():
         demand_activity_add(activity_id, data.pop('demand'))
