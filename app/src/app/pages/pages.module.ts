@@ -17,6 +17,7 @@ import {
 } from '@angular/material';
 
 import { DashboardService } from './pm/pm-dashboard.component/dashboard.service';
+import {Detail_memberService} from "./detail_member.service";
 
 @NgModule({
   imports: [
@@ -61,7 +62,8 @@ import { DashboardService } from './pm/pm-dashboard.component/dashboard.service'
 
   ],
   providers: [
-    DashboardService
+    DashboardService,
+    Detail_memberService
   ]
 })
 export class PagesModule { }
