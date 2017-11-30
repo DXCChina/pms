@@ -1,13 +1,15 @@
-import {Component, Inject, ViewChild, Input} from "@angular/core";
+import {Component, Inject, ViewChild, Input, OnInit} from "@angular/core";
 import {MatDialogRef, MAT_DIALOG_DATA, MatMenuTrigger} from "@angular/material";
-import {FormControl} from "@angular/forms";
+import {FormControl, AbstractControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
+import {PmTaskDetailService} from "./task-detail-dialog.service";
 
 @Component({
   selector: 'task-detail-dialog',
   templateUrl: 'task-detail-dialog.component.html',
-  styleUrls: ['task-detail-dialog.component.scss']
+  styleUrls: ['task-detail-dialog.component.scss'],
+  providers: [PmTaskDetailService]
 })
-export class TaskDetailDialogComponent {
+export class TaskDetailDialogComponent implements OnInit {
   @ViewChild('trigger') trigger: MatMenuTrigger;
   @ViewChild('userTrigger') userTrigger: MatMenuTrigger;
   // @Input('user-role-panel') panelClass: string;
@@ -24,23 +26,27 @@ export class TaskDetailDialogComponent {
 
   userLists: any = [];
 
-  constructor(public dialogRef: MatDialogRef<TaskDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
-    // this.userList = [{name: 'dev1'}, {name: 'dev2'}, {name: 'dev3'}, {name: 'dev4'}, {name: 'dev5'}, {name: 'dev6'}];
-    // this.roleList = [{name: 'PM'}, {name: 'Dev'}, {name: 'Test'}];
-    this.demandListNotAssigned = [{name: '需求1'}, {name: '需求2'}, {name: '需求3'}];
+  title: AbstractControl;
+  detail: AbstractControl;
+  cost: AbstractControl;
+  startDate: AbstractControl;
+  endDate: AbstractControl;
+  testForm: FormGroup;
+  taskInfoParams: any;
 
+  projectId: string = '';
+
+  constructor(public dialogRef: MatDialogRef<TaskDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
+              public fb: FormBuilder, private _service: PmTaskDetailService) {
+    this.projectId = sessionStorage.getItem('projectId');
     this.userLists = [
       {
-        role: 'PM',
-        members: ['PM1']
+        role: 'dev',
+        members: []
       },
       {
-        role: '开发人员',
-        members: ['开发1', '开发2', '开发3', '开发4']
-      },
-      {
-        role: '测试人员',
-        members: ['测试1', '测试2', '测试3', '测试4']
+        role: 'test',
+        members: []
       }
     ];
 
@@ -50,21 +56,109 @@ export class TaskDetailDialogComponent {
     // this.addCheckedStatus(this.roleList);
   }
 
+  ngOnInit() {
+    this.buildForm();
+    this.findMemberInProject();
+    this.findDemandListNotAssigned();
+  }
+
+  buildForm() {
+    this.testForm = this.fb.group({
+      'title': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
+      'detail': ['', Validators.compose([])],
+      'cost': ['', Validators.compose([])],
+      'startDate': ['', Validators.compose([Validators.required])],
+      'endDate': ['', Validators.compose([Validators.required])],
+    });
+
+    this.title = this.testForm.controls['title'];
+    this.detail = this.testForm.controls['detail'];
+    this.cost = this.testForm.controls['cost'];
+    this.startDate = this.testForm.controls['startDate'];
+    this.endDate = this.testForm.controls['endDate'];
+
+    this.testForm.valueChanges
+      .subscribe(data => this.onValueChanged(data));
+  }
+
+  onValueChanged(data ?: any) {
+    // if (!this.testForm) {
+    //   return;
+    // }
+    // const form = this.testForm;
+    // for (const field in this.formErrors) {
+    //
+    //   this.formErrors[field] = '';
+    //   const control = form.get(field);
+    //
+    //   if (control && control.dirty && !control.valid) {
+    //     const messages = this.validationMessages[field];
+    //     for (const key in control.errors) {
+    //       this.formErrors[field] += messages[key] + ' ';
+    //     }
+    //   }
+    // }
+  }
+
+  findMemberInProject() {
+    this._service.findMemberInProject(this.projectId)
+      .then(res => {
+        res.data.forEach(ele => {
+          if (ele.role === 'dev') {
+            this.userLists.forEach(user => {
+              if (user.role === 'dev') {
+                user.members.push({id: ele.id, name: ele.username});
+              }
+            })
+          } else if (ele.role === 'test') {
+            this.userLists.forEach(user => {
+              if (user.role === 'test') {
+                user.members.push({id: ele.id, name: ele.username});
+              }
+            })
+          }
+        });
+      })
+  }
+
+  findDemandListNotAssigned() {
+    this._service.getProjectDemand(this.projectId)
+      .then(res => {
+        if (res) {
+          res.forEach(ele => {
+            if (ele && !ele.activityId) {
+              this.demandListNotAssigned.push(ele);
+            }
+          });
+        }
+      })
+  }
+
+  onSubmit() {
+    let memberId = this.selectUserList.map(user => user.id);
+    let demand = this.demandListInTask.map(demand => demand.id);
+    this.taskInfoParams = Object.assign({memberId: memberId, projectId:this.projectId, demand:demand}, this.testForm.value);
+    console.log("taskInfoParams", this.taskInfoParams);
+    this._service.newTask(this.taskInfoParams)
+      .then(res=>{
+        console.log("submit", res);
+      })
+  }
+
   getSelectUsers() {
     this.selectUserList = this.selectUsers.value;
-    console.log('ele', this.selectUsers);
   }
 
   // ngOnChanges(){
   //   this.selectUsers = new FormControl(this.users);
   // }
 
-  addCheckedStatus(arrList) {
-    return arrList.map(ele => {
-      ele.checked = false;
-      return ele;
-    })
-  }
+  // addCheckedStatus(arrList) {
+  //   return arrList.map(ele => {
+  //     ele.checked = false;
+  //     return ele;
+  //   })
+  // }
 
   // selectRoles(role, event) {
   //   this.selectList(role, event, this.selectRoleList);

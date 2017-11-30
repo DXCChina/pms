@@ -184,7 +184,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    // this.subscription.unsubscribe();
     this.eventManager.destroy(this.eventSubscriber);
   }
 
@@ -211,6 +211,18 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
       width: '750px',
       height: '61vh',
       data: {mode: 'update', info: data}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  addTask(){
+    const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
+      width: '750px',
+      height: '70vh',
+      data: {mode: 'create'}
     });
 
     dialogRef.afterClosed().subscribe(result => {
