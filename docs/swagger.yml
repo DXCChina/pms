@@ -426,7 +426,6 @@ definitions:
     required:
     - title
     - projectId
-    - demand
   Activity:
     type: object
     properties:
@@ -443,8 +442,8 @@ definitions:
         items:
           type: integer
       memberId:
-        type: integer
+        type: array
+        items:
+          type: integer
     required:
     - title
-    - demand
-

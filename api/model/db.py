@@ -42,6 +42,14 @@ DB_CONF['cursorclass'] = cursors.DictCursor
 db = connect(**DB_CONF)
 
 
+class ListField(FixedCharField):
+    def db_value(self, value):
+        return ','.join(str(v) for v in value)  # convert list to str
+
+    def python_value(self, value):
+        return value.split(',')  # convert str to list
+
+
 def db_autoId():
     return IntegerField(primary_key=True, constraints=[SQL('AUTO_INCREMENT')])
 
@@ -144,7 +152,7 @@ class ActivityBase(MySQLModel):
     '''活动表基类'''
     title = db_char()
     detail = TextField(null=True)
-    memberId = IntegerField(null=True)
+    memberId = ListField(max_length=10, null=True)
     projectId = db_id()
     progress = IntegerField(null=True)
     cost = IntegerField(null=True)
