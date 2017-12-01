@@ -4,31 +4,30 @@
 @author: Wang Qianxiang
 '''
 
-from .db import TestCase, TestResult
-from .role import identity
+from .db import Demand, ActivityMember, TestCase, TestResult
 
 
-# @identity.check_permission("create", 'test_result')
 def create_test_result(test_result):
     '''新建测试结果'''
-    return TestResult.get_or_create(
-        title=test_result['title'],
+    return TestResult.create(
+        name=test_result['name'],
+        detail=test_result['detail'],
+        caseId=test_result['caseId'],
+        output=test_result['output'],
+        status=test_result['status'],
+        devId=TestCase.select(ActivityMember.memberId)
+            .join(Demand, on=(TestCase.demandId == Demand.id))
+            .join(ActivityMember, on=(Demand.activityId == ActivityMember.activityId))
+            .where((TestCase.id == test_result['caseId']) and (ActivityMember.role == "dev"))
+            .get().username,
         defaults={
-            'name': test_result['name'],
-            'detail': test_result['detail']
+            'level': test_result['level'],
+            'priority': test_result['priority']
         })
 
 
-def test_result_detail(r_Id):
-    '''获取测试结果详情'''
-    return TestResult.sfind(TestResult, TestCase.title.alias('testCaseName')).join(
-        TestCase, on=(TestResult.caseId == TestCase.id
-                      )).where(TestResult.id == r_Id).get()
-
-
-# @identity.check_permission("update", 'test_result')
 def update_test_results(test_result):
-    '''更新测试结果'''    
+    '''更新测试结果'''
     TestResult.update(
         name=test_result['name'],
         detail=test_result['detail'],
@@ -36,18 +35,27 @@ def update_test_results(test_result):
     return TestResult.getOne(TestResult.id == test_result['id'])
 
 
-def find_test_result_by_id(id):
-    return TestResult.getOne(TestResult.id == id)
+def test_result_detail(r_id):
+    '''获取测试结果详情'''
+    return TestResult.sfind(
+        TestResult,
+        TestCase.name.alias('testCaseName')
+    ).join(
+        TestCase,
+        on=(TestResult.caseId == TestCase.id)
+    ).where(TestResult.id == r_id).get()
 
 
-def find_test_result_by_caseId(caseId):
-    return TestResult.getOne(TestResult.caseId == caseId)
+def find_test_result_by_id(test_result_id):
+    '''按test_result_id查询测试结果'''
+    return TestResult.getOne(TestResult.id == test_result_id)
 
 
-def find_test_result_by_name(name):
-    return TestResult.getOne(TestResult.name == name)
+def find_test_result_by_case(case_id):
+    '''按case_id更新测试结果'''
+    return TestResult.getOne(TestResult.caseId == case_id)
 
 
-# def find_test_result_list_match_str(title):
-#     '''模糊查询测试结果'''
-#     return test_result.sfind().where(test_result.title.contains(title)).dicts()
+def find_test_result_by_name(test_result_name):
+    '''按test_result_name更新测试结果'''
+    return TestResult.getOne(TestResult.name == test_result_name)
