@@ -35,9 +35,9 @@ export class DialogCreateProjectComponent implements OnInit {
     this.endDate = this.form.controls['endDate'];
 
     this.projectType = [
-      { name: '长期项目', value: 'long-term'},
       { name: '短期项目', value: 'short-term'},
-      { name: '运维项目', value: 'operation'},
+      { name: '长期项目', value: 'long-term'},
+      { name: '运维项目', value: 'operation'}
     ];
   }
 

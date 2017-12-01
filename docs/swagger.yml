@@ -40,6 +40,18 @@ paths:
       responses:
         200:
           description: ok
+  /activity/{activity_id}:
+    get:
+      summary: 项目活动详情
+      operationId: controller.activity.activity_detail
+      parameters:
+        - name: activity_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
   /activity:
     get:
       summary: 项目活动列表
@@ -448,6 +460,18 @@ definitions:
         type: string
       projectId:
         type: integer
+      detail:
+        type: string
+      progress:
+        type: integer
+      cost:
+        type: integer
+      status:
+        type: string
+      memberId:
+        type: array
+        items:
+          type: integer
       demand:
         type: array
         items:
@@ -458,11 +482,17 @@ definitions:
   Activity:
     type: object
     properties:
+      projectId:
+        type: integer
       activityId:
         type: integer
       title:
         type: string
       del_demand:
+        type: array
+        items:
+          type: integer
+      del_memberId:
         type: array
         items:
           type: integer
@@ -474,5 +504,13 @@ definitions:
         type: array
         items:
           type: integer
+      detail:
+        type: string
+      progress:
+        type: integer
+      cost:
+        type: integer
+      status:
+        type: string
     required:
     - title
