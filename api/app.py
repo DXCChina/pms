@@ -12,7 +12,8 @@ import connexion
 from flask import request, session, jsonify
 from rbac.context import PermissionDenied
 from peewee import DoesNotExist
-
+from flask_graphql import GraphQLView
+from graph.schema import schema
 # pylint:disable=c0103
 application = connexion.App(
     __name__, specification_dir='../docs')  # pylint:disable=c0103
@@ -29,6 +30,7 @@ app.config['JWT_COOKIE_CSRF_PROTECT'] = False  # 开发环境临时禁用
 app.config['JWT_COOKIE_SECURE'] = False  # 开发环境临时禁用
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=7)  # Token 过期时间
 app.config['DEBUG'] = 'PY_ENV' in environ and environ['PY_ENV'] == 'dev'
+app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql', schema=schema, graphiql=True))
 
 jwt = JWTManager(app)  # pylint:disable=c0103
 

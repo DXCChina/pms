@@ -155,14 +155,14 @@ class ActivityBase(MySQLModel):
     # memberId = IntegerField(null=True)
     projectId = db_id()
     progress = IntegerField(null=True)
-    cost = IntegerField(null=True)
+    cost = db_char(null=True)
     status = db_option(
         default='new',
         comment='new(新建,未分配),dev-ing(开发中),needtest(开发完待测试),test-ing(测试中),fix-ing(修复中),finish(已完成),close(已关闭)'
     )
     createAt = db_autoDate()
-    startDate = db_autoDate()
-    endDate = db_date()
+    startDate = db_char(null=True)
+    endDate = db_char(null=True)
 
     class Meta:
         db_table = 'activity'

@@ -5,7 +5,9 @@ flask-jwt-extended
 PyMySQL
 peewee
 marshmallow
-
+Flask-GraphQL
+graphene
+iso8601
 passlib
 argon2_cffi
 bcrypt
