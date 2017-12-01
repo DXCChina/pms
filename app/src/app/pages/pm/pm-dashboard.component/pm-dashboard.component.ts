@@ -230,7 +230,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
       width: '750px',
-      data: {name: 'dd', demandId: data.id}
+      data: {mode:'update', taskInfo:data}
     });
 
     dialogRef.afterClosed().subscribe(result => {

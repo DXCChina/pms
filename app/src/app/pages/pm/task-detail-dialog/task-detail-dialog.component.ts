@@ -35,12 +35,15 @@ export class TaskDetailDialogComponent implements OnInit {
   cost: AbstractControl;
   startDate: AbstractControl;
   endDate: AbstractControl;
-  testForm: FormGroup;
+  taskForm: FormGroup;
   taskInfoParams: any;
+  taskInfo: any;
 
   projectId: string = '';
-  search:AbstractControl;
+  search: AbstractControl;
   form: FormGroup;
+
+  mode: string;
 
   constructor(public dialogRef: MatDialogRef<TaskDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
               public fb: FormBuilder, private _service: PmTaskDetailService) {
@@ -55,6 +58,8 @@ export class TaskDetailDialogComponent implements OnInit {
         members: []
       }
     ];
+    this.mode = this.data.mode;
+    this.taskInfo = this.data.taskInfo;
   }
 
   ngOnInit() {
@@ -66,32 +71,39 @@ export class TaskDetailDialogComponent implements OnInit {
     this.buildForm();
     this.findMemberInProject();
     this.findDemandListNotAssigned();
+
+    if (this.mode === 'update') {
+      this.selectUserList = this.taskInfo.member.map(ele => {
+        return {id: ele.id, name: ele.username};
+      });
+      this.selectUsers = new FormControl(this.selectUserList);
+    }
   }
 
   buildForm() {
-    this.testForm = this.fb.group({
-      'title': ['', Validators.compose([Validators.required, Validators.minLength(4)])],
-      'detail': ['', Validators.compose([])],
-      'cost': ['', Validators.compose([])],
-      'startDate': ['', Validators.compose([Validators.required])],
-      'endDate': ['', Validators.compose([Validators.required])],
+    this.taskForm = this.fb.group({
+      'title': [this.taskInfo.title, Validators.compose([Validators.required, Validators.minLength(4)])],
+      'detail': [this.taskInfo.detail, Validators.compose([])],
+      'cost': [this.taskInfo.cost, Validators.compose([])],
+      'startDate': [new Date(this.taskInfo.startDate), Validators.compose([Validators.required])],
+      'endDate': [new Date(this.taskInfo.endDate), Validators.compose([Validators.required])],
     });
 
-    this.title = this.testForm.controls['title'];
-    this.detail = this.testForm.controls['detail'];
-    this.cost = this.testForm.controls['cost'];
-    this.startDate = this.testForm.controls['startDate'];
-    this.endDate = this.testForm.controls['endDate'];
+    this.title = this.taskForm.controls['title'];
+    this.detail = this.taskForm.controls['detail'];
+    this.cost = this.taskForm.controls['cost'];
+    this.startDate = this.taskForm.controls['startDate'];
+    this.endDate = this.taskForm.controls['endDate'];
 
-    this.testForm.valueChanges
+    this.taskForm.valueChanges
       .subscribe(data => this.onValueChanged(data));
   }
 
   onValueChanged(data ?: any) {
-    // if (!this.testForm) {
+    // if (!this.taskForm) {
     //   return;
     // }
-    // const form = this.testForm;
+    // const form = this.taskForm;
     // for (const field in this.formErrors) {
     //
     //   this.formErrors[field] = '';
@@ -140,15 +152,15 @@ export class TaskDetailDialogComponent implements OnInit {
       })
   }
 
-  searchDemandList(){
+  searchDemandList() {
     this._service.searchDemandList(this.searchDemand, Number(this.projectId))
-      .then(res=>{
+      .then(res => {
         this.demandListNotAssigned = [];
         console.log("res", res);
       })
   }
 
-  clear(){
+  clear() {
     this.searchDemand = '';
   }
 
@@ -156,10 +168,14 @@ export class TaskDetailDialogComponent implements OnInit {
     let memberId = this.selectUserList.map(user => user.id);
     let demand = this.demandListInTask.map(demand => demand.id);
     let projectId = Number(this.projectId);
-    this.taskInfoParams = Object.assign({memberId: memberId, projectId:projectId, demand:demand}, this.testForm.value);
+    this.taskInfoParams = Object.assign({
+      memberId: memberId,
+      projectId: projectId,
+      demand: demand
+    }, this.taskForm.value);
     console.log("taskInfoParams", this.taskInfoParams);
     this._service.newTask(this.taskInfoParams)
-      .then(res=>{
+      .then(res => {
         console.log("submit", res);
       })
   }
@@ -174,16 +190,16 @@ export class TaskDetailDialogComponent implements OnInit {
     this.selectUserList = this.selectUsers.value;
   }
 
-  remove(role, arrlist, selectList) {
-    arrlist.forEach(user => {
-      if (user == role) {
-        user.checked = false;
-      }
-    });
-
-    let index = selectList.indexOf(role);
-    selectList.splice(index, 1);
-  }
+  // remove(role, arrlist, selectList) {
+  //   arrlist.forEach(user => {
+  //     if (user == role) {
+  //       user.checked = false;
+  //     }
+  //   });
+  //
+  //   let index = selectList.indexOf(role);
+  //   selectList.splice(index, 1);
+  // }
 
   addDemandToTask(demand) {
     this.demandListInTask.push(demand);
