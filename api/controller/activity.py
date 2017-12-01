@@ -88,9 +88,9 @@ def activity_list():
     '''项目活动列表'''
 
     return {
-        "data": list(Activity.find().where(
-            Activity.projectId == request.args.get('projectId')
-        ))
+        # "data": list(Activity.find().where(
+        #     Activity.projectId == request.args.get('projectId')
+        # ))
     }
 
 
@@ -125,6 +125,13 @@ def activity_detail(activity_id):
         GET /api/activity/<int:activity_id>
     '''
     activity = Activity.findOne(Activity.id == activity_id)
-    activity['member'] = list(ActivityMember.find(
-        ActivityMember.role, User.username, User.email).join(User))
+    activity['member'] = list(
+        ActivityMember.find(
+            ActivityMember.role, User.username, User.email
+        ).join(User)
+        .where(ActivityMember.activityId == activity_id)
+    )
+    activity['demand'] = list(
+        Demand.find().where(Demand.activityId == activity_id)
+    )
     return activity
