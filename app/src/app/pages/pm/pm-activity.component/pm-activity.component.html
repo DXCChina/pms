@@ -54,8 +54,8 @@
           <div class="pm-activity-body-title">
             <p>信息修改</p>
             <div class="pm-activity-btnGroup">
-              <button mat-button color="primary">取消</button>
-              <button mat-button [disabled]="!form.valid" color="primary">保存</button>
+              <button mat-button color="primary" (click)="cancelModify()">取消</button>
+              <button mat-button type="submit" [disabled]="!form.valid" color="primary">保存</button>
             </div>
           </div>
           <div class="pm-activity-body-content">
