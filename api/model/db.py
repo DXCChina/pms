@@ -152,17 +152,17 @@ class ActivityBase(MySQLModel):
     '''活动表基类'''
     title = db_char()
     detail = TextField(null=True)
-    memberId = ListField(max_length=10, null=True)
+    # memberId = IntegerField(null=True)
     projectId = db_id()
     progress = IntegerField(null=True)
-    cost = IntegerField(null=True)
+    cost = db_char(null=True)
     status = db_option(
         default='new',
         comment='new(新建,未分配),dev-ing(开发中),needtest(开发完待测试),test-ing(测试中),fix-ing(修复中),finish(已完成),close(已关闭)'
     )
     createAt = db_autoDate()
-    startDate = db_autoDate()
-    endDate = db_date()
+    startDate = db_char(null=True)
+    endDate = db_char(null=True)
 
     class Meta:
         db_table = 'activity'
@@ -198,6 +198,17 @@ class ProjectMember(MySQLModel):
 
     class Meta:
         db_table = 'project_member'
+
+
+class ActivityMember(MySQLModel):
+    '''活动成员'''
+    id = db_autoId()
+    activityId = ForeignKeyField(Activity, related_name='user')
+    memberId = ForeignKeyField(User, related_name='activity')
+    role = db_option(default='dev', comment='用户角色:dev/test')
+
+    class Meta:
+        db_table = 'activity_member'
 
 
 class TestCase(MySQLModel):
