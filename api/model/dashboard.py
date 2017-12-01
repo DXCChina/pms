@@ -28,8 +28,16 @@ def find_activity(p_id, m_id):
     '''按M_id查询相关项目活动'''
     activity = ActivityMember.find(Activity).where((Activity.projectId == p_id) and (ActivityMember.memberId==m_id))
     for act in activity:
-        act['member'] = list(ActivityMember.find(
-            ActivityMember.role, User.username, User.email).join(User))
+        act['member'] = list(
+            ActivityMember.find(
+                ActivityMember.role, User.username, User.email
+            )
+            .join(User)
+            .where(ActivityMember.activityId == act['id'])
+        )
+        act['demand'] = list(
+            Demand.find().where(Demand.activityId == act['id'])
+        )            
     return list(activity)
 
 
@@ -70,9 +78,15 @@ def find_all_activity(p_id):
     
     activity = Activity.find().where(Activity.projectId == p_id)
     for act in activity:
-        act['member'] = list(ActivityMember.find(
-            ActivityMember.role, User.username, User.email).join(User))
-
+        act['member'] = list(
+            ActivityMember.find(
+                ActivityMember.role, User.username, User.email
+            ).join(User)
+            .where(ActivityMember.activityId == act['id'])
+        )
+        act['demand'] = list(
+            Demand.find().where(Demand.activityId == act['id'])
+        )
     return list(activity)
 
 
