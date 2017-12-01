@@ -465,7 +465,7 @@ definitions:
       progress:
         type: integer
       cost:
-        type: integer
+        type: string
       status:
         type: string
       memberId:
@@ -509,7 +509,7 @@ definitions:
       progress:
         type: integer
       cost:
-        type: integer
+        type: string
       status:
         type: string
     required:
