@@ -193,7 +193,6 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
   addDemand() {
     const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
-      height: '61vh',
       data: {mode: 'create'}
     });
 
@@ -207,7 +206,6 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
-      height: '61vh',
       data: {mode: 'update', info: data}
     });
 
@@ -219,7 +217,6 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
   addTask(){
     const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
       width: '750px',
-      height: '70vh',
       data: {mode: 'create'}
     });
 
@@ -233,7 +230,6 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
       width: '750px',
-      height: '70vh',
       data: {name: 'dd', demandId: data.id}
     });
 

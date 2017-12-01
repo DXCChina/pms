@@ -2,6 +2,7 @@ import {Component, Inject, ViewChild, Input, OnInit} from "@angular/core";
 import {MatDialogRef, MAT_DIALOG_DATA, MatMenuTrigger} from "@angular/material";
 import {FormControl, AbstractControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
 import {PmTaskDetailService} from "./task-detail-dialog.service";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'task-detail-dialog',
@@ -20,9 +21,12 @@ export class TaskDetailDialogComponent implements OnInit {
   demandListNotAssigned: any = [];
   demandListInTask: any = [];
   demandListCompletedInTask: any = [];
+  searchDemand: string = '';
   progressValue: number = 0;
   selectUsers = new FormControl();
   selectUserList: any;
+
+  searchObservable: Subscription;
 
   userLists: any = [];
 
@@ -35,6 +39,8 @@ export class TaskDetailDialogComponent implements OnInit {
   taskInfoParams: any;
 
   projectId: string = '';
+  search:AbstractControl;
+  form: FormGroup;
 
   constructor(public dialogRef: MatDialogRef<TaskDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
               public fb: FormBuilder, private _service: PmTaskDetailService) {
@@ -49,14 +55,14 @@ export class TaskDetailDialogComponent implements OnInit {
         members: []
       }
     ];
-
-    // this.selectUserList
-
-    // this.addCheckedStatus(this.userList);
-    // this.addCheckedStatus(this.roleList);
   }
 
   ngOnInit() {
+    this.form = new FormGroup({
+      search: new FormControl('')
+    });
+    this.search = this.form.controls['search'];
+
     this.buildForm();
     this.findMemberInProject();
     this.findDemandListNotAssigned();
@@ -134,10 +140,23 @@ export class TaskDetailDialogComponent implements OnInit {
       })
   }
 
+  searchDemandList(){
+    this._service.searchDemandList(this.searchDemand, Number(this.projectId))
+      .then(res=>{
+        this.demandListNotAssigned = [];
+        console.log("res", res);
+      })
+  }
+
+  clear(){
+    this.searchDemand = '';
+  }
+
   onSubmit() {
     let memberId = this.selectUserList.map(user => user.id);
     let demand = this.demandListInTask.map(demand => demand.id);
-    this.taskInfoParams = Object.assign({memberId: memberId, projectId:this.projectId, demand:demand}, this.testForm.value);
+    let projectId = Number(this.projectId);
+    this.taskInfoParams = Object.assign({memberId: memberId, projectId:projectId, demand:demand}, this.testForm.value);
     console.log("taskInfoParams", this.taskInfoParams);
     this._service.newTask(this.taskInfoParams)
       .then(res=>{
@@ -147,42 +166,6 @@ export class TaskDetailDialogComponent implements OnInit {
 
   getSelectUsers() {
     this.selectUserList = this.selectUsers.value;
-  }
-
-  // ngOnChanges(){
-  //   this.selectUsers = new FormControl(this.users);
-  // }
-
-  // addCheckedStatus(arrList) {
-  //   return arrList.map(ele => {
-  //     ele.checked = false;
-  //     return ele;
-  //   })
-  // }
-
-  // selectRoles(role, event) {
-  //   this.selectList(role, event, this.selectRoleList);
-  //   if (event.checked === false) {
-  //     this.remove(role, this.roleList, this.selectRoleList);
-  //   }
-  // }
-
-  // selectUsers(user, event) {
-  //   this.selectList(user, event, this.selectUserList);
-  //   if (event.checked === false) {
-  //     this.remove(user, this.userList, this.selectUserList);
-  //   }
-  // }
-
-  selectList(user, event, selectUserList) {
-    if (event.checked === true) {
-      user.checked = true;
-      selectUserList.push(user);
-    }
-  }
-
-  removeRole(role: any) {
-    // this.remove(role, this.roleList, this.selectRoleList);
   }
 
   removeUser(userList: any): void {
