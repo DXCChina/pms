@@ -5,7 +5,7 @@
 '''
 
 from flask import request
-from model.db import database, Activity, Demand, ActivityBase, ProjectMember, User
+from model.db import database, Activity, ActivityMember, Demand, ActivityBase, ProjectMember, User
 from model.role import identity
 
 from flask_jwt_extended import (fresh_jwt_required)
@@ -40,6 +40,15 @@ def activity_add():
         data['status'] = 'dev-ing'
     with database.atomic():
         activity_id = ActivityBase.create(**data).id
+        if 'memberId' in data and data['memberId']:
+            for member_id in data['memberId']:
+                role = ProjectMember.get(
+                    ProjectMember.projectId == data['projectId'], ProjectMember.memberId == member_id).role
+                ActivityMember.create(**{
+                    'activityId': activity_id,
+                    'memberId': member_id,
+                    'role': role
+                })
         demand_activity_add(activity_id, data['demand'])
     return {"msg": 'ok'}
 
@@ -50,9 +59,24 @@ def activity_update():
     '''更新项目活动'''
     data = request.json
     activity_id = data.pop('activityId')
-    if 'memberId' in data and (not 'status' in data or not data['status']):
-        data['status'] = 'dev-ing'
     with database.atomic():
+        for member_id in data.pop('del_memberId'):
+            ActivityMember.delete().where(
+                (ActivityMember.activityId == activity_id) &
+                (ActivityMember.memberId == member_id)
+            ).execute()
+        if 'memberId' in data:
+            if not 'status' in data or not data['status']:
+                data['status'] = 'dev-ing'
+            for member_id in data.pop('memberId'):
+                ActivityMember.get_or_create(
+                    activityId=activity_id,
+                    memberId=member_id,
+                    role=ProjectMember.get(
+                        (ProjectMember.projectId == data['projectId'])
+                        and (ProjectMember.memberId == member_id)
+                    ).role
+                )
         demand_activity_add(activity_id, data.pop('demand'))
         demand_activity_del(activity_id, data.pop('del_demand'))
         Activity.update(**data).where(Activity.id == activity_id).execute()
@@ -64,9 +88,9 @@ def activity_list():
     '''项目活动列表'''
 
     return {
-        "data": list(Activity.find().where(
-            Activity.projectId == request.args.get('projectId')
-        ))
+        # "data": list(Activity.find().where(
+        #     Activity.projectId == request.args.get('projectId')
+        # ))
     }
 
 
@@ -93,3 +117,21 @@ def project_user(project_id):
             ProjectMember.projectId == project_id
         ))
     }
+
+
+@fresh_jwt_required
+def activity_detail(activity_id):
+    '''查询活动详情
+        GET /api/activity/<int:activity_id>
+    '''
+    activity = Activity.findOne(Activity.id == activity_id)
+    activity['member'] = list(
+        ActivityMember.find(
+            ActivityMember.role, User.username, User.email
+        ).join(User)
+        .where(ActivityMember.activityId == activity_id)
+    )
+    activity['demand'] = list(
+        Demand.find().where(Demand.activityId == activity_id)
+    )
+    return activity

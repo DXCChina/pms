@@ -4,7 +4,7 @@
 @author: Wang Qianxiang
 '''
 
-from .db import (Demand, Activity, TestCase, TestResult, Project, ProjectMember, User)
+from .db import (Demand, Activity, TestCase, TestResult, Project, ProjectMember, User, ActivityMember)
 
 
 def find_owner(p_id):
@@ -26,10 +26,19 @@ def find_demand(p_id, m_id):
 
 def find_activity(p_id, m_id):
     '''按M_id查询相关项目活动'''
-    return list(Activity.select(Activity, User.username.alias('memberName'))
-        .join(User, on = (Activity.memberId == User.id))
-        .where((Activity.projectId == p_id) & (Activity.memberId == m_id))
-        .dicts())
+    activity = ActivityMember.find(Activity).where((Activity.projectId == p_id) and (ActivityMember.memberId==m_id))
+    for act in activity:
+        act['member'] = list(
+            ActivityMember.find(
+                ActivityMember.role, User.username, User.email
+            )
+            .join(User)
+            .where(ActivityMember.activityId == act['id'])
+        )
+        act['demand'] = list(
+            Demand.find().where(Demand.activityId == act['id'])
+        )            
+    return list(activity)
 
 
 def find_test_case(p_id, m_id):
@@ -58,22 +67,31 @@ def find_test_result_for_test(p_id, m_id):
 
 
 def find_all_demand(p_id):
-    '''按M_id查询全部项目需求'''
+    '''按P_id查询全部项目需求'''
     return list(Demand.select()
         .where(Demand.projectId == p_id)
         .dicts())
 
 
 def find_all_activity(p_id):
-    '''按M_id查询全部项目活动'''
-    return list(Activity.select(Activity, User.username.alias('memberName'))
-        .join(User, on = (Activity.memberId == User.id))
-        .where(Activity.projectId == p_id)
-        .dicts())
+    '''按P_id查询全部项目活动'''
+    
+    activity = Activity.find().where(Activity.projectId == p_id)
+    for act in activity:
+        act['member'] = list(
+            ActivityMember.find(
+                ActivityMember.role, User.username, User.email
+            ).join(User)
+            .where(ActivityMember.activityId == act['id'])
+        )
+        act['demand'] = list(
+            Demand.find().where(Demand.activityId == act['id'])
+        )
+    return list(activity)
 
 
 def find_all_test_result(p_id):
-    '''按M_id查询全部项目测试结果'''
+    '''按P_id查询全部项目测试结果'''
     return list(TestResult.select(TestResult, TestCase, User.username.alias('ownerName'))
         .join(TestCase, on = (TestResult.caseId == TestCase.id))
         .join(User, on = (TestCase.ownerId == User.id))
