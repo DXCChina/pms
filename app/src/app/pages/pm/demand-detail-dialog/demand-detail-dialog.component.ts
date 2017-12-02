@@ -108,7 +108,7 @@ export class DemandDetailDialogComponent {
   }
 
 
-  onSubmit() {
+  onSubmit(data) {
     let demandInfo = Object.assign(this.demandForm.value, {projectId: this.projectId});
     if(this.mode === 'create'){
       this._service.newDemand(demandInfo)
