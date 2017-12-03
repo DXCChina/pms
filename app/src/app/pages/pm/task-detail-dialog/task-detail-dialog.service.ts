@@ -37,6 +37,13 @@ export class PmTaskDetailService {
       .catch(this._global.handleError)
   }
 
+  updateTask(taskInfo) {
+    return this.http.put(this.newActivityUrl, JSON.stringify(taskInfo), this._global.options)
+      .toPromise()
+      .then(this._global.extractData)
+      .catch(this._global.handleError)
+  }
+
   searchDemandList(title, id) {
     return this.http.get(`${this.demandListUrl}?title=${title}&projectId=${id}`)
       .toPromise()

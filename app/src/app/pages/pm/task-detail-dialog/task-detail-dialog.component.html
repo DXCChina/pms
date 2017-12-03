@@ -1,7 +1,7 @@
 <div>
   <mat-toolbar class="demand-detail-header">
     <!--<span>项目名称</span><span> > </span>-->
-    <span>活动名称</span>
+    <span>{{mode==='create'? "活动名称":taskInfo?.title}}</span>
   </mat-toolbar>
 </div>
 
@@ -43,7 +43,7 @@
 
     <div>
       <div>
-        执行人
+        执行人(测试和开发仅限选一人)
       </div>
       <div style="margin-top: 10px">
         <mat-card>
@@ -160,4 +160,7 @@
     </div>
   </form>
 </div>
+
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+
 

@@ -3,6 +3,9 @@ import {MatDialogRef, MAT_DIALOG_DATA, MatMenuTrigger} from "@angular/material";
 import {FormControl, AbstractControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
 import {PmTaskDetailService} from "./task-detail-dialog.service";
 import {Subscription} from "rxjs";
+import {ToasterService, ToasterConfig} from "angular2-toaster";
+import {TaskInfo} from "./task.model";
+import {JhiEventManager} from "ng-jhipster";
 
 @Component({
   selector: 'task-detail-dialog',
@@ -37,16 +40,24 @@ export class TaskDetailDialogComponent implements OnInit {
   endDate: AbstractControl;
   taskForm: FormGroup;
   taskInfoParams: any;
-  taskInfo: any;
+  taskInfo: TaskInfo = new TaskInfo();
 
   projectId: string = '';
   search: AbstractControl;
   form: FormGroup;
 
   mode: string;
+  delMemberList: any[] = [];
+  delDemandList: any[] = [];
+
+  toasterconfig: ToasterConfig = new ToasterConfig({
+    tapToDismiss: false,
+    showCloseButton: true
+  });
 
   constructor(public dialogRef: MatDialogRef<TaskDetailDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
-              public fb: FormBuilder, private _service: PmTaskDetailService) {
+              public fb: FormBuilder, private _service: PmTaskDetailService, private toasterService: ToasterService,
+              private eventManager: JhiEventManager) {
     this.projectId = sessionStorage.getItem('projectId');
     this.userLists = [
       {
@@ -59,7 +70,6 @@ export class TaskDetailDialogComponent implements OnInit {
       }
     ];
     this.mode = this.data.mode;
-    this.taskInfo = this.data.taskInfo;
   }
 
   ngOnInit() {
@@ -68,16 +78,18 @@ export class TaskDetailDialogComponent implements OnInit {
     });
     this.search = this.form.controls['search'];
 
+    if (this.mode === 'update') {
+      this.delMemberList = this.selectUserList = this.taskInfo.member.map(ele => {
+        return {id: ele.id, name: ele.username};
+      });
+      this.taskInfo = this.data.taskInfo;
+      this.selectUsers = new FormControl(this.selectUserList);
+      this.demandListInTask = this.taskInfo.demand;
+      this.delDemandList = this.demandListInTask.concat();
+    }
     this.buildForm();
     this.findMemberInProject();
     this.findDemandListNotAssigned();
-
-    if (this.mode === 'update') {
-      this.selectUserList = this.taskInfo.member.map(ele => {
-        return {id: ele.id, name: ele.username};
-      });
-      this.selectUsers = new FormControl(this.selectUserList);
-    }
   }
 
   buildForm() {
@@ -168,16 +180,61 @@ export class TaskDetailDialogComponent implements OnInit {
     let memberId = this.selectUserList.map(user => user.id);
     let demand = this.demandListInTask.map(demand => demand.id);
     let projectId = Number(this.projectId);
+
     this.taskInfoParams = Object.assign({
       memberId: memberId,
       projectId: projectId,
-      demand: demand
+      demand: demand,
+      progress: this.progressValue
     }, this.taskForm.value);
-    console.log("taskInfoParams", this.taskInfoParams);
-    this._service.newTask(this.taskInfoParams)
-      .then(res => {
-        console.log("submit", res);
-      })
+    if (this.mode === 'create') {
+      this._service.newTask(this.taskInfoParams)
+        .then(res => {
+          if(res.msg === 'ok'){
+            this.toasterService.pop('ok', '活动新建成功');
+            this.eventManager.broadcast({name: 'ActivityListModification', content: 'OK'});
+            this.dialogRef.close();
+          }else{
+            this.toasterService.pop('error', res.msg);
+          }
+        })
+    } else if (this.mode === 'update') {
+      let memberList = this.selectUserList.filter(user => {
+        return this.delMemberList.find(member => {
+          return member.id == user.id;
+        });
+      });
+      let delMemberList = this.delMemberList.filter(user => {
+        return memberList.find(member => {
+          return member.id != user.id;
+        });
+      });
+      let delMemberId = delMemberList.map(member => member.id);
+      let demandList = this.demandListInTask.filter(demand => {
+        return this.delDemandList.find(ele => {
+          return ele.id == demand.id;
+        });
+      });
+      let delDemandList = this.delDemandList.filter(demand => {
+        return demandList.find(ele => {
+          return ele.id != demand.id;
+        });
+      });
+      let delDemandId = delDemandList.map(demand => demand.id);
+      this.taskInfoParams = Object.assign(
+        {activityId: this.taskInfo.id, del_memberId: delMemberId, del_demand: delDemandId},
+        this.taskInfoParams);
+      this._service.updateTask(this.taskInfoParams)
+        .then(res => {
+          if(res.msg === 'ok'){
+            this.toasterService.pop('ok', '活动修改成功');
+            this.eventManager.broadcast({name: 'ActivityListModification', content: 'OK'});
+            this.dialogRef.close();
+          }else{
+            this.toasterService.pop('error', res.msg);
+          }
+        })
+    }
   }
 
   getSelectUsers() {
@@ -186,6 +243,9 @@ export class TaskDetailDialogComponent implements OnInit {
 
   removeUser(userList: any): void {
     //   this.remove(role, this.userList, this.selectUserList);
+    // console.log("userlist", userList.userList);
+    // console.log("removeUserList", userList.delUserList);
+    // this.delMemberList = this.delMemberList.concat(userList.delUserList);
     this.selectUsers = new FormControl(userList);
     this.selectUserList = this.selectUsers.value;
   }

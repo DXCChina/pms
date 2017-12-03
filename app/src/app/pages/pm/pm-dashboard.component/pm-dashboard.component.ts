@@ -21,6 +21,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
   public testResultData: any[] = [];
 
   private eventSubscriber: Subscription;
+  private eventActivitySubscriber: Subscription;
 
   constructor(private router: Router, private service: DashboardService, private dialog: MatDialog, private eventManager: JhiEventManager) {
   }
@@ -44,6 +45,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
     this.getProjectTestResult();
 
     this.registerChangeInDemand();
+    this.registerChangeInActivity();
   }
 
   getProjectDemand() {
@@ -182,8 +184,17 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
     );
   }
 
+  registerChangeInActivity() {
+    this.eventActivitySubscriber = this.eventManager.subscribe(
+      'ActivityListModification',
+      () => this.getProjectActivity()
+    );
+  }
+
+
   ngOnDestroy() {
     this.eventManager.destroy(this.eventSubscriber);
+    this.eventManager.destroy(this.eventActivitySubscriber);
   }
 
   addItem() {
