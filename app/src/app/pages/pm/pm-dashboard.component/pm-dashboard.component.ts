@@ -21,6 +21,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
   public testResultData: any[] = [];
 
   private eventSubscriber: Subscription;
+  private eventActivitySubscriber: Subscription;
 
   constructor(private router: Router, private service: DashboardService, private dialog: MatDialog, private eventManager: JhiEventManager) {
   }
@@ -44,6 +45,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
     this.getProjectTestResult();
 
     this.registerChangeInDemand();
+    this.registerChangeInActivity();
   }
 
   getProjectDemand() {
@@ -182,8 +184,17 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
     );
   }
 
+  registerChangeInActivity() {
+    this.eventActivitySubscriber = this.eventManager.subscribe(
+      'ActivityListModification',
+      () => this.getProjectActivity()
+    );
+  }
+
+
   ngOnDestroy() {
     this.eventManager.destroy(this.eventSubscriber);
+    this.eventManager.destroy(this.eventActivitySubscriber);
   }
 
   addItem() {
@@ -193,7 +204,6 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
   addDemand() {
     const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
-      height: '61vh',
       data: {mode: 'create'}
     });
 
@@ -207,8 +217,18 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
-      height: '61vh',
       data: {mode: 'update', info: data}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  addTask(){
+    const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
+      width: '750px',
+      data: {mode: 'create'}
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -221,8 +241,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
       width: '750px',
-      height: '70vh',
-      data: {name: 'dd', demandId: data.id}
+      data: {mode:'update', taskInfo:data}
     });
 
     dialogRef.afterClosed().subscribe(result => {

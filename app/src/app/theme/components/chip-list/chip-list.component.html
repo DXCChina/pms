@@ -1,7 +1,7 @@
 <mat-chip-list>
   <mat-chip *ngFor="let chip of chipList" [selectable]="selectable"
             [removable]="removable" (remove)="remove(chip)">
-    {{chip}}
+    {{chip?.name}}
     <span matChipRemove *ngIf="removable">X</span>
   </mat-chip>
 </mat-chip-list>
