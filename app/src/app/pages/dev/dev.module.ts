@@ -14,14 +14,14 @@ import {
 import { DevComponent } from './dev.component';
 import { DevDashboardComponent } from './dev-dashboard/dev-dashboard.component';
 import { DevActivityComponent } from './dev-activity/dev-activity.component';
-// import { DemandDetailModalComponent } from './demand-detail-modal/demand-detail-modal.component';
+import { DemandDetailModalComponent } from './demand-detail-modal/demand-detail-modal.component';
 
 @NgModule({
   declarations: [
     DevComponent,
     DevDashboardComponent,
     DevActivityComponent,
-    // DemandDetailModalComponent
+    DemandDetailModalComponent
   ],
   imports: [
     CommonModule,
