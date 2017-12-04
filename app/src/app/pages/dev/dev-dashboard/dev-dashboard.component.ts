@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {ListMetrics, ItemMetrics} from '../../pm/pm-dashboard.component/card-data.Entity';
 import {DashboardService} from '../../pm/pm-dashboard.component/dashboard.service';
 import {MatDialog} from '@angular/material';
 import {DevTaskDetailDialogComponent} from "../dev-task-detail-dialog/task-detail-dialog.component";
+import {JhiEventManager} from "ng-jhipster";
+import {Subscription} from "rxjs";
 // import { DemandDetailModalComponent } from '../demand-detail-modal/demand-detail-modal.component';
 
 @Component({
@@ -13,12 +15,14 @@ import {DevTaskDetailDialogComponent} from "../dev-task-detail-dialog/task-detai
   styleUrls: ['./dev-dashboard.component.scss']
 })
 
-export class DevDashboardComponent implements OnInit {
+export class DevDashboardComponent implements OnInit, OnDestroy {
 
   public activityData: any[] = [];
   public testResultData: any[] = [];
 
-  constructor(private router: Router, private service: DashboardService, private dialog: MatDialog) {
+  private eventActivitySubscriber: Subscription;
+
+  constructor(private router: Router, private service: DashboardService, private dialog: MatDialog, private eventManager: JhiEventManager) {
   }
 
   // 项目ID
@@ -33,16 +37,23 @@ export class DevDashboardComponent implements OnInit {
     }
   }
 
+  ngOnDestroy() {
+    this.eventManager.destroy(this.eventActivitySubscriber);
+  }
+
   // 初始化数据 调用三个接口
   initData() {
     this.getProjectActivity();
     this.getProjectTestResult();
+
+    this.registerChangeInActivity();
   }
 
   getProjectActivity() {
     this.service.getProjectActivity(this.projectId)
       .then(res => {
 
+        this.activityData = [];
         this.activityData.push(
           new ListMetrics(
             '进行中活动',
@@ -125,6 +136,14 @@ export class DevDashboardComponent implements OnInit {
       }).catch(err => console.log(err));
   }
 
+  registerChangeInActivity() {
+    this.eventActivitySubscriber = this.eventManager.subscribe(
+      'ActivityListModification',
+      () => this.getProjectActivity()
+    );
+  }
+
+
   addItem() {
     console.log('add');
   }
@@ -144,7 +163,7 @@ export class DevDashboardComponent implements OnInit {
   showActivityDetail(data) {
     const dialogRef = this.dialog.open(DevTaskDetailDialogComponent, {
       width: '750px',
-      data: {data:data}
+      data: {data: data}
     });
   }
 

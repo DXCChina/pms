@@ -1,8 +1,7 @@
-import {Component, Inject, ViewChild, Input, OnInit} from "@angular/core";
+import {Component, Inject, ViewChild, OnInit} from "@angular/core";
 import {MatDialogRef, MAT_DIALOG_DATA, MatMenuTrigger} from "@angular/material";
-import {FormControl, AbstractControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
+import {AbstractControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
 import {DevTaskDetailService} from "./task-detail-dialog.service";
-import {Subscription} from "rxjs";
 import {ToasterService, ToasterConfig} from "angular2-toaster";
 import {JhiEventManager} from "ng-jhipster";
 
@@ -24,8 +23,6 @@ export class DevTaskDetailDialogComponent implements OnInit {
   demandListCompletedInTask: any = [];
   progressValue: number = 0;
   selectUserList: any;
-
-  userLists: any = [];
 
   title: AbstractControl;
   detail: AbstractControl;
@@ -117,7 +114,13 @@ export class DevTaskDetailDialogComponent implements OnInit {
       this.taskForm.value);
     this._service.updateTask(this.taskInfoParams)
       .then(res => {
-        console.log("res", res);
+        if(res.msg === 'ok'){
+          this.eventManager.broadcast({name: 'ActivityListModification', content: 'OK'});
+          this.toasterService.pop('ok', '活动修改成功');
+          this.dialogRef.close();
+        }else {
+          this.toasterService.pop('error', res.msg);
+        }
       })
   }
 
