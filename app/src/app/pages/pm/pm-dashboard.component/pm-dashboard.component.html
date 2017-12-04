@@ -1,5 +1,5 @@
 <div class="card-container">
     <app-list-card *ngIf="demandData.length" [data]="demandData" (addItem)="addDemand()" (showDetail)="showDemandDetail($event)"></app-list-card>
-    <app-list-card *ngIf="activityData.length" [data]="activityData" (addItem)="addItem()" (showDetail)="showTaskDetail($event)"></app-list-card>
+    <app-list-card *ngIf="activityData.length" [data]="activityData" (addItem)="addTask()" (showDetail)="showTaskDetail($event)"></app-list-card>
     <app-list-card *ngIf="testResultData.length" [data]="testResultData" (addItem)="addItem()" (showDetail)="showTaskDetail($event)"></app-list-card>
 </div>

@@ -30,7 +30,7 @@ def find_activity(p_id, m_id):
     for act in activity:
         act['member'] = list(
             ActivityMember.find(
-                ActivityMember.role, User.username, User.email
+                ActivityMember.role, User.username, User.email, User.id
             )
             .join(User)
             .where(ActivityMember.activityId == act['id'])
@@ -80,7 +80,7 @@ def find_all_activity(p_id):
     for act in activity:
         act['member'] = list(
             ActivityMember.find(
-                ActivityMember.role, User.username, User.email
+                ActivityMember.role, User.username, User.email, User.id
             ).join(User)
             .where(ActivityMember.activityId == act['id'])
         )
