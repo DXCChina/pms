@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
 
-import { ListMetrics, ItemMetrics } from '../../pm/pm-dashboard.component/card-data.Entity';
-import { DashboardService } from '../../pm/pm-dashboard.component/dashboard.service';
-import { MatDialog } from '@angular/material';
+import {ListMetrics, ItemMetrics} from '../../pm/pm-dashboard.component/card-data.Entity';
+import {DashboardService} from '../../pm/pm-dashboard.component/dashboard.service';
+import {MatDialog} from '@angular/material';
+import {DevTaskDetailDialogComponent} from "../dev-task-detail-dialog/task-detail-dialog.component";
 // import { DemandDetailModalComponent } from '../demand-detail-modal/demand-detail-modal.component';
 
 @Component({
@@ -17,7 +18,8 @@ export class DevDashboardComponent implements OnInit {
   public activityData: any[] = [];
   public testResultData: any[] = [];
 
-  constructor(private router: Router, private service: DashboardService, private dialog: MatDialog) { }
+  constructor(private router: Router, private service: DashboardService, private dialog: MatDialog) {
+  }
 
   // 项目ID
   projectId: string;
@@ -140,8 +142,12 @@ export class DevDashboardComponent implements OnInit {
   // }
 
   showActivityDetail(data) {
-    console.log(data);
+    const dialogRef = this.dialog.open(DevTaskDetailDialogComponent, {
+      width: '750px',
+      data: {data:data}
+    });
   }
+
   showResultDetail(data) {
     console.log(data);
   }
