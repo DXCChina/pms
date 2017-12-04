@@ -492,6 +492,10 @@ definitions:
         type: array
         items:
           type: integer
+      done_demand:
+        type: array
+        items:
+          type: integer
       del_memberId:
         type: array
         items:
