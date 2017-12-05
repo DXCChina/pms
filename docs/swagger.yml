@@ -473,7 +473,7 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - name: activity
+        - name: testResult
           in: body
           description: 测试结果初始信息
           required: true
@@ -490,7 +490,7 @@ paths:
       produces:
       - "application/json"
       parameters:
-        - name: activity
+        - name: testResult
           in: body
           description: 更新测试结果信息
           required: true
@@ -584,6 +584,8 @@ definitions:
     - caseId
     - output
     - status
+    - level
+    - priority
   TestResultUpdate:
     type: object
     properties:
@@ -603,3 +605,9 @@ definitions:
         type: string
     required:
     - id
+    - name
+    - detail
+    - output
+    - status
+    - level
+    - priority
