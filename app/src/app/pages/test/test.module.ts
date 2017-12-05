@@ -16,13 +16,15 @@ import { TestComponent } from './test.component';
 import { TestDashboardComponent } from './test-dashboard/test-dashboard.component';
 import { TestActivityComponent } from './test-activity/test-activity.component';
 import { CaseDetailModalComponent } from './case-detail-modal/case-detail-modal.component';
+import {TestTaskDetailDialogComponent} from "./case-task-detail-dialog/task-detail-dialog.component";
 
 @NgModule({
   declarations: [
     TestComponent,
     TestDashboardComponent,
     TestActivityComponent,
-    CaseDetailModalComponent
+    CaseDetailModalComponent,
+    TestTaskDetailDialogComponent
   ],
   imports: [
     CommonModule,
@@ -59,7 +61,8 @@ import { CaseDetailModalComponent } from './case-detail-modal/case-detail-modal.
 
   ],
   entryComponents: [
-    CaseDetailModalComponent
+    CaseDetailModalComponent,
+    TestTaskDetailDialogComponent
   ]
 })
 export class TestModule { }
