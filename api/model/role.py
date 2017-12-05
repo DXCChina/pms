@@ -6,7 +6,7 @@ from rbac.context import IdentityContext
 from flask import session
 
 from flask_jwt_extended import (get_jwt_identity)
-from model.db import db, Project, ProjectMember
+from model.db import db, Project, ProjectMember, ActivityMember
 
 acl = Registry()
 identity = IdentityContext(acl)
@@ -15,11 +15,18 @@ identity = IdentityContext(acl)
 def is_task_member(_, role, operation, resource):
     '''判断是否是活动成员'''
     print("操作:", role, operation, resource)
-    with db.cursor() as cursor:
-        sql = "SELECT memberId FROM task WHERE id=%s"
-        cursor.execute(sql, (session['task_id']))
-        result = cursor.fetchone()
-    return result['memberId'] == get_jwt_identity()
+    data = ActivityMember.select().where(
+        ActivityMember.activityId == session['task_id']
+    )
+    for d in data:
+        if d.memberId == get_jwt_identity():
+            return True
+    return False
+    # with db.cursor() as cursor:
+    #     sql = "SELECT * FROM activity_member WHERE activityId_id=%s"
+    #     cursor.execute(sql, (session['task_id']))
+    #     result = cursor.fetchall()
+    # return result['memberId_id'] == get_jwt_identity()
 
 
 # 注册角色

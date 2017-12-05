@@ -42,7 +42,7 @@ def demand_activity_done(activity_id, data):
 
 
 @fresh_jwt_required
-@identity.check_permission("create", 'activity')
+@identity.check_permission("create", 'task')
 def activity_add():
     '''创建项目活动'''
     data = request.json

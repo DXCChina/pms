@@ -55,6 +55,8 @@ def check():
             return jsonify({"msg": "Missing JSON in request"}), 400
         if 'projectId' in request.json:
             session['project_id'] = request.json['projectId']
+        if 'activityId' in request.json:
+            session['task_id'] = request.json['activityId']
 
 
 @app.errorhandler(PermissionDenied)
