@@ -30,7 +30,8 @@ app.config['JWT_COOKIE_CSRF_PROTECT'] = False  # 开发环境临时禁用
 app.config['JWT_COOKIE_SECURE'] = False  # 开发环境临时禁用
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=7)  # Token 过期时间
 app.config['DEBUG'] = 'PY_ENV' in environ and environ['PY_ENV'] == 'dev'
-app.add_url_rule('/graphql', view_func=GraphQLView.as_view('graphql', schema=schema, graphiql=True))
+app.add_url_rule(
+    '/graphql', view_func=GraphQLView.as_view('graphql', schema=schema, graphiql=True))
 
 jwt = JWTManager(app)  # pylint:disable=c0103
 
@@ -48,7 +49,10 @@ def add_claims_to_access_token(user):
 
 
 @app.before_request
-def check():
+def init():
+    '''在请求收到之前绑定一个函数'''
+    if database.is_closed():
+        database.connect()
     '''project_id 加入 session'''
     if request.method == 'POST' or request.method == 'PUT':
         if not request.is_json:
@@ -57,6 +61,21 @@ def check():
             session['project_id'] = request.json['projectId']
         if 'activityId' in request.json:
             session['task_id'] = request.json['activityId']
+
+
+@app.after_request
+def after_request(response):
+    '''每一个请求之后绑定一个函数，如果请求没有异常'''
+    return response
+
+
+@app.teardown_request
+def _db_close(exception=None):
+    '''每一个请求之后绑定一个函数，即使遇到了异常'''
+    if exception:
+        print('teardown_request', exception)
+    if not database.is_closed():
+        database.close()
 
 
 @app.errorhandler(PermissionDenied)
