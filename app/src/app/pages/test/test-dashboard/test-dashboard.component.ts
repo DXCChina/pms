@@ -5,6 +5,9 @@ import { ListMetrics, ItemMetrics } from '../../pm/pm-dashboard.component/card-d
 import { DashboardService } from '../../pm/pm-dashboard.component/dashboard.service';
 import { MatDialog } from '@angular/material';
 import { CaseDetailModalComponent } from '../case-detail-modal/case-detail-modal.component';
+import {Subscription} from "rxjs";
+import {JhiEventManager} from "ng-jhipster";
+import {TestTaskDetailDialogComponent} from "../case-task-detail-dialog/task-detail-dialog.component";
 
 @Component({
   selector: 'app-test-dashboard',
@@ -17,7 +20,10 @@ export class TestDashboardComponent implements OnInit {
   public testCaseData: any[] = [];
   public testResultData: any[] = [];
 
-  constructor(private router: Router, private service: DashboardService, private dialog: MatDialog) { }
+  private eventTestCaseSubscriber: Subscription;
+  private eventActivitySubscriber: Subscription;
+
+  constructor(private router: Router, private service: DashboardService, private dialog: MatDialog, private eventManager: JhiEventManager) { }
 
   // 项目ID
   projectId: string;
@@ -36,6 +42,9 @@ export class TestDashboardComponent implements OnInit {
     this.getProjectActivity();
     this.getProjectTestCase();
     this.getProjectTestResult();
+
+    this.registerChangeInTestCase();
+    this.registerChangeInActivity();
   }
 
   getProjectActivity() {
@@ -85,6 +94,7 @@ export class TestDashboardComponent implements OnInit {
     this.service.getProjectTestCase(this.projectId)
       .then(res => {
 
+        this.testCaseData = [];
         this.testCaseData.push(
           new ListMetrics(
             '全部测试案例',
@@ -141,12 +151,32 @@ export class TestDashboardComponent implements OnInit {
       }).catch(err => console.log(err));
   }
 
+  registerChangeInTestCase() {
+    this.eventTestCaseSubscriber = this.eventManager.subscribe(
+      'TestCaseListModification',
+      () => this.getProjectTestCase()
+    );
+  }
+
+  registerChangeInActivity() {
+    this.eventActivitySubscriber = this.eventManager.subscribe(
+      'ActivityListModification',
+      () => this.getProjectActivity()
+    );
+  }
+
+
   addItem() {
     console.log('add');
   }
 
   showActivityDetail(data) {
-    console.log(data);
+    const dialogRef = this.dialog.open(TestTaskDetailDialogComponent, {
+      width: '750px',
+      data: {data: data}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
   }
 
   showResultDetail(data) {

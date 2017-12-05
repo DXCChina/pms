@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgaModule } from '../../theme/nga.module';
 import { routing } from './dev.routing';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {
   MatButtonModule, MatCommonModule, MatDialogModule, MatSelectModule, MatInputModule,
@@ -14,18 +14,22 @@ import {
 import { DevComponent } from './dev.component';
 import { DevDashboardComponent } from './dev-dashboard/dev-dashboard.component';
 import { DevActivityComponent } from './dev-activity/dev-activity.component';
-import { DemandDetailModalComponent } from './demand-detail-modal/demand-detail-modal.component';
+import {DevTaskDetailDialogComponent} from "./dev-task-detail-dialog/task-detail-dialog.component";
+import {ToasterModule} from "angular2-toaster";
+// import { DemandDetailModalComponent } from './demand-detail-modal/demand-detail-modal.component';
 
 @NgModule({
   declarations: [
     DevComponent,
     DevDashboardComponent,
     DevActivityComponent,
-    DemandDetailModalComponent
+    DevTaskDetailDialogComponent
+    // DemandDetailModalComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     NgaModule,
     routing,
 
@@ -50,13 +54,15 @@ import { DemandDetailModalComponent } from './demand-detail-modal/demand-detail-
     MatNativeDateModule,
     MatMenuModule,
     MatProgressBarModule,
-    MatToolbarModule
+    MatToolbarModule,
+    ToasterModule
   ],
   providers: [
 
   ],
   entryComponents: [
     // DemandDetailModalComponent
+    DevTaskDetailDialogComponent
   ]
 })
 export class DevModule { }

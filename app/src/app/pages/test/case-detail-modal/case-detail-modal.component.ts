@@ -4,6 +4,7 @@ import {AbstractControl, FormGroup, FormBuilder, Validators} from "@angular/form
 import {ToasterConfig, ToasterService} from "angular2-toaster";
 import {TestCase} from "./test-case.model";
 import {CaseDetailModalService} from "./case-detail-modal.service";
+import {JhiEventManager} from "ng-jhipster";
 
 @Component({
   selector: 'app-case-detail-modal',
@@ -56,11 +57,11 @@ export class CaseDetailModalComponent implements OnInit {
   caseId: string = '';
 
   constructor(public dialogRef: MatDialogRef<CaseDetailModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
-              public fb: FormBuilder, private toasterService: ToasterService, private _service:CaseDetailModalService) {
+              public fb: FormBuilder, private toasterService: ToasterService, private _service:CaseDetailModalService,
+              private eventManager: JhiEventManager) {
     this.mode = this.data.mode;
     if(this.mode === 'update'){
       this.testCaseInfo = this.data.caseInfo;
-      this.demandTittle = this.data.caseInfo.demandTittle;
       this.caseId = this.data.caseInfo.id;
     }
     this.projectId = sessionStorage.getItem('projectId');
@@ -68,6 +69,16 @@ export class CaseDetailModalComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
+    if(this.mode === 'update'){
+      this.reviewDetail();
+    }
+  }
+
+  reviewDetail(){
+    this._service.reviewDetail(this.data.caseInfo.demandId)
+      .then(res=>{
+        this.demandTittle = res.data&&res.data.demandTittle;
+      })
   }
 
   buildForm() {
@@ -107,7 +118,7 @@ export class CaseDetailModalComponent implements OnInit {
     }
   }
 
-  onSubmit(data) {
+  onSubmit() {
     this.testCaseParams = Object.assign({projectId:this.projectId},this.testCaseParams);
     this.testCaseParams = Object.assign(this.testCaseParams, this.testCaseForm.value);
     if(this.mode === 'create'){
@@ -115,6 +126,7 @@ export class CaseDetailModalComponent implements OnInit {
         .then(res => {
           if (res.msg === 'ok') {
             this.toasterService.pop('ok', '新建测试用例成功');
+            this.eventManager.broadcast({name: 'TestCaseListModification', content: 'OK'});
             this.dialogRef.close();
           } else {
             this.toasterService.pop('error', res.msg);
@@ -126,6 +138,7 @@ export class CaseDetailModalComponent implements OnInit {
         .then(res => {
           if (res.msg === 'ok') {
             this.toasterService.pop('ok', '测试用例修改成功');
+            this.eventManager.broadcast({name: 'TestCaseListModification', content: 'OK'});
             this.dialogRef.close();
           } else {
             this.toasterService.pop('error', res.msg);
