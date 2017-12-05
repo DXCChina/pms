@@ -95,6 +95,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
     this.service.getProjectActivity(this.projectId)
       .then(res => {
 
+        this.activityData = [];
         this.activityData.push(
           new ListMetrics(
             '进行中活动',

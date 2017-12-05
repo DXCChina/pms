@@ -66,7 +66,7 @@ def activity_add():
 
 
 @fresh_jwt_required
-@identity.check_permission("update", 'activity')
+@identity.check_permission("update", 'task')
 def activity_update():
     '''更新项目活动'''
     data = request.json
