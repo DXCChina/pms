@@ -14,12 +14,13 @@ identity = IdentityContext(acl)
 
 def is_task_member(_, role, operation, resource):
     '''判断是否是活动成员'''
-    print("操作:", role, operation, resource)
     data = ActivityMember.select().where(
         ActivityMember.activityId == session['task_id']
     )
+    print("操作:", role, operation, resource, data)
     for d in data:
-        if d.memberId == get_jwt_identity():
+        print('##########',d.memberId_id, get_jwt_identity())
+        if d.memberId_id == get_jwt_identity():
             return True
     return False
     # with db.cursor() as cursor:
