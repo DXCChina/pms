@@ -50,11 +50,14 @@ def add_claims_to_access_token(user):
 @app.before_request
 def check():
     '''project_id 加入 session'''
+    print(request.json)
     if request.method == 'POST' or request.method == 'PUT':
         if not request.is_json:
             return jsonify({"msg": "Missing JSON in request"}), 400
         if 'projectId' in request.json:
             session['project_id'] = request.json['projectId']
+        if 'activityId' in request.json:
+            session['task_id'] = request.json['activityId']
 
 
 @app.errorhandler(PermissionDenied)

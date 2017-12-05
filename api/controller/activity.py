@@ -31,8 +31,18 @@ def demand_activity_del(activity_id, data):
             demand.save()
 
 
+def demand_activity_done(activity_id, data):
+    '''更新活动需求'''
+    for demand_id in data:
+        demand = Demand.get(Demand.id == demand_id)
+        if demand.activityId == activity_id:
+            demand.status = 1
+            # Demand.update(activityId=activity_id).where(Demand.id == demand_id).execute()
+            demand.save()
+
+
 @fresh_jwt_required
-@identity.check_permission("create", 'activity')
+@identity.check_permission("create", 'task')
 def activity_add():
     '''创建项目活动'''
     data = request.json
@@ -43,7 +53,9 @@ def activity_add():
         if 'memberId' in data and data['memberId']:
             for member_id in data['memberId']:
                 role = ProjectMember.get(
-                    ProjectMember.projectId == data['projectId'], ProjectMember.memberId == member_id).role
+                    ProjectMember.projectId == data['projectId'],
+                    ProjectMember.memberId == member_id
+                ).role
                 ActivityMember.create(**{
                     'activityId': activity_id,
                     'memberId': member_id,
@@ -54,17 +66,18 @@ def activity_add():
 
 
 @fresh_jwt_required
-@identity.check_permission("update", 'activity')
+@identity.check_permission("update", 'task')
 def activity_update():
     '''更新项目活动'''
     data = request.json
     activity_id = data.pop('activityId')
     with database.atomic():
-        for member_id in data.pop('del_memberId'):
-            ActivityMember.delete().where(
-                (ActivityMember.activityId == activity_id) &
-                (ActivityMember.memberId == member_id)
-            ).execute()
+        if 'del_memberId' in data:
+            for member_id in data.pop('del_memberId'):
+                ActivityMember.delete().where(
+                    (ActivityMember.activityId == activity_id) &
+                    (ActivityMember.memberId == member_id)
+                ).execute()
         if 'memberId' in data:
             if not 'status' in data or not data['status']:
                 data['status'] = 'dev-ing'
@@ -77,8 +90,12 @@ def activity_update():
                         and (ProjectMember.memberId == member_id)
                     ).role
                 )
-        demand_activity_add(activity_id, data.pop('demand'))
-        demand_activity_del(activity_id, data.pop('del_demand'))
+        if 'done_demand' in data:
+            demand_activity_done(activity_id, data.pop('done_demand'))
+        if 'demand' in data:
+            demand_activity_add(activity_id, data.pop('demand'))
+        if 'del_demand' in data:
+            demand_activity_del(activity_id, data.pop('del_demand'))
         Activity.update(**data).where(Activity.id == activity_id).execute()
     return {"msg": 'ok'}
 

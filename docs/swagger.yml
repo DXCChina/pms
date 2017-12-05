@@ -100,8 +100,15 @@ paths:
           description: 活动更新成功
   /login:
     post:
-      summary: api
+      summary: 用户登录
       operationId: controller.user.login
+      parameters:
+        - name: login
+          in: body
+          description: 用户登录信息
+          required: true
+          schema:
+            $ref: '#/definitions/Login'
       responses:
         200:
           description: ok
@@ -500,6 +507,13 @@ paths:
         200:
           description: 测试结果更新成功
 definitions:
+  Login:
+    type: object
+    properties:
+      username:
+        type: string
+      password:
+        type: string
   ActivityInit:
     type: object
     properties:
@@ -536,6 +550,10 @@ definitions:
       title:
         type: string
       del_demand:
+        type: array
+        items:
+          type: integer
+      done_demand:
         type: array
         items:
           type: integer

@@ -6,6 +6,7 @@ export class CaseDetailModalService {
 
   private demandListMatchStrUrl = this.Global.baseURL + '/api/project/demand';
   private caseUrl = this.Global.baseURL + '/api/project/case';
+  private caseDetailUrl = this.Global.baseURL + '/api/project/case/detail';
 
   constructor(private Global: GlobalState, private http: Http){
 
@@ -29,6 +30,14 @@ export class CaseDetailModalService {
     let demandListMatchStrUrl = `${this.demandListMatchStrUrl}/${title}`;
 
     return this.http.get(demandListMatchStrUrl)
+      .toPromise()
+      .then(this.Global.extractData)
+      .catch(this.Global.handleError)
+  }
+
+  reviewDetail(id): Promise<any>{
+    let caseDetailUrl = `${this.caseDetailUrl}/${id}`;
+    return this.http.get(caseDetailUrl)
       .toPromise()
       .then(this.Global.extractData)
       .catch(this.Global.handleError)

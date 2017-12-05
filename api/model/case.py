@@ -46,3 +46,6 @@ def case_update(case):
 
 def find_one_case_by_title(name):
     return TestCase.getOne(TestCase.name == name)
+
+def find_name_by_id(id):
+    return TestCase.getOne(TestCase.id == id).name
