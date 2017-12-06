@@ -48,21 +48,34 @@ def find_test_case(p_id, m_id):
 
 def find_test_result_for_dev(p_id, m_id):
     '''按M_id查询开发相关项目测试结果'''
-    return list(
-        TestResult.select(TestResult, TestCase,
-                          User.username.alias('ownerName')).join(
-                              TestCase,
-                              on=(TestResult.caseId == TestCase.id)).join(
-                                  User, on=(TestCase.ownerId == User.id))
+    return list(TestResult.select(
+            TestResult,
+            TestCase.id.alias('caseId'),
+            TestCase.name.alias('caseName'),
+            Demand.title.alias('demandName'),
+            TestCase.input,
+            TestCase.expect,
+            User.username.alias('ownerName'))
+        .join(TestCase, on = (TestResult.caseId == TestCase.id))
+        .join(User, on = (TestCase.ownerId == User.id))
+        .join(Demand, on = (TestCase.demandId == Demand.id))
         .where((TestCase.projectId == p_id) & (TestResult.devId == m_id))
         .dicts())
 
 
 def find_test_result_for_test(p_id, m_id):
     '''按M_id查询测试相关项目测试结果'''
-    return list(TestResult.select(TestResult, TestCase, User.username.alias('devName'))
+    return list(TestResult.select(
+            TestResult,
+            TestCase.id.alias('caseId'),
+            TestCase.name.alias('caseName'),
+            Demand.title.alias('demandName'),
+            TestCase.input,
+            TestCase.expect,
+            User.username.alias('ownerName'))
         .join(TestCase, on = (TestResult.caseId == TestCase.id))
-        .join(User, on = (TestResult.devId == User.id))
+        .join(User, on = (TestCase.ownerId == User.id))
+        .join(Demand, on = (TestCase.demandId == Demand.id))
         .where((TestCase.projectId == p_id) & (TestCase.ownerId == m_id))
         .dicts())
 
@@ -93,8 +106,16 @@ def find_all_activity(p_id):
 
 def find_all_test_result(p_id):
     '''按P_id查询全部项目测试结果'''
-    return list(TestResult.select(TestResult, TestCase, User.username.alias('ownerName'))
+    return list(TestResult.select(
+            TestResult,
+            TestCase.id.alias('caseId'),
+            TestCase.name.alias('caseName'),
+            Demand.title.alias('demandName'),
+            TestCase.input,
+            TestCase.expect,
+            User.username.alias('ownerName'))
         .join(TestCase, on = (TestResult.caseId == TestCase.id))
         .join(User, on = (TestCase.ownerId == User.id))
+        .join(Demand, on = (TestCase.demandId == Demand.id))
         .where(TestCase.projectId == p_id)
         .dicts())
