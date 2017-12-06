@@ -188,10 +188,11 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
   registerChangeInActivity() {
     this.eventActivitySubscriber = this.eventManager.subscribe(
       'ActivityListModification',
-      () => this.getProjectActivity()
+      () => {
+        this.getProjectActivity();
+        this.getProjectDemand();}
     );
   }
-
 
   ngOnDestroy() {
     this.eventManager.destroy(this.eventSubscriber);
