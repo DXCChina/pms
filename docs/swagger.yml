@@ -454,6 +454,53 @@ paths:
       responses:
         200:
           description: ok
+# @author: Wang Qianxiang
+  /testResult:
+    get:
+      summary: 查询测试结果
+      operationId: controller.testResult.search_test_result
+      parameters:
+        - name: testResultId
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+    post:
+      summary: 创建项目测试结果
+      operationId: controller.testResult.add_test_result
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: testResult
+          in: body
+          description: 测试结果初始信息
+          required: true
+          schema:
+            $ref: '#/definitions/TestResultInit'
+      responses:
+        200:
+          description: 测试结果创建成功
+    put:
+      summary: 更新项目测试结果
+      operationId: controller.testResult.update_test_result
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: testResult
+          in: body
+          description: 更新测试结果信息
+          required: true
+          schema:
+            $ref: '#/definitions/TestResultUpdate'
+      responses:
+        200:
+          description: 测试结果更新成功
 definitions:
   Login:
     type: object
@@ -527,3 +574,53 @@ definitions:
         type: string
     required:
     - title
+  TestResultInit:
+    type: object
+    properties:
+      name:
+        type: string
+      detail:
+        type: string
+      caseId:
+        type: integer
+      output:
+        type: string
+      status:
+        type: string
+      level:
+        type: string
+      priority:
+        type: string
+    required:
+    - name
+    - detail
+    - caseId
+    - output
+    - status
+    - level
+    - priority
+  TestResultUpdate:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      detail:
+        type: string
+      output:
+        type: string
+      status:
+        type: string
+      level:
+        type: string
+      priority:
+        type: string
+    required:
+    - id
+    - name
+    - detail
+    - output
+    - status
+    - level
+    - priority
