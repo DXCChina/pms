@@ -52,7 +52,7 @@ export class DevTaskDetailDialogComponent implements OnInit {
 
   ngOnInit() {
     this.selectUserList = this.taskInfo.member.map(ele => {
-      return {id: ele.id, name: ele.username};
+      return {id: ele.id, name: ele.username, role:ele.role};
     });
 
     this.demandListInTask = this.taskInfo.demand;
@@ -102,7 +102,7 @@ export class DevTaskDetailDialogComponent implements OnInit {
     // }
   }
 
-  onSubmit() {
+  onSubmit(data) {
     let doneDemandId = this.demandListCompletedInTask.map(demand => demand.id);
     this.taskInfoParams = Object.assign(
       {

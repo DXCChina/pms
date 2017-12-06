@@ -56,18 +56,21 @@ export class DemandDetailDialogComponent {
 
   ngOnInit() {
     if (this.mode == 'update') {
-      this.demandInfo = this.data.info;
-      // this.reviewDetail(this.demandId);
+      // this.demandInfo = this.data.info;
+      this.reviewDetail(this.data.info.id);
     }
     this.buildForm();
   }
 
-  // reviewDetail(demandId) {
-  //   this._service.reviewDemandDetail(demandId)
-  //     .then(res => {
-  //       this.demandInfo = res.data;
-  //     })
-  // }
+  reviewDetail(demandId) {
+    this._service.reviewDemandDetail(demandId)
+      .then(res => {
+        this.demandInfo = res.data;
+        if (!this.demandInfo.activityId) {
+          this.demandInfo.activityTittle = '没有绑定任务'
+        }
+      })
+  }
 
   buildForm() {
     this.demandForm = this.fb.group({
@@ -110,7 +113,7 @@ export class DemandDetailDialogComponent {
 
   onSubmit(data) {
     let demandInfo = Object.assign(this.demandForm.value, {projectId: this.projectId});
-    if(this.mode === 'create'){
+    if (this.mode === 'create') {
       this._service.newDemand(demandInfo)
         .then(res => {
           if (res.msg === 'ok') {
@@ -121,7 +124,7 @@ export class DemandDetailDialogComponent {
             this.toasterService.pop('error', res.msg);
           }
         });
-    }else if(this.mode === 'update'){
+    } else if (this.mode === 'update') {
       demandInfo = Object.assign(demandInfo, {id: this.demandInfo.id});
       this._service.updateDemand(demandInfo)
         .then(res => {

@@ -29,8 +29,6 @@ export class TaskDetailDialogComponent implements OnInit {
   selectUsers = new FormControl();
   selectUserList: any;
 
-  searchObservable: Subscription;
-
   userLists: any = [];
 
   title: AbstractControl;
@@ -79,12 +77,14 @@ export class TaskDetailDialogComponent implements OnInit {
     this.search = this.form.controls['search'];
 
     if (this.mode === 'update') {
-      this.delMemberList = this.selectUserList = this.taskInfo.member.map(ele => {
-        return {id: ele.id, name: ele.username};
-      });
       this.taskInfo = this.data.taskInfo;
+      this.delMemberList = this.selectUserList = this.taskInfo.member.map(ele => {
+        return {id: ele.id, name: ele.username, role: ele.role};
+      });
       this.selectUsers = new FormControl(this.selectUserList);
       this.demandListInTask = this.taskInfo.demand;
+      this.demandListCompletedInTask = this.demandListInTask.filter(demand => demand.status === true);
+      this.progressValue = this.demandListCompletedInTask.length / this.demandListInTask.length * 100;
       this.delDemandList = this.demandListInTask.concat();
     }
     this.buildForm();
@@ -137,13 +137,13 @@ export class TaskDetailDialogComponent implements OnInit {
           if (ele.role === 'dev') {
             this.userLists.forEach(user => {
               if (user.role === 'dev') {
-                user.members.push({id: ele.id, name: ele.username});
+                user.members.push({id: ele.id, name: ele.username, role: ele.role});
               }
             })
           } else if (ele.role === 'test') {
             this.userLists.forEach(user => {
               if (user.role === 'test') {
-                user.members.push({id: ele.id, name: ele.username});
+                user.members.push({id: ele.id, name: ele.username, role: ele.role});
               }
             })
           }
@@ -168,7 +168,7 @@ export class TaskDetailDialogComponent implements OnInit {
     this._service.searchDemandList(this.searchDemand, Number(this.projectId))
       .then(res => {
         this.demandListNotAssigned = [];
-        console.log("res", res);
+        this.demandListNotAssigned = res.data;
       })
   }
 
@@ -176,7 +176,7 @@ export class TaskDetailDialogComponent implements OnInit {
     this.searchDemand = '';
   }
 
-  onSubmit(data) {
+  onSubmit() {
     let memberId = this.selectUserList.map(user => user.id);
     let demand = this.demandListInTask.map(demand => demand.id);
     let projectId = Number(this.projectId);
@@ -185,56 +185,51 @@ export class TaskDetailDialogComponent implements OnInit {
       memberId: memberId,
       projectId: projectId,
       demand: demand,
-      progress: this.progressValue
+      progress:this.progressValue || 0
     }, this.taskForm.value);
     if (this.mode === 'create') {
       this._service.newTask(this.taskInfoParams)
         .then(res => {
-          if(res.msg === 'ok'){
+          if (res.msg === 'ok') {
             this.toasterService.pop('ok', '活动新建成功');
             this.eventManager.broadcast({name: 'ActivityListModification', content: 'OK'});
             this.dialogRef.close();
-          }else{
+          } else {
             this.toasterService.pop('error', res.msg);
           }
         })
     } else if (this.mode === 'update') {
-      let memberList = this.selectUserList.filter(user => {
-        return this.delMemberList.find(member => {
-          return member.id == user.id;
-        });
-      });
-      let delMemberList = this.delMemberList.filter(user => {
-        return memberList.find(member => {
-          return member.id != user.id;
-        });
-      });
-      let delMemberId = delMemberList.map(member => member.id);
-      let demandList = this.demandListInTask.filter(demand => {
-        return this.delDemandList.find(ele => {
-          return ele.id == demand.id;
-        });
-      });
-      let delDemandList = this.delDemandList.filter(demand => {
-        return demandList.find(ele => {
-          return ele.id != demand.id;
-        });
-      });
-      let delDemandId = delDemandList.map(demand => demand.id);
+      let delDemandId = this.getDelId(this.demandListInTask, this.delDemandList);
+      let delMemberId = this.getDelId(this.selectUserList, this.delMemberList);
+      let doneDemandId = this.demandListCompletedInTask.map(demand => demand.id);
       this.taskInfoParams = Object.assign(
-        {activityId: this.taskInfo.id, del_memberId: delMemberId, del_demand: delDemandId},
+        {activityId: this.taskInfo.id, del_memberId: delMemberId, del_demand: delDemandId, done_demand: doneDemandId},
         this.taskInfoParams);
       this._service.updateTask(this.taskInfoParams)
         .then(res => {
-          if(res.msg === 'ok'){
+          if (res.msg === 'ok') {
             this.toasterService.pop('ok', '活动修改成功');
             this.eventManager.broadcast({name: 'ActivityListModification', content: 'OK'});
             this.dialogRef.close();
-          }else{
+          } else {
             this.toasterService.pop('error', res.msg);
           }
         })
     }
+  }
+
+  getDelId(newDatas, oldDatas) {
+    let delDatas = oldDatas.filter(data => {
+      let isContained = true;
+      newDatas.forEach(newData => {
+        if (newData.id === data.id) {
+          isContained = false;
+          return;
+        }
+      });
+      return isContained;
+    });
+    return delDatas.map(data => data.id);
   }
 
   getSelectUsers() {
@@ -242,24 +237,9 @@ export class TaskDetailDialogComponent implements OnInit {
   }
 
   removeUser(userList: any): void {
-    //   this.remove(role, this.userList, this.selectUserList);
-    // console.log("userlist", userList.userList);
-    // console.log("removeUserList", userList.delUserList);
-    // this.delMemberList = this.delMemberList.concat(userList.delUserList);
     this.selectUsers = new FormControl(userList);
     this.selectUserList = this.selectUsers.value;
   }
-
-  // remove(role, arrlist, selectList) {
-  //   arrlist.forEach(user => {
-  //     if (user == role) {
-  //       user.checked = false;
-  //     }
-  //   });
-  //
-  //   let index = selectList.indexOf(role);
-  //   selectList.splice(index, 1);
-  // }
 
   addDemandToTask(demand) {
     this.demandListInTask.push(demand);

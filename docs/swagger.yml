@@ -20,26 +20,6 @@ paths:
       responses:
         200:
           description: ok
-  /demand:
-    get:
-      summary: 查询需求
-      operationId: controller.activity.demand_search
-      consumes:
-      - "application/json"
-      produces:
-      - "application/json"
-      parameters:
-        - name: title
-          in: query
-          required: true
-          type: string
-        - name: projectId
-          in: query
-          required: true
-          type: integer
-      responses:
-        200:
-          description: ok
   /activity/{activity_id}:
     get:
       summary: 项目活动详情
@@ -264,6 +244,21 @@ paths:
           description: ok
 # @author: Xing Dong
   /project/demand:
+    get:
+      summary: 查询需求
+      operationId: controller.activity.demand_search
+      parameters:
+        - name: title
+          in: query
+          required: true
+          type: string
+        - name: projectId
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
     post:
       summary: api
       operationId: controller.demand.demand_add
