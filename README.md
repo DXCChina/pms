@@ -1,4 +1,4 @@
-# pms 前后端分离架构 v0.1
+# 质量管理平台前后端分离架构 v0.1
 ### 前端(MVC)
 * MVC:[angular v4](https://angular.io/) [angular cn](https://angular.cn/)
 * UI:[Material](https://material.angular.io/),
@@ -50,6 +50,7 @@
 3. 启动
     * 添加环境变量:
     ```
+    # example
     PY_ENV:dev
     PY_DB_NAME:pms
     PY_DB_HOST:localhost
@@ -60,7 +61,6 @@
     * 一键启动:`run`
     * 启动前端:`app\run`
     * 启动后端:`api\run`
-    * 打开接口文档:`api`
 4. nginx配置
     ```
     #负载均衡服务器列表
@@ -97,11 +97,14 @@
     * 安装依赖:
         * 前端:`cd app&&yarn&&cd ..||cd ..`
         * 后端:`pip install -r api/requirements.txt`
+#### 发布前端
+```bash
+cd app
+yarn build:prod:aot # 生成的 dist 目录上传到生产环境 nginx 静态资源路径
+```
 #### [CentOS7生产环境部署](https://github.com/canfeit/pms/blob/master/docs/%E7%94%9F%E4%BA%A7%E7%8E%AF%E5%A2%83%E9%83%A8%E7%BD%B2.md)
 ### 测试
 * [python 单元测试](https://hypothesis.readthedocs.io/en/master/quickstart.html)
 * [flask 接口测试](http://flask.pocoo.org/docs/dev/testing/)
 * [angular 单元测试](https://angular.cn/guide/testing)
 * [angular E2E测试](http://www.protractortest.org/#/tutorial)
-### TODO
-* 多线程下项目人员抖动

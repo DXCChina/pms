@@ -102,7 +102,7 @@ export class TestTaskDetailDialogComponent implements OnInit {
     // }
   }
 
-  onSubmit() {
+  onSubmit(data) {
     let doneDemandId = this.demandListCompletedInTask.map(demand => demand.id);
     this.taskInfoParams = Object.assign(
       {

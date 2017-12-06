@@ -16,15 +16,15 @@ import { DevDashboardComponent } from './dev-dashboard/dev-dashboard.component';
 import { DevActivityComponent } from './dev-activity/dev-activity.component';
 import {DevTaskDetailDialogComponent} from "./dev-task-detail-dialog/task-detail-dialog.component";
 import {ToasterModule} from "angular2-toaster";
-// import { DemandDetailModalComponent } from './demand-detail-modal/demand-detail-modal.component';
+import { DemandDetailModalComponent } from './demand-detail-modal/demand-detail-modal.component';
 
 @NgModule({
   declarations: [
     DevComponent,
     DevDashboardComponent,
     DevActivityComponent,
-    DevTaskDetailDialogComponent
-    // DemandDetailModalComponent
+    DevTaskDetailDialogComponent,
+    DemandDetailModalComponent
   ],
   imports: [
     CommonModule,
