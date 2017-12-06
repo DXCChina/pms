@@ -12,6 +12,7 @@ export class ChipListComponent{
   @Input() chipList: any = [];
   @Input() selectable:boolean = true;
   @Input() removable:boolean = true;
+  @Input() mode: string = '';
 
   @Output() removeChip:EventEmitter<any>= new EventEmitter<any>();
   removeChipEle:any;

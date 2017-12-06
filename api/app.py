@@ -54,6 +54,7 @@ def init():
     if database.is_closed():
         database.connect()
     '''project_id 加入 session'''
+    print(request.json)
     if request.method == 'POST' or request.method == 'PUT':
         if not request.is_json:
             return jsonify({"msg": "Missing JSON in request"}), 400
