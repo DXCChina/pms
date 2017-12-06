@@ -5,9 +5,10 @@ import { ListMetrics, ItemMetrics } from '../../pm/pm-dashboard.component/card-d
 import { DashboardService } from '../../pm/pm-dashboard.component/dashboard.service';
 import { MatDialog } from '@angular/material';
 import { CaseDetailModalComponent } from '../case-detail-modal/case-detail-modal.component';
-import {Subscription} from "rxjs";
-import {JhiEventManager} from "ng-jhipster";
-import {TestTaskDetailDialogComponent} from "../case-task-detail-dialog/task-detail-dialog.component";
+import { Subscription } from 'rxjs';
+import { JhiEventManager } from 'ng-jhipster';
+import { TestTaskDetailDialogComponent } from '../case-task-detail-dialog/task-detail-dialog.component';
+import { TestResultDetailComponent } from '../test-result-detail-dialog/test-result-detail-dialog.component';
 
 @Component({
   selector: 'app-test-dashboard',
@@ -22,6 +23,7 @@ export class TestDashboardComponent implements OnInit {
 
   private eventTestCaseSubscriber: Subscription;
   private eventActivitySubscriber: Subscription;
+  private eventTestResultSubscriber: Subscription;
 
   constructor(private router: Router, private service: DashboardService, private dialog: MatDialog, private eventManager: JhiEventManager) { }
 
@@ -45,6 +47,7 @@ export class TestDashboardComponent implements OnInit {
 
     this.registerChangeInTestCase();
     this.registerChangeInActivity();
+    this.registerChangeInTestResult();
   }
 
   getProjectActivity() {
@@ -165,6 +168,12 @@ export class TestDashboardComponent implements OnInit {
     );
   }
 
+  registerChangeInTestResult() {
+    this.eventTestResultSubscriber = this.eventManager.subscribe(
+      'TestResultListModification',
+      () => this.getProjectTestResult()
+    );
+  }
 
   addItem() {
     console.log('add');
@@ -173,14 +182,10 @@ export class TestDashboardComponent implements OnInit {
   showActivityDetail(data) {
     const dialogRef = this.dialog.open(TestTaskDetailDialogComponent, {
       width: '750px',
-      data: {data: data}
+      data: { data: data }
     });
     dialogRef.afterClosed().subscribe(result => {
     });
-  }
-
-  showResultDetail(data) {
-    console.log(data);
   }
 
   addCase() {
@@ -200,6 +205,30 @@ export class TestDashboardComponent implements OnInit {
       width: '750px',
       height: '61vh',
       data: { mode: 'update', caseInfo: data }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  addTestResult() {
+    const dialogRef = this.dialog.open(TestResultDetailComponent, {
+      width: '750px',
+      data: { mode: 'create' }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  showTestResultDetail(data) {
+    console.log(data);
+
+    const dialogRef = this.dialog.open(TestResultDetailComponent, {
+      width: '750px',
+      data: { mode: 'update', info: data }
     });
 
     dialogRef.afterClosed().subscribe(result => {

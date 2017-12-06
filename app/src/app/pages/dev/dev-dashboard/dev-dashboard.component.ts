@@ -1,12 +1,13 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {ListMetrics, ItemMetrics} from '../../pm/pm-dashboard.component/card-data.Entity';
-import {DashboardService} from '../../pm/pm-dashboard.component/dashboard.service';
-import {MatDialog} from '@angular/material';
-import {DevTaskDetailDialogComponent} from "../dev-task-detail-dialog/task-detail-dialog.component";
-import {JhiEventManager} from "ng-jhipster";
-import {Subscription} from "rxjs";
+import { ListMetrics, ItemMetrics } from '../../pm/pm-dashboard.component/card-data.Entity';
+import { DashboardService } from '../../pm/pm-dashboard.component/dashboard.service';
+import { MatDialog } from '@angular/material';
+import { DevTaskDetailDialogComponent } from '../dev-task-detail-dialog/task-detail-dialog.component';
+import { TestResultDetailComponent } from '../test-result-detail-dialog/test-result-detail-dialog.component';
+import { JhiEventManager } from 'ng-jhipster';
+import { Subscription } from 'rxjs';
 // import { DemandDetailModalComponent } from '../demand-detail-modal/demand-detail-modal.component';
 
 @Component({
@@ -21,6 +22,7 @@ export class DevDashboardComponent implements OnInit, OnDestroy {
   public testResultData: any[] = [];
 
   private eventActivitySubscriber: Subscription;
+  private eventTestResultSubscriber: Subscription;
 
   constructor(private router: Router, private service: DashboardService, private dialog: MatDialog, private eventManager: JhiEventManager) {
   }
@@ -41,12 +43,13 @@ export class DevDashboardComponent implements OnInit, OnDestroy {
     this.eventManager.destroy(this.eventActivitySubscriber);
   }
 
-  // 初始化数据 调用三个接口
+  // 初始化数据 调用两个接口
   initData() {
     this.getProjectActivity();
     this.getProjectTestResult();
 
     this.registerChangeInActivity();
+    this.registerChangeInTestResult();
   }
 
   getProjectActivity() {
@@ -143,6 +146,12 @@ export class DevDashboardComponent implements OnInit, OnDestroy {
     );
   }
 
+  registerChangeInTestResult() {
+    this.eventTestResultSubscriber = this.eventManager.subscribe(
+      'TestResultListModification',
+      () => this.getProjectTestResult()
+    );
+  }
 
   addItem() {
     console.log('add');
@@ -163,11 +172,20 @@ export class DevDashboardComponent implements OnInit, OnDestroy {
   showActivityDetail(data) {
     const dialogRef = this.dialog.open(DevTaskDetailDialogComponent, {
       width: '750px',
-      data: {data: data}
+      data: { data: data }
     });
   }
 
-  showResultDetail(data) {
+  showTestResultDetail(data) {
     console.log(data);
+
+    const dialogRef = this.dialog.open(TestResultDetailComponent, {
+      width: '750px',
+      data: { mode: 'update', info: data }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
   }
 }
