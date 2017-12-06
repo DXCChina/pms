@@ -176,7 +176,7 @@ export class TaskDetailDialogComponent implements OnInit {
     this.searchDemand = '';
   }
 
-  onSubmit(data) {
+  onSubmit() {
     let memberId = this.selectUserList.map(user => user.id);
     let demand = this.demandListInTask.map(demand => demand.id);
     let projectId = Number(this.projectId);
@@ -185,7 +185,7 @@ export class TaskDetailDialogComponent implements OnInit {
       memberId: memberId,
       projectId: projectId,
       demand: demand,
-      progress: this.progressValue
+      progress:this.progressValue || 0
     }, this.taskForm.value);
     if (this.mode === 'create') {
       this._service.newTask(this.taskInfoParams)
@@ -224,12 +224,11 @@ export class TaskDetailDialogComponent implements OnInit {
       newDatas.forEach(newData => {
         if (newData.id === data.id) {
           isContained = false;
-          return ;
+          return;
         }
       });
       return isContained;
     });
-
     return delDatas.map(data => data.id);
   }
 

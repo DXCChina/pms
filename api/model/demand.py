@@ -25,7 +25,7 @@ def create_demand(demand):
 def demand_detail(demandId):
     '''获取需求详情'''
     return Demand.sfind(Demand, Activity.title.alias('activityTittle')).join(
-        Activity, on=(Demand.activityId == Activity.id
+        Activity,JOIN.LEFT_OUTER, on=(Demand.activityId == Activity.id
                       )).where(Demand.id == demandId).get()
 
 

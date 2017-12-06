@@ -87,7 +87,7 @@
       </div>
       <div class="demand-in-task">
         <div *ngFor="let demand of demandListInTask">
-          <mat-checkbox (change)="toggleDemandStatus(demand, $event)" [checked]="demand?.status"></mat-checkbox>
+          <mat-checkbox (change)="toggleDemandStatus(demand, $event)" [checked]="demand?.status" disabled></mat-checkbox>
           <mat-form-field>
             <input matInput value="{{demand?.title}}">
           </mat-form-field>
