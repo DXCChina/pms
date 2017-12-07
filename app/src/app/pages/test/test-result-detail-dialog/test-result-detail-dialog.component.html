@@ -1,0 +1,64 @@
+<div>
+  <mat-toolbar class="result-detail-header">
+    <span *ngIf="mode === 'update'">{{testResultInfo?.name}}</span>
+    <span *ngIf="mode === 'create'">新建测试结果</span>
+  </mat-toolbar>
+</div>
+
+<div class="dialog-content">
+  <form action="" [formGroup]="testResultForm" (ngSubmit)="onSubmit(testResultForm)">
+    <div class="result-detail-content">
+      <mat-form-field>
+        <input matInput placeholder="测试结果名称" [formControl]="name" [(ngModel)]="testResultInfo.name" name="name">
+        <mat-error >{{formErrors.name}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput placeholder="测试结果描述" [formControl]="detail" [(ngModel)]="testResultInfo.detail" name="detail">
+      </mat-form-field>
+
+      <mat-form-field>
+        <input type='number' matInput *ngIf="mode=='create'" placeholder="测试案例" [formControl]="caseId">
+        <input type='number' matInput *ngIf="mode=='update'" placeholder="测试案例" [formControl]="caseId" [(ngModel)]="testResultInfo.caseId" name="caseId" readonly>
+        <mat-error>{{formErrors.caseId}}</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input matInput placeholder="案例输出结果" [formControl]="output" [(ngModel)]="testResultInfo.output" name="output">
+        <mat-error>{{formErrors.output}}</mat-error>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <mat-select placeholder="测试结果状态" [formControl]="status" [(ngModel)]="testResultInfo.status" name="status">
+          <mat-option value="tofix" aria-selected="true">待修复</mat-option>
+          <mat-option value="tocheck">待审核</mat-option>
+          <mat-option value="close">通过测试</mat-option>
+        </mat-select>
+        <mat-error>{{formErrors.status}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select placeholder="优先级" [formControl]="level" [(ngModel)]="testResultInfo.level" name="level">
+          <mat-option value="low">低</mat-option>
+          <mat-option value="normal" aria-selected="true">中</mat-option>
+          <mat-option value="high">高</mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+      <mat-form-field *ngIf="testResultInfo.status!=='close'">
+        <mat-select placeholder="严重程度" [formControl]="priority" [(ngModel)]="testResultInfo.priority" name="priority">
+          <mat-option value="low">低</mat-option>
+          <mat-option value="normal" aria-selected="true">中</mat-option>
+          <mat-option value="high">高</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="result-detail-footer">
+      <button mat-button mat-dialog-close>取消</button>
+      <button mat-button type="submit" [disabled]="!testResultForm?.valid">{{mode == 'create' ?  '创建' : '提交'}}</button>
+    </div>
+  </form>
+</div>
+
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>

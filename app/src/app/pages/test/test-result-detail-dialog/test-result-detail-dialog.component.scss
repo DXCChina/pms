@@ -1,0 +1,21 @@
+.result-detail-header{
+  background: #8847dc;
+  color:#fefefe;
+  padding: 0 24px;
+}
+.dialog-content{
+  padding: 24px;
+  height: 51vh;
+  overflow: auto;
+}
+.result-detail-content{
+  display: flex;
+  flex-direction: column;
+}
+.result-detail-content > *{
+  width: 100%;
+}
+
+.result-detail-footer{
+  text-align: center;
+}
