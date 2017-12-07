@@ -45,7 +45,7 @@ def project_add():
 
     schema = projectNewSchema()
     data, errors = schema.load(request.json)
-    print(data, errors)
+    # print(data, errors)
     if errors:
         return jsonify({"msg": errors}), 400
     if find_one_project_by_name(data["name"]):

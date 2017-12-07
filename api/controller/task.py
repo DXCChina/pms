@@ -100,7 +100,7 @@ def demand_update():
     '''
 
     if not request.json or not 'data' in request.json:
-        print('request:', request.json)
+        # print('request:', request.json)
         abort(400)
     try:
         data = task.update_demands(request.json["data"])
@@ -164,7 +164,7 @@ def task_list():
 
     GET /api/task/list
     # '''
-    print(request.args.to_dict())
+    # print(request.args.to_dict())
     return jsonify({
         "message": "ok",
         "data": task.taskList(request.args.to_dict())["data"],
@@ -200,7 +200,7 @@ def getMemberInfo(projectId):
 
     GET /api/member/<int:projectId>
     '''
-    print(projectId)
+    # print(projectId)
     res = {"message": "ok", "data": {}}
 
     if task.findMember(projectId) != None:
@@ -217,7 +217,7 @@ def update_task():
     PUT /api/demand/task/update
     '''
     if not request.json or not 'data' in request.json:
-        print('request:', request.json)
+        # print('request:', request.json)
         abort(400)
     session['task_id'] = request.json["data"]["id"]
 
