@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { ListMetrics } from './list-metrics';
 
 @Component({
@@ -7,9 +7,10 @@ import { ListMetrics } from './list-metrics';
   styleUrls: ['./list-card.component.scss'],
   providers: []
 })
-export class ListCardComponent implements OnInit {
+export class ListCardComponent implements OnInit, OnChanges {
 
   @Input() data: ListMetrics[];
+  @Input() canAdd: boolean;
   @Output() showDetail: EventEmitter<any> = new EventEmitter<any>();
   @Output() addItem: EventEmitter<any> = new EventEmitter<any>();
 
@@ -27,8 +28,10 @@ export class ListCardComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngOnChanges(){
-    this.changeCardData(this.data[0]);
+  ngOnChanges() {
+    if (this.data.length) {
+      this.changeCardData(this.data[0]);
+    }
   }
 
   changeCardData(list) {
@@ -39,7 +42,9 @@ export class ListCardComponent implements OnInit {
   }
 
   addEmit() {
-    this.addItem.emit();
+    if (this.canAdd) {
+      this.addItem.emit();
+    }
   }
 
   detailEmit(item: Object) {

@@ -8,24 +8,10 @@ export class TestResultService {
 
   constructor(private _global: GlobalState, private http: Http) { }
 
-  newTestResult(testResultInfo: any): Promise<any> {
-    return this.http.post(this.testResultUrl, JSON.stringify(testResultInfo), this._global.options)
-      .toPromise()
-      .then(this._global.extractData)
-      .catch(this._global.handleError);
-  }
-
   reviewTestResult(id: number): Promise<any> {
     this.testResultUrl = `${this.testResultUrl}?testResultId=${id}`;
 
     return this.http.get(this.testResultUrl)
-      .toPromise()
-      .then(this._global.extractData)
-      .catch(this._global.handleError);
-  }
-
-  updateTestResult(testResultInfo: any): Promise<any> {
-    return this.http.put(this.testResultUrl, JSON.stringify(testResultInfo), this._global.options)
       .toPromise()
       .then(this._global.extractData)
       .catch(this._global.handleError);
