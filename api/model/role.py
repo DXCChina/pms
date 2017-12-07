@@ -19,7 +19,7 @@ def is_task_member(_, role, operation, resource):
     )
     print("操作:", role, operation, resource, data)
     for d in data:
-        print('##########',d.memberId_id, get_jwt_identity())
+        # print('##########',d.memberId_id, get_jwt_identity())
         if d.memberId_id == get_jwt_identity():
             return True
     return False

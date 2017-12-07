@@ -25,7 +25,7 @@ def find_project(project_id):
 @identity.check_permission("update", 'project')
 def update_project(project_id, request):
     '''更新项目信息'''
-    print(request, project_id)
+    # print(request, project_id)
     query = Project.update(
                  name = request['name'],
                  detail = request['detail'],
@@ -93,5 +93,5 @@ def member_delete(query):
     '''删除人员'''
     result = ProjectMember.delete().where(ProjectMember.id == query['id'])
     result.execute()
-    print(result)
+    # print(result)
     return None
