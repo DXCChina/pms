@@ -63,7 +63,7 @@ import { TestResultDetailComponent } from './test-result-detail-dialog/test-resu
 
   ],
   entryComponents: [
-    DemandDetailModalComponent
+    DemandDetailModalComponent,
     DevTaskDetailDialogComponent,
     TestResultDetailComponent
   ]
