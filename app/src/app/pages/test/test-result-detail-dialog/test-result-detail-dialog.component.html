@@ -10,7 +10,7 @@
     <div class="result-detail-content">
       <mat-form-field>
         <input matInput placeholder="测试结果名称" [formControl]="name" [(ngModel)]="testResultInfo.name" name="name">
-        <mat-error >{{formErrors.name}}</mat-error>
+        <mat-error>{{formErrors.name}}</mat-error>
       </mat-form-field>
 
       <mat-form-field>
@@ -19,7 +19,7 @@
 
       <mat-form-field>
         <input type='number' matInput *ngIf="mode=='create'" placeholder="测试案例" [formControl]="caseId">
-        <input type='number' matInput *ngIf="mode=='update'" placeholder="测试案例" [formControl]="caseId" [(ngModel)]="testResultInfo.caseId" name="caseId" readonly>
+        <input matInput *ngIf="mode=='update'" placeholder="测试案例" [formControl]="caseId" [(ngModel)]="testResultInfo.caseId" name="caseId" readonly>
         <mat-error>{{formErrors.caseId}}</mat-error>
       </mat-form-field>
       
@@ -55,8 +55,9 @@
     </div>
 
     <div class="result-detail-footer">
-      <button mat-button mat-dialog-close>取消</button>
-      <button mat-button type="submit" [disabled]="!testResultForm?.valid">{{mode == 'create' ?  '创建' : '提交'}}</button>
+      <button mat-button mat-dialog-close>关闭</button>
+      <button mat-button type="submit" *ngIf="mode==='create'" [disabled]="!testResultForm?.valid">创建</button>
+      <button mat-button type="submit" *ngIf="mode==='update'" [disabled]="!testResultForm?.valid">修改</button>
     </div>
   </form>
 </div>
