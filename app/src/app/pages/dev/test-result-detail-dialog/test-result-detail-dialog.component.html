@@ -1,12 +1,11 @@
 <div>
   <mat-toolbar class="result-detail-header">
-    <span *ngIf="mode === 'update'">{{testResultInfo?.name}}</span>
-    <span *ngIf="mode === 'create'">新建测试结果</span>
+    <span>{{testResultInfo?.name}}</span>
   </mat-toolbar>
 </div>
 
 <div class="dialog-content">
-  <form action="" (ngSubmit)="onSubmit(testResultForm)">
+  <form action="" (ngSubmit)="onSubmit()">
     <div class="result-detail-content">
       <mat-form-field>
         <input matInput placeholder="测试结果名称" [(ngModel)]="testResultInfo.name" name="name" readonly>

@@ -42,7 +42,7 @@ export class TestResultDetailComponent implements OnInit {
       });
   }
 
-  onSubmit(data) {
+  onSubmit() {
     this.testResultInfo.status = 'tocheck';
     this._service.updateTestResult(this.testResultInfo)
       .then(res => {
