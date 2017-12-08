@@ -6,7 +6,7 @@
                 <button mat-menu-item *ngFor="let list of data" (click)="changeCardData(list)">{{list.listName}}</button>
             </mat-menu>
         </mat-card-title>
-        <button mat-icon-button (click)="addEmit()">+</button>
+        <button mat-icon-button *ngIf="canAdd" (click)="addEmit()">+</button>
     </mat-card-header>
     <mat-card-content class="list-card-content">
         <div class="list-card-no-data" *ngIf="activeData.listData.length === 0">暂无内容</div>

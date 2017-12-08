@@ -197,25 +197,22 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
       'ActivityListModification',
       () => {
         this.getProjectActivity();
-        this.getProjectDemand();}
+        this.getProjectDemand();
+      }
     );
   }
-  
+
   registerChangeInTestResult() {
     this.eventTestResultSubscriber = this.eventManager.subscribe(
       'TestResultListModification',
       () => this.getProjectTestResult()
     );
   }
-  
+
   ngOnDestroy() {
     this.eventManager.destroy(this.eventSubscriber);
     this.eventManager.destroy(this.eventActivitySubscriber);
     this.eventManager.destroy(this.eventTestResultSubscriber);
-  }
-
-  addItem() {
-    console.log('add');
   }
 
   addDemand() {
@@ -259,17 +256,6 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
       width: '750px',
       data: { mode: 'update', taskInfo: data }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
-  }
-
-  addTestResult() {
-    const dialogRef = this.dialog.open(TestResultDetailComponent, {
-      width: '750px',
-      data: { mode: 'create' }
     });
 
     dialogRef.afterClosed().subscribe(result => {

@@ -145,6 +145,9 @@ export class TestDashboardComponent implements OnInit {
           new ListMetrics(
             '已通过测试结果',
             res
+              .filter(i => {
+                return i.status === 'close';
+              })
               .map(i => {
                 return new ItemMetrics(i, i.name, '', i.ownerName, '', i.level);
               })
