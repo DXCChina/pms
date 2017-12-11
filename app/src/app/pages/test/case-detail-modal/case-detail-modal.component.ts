@@ -10,7 +10,7 @@ import {JhiEventManager} from "ng-jhipster";
   selector: 'app-case-detail-modal',
   templateUrl: './case-detail-modal.component.html',
   styleUrls: ['./case-detail-modal.component.css'],
-  providers:[CaseDetailModalService]
+  providers: [CaseDetailModalService]
 })
 export class CaseDetailModalComponent implements OnInit {
 
@@ -27,7 +27,7 @@ export class CaseDetailModalComponent implements OnInit {
     'name': '',
     'detail': '',
     'type': '',
-    'dependentDemand':'',
+    'dependentDemand': '',
     'input': '',
     'expect': ''
   };
@@ -36,7 +36,7 @@ export class CaseDetailModalComponent implements OnInit {
       'required': '请输入用例名称',
       'minlength': '用例名称最少4个字符长'
     },
-    'dependentDemand':{
+    'dependentDemand': {
       'required': '请输入用例类型'
     },
     'type': {
@@ -57,10 +57,10 @@ export class CaseDetailModalComponent implements OnInit {
   caseId: string = '';
 
   constructor(public dialogRef: MatDialogRef<CaseDetailModalComponent>, @Inject(MAT_DIALOG_DATA) public data: any,
-              public fb: FormBuilder, private toasterService: ToasterService, private _service:CaseDetailModalService,
+              public fb: FormBuilder, private toasterService: ToasterService, private _service: CaseDetailModalService,
               private eventManager: JhiEventManager) {
     this.mode = this.data.mode;
-    if(this.mode === 'update'){
+    if (this.mode === 'update') {
       this.testCaseInfo = this.data.caseInfo;
       this.caseId = this.data.caseInfo.id;
     }
@@ -69,15 +69,15 @@ export class CaseDetailModalComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
-    if(this.mode === 'update'){
+    if (this.mode === 'update') {
       this.reviewDetail();
     }
   }
 
-  reviewDetail(){
-    this._service.reviewDetail(this.data.caseInfo.demandId)
-      .then(res=>{
-        this.demandTittle = res.data&&res.data.demandTittle;
+  reviewDetail() {
+    this._service.reviewDetail(this.data.caseInfo.id)
+      .then(res => {
+        this.demandTittle = res.data && res.data.demandTittle;
       })
   }
 
@@ -119,9 +119,9 @@ export class CaseDetailModalComponent implements OnInit {
   }
 
   onSubmit() {
-    this.testCaseParams = Object.assign({projectId:this.projectId},this.testCaseParams);
+    this.testCaseParams = Object.assign({projectId: this.projectId}, this.testCaseParams);
     this.testCaseParams = Object.assign(this.testCaseParams, this.testCaseForm.value);
-    if(this.mode === 'create'){
+    if (this.mode === 'create') {
       this._service.newCase(this.testCaseParams)
         .then(res => {
           if (res.msg === 'ok') {
@@ -132,7 +132,7 @@ export class CaseDetailModalComponent implements OnInit {
             this.toasterService.pop('error', res.msg);
           }
         });
-    }else if(this.mode === 'update'){
+    } else if (this.mode === 'update') {
       this.testCaseParams = Object.assign({id: this.caseId}, this.testCaseParams);
       this._service.updateCase(this.testCaseParams)
         .then(res => {
@@ -147,16 +147,15 @@ export class CaseDetailModalComponent implements OnInit {
     }
   }
 
-  emitSearch(str){
-    this._service.searchDemandList(str)
+  emitSearch(str) {
+    this.searchDemandList = [];
+    this._service.searchDemandList(str, this.projectId)
       .then(res => {
-        if (res.msg === 'ok') {
-          this.searchDemandList = res.data;
-        }
+        this.searchDemandList = res.data;
       });
   }
 
-  select(demand){
+  select(demand) {
     this.testCaseParams['demandId'] = demand.id;
   }
 }
