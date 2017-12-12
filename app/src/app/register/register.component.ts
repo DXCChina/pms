@@ -1,29 +1,29 @@
-import {Component, ElementRef, HostListener, Renderer2} from '@angular/core';
-import {FormGroup, AbstractControl, FormBuilder, Validators} from '@angular/forms';
+import { Component, ElementRef, HostListener, Renderer2 } from '@angular/core';
+import { FormGroup, AbstractControl, FormBuilder, Validators } from '@angular/forms';
 
 import 'style-loader!./register.scss';
-import {EmailValidator} from "../theme/validators/email.validator";
-import {EqualPasswordsValidator} from "../theme/validators/equalPasswords.validator";
-import {RegisterService} from "./register.service";
-import {Router} from "@angular/router";
-import {ToasterConfig, ToasterService} from "angular2-toaster";
+import { EmailValidator } from "../theme/validators/email.validator";
+import { EqualPasswordsValidator } from "../theme/validators/equalPasswords.validator";
+import { RegisterService } from "./register.service";
+import { Router } from "@angular/router";
+import { ToasterConfig, ToasterService } from "angular2-toaster";
 
 @Component({
   selector: 'register',
   templateUrl: './register.html',
-  styleUrls:['./register.css'],
+  styleUrls: ['./register.css'],
   providers: [RegisterService]
 })
 export class Register {
 
-  public form:FormGroup;
-  public name:AbstractControl;
-  public email:AbstractControl;
-  public password:AbstractControl;
-  public repeatPassword:AbstractControl;
-  public passwords:FormGroup;
+  public form: FormGroup;
+  public name: AbstractControl;
+  public email: AbstractControl;
+  public password: AbstractControl;
+  public repeatPassword: AbstractControl;
+  public passwords: FormGroup;
 
-  public submitted:boolean = false;
+  public submitted: boolean = false;
 
   toasterconfig: ToasterConfig =
     new ToasterConfig({
@@ -31,8 +31,8 @@ export class Register {
       showCloseButton: true
     });
 
-  constructor(fb:FormBuilder, private elementRef:ElementRef, private Renderer: Renderer2,
-              private service: RegisterService, private router: Router, private toasterService: ToasterService) {
+  constructor(fb: FormBuilder, private elementRef: ElementRef, private Renderer: Renderer2,
+    private service: RegisterService, private router: Router, private toasterService: ToasterService) {
 
     this.form = fb.group({
       'name': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
@@ -40,55 +40,56 @@ export class Register {
       'passwords': fb.group({
         'password': ['', Validators.compose([Validators.required, Validators.minLength(1)])],
         'repeatPassword': ['', Validators.compose([Validators.required, Validators.minLength(1)])]
-      }, {validator: EqualPasswordsValidator.validate('password', 'repeatPassword')})
+      }, { validator: EqualPasswordsValidator.validate('password', 'repeatPassword') })
     });
 
     this.name = this.form.controls['name'];
     this.email = this.form.controls['email'];
-    this.passwords = <FormGroup> this.form.controls['passwords'];
+    this.passwords = <FormGroup>this.form.controls['passwords'];
     this.password = this.passwords.controls['password'];
     this.repeatPassword = this.passwords.controls['repeatPassword'];
   }
 
-  onSubmit(): void{
+  onSubmit(): void {
 
     // let submit: HTMLElement = this.elementRef.nativeElement.querySelector('#re-register');
     // this.Renderer.s
 
     this.service.register(this.name.value, this.password.value, this.email.value)
       .then(res => {
-        if(res.msg){
-          this.toasterService.pop('error', res.msg[1] , '注册失败');
-        }else {
-          this.router.navigate(['/login']);
+        if (res.msg) {
+          this.toasterService.pop('error', res.msg[1], '注册失败');
+        } else {
+          this.toasterService.pop('OK', '注册成功,自动登录');
+          this.router.navigate(['/pages/welcome']);
         }
       }, err => {
         console.log(err)
-        this.toasterService.pop('error', JSON.parse(err._body).msg[1] , '注册失败');
+        this.toasterService.pop('error', JSON.parse(err._body).msg[1], '注册失败');
       })
   }
 
   @HostListener('window:resize', ['$event'])
-  onResize(event){
+  onResize(event) {
 
-    let header : HTMLElement = this.elementRef.nativeElement.querySelector('#header');
-    let content : HTMLElement = this.elementRef.nativeElement.querySelector('#content');
-    let register : HTMLElement = this.elementRef.nativeElement.querySelector('#RegisterPart');
+    let header: HTMLElement = this.elementRef.nativeElement.querySelector('#header');
+    let content: HTMLElement = this.elementRef.nativeElement.querySelector('#content');
+    let register: HTMLElement = this.elementRef.nativeElement.querySelector('#RegisterPart');
 
-    if( header.scrollHeight > content.scrollHeight) {
+    if (header.scrollHeight > content.scrollHeight) {
       // content.style.marginTop = (header.scrollHeight - content.scrollHeight) / 2 + 20 + 'px';
-      this.Renderer.setStyle(content,'marginTop', "(header.scrollHeight - content.scrollHeight)/2 + 20 + 'px'");
+      this.Renderer.setStyle(content, 'marginTop', "(header.scrollHeight - content.scrollHeight)/2 + 20 + 'px'");
     }
 
-    if( screen.width < 1920 && screen.height < 1080) {
+    if (screen.width < 1920 && screen.height < 1080) {
 
-      this.Renderer.setStyle(content,'width','980px');
-      this.Renderer.setStyle(content,'height','560px');
-      this.Renderer.setStyle(content,'minWidth','980px');
-      this.Renderer.setStyle(register,'top','120px')
+      this.Renderer.setStyle(content, 'width', '980px');
+      this.Renderer.setStyle(content, 'height', '560px');
+      this.Renderer.setStyle(content, 'minWidth', '980px');
+      this.Renderer.setStyle(register, 'top', '120px')
     }
   }
-  ngOnInit(){
+  ngOnInit() {
     this.onResize(event);
   }
 
