@@ -59,4 +59,11 @@ export class BaWelTop {
   public scrolledChanged(isScrolled) {
     this.isScrolled = isScrolled;
   }
+
+  public toggleMenu() {
+    this.isMenuCollapsed = !this.isMenuCollapsed;
+    this._state.notifyDataChanged('menu.isCollapsed', this.isMenuCollapsed);
+    return false;
+  }
+
 }

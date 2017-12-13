@@ -30,7 +30,8 @@ import {
   BaFileUploader,
   BaWelTop,
   WaSortListComponent,
-  ListCardComponent
+  ListCardComponent,
+  PmsSidebar
 } from './components';
 
 import { BaCardBlur } from './components/baCard/baCardBlur.directive';
@@ -129,7 +130,8 @@ const NGA_COMPONENTS = [
   ChipListComponent,
   ListCardComponent,
   PmPeoplemanageComponent,
-  CommonDeleteDialog
+  CommonDeleteDialog,
+  PmsSidebar
 ];
 
 const NGA_DIRECTIVES = [

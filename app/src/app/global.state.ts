@@ -10,7 +10,7 @@ export class GlobalState {
   headers = new Headers({'Content-Type': 'application/json'});
   options = new RequestOptions({headers: this.headers});
   userRoleInProject: string = '';
-  createJudge: any = {position: false, title: false, projectId: '', members: [], description: '', projectName: ''};
+  userType: string = 'pm';
 
   private _data = new Subject<Object>();
   private _dataStream$ = this._data.asObservable();
