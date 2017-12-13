@@ -58,11 +58,13 @@ def init():
     # project_id,task_id 加入 session
     if request.method == 'POST' or request.method == 'PUT':
         if not request.is_json:
-            return jsonify({"msg": "Missing JSON in request"}), 400
-        if 'projectId' in request.json:
-            session['project_id'] = request.json['projectId']
-        if 'activityId' in request.json:
-            session['task_id'] = request.json['activityId']
+            # return jsonify({"msg": "Missing JSON in request"}), 400
+            pass
+        else:
+            if 'projectId' in request.json:
+                session['project_id'] = request.json['projectId']
+            if 'activityId' in request.json:
+                session['task_id'] = request.json['activityId']
 
 
 @app.after_request

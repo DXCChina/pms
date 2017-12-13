@@ -2,7 +2,7 @@ set startdir=%cd%
 cd %~dp0app
 set PYTHON_HOME=C:\Python27\;C:\Python27\Scripts;
 set path=%PYTHON_HOME%%path%
-call yarn||call cnpm i node-sass
+call cnpm i||call yarn||call npm i
 start /min run
 cd ..
 set PYTHON_HOME=C:\Users\wajianhu\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\wajianhu\AppData\Local\Programs\Python\Python36\;
