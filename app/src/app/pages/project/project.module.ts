@@ -11,11 +11,13 @@ import {
   MatProgressBarModule, MatToolbarModule, MatTooltipModule
 } from '@angular/material';
 
-import {NgaModule} from "../../theme/nga.module";
-import {routing} from "./project.routing";
-import {DashboardService} from "./pm/pm-dashboard.component/dashboard.service";
-import {Detail_memberService} from "../detail_member.service";
-import {Project} from "./project.component";
+import { NgaModule } from '../../theme/nga.module';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { routing } from './project.routing';
+import { DashboardService } from './pm/pm-dashboard.component/dashboard.service';
+import { Detail_memberService } from '../detail_member.service';
+import { ProjectComponent } from './project.component';
+import { TableViewComponent } from './table-view/table-view.component';
 
 @NgModule({
   imports: [
@@ -23,6 +25,7 @@ import {Project} from "./project.component";
     NgaModule,
     routing,
     MatButtonModule,
+    NgxDatatableModule,
     NgJhipsterModule.forRoot({
       // set below to true to make alerts look like toast
       alertAsToast: false,
@@ -52,7 +55,8 @@ import {Project} from "./project.component";
     MatToolbarModule
   ],
   declarations: [
-    Project,
+    ProjectComponent,
+    TableViewComponent
   ],
   entryComponents: [
 

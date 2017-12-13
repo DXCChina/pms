@@ -1,10 +1,7 @@
-import {Component} from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'test',
-  styleUrls: ['./test.component.scss'],
-  template: `
-    <pms-sidebar></pms-sidebar>
-    <div class="pms-main"><router-outlet></router-outlet></div>`
+  selector: 'app-test',
+  template: `<router-outlet></router-outlet>`
 })
-export class TestComponent {}
+export class TestComponent { }
