@@ -33,7 +33,7 @@ import { BugManageComponent } from './bug-manage/bug-manage.component';
     PmActivityComponent,
     TaskDetailDialogComponent,
     DemandDetailDialogComponent,
-    TestResultDetailComponent
+    TestResultDetailComponent,
     DemandDetailDialogComponent,
     DemandManageComponent,
     DevSetManageComponent,
