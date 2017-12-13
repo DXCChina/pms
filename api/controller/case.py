@@ -4,12 +4,13 @@
 @author: Gao Le
 '''
 
-from flask import jsonify, request, abort, Blueprint, session
+from flask import jsonify, request, abort, Blueprint
 from model import case
 
-from flask_jwt_extended import (create_access_token, get_jwt_identity,
-                                get_jwt_claims, fresh_jwt_required,
-                                set_access_cookies, unset_jwt_cookies)
+from flask_jwt_extended import (
+    get_jwt_identity,
+    fresh_jwt_required,
+)
 from marshmallow import Schema, fields
 from rbac.context import PermissionDenied
 from playhouse.shortcuts import model_to_dict

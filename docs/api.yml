@@ -61,13 +61,13 @@ paths:
   /project:
     get:
       summary: 获取项目列表
-      operationId: controller.info.project_list
+      operationId: controller.project.project_list
       responses:
         200:
           description: ok
     post:
       summary: 创建项目
-      operationId: controller.info.project_add
+      operationId: controller.project.project_add
       responses:
         200:
           description: ok
@@ -139,19 +139,19 @@ paths:
           description: ok
 
 # release
-  # /release:
-  #   get:
-  #     summary: 获取项目Release
-  #     operationId: controller.info.project_list
-  #     responses:
-  #       200:
-  #         description: ok
-  #   post:
-  #     summary: 创建Release
-  #     operationId: controller.info.project_add
-  #     responses:
-  #       200:
-  #         description: ok
+  /release:
+    get:
+      summary: 获取项目Release
+      operationId: controller.release.release_list
+      responses:
+        200:
+          description: ok
+    post:
+      summary: 创建Release
+      operationId: controller.release.release_add
+      responses:
+        200:
+          description: ok
 
 # dashboard     
   /dashboard/{release_id}/demand:
@@ -202,18 +202,18 @@ paths:
       responses:
         200:
           description: ok
-  # /dashboard/{release_id}/testSet:
-  #   get:
-  #     summary: 获取项目测试集
-  #     operationId: controller.dashboard.project_test_set
-  #     parameters:
-  #       - name: release_id
-  #         in: path
-  #         required: true
-  #         type: integer
-  #     responses:
-  #       200:
-  #         description: ok
+  /dashboard/{release_id}/testSet:
+    get:
+      summary: 获取项目测试集
+      operationId: controller.dashboard.project_test_set
+      parameters:
+        - name: release_id
+          in: path
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
 
 # testSet
 
@@ -245,7 +245,7 @@ paths:
         200:
           description: ok
 
-# result 
+# testResult 
   /testResult:
     get:
       summary: 查询测试结果
@@ -294,10 +294,23 @@ paths:
           description: 测试结果更新成功
 
 # demand
+  /project/demand/{title}:
+    get:
+      summary: 模糊查询需求列表
+      operationId: controller.demand.find_demand_list_match_str
+
+      parameters:
+        - name: title
+          in: path
+          required: true
+          type: string
+      responses:
+        200:
+          description: ok
   /project/demand:
     get:
-      summary: 查询需求
-      operationId: controller.activity.demand_search
+      summary: 模糊查询项目需求
+      operationId: controller.demand.demand_search
       parameters:
         - name: title
           in: query
@@ -335,52 +348,16 @@ paths:
       responses:
         200:
           description: ok
-  /demand/{demand_title}:
-    get:
-      summary: api
-      operationId: controller.task.demand_search
-      parameters:
-        - name: demand_title
-          in: path
-          required: true
-          type: string
-      responses:
-        200:
-          description: ok
   /demand/list:
     get:
       summary: api
-      operationId: controller.task.demand_lists
-      responses:
-        200:
-          description: ok
-  /project/demand/{title}:
-    get:
-      summary: api
-      operationId: controller.demand.find_demand_list_match_str
-
-      parameters:
-        - name: title
-          in: path
-          required: true
-          type: string
+      operationId: controller.demand.demand_lists
       responses:
         200:
           description: ok
 
 # activity
   /activity:
-    get:
-      summary: 项目活动列表
-      operationId: controller.activity.activity_list
-      parameters:
-        - name: projectId
-          in: query
-          required: true
-          type: integer
-      responses:
-        200:
-          description: ok
     post:
       summary: 创建项目活动
       operationId: controller.activity.activity_add

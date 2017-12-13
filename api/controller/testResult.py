@@ -6,10 +6,23 @@
 
 from flask import jsonify, request
 from flask_jwt_extended import (fresh_jwt_required)
-from model.role import identity
 from playhouse.shortcuts import model_to_dict
 
 from model import testResult
+
+
+@fresh_jwt_required
+def search_test_result():
+    '''获取测试结果详情
+
+    GET /api/test_result
+    '''
+    return jsonify({
+        'msg':
+        'ok',
+        'data':
+        testResult.test_result_detail(request.args.get('testResultId'))
+    }), 200
 
 
 @fresh_jwt_required
@@ -25,8 +38,10 @@ def add_test_result():
         return jsonify({"msg": '该案例已有测试结果！'}), 400
 
     return jsonify({
-        'msg': 'ok',
-        'data': model_to_dict(testResult.create_test_result(data)[0])
+        'msg':
+        'ok',
+        'data':
+        model_to_dict(testResult.create_test_result(data)[0])
     }), 200
 
 
@@ -45,16 +60,4 @@ def update_test_result():
     return jsonify({
         'msg': 'ok',
         'data': testResult.update_test_results(data)
-    }), 200
-
-
-@fresh_jwt_required
-def search_test_result():
-    '''获取测试结果详情
-
-    GET /api/test_result
-    '''
-    return jsonify({
-        'msg': 'ok',
-        'data': testResult.test_result_detail(request.args.get('testResultId'))
     }), 200
