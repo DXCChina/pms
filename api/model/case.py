@@ -39,13 +39,15 @@ def case_update(case):
         detail=case['detail'],
         type=case['type'],
         input=case['input'],
-        expect=case['expect']).where(TestCase.id == case['id']).execute()
+        expect=case['expect'],
+        demandId=case['demandId']).where(TestCase.id == case['id']).execute()
 
     return TestCase.getOne(TestCase.id == case['id'])
 
 
 def find_one_case_by_title(name):
     return TestCase.getOne(TestCase.name == name)
+
 
 def find_name_by_id(id):
     return TestCase.getOne(TestCase.id == id).name
