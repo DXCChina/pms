@@ -19,6 +19,11 @@ import { PmPeoplemanageComponent } from '../../theme/components/pm-peoplemanage/
 
 import { TaskDetailDialogComponent } from './task-detail-dialog/task-detail-dialog.component';
 import { DemandDetailDialogComponent } from './demand-detail-dialog/demand-detail-dialog.component';
+import { DemandManageComponent } from './demand-manage/demand-manage.component';
+import { DevSetManageComponent } from './dev-set-manage/dev-set-manage.component';
+import { TestManageComponent } from './test-manage/test-manage.component';
+import { TestSetManageComponent } from './test-set-manage/test-set-manage.component';
+import { BugManageComponent } from './bug-manage/bug-manage.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +31,12 @@ import { DemandDetailDialogComponent } from './demand-detail-dialog/demand-detai
     PmDashboardComponent,
     PmActivityComponent,
     TaskDetailDialogComponent,
-    DemandDetailDialogComponent
+    DemandDetailDialogComponent,
+    DemandManageComponent,
+    DevSetManageComponent,
+    TestManageComponent,
+    TestSetManageComponent,
+    BugManageComponent
   ],
   imports: [
     CommonModule,
