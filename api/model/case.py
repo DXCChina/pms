@@ -10,7 +10,7 @@ from .role import identity
 # @identity.check_permission("create", 'task')
 def create_case(case):
     '''新建案例'''
-    print("case", case)
+    # print("case", case)
     return TestCase.get_or_create(
         name=case['name'],
         defaults={

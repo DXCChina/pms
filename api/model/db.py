@@ -120,9 +120,8 @@ class MySQLModel(Model):
             return {}
 
 
-class User(MySQLModel):
-    '''用户表'''
-    id = db_autoId()
+class UserBase(MySQLModel):
+    '''用户表基类'''
     username = FixedCharField(unique=True, max_length=50)
     password = FixedCharField(max_length=100)
     email = FixedCharField(unique=True, max_length=50)
@@ -133,44 +132,19 @@ class User(MySQLModel):
         db_table = 'user'
 
 
-class Demand(MySQLModel):
-    '''需求表'''
+class User(UserBase):
+    '''用户表'''
     id = db_autoId()
-    title = db_char()
+
+class Release(MySQLModel):
+    '''版本'''
+    id = db_autoId()
+    name = db_char()
     detail = TextField(null=True)
-    level = db_option(default='normal', comment='low(低)/high(高)/normal(中,默认)')
     projectId = db_id()
-    activityId = IntegerField(null=True)
-    status = db_bool(default=0, comment='0(未完成)/1(已完成)')
-    createAt = db_autoDate()
 
     class Meta:
-        db_table = 'demand'
-
-
-class ActivityBase(MySQLModel):
-    '''活动表基类'''
-    title = db_char()
-    detail = TextField(null=True)
-    # memberId = IntegerField(null=True)
-    projectId = db_id()
-    progress = IntegerField(null=True)
-    cost = db_char(null=True)
-    status = db_option(
-        default='new',
-        comment='new(新建,未分配),dev-ing(开发中),needtest(开发完待测试),test-ing(测试中),fix-ing(修复中),finish(已完成),close(已关闭)'
-    )
-    createAt = db_autoDate()
-    startDate = db_char(null=True)
-    endDate = db_char(null=True)
-
-    class Meta:
-        db_table = 'activity'
-
-
-class Activity(ActivityBase):
-    '''活动表'''
-    id = db_autoId()
+        db_table = 'release'
 
 
 class Project(MySQLModel):
@@ -178,6 +152,7 @@ class Project(MySQLModel):
     id = db_autoId()
     name = FixedCharField(unique=True, max_length=50)
     detail = TextField(null=True)
+    currentRelease = ForeignKeyField(Release)
     ownerId = db_id()
     status = db_option(default='active', comment='active(默认)/done/delete')
     createAt = db_autoDate()
@@ -200,6 +175,33 @@ class ProjectMember(MySQLModel):
         db_table = 'project_member'
 
 
+class ActivityBase(MySQLModel):
+    '''活动表基类'''
+    title = db_char()
+    detail = TextField(null=True)
+    # memberId = IntegerField(null=True)
+    projectId = db_id()
+    releaseId = db_id()
+    progress = IntegerField(null=True)
+    cost = db_char(null=True)
+    status = db_option(
+        default='new',
+        comment=
+        'new(新建,未分配),dev-ing(开发中),needtest(开发完待测试),test-ing(测试中),fix-ing(修复中),finish(已完成),close(已关闭)'
+    )
+    createAt = db_autoDate()
+    startDate = db_char(null=True)
+    endDate = db_char(null=True)
+
+    class Meta:
+        db_table = 'activity'
+
+
+class Activity(ActivityBase):
+    '''活动表'''
+    id = db_autoId()
+
+
 class ActivityMember(MySQLModel):
     '''活动成员'''
     id = db_autoId()
@@ -211,6 +213,41 @@ class ActivityMember(MySQLModel):
         db_table = 'activity_member'
 
 
+class Demand(MySQLModel):
+    '''需求表'''
+    id = db_autoId()
+    title = db_char()
+    detail = TextField(null=True)
+    level = db_option(default='normal', comment='low(低)/high(高)/normal(中,默认)')
+    projectId = db_id()
+    releaseId = db_id()
+    activityId = IntegerField(null=True)
+    status = db_bool(default=0, comment='0(未完成)/1(已完成)')
+    createAt = db_autoDate()
+
+    class Meta:
+        db_table = 'demand'
+
+
+class TestSet(MySQLModel):
+    '''测试集'''
+    id = db_autoId()
+    name = db_char()
+    detail = TextField(null=True)
+    projectId = db_id()
+    releaseId = db_id()
+
+    class Meta:
+        db_table = 'test_set'
+
+
+class TestSetMember(MySQLModel):
+    '''测试集成员关系'''
+    id = db_autoId()
+    testSetId = ForeignKeyField(TestSet, related_name='member')
+    memberId = ForeignKeyField(User, related_name='testSet')
+
+
 class TestCase(MySQLModel):
     '''测试用例表'''
     id = db_autoId()
@@ -218,7 +255,8 @@ class TestCase(MySQLModel):
     detail = TextField(null=True)
     demandId = db_id()
     projectId = db_id()
-    ownerId = db_id()
+    releaseId = ForeignKeyField(Release, related_name='testCase')
+    ownerId = ForeignKeyField(User, related_name='testCase')
     type = db_char(length=10, null=True)
     input = db_char()
     expect = db_char()
@@ -227,18 +265,29 @@ class TestCase(MySQLModel):
         db_table = 'test_case'
 
 
+class Case_Set(MySQLModel):
+    '''案例_测试集关系表'''
+    id = db_autoId()
+    caseId = ForeignKeyField(TestCase, related_name='set')
+    setId = ForeignKeyField(TestSet, related_name='case')
+
+    class Meta:
+        db_table = 'case_set'
+
+
 class TestResult(MySQLModel):
     '''测试结果表'''
     id = db_autoId()
     name = db_char()
     detail = TextField(null=True)
-    caseId = db_id()
+    testSetId = ForeignKeyField(TestSet, related_name='testResult')
+    ownerId = ForeignKeyField(User, related_name='testResult')
+    releaseId = ForeignKeyField(Release, related_name='testResult')
+    caseId = ForeignKeyField(TestCase, related_name='testResult')
     output = db_char()
-    result = db_bool(
-        default=0, comment='0(bug)/1(正常)')
     status = db_option(default='close', comment='tofix,tocheck,close(默认)')
     level = db_option('normal', '优先级:low(低)/high(高)/normal(中,默认)')
-    devId = db_id()
+    devId = ForeignKeyField(User, related_name='devResult')
     priority = db_option('normal', '严重程度:low(低)/high(高)/normal(中,默认)')
 
     class Meta:

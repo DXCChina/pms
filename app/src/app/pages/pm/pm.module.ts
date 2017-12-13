@@ -19,6 +19,7 @@ import { PmPeoplemanageComponent } from '../../theme/components/pm-peoplemanage/
 
 import { TaskDetailDialogComponent } from './task-detail-dialog/task-detail-dialog.component';
 import { DemandDetailDialogComponent } from './demand-detail-dialog/demand-detail-dialog.component';
+import { TestResultDetailComponent } from './test-result-detail-dialog/test-result-detail-dialog.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DemandDetailDialogComponent } from './demand-detail-dialog/demand-detai
     PmDashboardComponent,
     PmActivityComponent,
     TaskDetailDialogComponent,
-    DemandDetailDialogComponent
+    DemandDetailDialogComponent,
+    TestResultDetailComponent
   ],
   imports: [
     CommonModule,
@@ -65,7 +67,8 @@ import { DemandDetailDialogComponent } from './demand-detail-dialog/demand-detai
   ],
   entryComponents: [
     TaskDetailDialogComponent,
-    DemandDetailDialogComponent
+    DemandDetailDialogComponent,
+    TestResultDetailComponent
   ]
 })
 export class PmModule { }

@@ -42,7 +42,6 @@ export class Login {
     if (this.form.valid) {
       this._service.login(this.name.value, this.password.value).then(
         res => {
-          console.log(res)
           if (res.id !== '') {
             this.router.navigate(['/pages/welcome']);
           } else {

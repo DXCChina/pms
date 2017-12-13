@@ -1,13 +1,15 @@
-import {Component, OnInit, OnDestroy} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {ListMetrics, ItemMetrics} from './card-data.Entity';
-import {DashboardService} from './dashboard.service';
-import {MatDialog} from '@angular/material';
-import {TaskDetailDialogComponent} from '../task-detail-dialog/task-detail-dialog.component';
-import {DemandDetailDialogComponent} from '../demand-detail-dialog/demand-detail-dialog.component';
-import {Subscription} from "rxjs";
-import {JhiEventManager} from "ng-jhipster";
+import { ListMetrics, ItemMetrics } from './card-data.Entity';
+import { DashboardService } from './dashboard.service';
+import { MatDialog } from '@angular/material';
+import { TaskDetailDialogComponent } from '../task-detail-dialog/task-detail-dialog.component';
+import { DemandDetailDialogComponent } from '../demand-detail-dialog/demand-detail-dialog.component';
+import { TestResultDetailComponent } from '../test-result-detail-dialog/test-result-detail-dialog.component';
+import { Subscription } from 'rxjs';
+import { JhiEventManager } from 'ng-jhipster';
+import { Subscribable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-pm-dashboard',
@@ -22,6 +24,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
 
   private eventSubscriber: Subscription;
   private eventActivitySubscriber: Subscription;
+  private eventTestResultSubscriber: Subscription;
 
   constructor(private router: Router, private service: DashboardService, private dialog: MatDialog, private eventManager: JhiEventManager) {
   }
@@ -46,6 +49,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
 
     this.registerChangeInDemand();
     this.registerChangeInActivity();
+    this.registerChangeInTestResult();
   }
 
   getProjectDemand() {
@@ -104,7 +108,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
                 return i.status === 'dev-ing';
               })
               .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.memberName, '', '');
+                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', '');
               })
           )
         );
@@ -117,7 +121,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
                 return i.status === 'needtest';
               })
               .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.memberName, '', '');
+                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', '');
               })
           )
         );
@@ -127,7 +131,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
             '全部活动',
             res
               .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.memberName, '', '');
+                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', '');
               })
           )
         );
@@ -147,7 +151,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
                 return i.status === 'tofix';
               })
               .map(i => {
-                return new ItemMetrics(i, i.name, '', i.ownerName, '', i.level);
+                return new ItemMetrics(i, i.name, '', i.detail, '', i.level);
               })
           )
         );
@@ -160,7 +164,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
                 return i.status === 'tocheck';
               })
               .map(i => {
-                return new ItemMetrics(i, i.name, '', i.ownerName, '', i.level);
+                return new ItemMetrics(i, i.name, '', i.detail, '', i.level);
               })
           )
         );
@@ -169,8 +173,11 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
           new ListMetrics(
             '已通过测试结果',
             res
+              .filter(i => {
+                return i.status === 'close';
+              })
               .map(i => {
-                return new ItemMetrics(i, i.name, '', i.ownerName, '', i.level);
+                return new ItemMetrics(i, i.name, '', i.detail, '', i.level);
               })
           )
         );
@@ -190,23 +197,28 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
       'ActivityListModification',
       () => {
         this.getProjectActivity();
-        this.getProjectDemand();}
+        this.getProjectDemand();
+      }
+    );
+  }
+
+  registerChangeInTestResult() {
+    this.eventTestResultSubscriber = this.eventManager.subscribe(
+      'TestResultListModification',
+      () => this.getProjectTestResult()
     );
   }
 
   ngOnDestroy() {
     this.eventManager.destroy(this.eventSubscriber);
     this.eventManager.destroy(this.eventActivitySubscriber);
-  }
-
-  addItem() {
-    console.log('add');
+    this.eventManager.destroy(this.eventTestResultSubscriber);
   }
 
   addDemand() {
     const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
-      data: {mode: 'create'}
+      data: { mode: 'create' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -219,7 +231,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
       width: '750px',
-      data: {mode: 'update', info: data}
+      data: { mode: 'update', info: data }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -227,10 +239,10 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
-  addTask(){
+  addTask() {
     const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
       width: '750px',
-      data: {mode: 'create'}
+      data: { mode: 'create' }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -243,7 +255,20 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
 
     const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
       width: '750px',
-      data: {mode:'update', taskInfo:data}
+      data: { mode: 'update', taskInfo: data }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+  showTestResultDetail(data) {
+    console.log(data);
+
+    const dialogRef = this.dialog.open(TestResultDetailComponent, {
+      width: '750px',
+      data: { mode: 'update', info: data }
     });
 
     dialogRef.afterClosed().subscribe(result => {

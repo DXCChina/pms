@@ -118,8 +118,9 @@ export class CaseDetailModalComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    this.testCaseParams = Object.assign({projectId: this.projectId}, this.testCaseParams);
+
+  onSubmit(data) {
+    this.testCaseParams = Object.assign({projectId:this.projectId},this.testCaseParams);
     this.testCaseParams = Object.assign(this.testCaseParams, this.testCaseForm.value);
     if (this.mode === 'create') {
       this._service.newCase(this.testCaseParams)

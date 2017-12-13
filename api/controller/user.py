@@ -12,6 +12,7 @@ from marshmallow import Schema, fields
 from passlib.hash import argon2
 
 from model import user
+
 # app = Blueprint('user', __name__, url_prefix='/api')  # pylint: disable=c0103
 
 
@@ -71,9 +72,18 @@ def reg():
     if user.findOneByName(data['username']):
         return jsonify({"msg": ('username', '用户名已存在')}), 400
     data['password'] = argon2.hash(data['password'])
-    user.save(data)
-    # data = user.findOneByName(data['username'])
-    return jsonify(result=True)
+    account = user.save(data)
+    access_token = create_access_token(
+        identity={
+            'id': account.id,
+            'username': account.username,
+            'email': account.email
+        },
+        fresh=True)
+    resp = jsonify({'access_token': access_token})
+    set_access_cookies(resp, access_token)
+    session['user_id'] = account.id
+    return resp
 
 
 # @app.route("/login", methods=['POST'])
@@ -106,7 +116,7 @@ def login():
         resp = jsonify({'access_token': access_token})
         set_access_cookies(resp, access_token)
         session['user_id'] = account.id
-        print(session['user_id'])
+        # print(session['user_id'])
         return resp
     else:
         return jsonify({"msg": "用户名或密码错误"}), 403

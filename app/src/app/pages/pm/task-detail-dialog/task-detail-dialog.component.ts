@@ -196,7 +196,7 @@ export class TaskDetailDialogComponent implements OnInit {
     this.searchDemand = '';
   }
 
-  onSubmit() {
+  onSubmit(data) {
     let memberId = this.selectUserList.map(user => user.id);
     let demand = this.demandListInTask.map(demand => demand.id);
     let projectId = Number(this.projectId);

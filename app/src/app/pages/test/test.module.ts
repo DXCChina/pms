@@ -16,7 +16,8 @@ import { TestComponent } from './test.component';
 import { TestDashboardComponent } from './test-dashboard/test-dashboard.component';
 import { TestActivityComponent } from './test-activity/test-activity.component';
 import { CaseDetailModalComponent } from './case-detail-modal/case-detail-modal.component';
-import {TestTaskDetailDialogComponent} from "./case-task-detail-dialog/task-detail-dialog.component";
+import { TestTaskDetailDialogComponent } from './case-task-detail-dialog/task-detail-dialog.component';
+import { TestResultDetailComponent } from './test-result-detail-dialog/test-result-detail-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {TestTaskDetailDialogComponent} from "./case-task-detail-dialog/task-deta
     TestDashboardComponent,
     TestActivityComponent,
     CaseDetailModalComponent,
-    TestTaskDetailDialogComponent
+    TestTaskDetailDialogComponent,
+    TestResultDetailComponent
   ],
   imports: [
     CommonModule,
@@ -62,7 +64,8 @@ import {TestTaskDetailDialogComponent} from "./case-task-detail-dialog/task-deta
   ],
   entryComponents: [
     CaseDetailModalComponent,
-    TestTaskDetailDialogComponent
+    TestTaskDetailDialogComponent,
+    TestResultDetailComponent
   ]
 })
 export class TestModule { }
