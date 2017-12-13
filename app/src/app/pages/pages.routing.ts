@@ -1,6 +1,7 @@
 import {Routes, RouterModule}  from '@angular/router';
 import {Pages} from './pages.component';
 import {ModuleWithProviders} from '@angular/core';
+import {ReleaseManageComponent} from "./release-manage/release-manage.component";
 
 export const routes: Routes = [
   {
@@ -26,6 +27,10 @@ export const routes: Routes = [
       {
         path: 'test',
         loadChildren: "app/pages/test/test.module#TestModule"
+      },
+      {
+        path: 'release',
+        component:ReleaseManageComponent
       },
       {path: '', redirectTo: 'welcome', pathMatch: 'full'}
     ]
