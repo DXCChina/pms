@@ -1,11 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { routing } from './pages.routing';
-import { NgaModule } from '../theme/nga.module';
-import { AppTranslationModule } from '../app.translation.module';
-
-import { Pages } from './pages.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgJhipsterModule } from 'ng-jhipster';
 
@@ -15,16 +10,18 @@ import {
   MatProgressSpinnerModule, MatChipsModule, MatGridListModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule,
   MatProgressBarModule, MatToolbarModule, MatTooltipModule
 } from '@angular/material';
-import {ReleaseManageComponent} from "./release-manage/release-manage.component";
 
+import {NgaModule} from "../../theme/nga.module";
+import {routing} from "./project.routing";
+import {DashboardService} from "./pm/pm-dashboard.component/dashboard.service";
+import {Detail_memberService} from "../detail_member.service";
+import {Project} from "./project.component";
 
 @NgModule({
   imports: [
     CommonModule,
-    AppTranslationModule,
     NgaModule,
     routing,
-    BrowserAnimationsModule,
     MatButtonModule,
     NgJhipsterModule.forRoot({
       // set below to true to make alerts look like toast
@@ -55,14 +52,14 @@ import {ReleaseManageComponent} from "./release-manage/release-manage.component"
     MatToolbarModule
   ],
   declarations: [
-    Pages,
-    ReleaseManageComponent
+    Project,
   ],
   entryComponents: [
 
   ],
   providers: [
-
+    DashboardService,
+    Detail_memberService
   ]
 })
-export class PagesModule { }
+export class ProjectModule { }

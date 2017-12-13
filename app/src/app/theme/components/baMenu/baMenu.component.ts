@@ -1,5 +1,5 @@
 import {Component, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
-import {Router, Routes, NavigationEnd} from '@angular/router';
+import {Router, NavigationEnd} from '@angular/router';
 import {Subscription} from 'rxjs/Rx';
 
 import {GlobalState} from '../../../global.state';
@@ -18,7 +18,7 @@ import {BaMenuService} from "./baMenu.service";
 })
 export class BaMenu {
 
-  @Input() menuRoutes:Routes = [];
+  @Input() menuRoutes:any = [];
   @Input() sidebarCollapsed:boolean = false;
   @Input() menuHeight:number;
 
@@ -30,6 +30,7 @@ export class BaMenu {
   public hoverElemTop:number;
   protected _onRouteChange:Subscription;
   public outOfArea:number = -200;
+  protected userType: string;
 
   constructor(private _router:Router, private _service:BaMenuService, private _state:GlobalState) {
     this._onRouteChange = this._router.events.subscribe((event) => {
@@ -43,6 +44,8 @@ export class BaMenu {
         }
       }
     });
+
+    this.userType = window.sessionStorage.getItem('userRoleInProject');
   }
 
   public selectMenuAndNotify(): void {
@@ -53,11 +56,11 @@ export class BaMenu {
   }
 
   public ngOnInit(): void {
-    if (this._state.userType === 'pm') {
+    if (this.userType === 'pm') {
       this.menuRoutes = ASSOCIATION_MENU;
-    } else if (this._state.userType === 'dev') {
+    } else if (this.userType === 'dev') {
       this.menuRoutes = COMPANY_MENU;
-    } else if (this._state.userType === 'test') {
+    } else if (this.userType === 'test') {
       this.menuRoutes = USER_MENU;
     }
 
