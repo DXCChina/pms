@@ -14,6 +14,6 @@ export class ReleaseManageComponent implements OnInit {
   }
 
   goTo(){
-    this.router.navigate([`/pages/${window.sessionStorage.getItem('userRoleInProject')}/dashboard`]);
+    this.router.navigate([`/pages/project/${window.sessionStorage.getItem('userRoleInProject')}/dashboard`]);
   }
 }
