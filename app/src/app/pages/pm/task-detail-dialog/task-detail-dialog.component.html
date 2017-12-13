@@ -10,6 +10,7 @@
     <div class="mat-container">
       <mat-form-field>
         <input matInput placeholder="名称" [formControl]="title">
+        <mat-error >{{formErrors.title}}</mat-error>
       </mat-form-field>
 
       <mat-form-field>
@@ -22,6 +23,7 @@
             <input matInput [formControl]="startDate" [matDatepicker]="startPicker" placeholder="预计开始">
             <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
             <mat-datepicker #startPicker></mat-datepicker>
+            <mat-error >{{formErrors.startDate}}</mat-error>
           </mat-form-field>
         </div>
 
@@ -30,6 +32,7 @@
             <input matInput [formControl]="endDate" [matDatepicker]="endPicker" placeholder="截止日期">
             <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
             <mat-datepicker #endPicker></mat-datepicker>
+            <mat-error >{{formErrors.endDate}}</mat-error>
           </mat-form-field>
         </div>
 
@@ -155,7 +158,7 @@
     </div>
 
     <div class="task-detail-footer">
-      <button mat-button>取消</button>
+      <button mat-button (click)="cance()">取消</button>
       <button mat-button type="submit" [disabled]="!taskForm?.valid">{{mode === 'create' ? '提交' : '修改'}}</button>
     </div>
   </form>
