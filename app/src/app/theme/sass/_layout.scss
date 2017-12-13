@@ -29,6 +29,10 @@ main {
   }
 }
 
+.pms-main{
+  margin-left: $left-space;
+}
+
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   html {
     overflow: hidden;

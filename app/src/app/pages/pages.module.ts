@@ -18,6 +18,7 @@ import {
 
 import { DashboardService } from './pm/pm-dashboard.component/dashboard.service';
 import {Detail_memberService} from "./detail_member.service";
+import {ReleaseManageComponent} from "./release-manage/release-manage.component";
 
 @NgModule({
   imports: [
@@ -57,6 +58,7 @@ import {Detail_memberService} from "./detail_member.service";
   ],
   declarations: [
     Pages,
+    ReleaseManageComponent
   ],
   entryComponents: [
 
