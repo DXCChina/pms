@@ -428,6 +428,15 @@ paths:
         200:
           description: ok
 
+# upload
+  /upload:
+    post:
+      summary: 文件上传
+      operationId: controller.upload.save_image
+      responses:
+        200:
+          description: ok
+
 definitions:
   Login:
     type: object
