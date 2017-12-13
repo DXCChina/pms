@@ -5,12 +5,8 @@ import {RequestOptions, Response , Headers} from '@angular/http';
 @Injectable()
 export class GlobalState {
   baseURL: string = '';
-  jwtHeader: string = 'X-TOKEN';
-  jwtRefreshCode: number = -5;
   headers = new Headers({'Content-Type': 'application/json'});
   options = new RequestOptions({headers: this.headers});
-  userRoleInProject: string = '';
-  userType: string = 'pm';
 
   private _data = new Subject<Object>();
   private _dataStream$ = this._data.asObservable();
