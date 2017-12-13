@@ -78,7 +78,7 @@ export class BaMenuService {
     if (Array.isArray(item.route.path)) {
       item.route.paths = item.route.path;
     } else {
-      item.route.paths = parent && parent.route && parent.route.paths ? parent.route.paths.slice(0) : ['/', 'pages'];
+      item.route.paths = parent && parent.route && parent.route.paths ? parent.route.paths.slice(0) : ['/', 'pages', 'project'];
       if (!!item.route.path) item.route.paths.push(item.route.path);
     }
 
