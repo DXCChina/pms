@@ -40,6 +40,26 @@ export class TaskDetailDialogComponent implements OnInit {
   taskInfoParams: any;
   taskInfo: TaskInfo = new TaskInfo();
 
+  formErrors = {
+    'title': '',
+    'detail': '',
+    'cost': '',
+    'startDate': '',
+    'endDate': ''
+  };
+  validationMessages = {
+    'title': {
+      'required': '请输入任务名称',
+      'minlength': '任务名称最少4个字符长'
+    },
+    'startDate': {
+      'required': '请输入开始日期'
+    },
+    'endDate': {
+      'required': '请输入截止日期'
+    }
+  };
+
   projectId: string = '';
   search: AbstractControl;
   form: FormGroup;
@@ -112,22 +132,22 @@ export class TaskDetailDialogComponent implements OnInit {
   }
 
   onValueChanged(data ?: any) {
-    // if (!this.taskForm) {
-    //   return;
-    // }
-    // const form = this.taskForm;
-    // for (const field in this.formErrors) {
-    //
-    //   this.formErrors[field] = '';
-    //   const control = form.get(field);
-    //
-    //   if (control && control.dirty && !control.valid) {
-    //     const messages = this.validationMessages[field];
-    //     for (const key in control.errors) {
-    //       this.formErrors[field] += messages[key] + ' ';
-    //     }
-    //   }
-    // }
+    if (!this.taskForm) {
+      return;
+    }
+    const form = this.taskForm;
+    for (const field in this.formErrors) {
+
+      this.formErrors[field] = '';
+      const control = form.get(field);
+
+      if (control && control.dirty && !control.valid) {
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          this.formErrors[field] += messages[key] + ' ';
+        }
+      }
+    }
   }
 
   findMemberInProject() {
@@ -216,6 +236,10 @@ export class TaskDetailDialogComponent implements OnInit {
           }
         })
     }
+  }
+
+  cancel(){
+    this.dialogRef.close();
   }
 
   getDelId(newDatas, oldDatas) {

@@ -26,8 +26,8 @@ export class CaseDetailModalService {
       .catch(this.Global.handleError)
   }
 
-  searchDemandList(title): Promise<any> {
-    let demandListMatchStrUrl = `${this.demandListMatchStrUrl}/${title}`;
+  searchDemandList(title, projectId): Promise<any> {
+    let demandListMatchStrUrl = `${this.demandListMatchStrUrl}?title=${title}&projectId=${projectId}`;
 
     return this.http.get(demandListMatchStrUrl)
       .toPromise()

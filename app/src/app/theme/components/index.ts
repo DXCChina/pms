@@ -17,3 +17,4 @@ export * from './baWelTop';
 export * from './waSortList';
 export * from './waSearch';
 export * from './list-card';
+export * from './pmsSidebar'
