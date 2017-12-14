@@ -1,10 +1,7 @@
-import {Component} from "@angular/core";
+import { Component } from '@angular/core';
 
 @Component({
-  selector: 'dev',
-  styleUrls: ['./dev.component.scss'],
-  template: `
-    <pms-sidebar></pms-sidebar>
-    <div class="pms-main"><router-outlet></router-outlet></div>`
+  selector: 'app-dev',
+  template: `<router-outlet></router-outlet>`
 })
-export class DevComponent {}
+export class DevComponent { }
