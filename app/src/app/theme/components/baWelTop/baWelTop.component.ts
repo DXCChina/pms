@@ -15,6 +15,7 @@ export class BaWelTop {
   public isScrolled: boolean = false;
   public isMenuCollapsed: boolean = false;
   public showLevel2Menu: boolean = false;
+  public isShowSidebar: boolean = false;
   public userRoleInProject: string = '';
   public projectName: string = '';
 
@@ -48,6 +49,12 @@ export class BaWelTop {
           this.showLevel2Menu = true;
         } else {
           this.showLevel2Menu = false;
+        }
+
+        if(event && event.isShowSidebar === true){
+          this.isShowSidebar = true;
+        }else {
+          this.isShowSidebar = false;
         }
       });
   }

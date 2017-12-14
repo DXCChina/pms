@@ -2,7 +2,7 @@
      [ngClass]="{scrolled: isScrolled}">
 
   <div class="juzuo system-name">
-    <a *ngIf="showLevel2Menu==true" (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
+    <a *ngIf="isShowSidebar==true" (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
     <a routerLink="welcome" class="al-logo clearfix">QACenter DXC </a>
     <span  *ngIf="showLevel2Menu==true&&projectName">{{projectName}}</span>
   </div>
@@ -12,10 +12,10 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item ">
-            <a class="nav-link" routerLink="/pages/release" routerLinkActive="active">release</a>
+            <a class="nav-link" routerLink="/pages/release/view" routerLinkActive="active">release</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink="{{'/pages/project/'+userRoleInProject+'/activity'}}" routerLinkActive="active">项目管理</a>
+            <a class="nav-link" routerLink="/pages/release/project-view" routerLinkActive="active">项目管理</a>
           </li>
         </ul>
       </div>

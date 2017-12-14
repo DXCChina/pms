@@ -19,11 +19,11 @@ export const routes: Routes = [
       {
         path: 'project',
         loadChildren: "app/pages/project/project.module#ProjectModule",
-        data:{isShowNav:true}
       },
       {
         path: 'release',
-        component:ReleaseManageComponent
+        loadChildren: "app/pages/project-manage/project-manage.module#ProjectManageModule",
+        data:{isShowNav:true}
       },
       {path: '', redirectTo: 'welcome', pathMatch: 'full'}
     ]

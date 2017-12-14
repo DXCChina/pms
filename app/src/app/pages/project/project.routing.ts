@@ -9,7 +9,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'pm',
-        loadChildren: "app/pages/project/pm/pm.module#PmModule"
+        loadChildren: "app/pages/project/pm/pm.module#PmModule",
       },
       {
         path: 'dev',
