@@ -1,30 +1,25 @@
-<div class="wel-top clearfix" baScrollPosition maxHeight="50" (scrollChange)="scrolledChanged($event)"
+<div class="wel-top clearfix" baScrollPosition (scrollChange)="scrolledChanged($event)"
      [ngClass]="{scrolled: isScrolled}">
-  <a (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
 
-  <a routerLink="welcome" class="al-logo clearfix">
-    Pms
-  </a>
-  <span class="project-name" *ngIf="showLevel2Menu==true&&projectName">{{projectName}}</span>
+  <div class="juzuo system-name">
+    <a *ngIf="isShowSidebar==true" (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
+    <a routerLink="welcome" class="al-logo clearfix">QACenter DXC </a>
+    <span  *ngIf="showLevel2Menu==true&&projectName">{{projectName}}</span>
+  </div>
 
-  <div class="level_1_menu">
-
-    <div class="level_2_menu" *ngIf="showLevel2Menu==true">
-
-      <li class="segmentation"></li>
-      <nav class="navbar navbar-toggleable-md navbar-light">
-        <div class="collapse navbar-collapse">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item ">
-              <a class="nav-link" routerLink="{{userRoleInProject+'/dashboard'}}" routerLinkActive="active">我的工作台</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" routerLink="{{userRoleInProject+'/activity'}}" routerLinkActive="active">项目管理</a>
-            </li>
-          </ul>
-        </div>
-      </nav>
-    </div>
+  <div class="level_2_menu juzuo" *ngIf="showLevel2Menu==true">
+    <nav class="navbar navbar-toggleable-md navbar-light">
+      <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item ">
+            <a class="nav-link" routerLink="/pages/release/view" routerLinkActive="active">release</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/pages/release/project-view" routerLinkActive="active">项目管理</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </div>
 
   <div class="user-profile clearfix">
@@ -36,8 +31,10 @@
         </a>
       </button>
 
-      <ul *dropdownMenu class="dropdown-menu profile-dropdown" role="menu" aria-labelledby="user-profile-dd" style="margin:10px 0 0 -37px">
-        <li class="dropdown-item"><a href class="signout" routerLink="/pages/user" routerLinkActive="active" (click)="showPersonInfo()"><i
+      <ul *dropdownMenu class="dropdown-menu profile-dropdown" role="menu" aria-labelledby="user-profile-dd"
+          style="margin:10px 0 0 -37px">
+        <li class="dropdown-item"><a href class="signout" routerLink="/pages/user" routerLinkActive="active"
+                                     (click)="showPersonInfo()"><i
           class="fa fa-cog"></i>&nbsp;&nbsp;&nbsp;Setting</a></li>
         <li class="dropdown-item"><a href class="signout" routerLink="/signout" routerLinkActive="active"><i
           class="fa fa-power-off"></i>&nbsp;&nbsp;&nbsp;Sign out</a></li>
