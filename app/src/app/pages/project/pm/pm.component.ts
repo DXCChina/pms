@@ -4,7 +4,6 @@ import {Component} from "@angular/core";
   selector: 'pm',
   styleUrls: ['./pm.component.scss'],
   template: `
-    <pms-sidebar></pms-sidebar>
-    <div class="pms-main"><router-outlet></router-outlet></div>`
+    <router-outlet></router-outlet>`
 })
 export class PmComponent { }

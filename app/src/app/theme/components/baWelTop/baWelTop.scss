@@ -12,7 +12,7 @@
     height: 66px;
     width: 100%;
     min-width: $resMin;
-    padding: 0 32px 0 40px;
+    padding: 0 20px;
 
     .dropdown-toggle::after {
       display: none;
@@ -33,18 +33,14 @@
     white-space: nowrap;
     float: left;
     outline: none !important;
-    line-height: 60px;
-
+    margin: 0 45px;
+    line-height: 66px;
   }
-
-  .project-name{
-    float: left;
-    display: block;
-    position: absolute;
-    top: 24px;
-    left: 200px;
+  .system-name {
+    line-height: 66px;
     font-size: 24px;
   }
+
   a.resource {
     color: $sidebar-text;
     display: block;
@@ -60,11 +56,16 @@
     color: #cccccc;
   }
 
+  .juzuo {
+    float: left;
+  }
   .user-profile {
-    background: #8847dc;
-    float: right;
-    min-width: 230px;
     margin-top: 10px;
+  }
+
+  .level_2_menu{
+    height: 100%;
+    display: flex;
   }
 
   .al-user-profile {
@@ -255,30 +256,30 @@
     }
   }
 
-  .level_2_menu {
-    display: block;
-    position: relative;
-    padding: 0;
-    margin-bottom: 0;
-    top: -17px;
-    left: 210px;
-    height: 65.99px;
-    list-style: none;
-    font-size: 14px;
-    .segmentation {
-      float: left;
-      width: 2px;
-      height: 20px;
-      //background: #22a01b;
-      background: #8847dc;
-      margin: 15px 25px 15px 0;
-    }
-
-    nav {
-      margin: 27px 0 0 0;
-      color: #216d11;
-    }
-  }
+  //.level_2_menu {
+  //  display: block;
+  //  position: relative;
+  //  padding: 0;
+  //  margin-bottom: 0;
+  //  top: -17px;
+  //  left: 210px;
+  //  height: 65.99px;
+  //  list-style: none;
+  //  font-size: 14px;
+  //  .segmentation {
+  //    float: left;
+  //    width: 2px;
+  //    height: 20px;
+  //    //background: #22a01b;
+  //    background: #8847dc;
+  //    margin: 15px 25px 15px 0;
+  //  }
+  //
+  //  nav {
+  //    margin: 27px 0 0 0;
+  //    color: #216d11;
+  //  }
+  //}
 
   .user-btn {
     background: #8847dc;
@@ -308,7 +309,7 @@
     border-radius: 0.25rem;
   }
 
-  .dropdown-item{
+  .dropdown-item {
     padding: 13px 1.5rem;
   }
 

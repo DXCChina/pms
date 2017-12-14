@@ -18,7 +18,8 @@ export const routes: Routes = [
       },
       {
         path: 'project',
-        loadChildren: "app/pages/project/project.module#ProjectModule"
+        loadChildren: "app/pages/project/project.module#ProjectModule",
+        data:{isShowNav:true}
       },
       {
         path: 'release',
