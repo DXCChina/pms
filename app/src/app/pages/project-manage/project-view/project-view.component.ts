@@ -4,24 +4,26 @@ import {MatDialog} from "@angular/material";
 import {CommonDeleteDialog} from "../../../theme/components/deleteDialog/deleteDialog.component";
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {PmActivityService} from "./pm-activity.service";
+import {ProjectViewService} from "./project-view.service";
 import * as moment from 'moment';
 
 @Component({
   selector: 'app-project-view',
   templateUrl: './project-view.component.html',
   styleUrls: ['project-view.component.scss'],
-  providers:[PmActivityService]
+  providers: [ProjectViewService]
 })
 export class ProjectViewComponent implements OnInit {
   dataListModel: PeopleManageModel[];
   members: any;
   form: FormGroup;
-  projectType: any[];
+  projectType: any;
   projectDetail: any;
   searchList: any[] = [];
+  isOperateProject: boolean = false;
+  object:any = Object;
 
-  constructor(public dialog: MatDialog, private router: Router, private service: PmActivityService) {
+  constructor(public dialog: MatDialog, private router: Router, private service: ProjectViewService) {
     this.form = new FormGroup({
       name: new FormControl('', [Validators.required, Validators.minLength(2)]),
       detail: new FormControl(''),
@@ -30,16 +32,21 @@ export class ProjectViewComponent implements OnInit {
       endDate: new FormControl('', [Validators.required])
     });
 
-    this.projectType = [
-      { name: '短期项目', value: 'short-term'},
-      { name: '长期项目', value: 'long-term'},
-      { name: '运维项目', value: 'operation'},
-    ];
+    this.projectType = {
+      'short-term': '短期项目',
+      'long-term': '长期项目',
+      'operation': '运维项目',
+    };
+
     this.dataListModel = [
-      { name: '姓名', value: 'username' },
-      { name: '职位', value: 'role' },
-      { name: '邮箱', value: 'email' },
+      {name: '姓名', value: 'username'},
+      {name: '职位', value: 'role'},
+      {name: '邮箱', value: 'email'},
     ];
+
+    if(window.sessionStorage.getItem('userRoleInProject') === 'pm') {
+      this.isOperateProject = true;
+    }
   }
 
   ngOnInit() {
@@ -144,13 +151,13 @@ export class ProjectViewComponent implements OnInit {
   }
 
   search(search: any) {
-    if(search !== '') {
+    if (search !== '') {
       this.fuzzyQuery(search);
     }
   }
 
   delete(data: any) {
-    console.log('delete: ',data);
+    console.log('delete: ', data);
     this.memberDelete(data.id);
     this.getMember();
   }
