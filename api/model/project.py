@@ -95,3 +95,51 @@ def member_delete(query):
     result.execute()
     # print(result)
     return None
+
+def project_add(project):
+    result = Project.create(
+                name=project['name'],
+                detail=project['detail'],
+                ownerId=project['ownerId'],
+                startDate=project['startDate'],
+                endDate=project['endDate'],
+                type=project['type']
+            )
+    return model_to_dict(Project.get(Project.name == project['name']))
+
+def project_list(ownerId):
+    # db.commit()
+    # with db.cursor() as cursor:
+    #     sql = "select tab.* from ( (select p.*, 'pm' as role from `project` as p where p.ownerId=%s AND p.status='active') \
+    #           union (select p.*, pm.role from `project` as p left join `project_member` as pm on p.id = pm.projectId where pm.memberId=%s) ) as tab"
+    #     cursor.execute(sql, (ownerId, ownerId))
+    #     data = cursor.fetchall()
+    result = (
+        Project.select(
+            Project.name,
+            Project.id,
+            Project.detail,
+            Project.status,
+            Project.startDate,
+            Project.endDate,
+            Project.ownerId,
+            Project.createAt,
+            Project.type,
+            SQL(" 'pm' As 'role' ")
+        ).where((Project.status == "active") & (Project.ownerId == ownerId))
+        |
+        Project.select(
+            Project.name,
+            Project.id,
+            Project.detail,
+            Project.status,
+            Project.startDate,
+            Project.endDate,
+            Project.ownerId,
+            Project.createAt,
+            Project.type,
+            ProjectMember.role
+        ).join(ProjectMember, on=(Project.id == ProjectMember.projectId)).where(ProjectMember.memberId == ownerId)
+    )
+    result = list(result.dicts())
+    return {'data': result, 'total': len(result)}

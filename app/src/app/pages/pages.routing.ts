@@ -1,7 +1,6 @@
 import {Routes, RouterModule}  from '@angular/router';
-import {Pages} from './pages.component';
 import {ModuleWithProviders} from '@angular/core';
-import {ReleaseManageComponent} from "./release-manage/release-manage.component";
+import {Pages} from './pages.component';
 
 export const routes: Routes = [
   {

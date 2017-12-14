@@ -4,12 +4,11 @@
 @author: Gao Le
 '''
 
-from flask import jsonify, request, abort, Blueprint, session
+from flask import jsonify, request, abort, Blueprint
 from model import demand
+from model.db import Demand
 
-from flask_jwt_extended import (create_access_token, get_jwt_identity,
-                                get_jwt_claims, fresh_jwt_required,
-                                set_access_cookies, unset_jwt_cookies)
+from flask_jwt_extended import (fresh_jwt_required)
 from marshmallow import Schema, fields
 from rbac.context import PermissionDenied
 from playhouse.shortcuts import model_to_dict
@@ -27,8 +26,31 @@ class DemandSchema(Schema):
     status = fields.Integer(required=False)
 
 
-# @app.route("/project/<int:project_id>/demand", methods=['POST'])
-# @app.route("/project/demand", methods=['POST'])
+def find_demand_list_match_str(title):
+    '''模糊查询需求列表
+
+    GET /api/project/demand/<str:title>
+    '''
+
+    return jsonify({
+        'msg': 'ok',
+        'data': list(demand.find_demand_list_match_str(title))
+    })
+
+
+@fresh_jwt_required
+def demand_search():
+    '''模糊查询项目需求
+        GET /api/demand?title=aaa&projectId=1
+    '''
+    return {
+        "data":
+        list(Demand.find().where(
+            Demand.projectId == request.args.get('projectId'),
+            Demand.title % ('%' + request.args.get('title') + '%')))
+    }
+
+
 @fresh_jwt_required
 def demand_add():
     '''添加需求
@@ -52,7 +74,6 @@ def demand_add():
         return jsonify({'msg': 'PermissionDenied'})
 
 
-# @app.route("/project/demand/detail/<int:demand_id>", methods=['GET'])
 @fresh_jwt_required
 def demand_info(demand_id):
     '''获取需求详情
@@ -62,9 +83,6 @@ def demand_info(demand_id):
     return jsonify({'msg': 'ok', 'data': demand.demand_detail(demand_id)})
 
 
-# @app.route("/project/<int:project_id>/demand/<int:demand_id>", methods=['PUT'])
-# @app.route("/project/demand/update", methods=['PUT'])
-# @fresh_jwt_required
 def demand_update():
     '''更新需求信息
 
@@ -82,13 +100,11 @@ def demand_update():
         return jsonify({'msg': 'PermissionDenied'})
 
 
-def find_demand_list_match_str(title):
-    '''模糊查询需求列表
+@fresh_jwt_required
+def demand_lists():
+    '''获取需求列表
 
-    GET /api/project/demand/<str:title>
+    GET /api/demand/list
     '''
-
-    return jsonify({
-        'msg': 'ok',
-        'data': list(demand.find_demand_list_match_str(title))
-    })
+    demand_list = Demand.select().where(Demand.status == 0).dicts().get()
+    return list(demand_list)

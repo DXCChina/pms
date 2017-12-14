@@ -4,7 +4,7 @@
 @author: Wang Jianhui
 '''
 
-from .db import User
+from .db import User, UserBase
 
 
 def findOneById(userid):
@@ -24,7 +24,7 @@ def findOneByEmail(email):
 
 def save(user):
     '''添加用户并返回用户信息'''
-    User.create(
+    return UserBase.create(
         username=user['username'],
         email=user['email'],
         password=user['password'])
@@ -34,8 +34,7 @@ def update(user):
     '''更新用户信息'''
     User.update(
         username=user['username'],
-        email=user['email']
-    ).where(User.id == user['id']).execute()
+        email=user['email']).where(User.id == user['id']).execute()
 
 
 def change_password(userid, password):
