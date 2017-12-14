@@ -3,7 +3,7 @@ import {GlobalState} from "../../../global.state";
 import {Http} from "@angular/http";
 
 @Injectable()
-export class PmActivityService {
+export class ProjectViewService {
   memberUrl: string;
   projectDetailUrl: string;
   updateProjectUrl: string;

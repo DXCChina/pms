@@ -97,6 +97,7 @@ def member_delete(query):
     return None
 
 def project_add(project):
+    print('$$$$$$$$$$$$$model:add')
     result = Project.create(
                 name=project['name'],
                 detail=project['detail'],

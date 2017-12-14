@@ -25,9 +25,8 @@ class projectNewSchema(Schema):
 
 
 def find_one_project_by_name(project_name):
-    return model_to_dict(
-        Project.get(Project.name == project_name).where(
-            Project.status == "active"))
+    return Project.sfind(Project.name == project_name).where(
+            Project.status == "active")
 
 
 @fresh_jwt_required
