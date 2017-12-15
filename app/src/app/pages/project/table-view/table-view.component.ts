@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ViewModel } from './view.model';
 
 @Component({
   selector: 'app-table-view',
@@ -9,30 +9,37 @@ import { Observable } from 'rxjs/Rx';
 })
 export class TableViewComponent {
 
-  rows: Observable<any[]>;
+  viewModel = ViewModel;
+
+  viewName = '啊哈~';
+
+  rows = [];
+
+  temp = [];
 
   columns = [
     { name: 'Name' },
     { name: 'Gender' },
-    { name: 'Company' }
+    { name: 'Age' },
+    { name: 'City', prop: 'address.city' },
+    { name: 'State', prop: 'address.state' }
   ];
 
-  constructor() {
-    this.rows = Observable.create((subscriber) => {
-      this.fetch((data) => {
-        subscriber.next(data.splice(0, 15));
-        subscriber.next(data.splice(15, 30));
-        subscriber.complete();
-      });
-    });
+  @ViewChild('table') tableEl: any;
 
-    // Rx.DOM.ajax({ url: '/products', responseType: 'json'}).subscribe()
-    // this.rows = Observable.from(rows);
+  constructor() {
+    this.fetch((data) => {
+      // cache our list
+      this.temp = [...data];
+
+      // push our inital complete list
+      this.rows = data;
+    });
   }
 
   fetch(cb) {
     const req = new XMLHttpRequest();
-    req.open('GET', `http://swimlane.github.io/ngx-datatable/assets/data/company.json`);
+    req.open('GET', `http://swimlane.github.io/ngx-datatable/assets/data/100k.json`);
 
     req.onload = () => {
       cb(JSON.parse(req.response));
@@ -41,4 +48,28 @@ export class TableViewComponent {
     req.send();
   }
 
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
+
+    // filter our data
+    const temp = this.temp.filter(function (d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // update the rows
+    this.rows = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.tableEl.offset = 0;
+  }
+
+  toggleExpandRow(row) {
+    console.log('Toggled Expand Row!', row);
+    this.tableEl.rowDetail.toggleExpandRow(row);
+  }
+
+  onDetailToggle(event) {
+    console.log('Detail Toggled', event);
+  }
+
 }
+// http://swimlane.github.io/ngx-datatable/
