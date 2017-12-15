@@ -1,7 +1,7 @@
-import { Routes, RouterModule } from '@angular/router';
-import { ModuleWithProviders } from '@angular/core';
-import { ProjectComponent } from './project.component';
-import { TableViewComponent } from './table-view/table-view.component';
+import {Routes, RouterModule}  from '@angular/router';
+import {ModuleWithProviders} from '@angular/core';
+import {ProjectComponent} from "./project.component";
+import {TableViewComponent} from "./table-view/table-view.component";
 
 export const routes: Routes = [
   {

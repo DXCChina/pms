@@ -1,7 +1,6 @@
 import {Routes, RouterModule}  from '@angular/router';
-import {Pages} from './pages.component';
 import {ModuleWithProviders} from '@angular/core';
-import {ReleaseManageComponent} from "./release-manage/release-manage.component";
+import {Pages} from './pages.component';
 
 export const routes: Routes = [
   {
@@ -18,11 +17,12 @@ export const routes: Routes = [
       },
       {
         path: 'project',
-        loadChildren: "app/pages/project/project.module#ProjectModule"
+        loadChildren: "app/pages/project/project.module#ProjectModule",
       },
       {
-        path: 'release',
-        component:ReleaseManageComponent
+        path: ':userType/release',
+        loadChildren: "app/pages/project-manage/project-manage.module#ProjectManageModule",
+        data:{isShowNav:true}
       },
       {path: '', redirectTo: 'welcome', pathMatch: 'full'}
     ]

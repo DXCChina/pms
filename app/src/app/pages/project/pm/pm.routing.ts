@@ -17,32 +17,37 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: PmDashboardComponent,
-        data:{isShowNav:true}
+        data:{isShowNav:true, isShowSidebar:true}
       },
       {
         path: 'activity',
         component: PmActivityComponent,
-        data:{isShowNav:true}
+        data:{isShowNav:true, isShowSidebar:true}
       },
       {
         path: 'demand',
         component: DemandManageComponent,
+        data:{isShowNav:true, isShowSidebar:true}
       },
       {
         path: 'devset',
-        component:DevSetManageComponent
+        component:DevSetManageComponent,
+        data:{isShowNav:true, isShowSidebar:true}
       },
       {
         path: 'test',
-        component:TestManageComponent
+        component:TestManageComponent,
+        data:{isShowNav:true, isShowSidebar:true}
       },
       {
         path: 'testset',
-        component:TestSetManageComponent
+        component:TestSetManageComponent,
+        data:{isShowNav:true, isShowSidebar:true}
       },
       {
         path: 'bug',
-        component:BugManageComponent
+        component:BugManageComponent,
+        data:{isShowNav:true, isShowSidebar:true}
       },
       {
         path: '',
