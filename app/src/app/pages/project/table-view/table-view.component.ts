@@ -1,51 +1,76 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Router } from '@angular/router';
+import { TableViewService } from './table-view.service';
 import { ViewModel } from './view.model';
+import { MockData } from './mock-data';
 
 @Component({
   selector: 'app-table-view',
   templateUrl: './table-view.component.html',
   styleUrls: ['./table-view.component.scss'],
-  providers: []
+  providers: [TableViewService]
 })
 export class TableViewComponent {
 
+  // 项目ID
+  projectId: string;
+
   viewModel = ViewModel;
 
-  viewName = '啊哈~';
+  viewType = 'demand';
 
   rows = [];
 
   temp = [];
 
-  columns = [
-    { name: 'Name' },
-    { name: 'Gender' },
-    { name: 'Age' },
-    { name: 'City', prop: 'address.city' },
-    { name: 'State', prop: 'address.state' }
-  ];
+  columns;
 
   @ViewChild('table') tableEl: any;
 
-  constructor() {
-    this.fetch((data) => {
-      // cache our list
-      this.temp = [...data];
+  constructor(private router: Router, private service: TableViewService) {
 
-      // push our inital complete list
-      this.rows = data;
-    });
+    this.projectId = sessionStorage.getItem('projectId');
+
+    if (!this.projectId) {
+      this.router.navigate(['/welcome']);
+    } else {
+      this.columns = this.viewModel[this.viewType].columns;
+      this.initData();
+    }
+
   }
 
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `http://swimlane.github.io/ngx-datatable/assets/data/100k.json`);
+  initData() {
+    // const req = new XMLHttpRequest();
+    // req.open('GET', `http://swimlane.github.io/ngx-datatable/assets/data/100k.json`);
 
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
+    // req.onload = () => {
+    // const data  = JSON.parse(req.response);
 
-    req.send();
+    // cache our list
+    // this.temp = [...data];
+
+    // push our inital complete list
+    // this.rows = data;
+    // };
+
+    // req.send();
+
+    this.service
+      .getViewData(this.projectId, this.viewModel[this.viewType].detailUrl)
+      .then(res => {
+        res.map(date => {
+          date.name = date.title ? date.title : date.name;
+        });
+
+        // cache our list
+        this.temp = [...res];
+
+        // push our inital complete list
+        this.rows = res;
+      })
+      .catch(err => console.log(err));
+
   }
 
   updateFilter(event) {
@@ -71,5 +96,12 @@ export class TableViewComponent {
     console.log('Detail Toggled', event);
   }
 
+  addItem() {
+    console.log('add', this.viewType);
+  }
+
+  ViewDetail(name) {
+    console.log('show', name);
+  }
+
 }
-// http://swimlane.github.io/ngx-datatable/

@@ -3,6 +3,8 @@ export const ViewModel = {
         title: '需求',
         columns: [
             { name: '名称', prop: 'name' },
+            { name: '详情', prop: 'detail' },
+            { name: '详情', prop: 'detail' },
             { name: '详情', prop: 'detail' }
         ],
         newUrl: '',
@@ -11,12 +13,14 @@ export const ViewModel = {
             dev: true,
             test: true
         },
-        detailUrl: ''
+        detailUrl: 'demand'
     },
     activity: {
         title: '活动',
         columns: [
             { name: '名称', prop: 'name' },
+            { name: '详情', prop: 'detail' },
+            { name: '详情', prop: 'detail' },
             { name: '详情', prop: 'detail' }
         ],
         newUrl: '',
@@ -25,26 +29,30 @@ export const ViewModel = {
             dev: true,
             test: true
         },
-        detailUrl: ''
+        detailUrl: 'activity'
     },
     testCase: {
         title: '测试案例',
         columns: [
             { name: '名称', prop: 'name' },
+            { name: '详情', prop: 'detail' },
+            { name: '详情', prop: 'detail' },
             { name: '详情', prop: 'detail' }
         ],
         newUrl: '',
         roleOfNew: {
-            pm: true,
-            dev: true,
+            pm: false,
+            dev: false,
             test: true
         },
-        detailUrl: ''
+        detailUrl: 'testCase'
     },
     testSet: {
         title: '测试集',
         columns: [
             { name: '名称', prop: 'name' },
+            { name: '详情', prop: 'detail' },
+            { name: '详情', prop: 'detail' },
             { name: '详情', prop: 'detail' }
         ],
         newUrl: '',
@@ -53,12 +61,14 @@ export const ViewModel = {
             dev: true,
             test: true
         },
-        detailUrl: ''
+        detailUrl: 'testSet'
     },
-    bug: {
+    testResult: {
         title: 'BUG',
         columns: [
             { name: '名称', prop: 'name' },
+            { name: '详情', prop: 'detail' },
+            { name: '详情', prop: 'detail' },
             { name: '详情', prop: 'detail' }
         ],
         newUrl: '',
@@ -67,6 +77,6 @@ export const ViewModel = {
             dev: true,
             test: true
         },
-        detailUrl: ''
+        detailUrl: 'testResult'
     }
-}
+};
