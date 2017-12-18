@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TableViewService } from './table-view.service';
 import { ViewModel } from './view.model';
 import { MockData } from './mock-data';
@@ -13,26 +13,30 @@ import { MockData } from './mock-data';
 export class TableViewComponent {
 
   // 项目ID
-  projectId: string;
+  releaseId: string;
 
   viewModel = ViewModel;
 
-  viewType = 'demand';
+  viewType;
 
   rows = [];
 
   temp = [];
 
-  columns;
+  columns = [];
+
+  selected = [];
 
   @ViewChild('table') tableEl: any;
 
-  constructor(private router: Router, private service: TableViewService) {
+  constructor(private route: ActivatedRoute, private router: Router, private service: TableViewService) {
 
-    this.projectId = sessionStorage.getItem('projectId');
+    this.releaseId = sessionStorage.getItem('releaseId');
 
-    if (!this.projectId) {
-      this.router.navigate(['/welcome']);
+    this.route.params.subscribe((param) => this.viewType = param['type']);
+
+    if (!this.releaseId && !this.viewType) {
+      this.router.navigate(['/pages/release']);
     } else {
       this.columns = this.viewModel[this.viewType].columns;
       this.initData();
@@ -41,23 +45,8 @@ export class TableViewComponent {
   }
 
   initData() {
-    // const req = new XMLHttpRequest();
-    // req.open('GET', `http://swimlane.github.io/ngx-datatable/assets/data/100k.json`);
-
-    // req.onload = () => {
-    // const data  = JSON.parse(req.response);
-
-    // cache our list
-    // this.temp = [...data];
-
-    // push our inital complete list
-    // this.rows = data;
-    // };
-
-    // req.send();
-
     this.service
-      .getViewData(this.projectId, this.viewModel[this.viewType].detailUrl)
+      .getViewData(this.releaseId, this.viewModel[this.viewType].detailUrl)
       .then(res => {
         res.map(date => {
           date.name = date.title ? date.title : date.name;
@@ -70,7 +59,6 @@ export class TableViewComponent {
         this.rows = res;
       })
       .catch(err => console.log(err));
-
   }
 
   updateFilter(event) {
@@ -88,20 +76,23 @@ export class TableViewComponent {
   }
 
   toggleExpandRow(row) {
-    console.log('Toggled Expand Row!', row);
+    // console.log('Toggled Expand Row!', row);
+    event.stopPropagation();
     this.tableEl.rowDetail.toggleExpandRow(row);
   }
 
   onDetailToggle(event) {
-    console.log('Detail Toggled', event);
+    // console.log('Detail Toggled', event);
   }
 
   addItem() {
     console.log('add', this.viewType);
   }
 
-  ViewDetail(name) {
-    console.log('show', name);
+  ViewDetail(event) {
+    if (event.type === 'click') {
+      console.log('Activate Event', event);
+    }
   }
 
 }

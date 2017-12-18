@@ -9,7 +9,7 @@ export const routes: Routes = [
     component: ProjectComponent,
     children: [
       {
-        path: 'table-view',
+        path: 'table-view/:type',
         component: TableViewComponent
       },
       {

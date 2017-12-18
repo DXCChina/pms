@@ -27,7 +27,8 @@
                 [footerHeight]="50"
                 [rowHeight]="50"
                 [scrollbarV]="true"
-                [scrollbarH]="false">
+                [scrollbarH]="true"
+                (activate)="ViewDetail($event)">
 
                 <!-- Column Templates -->
                 <ngx-datatable-column
@@ -67,13 +68,13 @@
                     </ng-template>
                 </ngx-datatable-column>
 
-                <ngx-datatable-column
+                <!-- <ngx-datatable-column
                     name="操作"
                     width="46">
                     <ng-template let-row="row" ngx-datatable-cell-template>
-                        <button mat-icon-button style="position: absolute;top: 5px;" (click)="ViewDetail(row.name)">+</button>
+                        <button mat-icon-button style="position: absolute;top: 5px;outline: none;" (click)="ViewDetail(row.id)"><mat-icon>favorite</mat-icon></button>
                     </ng-template>
-                </ngx-datatable-column>
+                </ngx-datatable-column> -->
 
                 <!-- Row Detail Template -->
                 <ngx-datatable-row-detail [rowHeight]="150" (toggle)="onDetailToggle($event)">
