@@ -1,9 +1,92 @@
-<ngx-datatable
-    class="material striped"
-    [rows]="rows | async"
-    [columns]="columns"
-    [columnMode]="'force'"
-    [headerHeight]="50"
-    [footerHeight]="50"
-    [rowHeight]="50">
-</ngx-datatable>
+<div class="table-view-container">
+    <div class="container-bg"></div>
+    <div class="table-container">
+        <div class="table-title">
+            <div class="table-name">{{viewModel[viewType].title}}</div>
+            <!-- <mat-form-field class="table-search">
+                <mat-icon>Search</mat-icon>
+                <input matInput placeholder="搜索名称..." (keyup)="updateFilter($event)">
+            </mat-form-field> -->
+            <input
+                class="table-search"
+                type="text"
+                [placeholder]="'搜索'+viewModel[viewType].title+'名称...'"
+                (keyup)="updateFilter($event)"
+            />
+            <button mat-raised-button class="new-btn" (click)="addItem()"><span>+</span>添加</button>
+        </div>
+        <div class="table-content">
+            <ngx-datatable
+                #table
+                style="height: calc(100vh - 248px); margin-bottom: 32px;"
+                class="material striped"
+                [rows]="rows"
+                [columns]="columns"
+                [columnMode]="'force'"
+                [headerHeight]="50"
+                [footerHeight]="50"
+                [rowHeight]="50"
+                [scrollbarV]="true"
+                [scrollbarH]="true"
+                (activate)="ViewDetail($event)">
+
+                <!-- Column Templates -->
+                <ngx-datatable-column
+                    [width]="50"
+                    [resizeable]="false"
+                    [sortable]="false"
+                    [draggable]="false"
+                    [canAutoResize]="false"
+                    [frozenLeft]="true">
+                    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-cell-template>
+                        <a href="javascript:void(0)"
+                            [class.datatable-icon-right]="!expanded"
+                            [class.datatable-icon-down]="expanded"
+                            title="详细内容"
+                            (click)="toggleExpandRow(row)">
+                        </a>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column
+                    name="序号"
+                    width="46"
+                    [frozenLeft]="true">
+                    <ng-template let-rowIndex="rowIndex" let-row="row" ngx-datatable-cell-template>
+                        <strong>{{rowIndex}}</strong>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <ngx-datatable-column 
+                    *ngFor="let col of columns"
+                    [name]="col.name"
+                    [prop]="col.prop"
+                    [frozenLeft]="col.name==='名称'">
+                    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                        <div *ngIf = "col.name==='名称'">{{value}}</div>
+                        <div *ngIf = "col.name!=='名称'">{{value+"~"}}</div>
+                    </ng-template>
+                </ngx-datatable-column>
+
+                <!-- <ngx-datatable-column
+                    name="操作"
+                    width="46">
+                    <ng-template let-row="row" ngx-datatable-cell-template>
+                        <button mat-icon-button style="position: absolute;top: 5px;outline: none;" (click)="ViewDetail(row.id)"><mat-icon>favorite</mat-icon></button>
+                    </ng-template>
+                </ngx-datatable-column> -->
+
+                <!-- Row Detail Template -->
+                <ngx-datatable-row-detail [rowHeight]="150" (toggle)="onDetailToggle($event)">
+                    <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
+                        <div style="padding: 8px 16px;">
+                            <h3><strong>{{row.name}}</strong></h3>
+                            <p>{{row.detail}}</p>
+                        </div>
+                    </ng-template>
+                </ngx-datatable-row-detail>
+                
+            </ngx-datatable>
+        </div>
+    </div>
+</div>
