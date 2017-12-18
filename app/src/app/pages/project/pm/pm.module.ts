@@ -22,6 +22,7 @@ import { DevSetManageComponent } from './dev-set-manage/dev-set-manage.component
 import { TestManageComponent } from './test-manage/test-manage.component';
 import { TestSetManageComponent } from './test-set-manage/test-set-manage.component';
 import { BugManageComponent } from './bug-manage/bug-manage.component';
+import { DemandDetailComponent } from './demand-manage/demand-detail/demand-detail.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { BugManageComponent } from './bug-manage/bug-manage.component';
     DevSetManageComponent,
     TestManageComponent,
     TestSetManageComponent,
-    BugManageComponent
+    BugManageComponent,
+    DemandDetailComponent
   ],
   imports: [
     CommonModule,
