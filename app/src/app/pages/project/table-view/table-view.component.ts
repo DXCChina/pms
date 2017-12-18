@@ -1,44 +1,98 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TableViewService } from './table-view.service';
+import { ViewModel } from './view.model';
+import { MockData } from './mock-data';
 
 @Component({
   selector: 'app-table-view',
   templateUrl: './table-view.component.html',
   styleUrls: ['./table-view.component.scss'],
-  providers: []
+  providers: [TableViewService]
 })
 export class TableViewComponent {
 
-  rows: Observable<any[]>;
+  // 项目ID
+  releaseId: string;
 
-  columns = [
-    { name: 'Name' },
-    { name: 'Gender' },
-    { name: 'Company' }
-  ];
+  viewModel = ViewModel;
 
-  constructor() {
-    this.rows = Observable.create((subscriber) => {
-      this.fetch((data) => {
-        subscriber.next(data.splice(0, 15));
-        subscriber.next(data.splice(15, 30));
-        subscriber.complete();
-      });
-    });
+  viewType;
 
-    // Rx.DOM.ajax({ url: '/products', responseType: 'json'}).subscribe()
-    // this.rows = Observable.from(rows);
+  rows = [];
+
+  temp = [];
+
+  columns = [];
+
+  selected = [];
+
+  @ViewChild('table') tableEl: any;
+
+  constructor(private route: ActivatedRoute, private router: Router, private service: TableViewService) {
+
+    this.releaseId = sessionStorage.getItem('releaseId');
+
+    this.route.params.subscribe((param) => this.viewType = param['type']);
+
+    if (!this.releaseId && !this.viewType) {
+      this.router.navigate(['/pages/release']);
+    } else {
+      this.columns = this.viewModel[this.viewType].columns;
+      this.initData();
+    }
+
   }
 
-  fetch(cb) {
-    const req = new XMLHttpRequest();
-    req.open('GET', `http://swimlane.github.io/ngx-datatable/assets/data/company.json`);
+  initData() {
+    this.service
+      .getViewData(this.releaseId, this.viewModel[this.viewType].detailUrl)
+      .then(res => {
+        res.map(date => {
+          date.name = date.title ? date.title : date.name;
+        });
 
-    req.onload = () => {
-      cb(JSON.parse(req.response));
-    };
+        // cache our list
+        this.temp = [...res];
 
-    req.send();
+        // push our inital complete list
+        this.rows = res;
+      })
+      .catch(err => console.log(err));
+  }
+
+  updateFilter(event) {
+    const val = event.target.value.toLowerCase();
+
+    // filter our data
+    const temp = this.temp.filter(function (d) {
+      return d.name.toLowerCase().indexOf(val) !== -1 || !val;
+    });
+
+    // update the rows
+    this.rows = temp;
+    // Whenever the filter changes, always go back to the first page
+    this.tableEl.offset = 0;
+  }
+
+  toggleExpandRow(row) {
+    // console.log('Toggled Expand Row!', row);
+    event.stopPropagation();
+    this.tableEl.rowDetail.toggleExpandRow(row);
+  }
+
+  onDetailToggle(event) {
+    // console.log('Detail Toggled', event);
+  }
+
+  addItem() {
+    console.log('add', this.viewType);
+  }
+
+  ViewDetail(event) {
+    if (event.type === 'click') {
+      console.log('Activate Event', event);
+    }
   }
 
 }
