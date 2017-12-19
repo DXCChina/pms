@@ -1,5 +1,5 @@
 export const ViewModel = {
-    demandList: {
+    demand: {
         title: '需求',
         columns: [
             { name: '名称', prop: 'name' },
@@ -15,7 +15,7 @@ export const ViewModel = {
         },
         detailUrl: 'demand'
     },
-    activityList: {
+    activity: {
         title: '活动',
         columns: [
             { name: '名称', prop: 'name' },
@@ -31,7 +31,7 @@ export const ViewModel = {
         },
         detailUrl: 'activity'
     },
-    testCaseList: {
+    testCase: {
         title: '测试案例',
         columns: [
             { name: '名称', prop: 'name' },
@@ -47,7 +47,7 @@ export const ViewModel = {
         },
         detailUrl: 'testCase'
     },
-    testSetList: {
+    testSet: {
         title: '测试集',
         columns: [
             { name: '名称', prop: 'name' },
@@ -63,7 +63,7 @@ export const ViewModel = {
         },
         detailUrl: 'testSet'
     },
-    testResultList: {
+    testResult: {
         title: 'BUG',
         columns: [
             { name: '名称', prop: 'name' },

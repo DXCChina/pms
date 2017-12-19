@@ -33,7 +33,7 @@ export class TableViewComponent {
 
     this.releaseId = sessionStorage.getItem('releaseId');
 
-    this.route.params.subscribe((param) => this.viewType = param['type']);
+    this.viewType = this.route.snapshot.data['type'];
 
     if (!this.releaseId && !this.viewType) {
       this.router.navigate(['/pages/release']);
@@ -87,11 +87,14 @@ export class TableViewComponent {
 
   addItem() {
     console.log('add', this.viewType);
+    this.router.navigate([`/pages/project/${window.sessionStorage.getItem('userRoleInProject')}/${this.viewType}/new`],
+      {queryParams:{type:'new'}});
   }
 
   ViewDetail(event) {
     if (event.type === 'click') {
       console.log('Activate Event', event);
+      this.router.navigate([`/pages/project/${window.sessionStorage.getItem('userRoleInProject')}/${this.viewType}/${event.row.id}`]);
     }
   }
 

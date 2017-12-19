@@ -8,10 +8,10 @@ export const routes: Routes = [
     path: '',
     component: ProjectComponent,
     children: [
-      {
-        path: 'table-view/:type',
-        component: TableViewComponent
-      },
+      // {
+      //   path: 'table-view/:type',
+      //   component: TableViewComponent
+      // },
       {
         path: 'pm',
         loadChildren: 'app/pages/project/pm/pm.module#PmModule'
