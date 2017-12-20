@@ -30,6 +30,7 @@ main {
 }
 
 .pms-main{
+  height: calc(100% - 34px);
   margin-left: $left-space;
 }
 
