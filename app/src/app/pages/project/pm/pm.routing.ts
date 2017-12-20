@@ -11,6 +11,7 @@ import {BugManageComponent} from "./bug-manage/bug-manage.component";
 import {TableViewComponent} from "../table-view/table-view.component";
 import {DemandDetailComponent} from "./demand-manage/demand-detail/demand-detail.component";
 import {DevSetDetailComponent} from "./dev-set-manage/dev-set-detail/dev-set-detail.component";
+import {TestCaseDetailComponent} from "./test-manage/test-case-detail/test-case-detail.component";
 
 export const routes: Routes = [
   {
@@ -70,8 +71,24 @@ export const routes: Routes = [
         data: {isShowNav: true, isShowSidebar: true}
       },
       {
-        path: 'test',
+        path: 'testCase',
         component: TestManageComponent,
+        children: [
+          {
+            path: '',
+            component: TableViewComponent,
+            data: {type: 'testCase'}
+          },
+          {
+            path: ':id',
+            component: TestCaseDetailComponent,
+          },
+          {
+            path: 'new',
+            component: TestCaseDetailComponent,
+          },
+          {path: '', redirectTo: '', pathMatch: 'full'}
+        ],
         data: {isShowNav: true, isShowSidebar: true}
       },
       {

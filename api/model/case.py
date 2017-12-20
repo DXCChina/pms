@@ -20,6 +20,7 @@ def create_case(case):
             'input': case['input'],
             'expect': case['expect'],
             'projectId': case['projectId'],
+            'releaseId': case['releaseId'],
             'ownerId': case['ownerId']
         })
 

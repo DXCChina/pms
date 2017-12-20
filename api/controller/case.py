@@ -27,6 +27,7 @@ class TestCaseSchema(Schema):
     input = fields.String(required=True)
     expect = fields.String(required=True)
     projectId = fields.Integer(required=True)
+    releaseId = fields.Integer(required=True)
 
 
 @fresh_jwt_required
