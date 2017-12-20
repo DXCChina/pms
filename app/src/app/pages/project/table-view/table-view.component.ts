@@ -40,7 +40,7 @@ export class TableViewComponent {
     this.viewType = this.route.snapshot.data['type'];
 
     if (!this.releaseId || !this.role || !this.viewType || !this.viewModel[this.viewType]) {
-      this.router.navigate(['/pages/release']);
+      this.router.navigate([`/pages/${this.role}/release/view`]);
     } else {
       this.columns = this.viewModel[this.viewType].columns;
       this.initData();
@@ -50,10 +50,10 @@ export class TableViewComponent {
 
   initData() {
     this.service
-      .getViewData(this.releaseId, this.viewModel[this.viewType].detailUrl)
+      .getViewData(this.releaseId, this.viewModel[this.viewType].url)
       .then(res => {
         if (res.message) {
-          this.router.navigate(['/pages/release']);
+          this.router.navigate([`/pages/${this.role}/release/view`]);
         }
 
         res.map(date => {
@@ -94,14 +94,14 @@ export class TableViewComponent {
   }
 
   addItem() {
-    console.log('add', this.viewType);
+    // console.log('add', this.viewType);
     this.router.navigate([`/pages/project/${window.sessionStorage.getItem('userRoleInProject')}/${this.viewType}/new`],
-      {queryParams:{type:'new'}});
+      { queryParams: { type: 'new' } });
   }
 
   ViewDetail(event) {
     if (event.type === 'click') {
-      console.log('Activate Event', event);
+      // console.log('Activate Event', event);
       this.router.navigate([`/pages/project/${window.sessionStorage.getItem('userRoleInProject')}/${this.viewType}/${event.row.id}`]);
     }
   }

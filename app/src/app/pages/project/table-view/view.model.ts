@@ -9,15 +9,14 @@ export const ViewModel = {
             { name: '所属活动', prop: 'activity'},
             { name: '创建时间', prop: 'createAt' }
         ],
-        newUrl: '',
         roleOfNew: {
             pm: true,
-            dev: true,
-            test: true
+            dev: false,
+            test: false
         },
-        detailUrl: 'demand'
+        url: 'demand'
     },
-    devset: {
+    decSet: {
         title: '活动',
         normalCol: ['名称', '状态', '预计花费（小时）'],
         columns: [
@@ -29,13 +28,12 @@ export const ViewModel = {
             { name: '预计花费（小时）', prop: 'cost' },
             { name: '创建时间', prop: 'createAt' }
         ],
-        newUrl: '',
         roleOfNew: {
             pm: true,
-            dev: true,
-            test: true
+            dev: false,
+            test: false
         },
-        detailUrl: 'activity'
+        url: 'activity'
     },
     testCase: {
         title: '测试案例',
@@ -48,13 +46,12 @@ export const ViewModel = {
             { name: '输入', prop: 'input' },
             { name: '预期输出', prop: 'expect' }
         ],
-        newUrl: '',
         roleOfNew: {
             pm: false,
             dev: false,
             test: true
         },
-        detailUrl: 'testCase'
+        url: 'testCase'
     },
     testSet: {
         title: '测试集',
@@ -64,13 +61,12 @@ export const ViewModel = {
             { name: '指派人', prop: 'member' },
             { name: '所含案例', prop: 'testCase' }
         ],
-        newUrl: '',
         roleOfNew: {
             pm: true,
-            dev: true,
-            test: true
+            dev: false,
+            test: false
         },
-        detailUrl: 'testSet'
+        url: 'testSet'
     },
     bug: {
         title: 'BUG',
@@ -89,12 +85,11 @@ export const ViewModel = {
             { name: '优先级', prop: 'level' },
             { name: '严重程度', prop: 'priority' },
         ],
-        newUrl: '',
         roleOfNew: {
-            pm: true,
-            dev: true,
+            pm: false,
+            dev: false,
             test: true
         },
-        detailUrl: 'testResult'
+        url: 'testResult'
     }
 };
