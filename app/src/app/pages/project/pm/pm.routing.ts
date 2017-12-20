@@ -12,6 +12,7 @@ import {TableViewComponent} from "../table-view/table-view.component";
 import {DemandDetailComponent} from "./demand-manage/demand-detail/demand-detail.component";
 import {DevSetDetailComponent} from "./dev-set-manage/dev-set-detail/dev-set-detail.component";
 import {TestCaseDetailComponent} from "./test-manage/test-case-detail/test-case-detail.component";
+import {BugDetailComponent} from "./bug-manage/bug-detail/bug-detail.component";
 
 export const routes: Routes = [
   {
@@ -99,6 +100,22 @@ export const routes: Routes = [
       {
         path: 'bug',
         component: BugManageComponent,
+        children: [
+          {
+            path: '',
+            component: TableViewComponent,
+            data: {type: 'bug'}
+          },
+          {
+            path: ':id',
+            component: BugDetailComponent,
+          },
+          {
+            path: 'new',
+            component: BugDetailComponent,
+          },
+          {path: '', redirectTo: '', pathMatch: 'full'}
+        ],
         data: {isShowNav: true, isShowSidebar: true}
       },
       {

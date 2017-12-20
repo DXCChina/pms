@@ -63,7 +63,7 @@ export const ViewModel = {
         },
         detailUrl: 'testSet'
     },
-    testResult: {
+    bug: {
         title: 'BUG',
         columns: [
             { name: '名称', prop: 'name' },

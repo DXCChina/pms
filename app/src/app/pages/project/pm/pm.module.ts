@@ -27,6 +27,7 @@ import {TableViewComponent} from "../table-view/table-view.component";
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import { DevSetDetailComponent } from './dev-set-manage/dev-set-detail/dev-set-detail.component';
 import { TestCaseDetailComponent } from './test-manage/test-case-detail/test-case-detail.component';
+import { BugDetailComponent } from './bug-manage/bug-detail/bug-detail.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { TestCaseDetailComponent } from './test-manage/test-case-detail/test-cas
     DemandDetailComponent,
     TableViewComponent,
     DevSetDetailComponent,
-    TestCaseDetailComponent
+    TestCaseDetailComponent,
+    BugDetailComponent
   ],
   imports: [
     CommonModule,
