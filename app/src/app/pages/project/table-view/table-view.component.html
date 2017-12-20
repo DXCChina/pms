@@ -2,7 +2,7 @@
     <div class="container-bg"></div>
     <div class="table-container">
         <div class="table-title">
-            <div class="table-name">{{ viewModel[viewType].title }}</div>
+            <div class="table-name">{{ viewModel[viewType]?.title }}</div>
             <!-- <mat-form-field class="table-search">
                 <mat-icon>Search</mat-icon>
                 <input matInput placeholder="搜索名称..." (keyup)="updateFilter($event)">
@@ -10,10 +10,10 @@
             <input
                 class="table-search"
                 type="text"
-                [placeholder]="'搜索'+viewModel[viewType].title+'名称...'"
+                [placeholder]="'搜索'+viewModel[viewType]?.title+'名称...'"
                 (keyup)="updateFilter($event)"
                 />
-            <button mat-raised-button class="new-btn" (click)="addItem()"><span>+</span>添加</button>
+                <div><button mat-raised-button class="new-btn" *ngIf="viewModel[viewType]?.roleOfNew[role]" (click)="addItem()"><span>+</span>添加</button></div>
         </div>
         <div class="table-content">
             <ngx-datatable
@@ -65,10 +65,10 @@
                     <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
 
                         <!-- 直接显示的单元格 -->
-                        <div *ngIf = "viewModel[viewType].normalCol.indexOf(col.name)!=-1">{{ value }}</div>
+                        <div *ngIf = "viewModel[viewType]?.normalCol.indexOf(col.name)!=-1">{{ value }}</div>
 
                         <!-- 带有模板的单元格 -->
-                        <div *ngIf = "viewModel[viewType].normalCol.indexOf(col.name)==-1">
+                        <div *ngIf = "viewModel[viewType]?.normalCol.indexOf(col.name)==-1">
 
                             <div *ngIf = "col.name=='成员'">
                                 <span *ngFor="let member of row.member">

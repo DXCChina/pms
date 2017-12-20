@@ -27,7 +27,7 @@ export const ASSOCIATION_MENU = [
         },
       },
       {
-        path: 'devset',
+        path: 'devSet',
         data: {
           menu: {
             title: '开发活动',
@@ -51,7 +51,7 @@ export const ASSOCIATION_MENU = [
         },
       },
       {
-        path: 'testset',
+        path: 'testSet',
         data: {
           menu: {
             title: '测试实验室',

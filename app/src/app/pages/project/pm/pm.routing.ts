@@ -1,18 +1,18 @@
-import {RouterModule, Routes} from "@angular/router";
-import {PmComponent} from "./pm.component";
-import {ModuleWithProviders} from "@angular/core";
-import {PmDashboardComponent} from "./pm-dashboard.component/pm-dashboard.component";
-import {PmActivityComponent} from "./pm-activity.component/pm-activity.component";
-import {DemandManageComponent} from "./demand-manage/demand-manage.component";
-import {DevSetManageComponent} from "./dev-set-manage/dev-set-manage.component";
-import {TestManageComponent} from "./test-manage/test-manage.component";
-import {TestSetManageComponent} from "./test-set-manage/test-set-manage.component";
-import {BugManageComponent} from "./bug-manage/bug-manage.component";
-import {TableViewComponent} from "../table-view/table-view.component";
-import {DemandDetailComponent} from "./demand-manage/demand-detail/demand-detail.component";
-import {DevSetDetailComponent} from "./dev-set-manage/dev-set-detail/dev-set-detail.component";
-import {TestCaseDetailComponent} from "./test-manage/test-case-detail/test-case-detail.component";
-import {BugDetailComponent} from "./bug-manage/bug-detail/bug-detail.component";
+import { RouterModule, Routes } from '@angular/router';
+import { PmComponent } from './pm.component';
+import { ModuleWithProviders } from '@angular/core';
+import { PmDashboardComponent } from './pm-dashboard.component/pm-dashboard.component';
+import { PmActivityComponent } from './pm-activity.component/pm-activity.component';
+import { DemandManageComponent } from './demand-manage/demand-manage.component';
+import { DevSetManageComponent } from './dev-set-manage/dev-set-manage.component';
+import { TestManageComponent } from './test-manage/test-manage.component';
+import { TestSetManageComponent } from './test-set-manage/test-set-manage.component';
+import { BugManageComponent } from './bug-manage/bug-manage.component';
+import { TableViewComponent } from '../table-view/table-view.component';
+import { DemandDetailComponent } from './demand-manage/demand-detail/demand-detail.component';
+import { DevSetDetailComponent } from './dev-set-manage/dev-set-detail/dev-set-detail.component';
+import { TestCaseDetailComponent } from './test-manage/test-case-detail/test-case-detail.component';
+import { BugDetailComponent } from './bug-manage/bug-detail/bug-detail.component';
 
 export const routes: Routes = [
   {
@@ -22,12 +22,12 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: PmDashboardComponent,
-        data: {isShowNav: true, isShowSidebar: true}
+        data: { isShowNav: true, isShowSidebar: true }
       },
       {
         path: 'activity',
         component: PmActivityComponent,
-        data: {isShowNav: true, isShowSidebar: true}
+        data: { isShowNav: true, isShowSidebar: true }
       },
       {
         path: 'demand',
@@ -36,7 +36,7 @@ export const routes: Routes = [
           {
             path: '',
             component: TableViewComponent,
-            data: {type: 'demand'}
+            data: { type: 'demand' }
           },
           {
             path: ':id',
@@ -46,18 +46,18 @@ export const routes: Routes = [
             path: 'new',
             component: DemandDetailComponent,
           },
-          {path: '', redirectTo: '', pathMatch: 'full'}
+          { path: '', redirectTo: '', pathMatch: 'full' }
         ],
-        data: {isShowNav: true, isShowSidebar: true}
+        data: { isShowNav: true, isShowSidebar: true }
       },
       {
-        path: 'devset',
+        path: 'devSet',
         component: DevSetManageComponent,
         children: [
           {
             path: '',
             component: TableViewComponent,
-            data: {type: 'devset'}
+            data: { type: 'devSet' }
           },
           {
             path: ':id',
@@ -67,9 +67,9 @@ export const routes: Routes = [
             path: 'new',
             component: DevSetDetailComponent,
           },
-          {path: '', redirectTo: '', pathMatch: 'full'}
+          { path: '', redirectTo: '', pathMatch: 'full' }
         ],
-        data: {isShowNav: true, isShowSidebar: true}
+        data: { isShowNav: true, isShowSidebar: true }
       },
       {
         path: 'testCase',
@@ -78,7 +78,7 @@ export const routes: Routes = [
           {
             path: '',
             component: TableViewComponent,
-            data: {type: 'testCase'}
+            data: { type: 'testCase' }
           },
           {
             path: ':id',
@@ -88,14 +88,30 @@ export const routes: Routes = [
             path: 'new',
             component: TestCaseDetailComponent,
           },
-          {path: '', redirectTo: '', pathMatch: 'full'}
+          { path: '', redirectTo: '', pathMatch: 'full' }
         ],
-        data: {isShowNav: true, isShowSidebar: true}
+        data: { isShowNav: true, isShowSidebar: true }
       },
       {
-        path: 'testset',
+        path: 'testSet',
         component: TestSetManageComponent,
-        data: {isShowNav: true, isShowSidebar: true}
+        children: [
+          {
+            path: '',
+            component: TableViewComponent,
+            data: { type: 'testSet' }
+          },
+          {
+            path: ':id',
+            component: TestCaseDetailComponent,
+          },
+          {
+            path: 'new',
+            component: TestCaseDetailComponent,
+          },
+          { path: '', redirectTo: '', pathMatch: 'full' }
+        ],
+        data: { isShowNav: true, isShowSidebar: true }
       },
       {
         path: 'bug',
@@ -104,7 +120,7 @@ export const routes: Routes = [
           {
             path: '',
             component: TableViewComponent,
-            data: {type: 'bug'}
+            data: { type: 'bug' }
           },
           {
             path: ':id',
@@ -114,9 +130,9 @@ export const routes: Routes = [
             path: 'new',
             component: BugDetailComponent,
           },
-          {path: '', redirectTo: '', pathMatch: 'full'}
+          { path: '', redirectTo: '', pathMatch: 'full' }
         ],
-        data: {isShowNav: true, isShowSidebar: true}
+        data: { isShowNav: true, isShowSidebar: true }
       },
       {
         path: '',
