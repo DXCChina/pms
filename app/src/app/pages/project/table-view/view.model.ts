@@ -1,5 +1,5 @@
 export const ViewModel = {
-    demandList: {
+    demand: {
         title: '需求',
         normalCol: ['名称', '状态', '级别', '所属活动'],
         columns: [
@@ -17,7 +17,7 @@ export const ViewModel = {
         },
         detailUrl: 'demand'
     },
-    activityList: {
+    devset: {
         title: '活动',
         normalCol: ['名称', '状态', '预计花费（小时）'],
         columns: [
@@ -37,7 +37,7 @@ export const ViewModel = {
         },
         detailUrl: 'activity'
     },
-    testCaseList: {
+    testCase: {
         title: '测试案例',
         normalCol: ['名称', '对应任务', '创建人', '案例类型', '输入', '预期输出'],
         columns: [
@@ -56,7 +56,7 @@ export const ViewModel = {
         },
         detailUrl: 'testCase'
     },
-    testSetList: {
+    testSet: {
         title: '测试集',
         normalCol: ['名称', '指派人'],
         columns: [
@@ -72,7 +72,7 @@ export const ViewModel = {
         },
         detailUrl: 'testSet'
     },
-    testResultList: {
+    bug: {
         title: 'BUG',
         normalCol: ['名称', '对应任务', '对应案例', '对应测试集', '创建人', '开发人员', '当前状态', '输入', '预期输出', '实际输入', '优先级', '严重程度'],
         columns: [

@@ -1,0 +1,77 @@
+<div class="detail-view-container">
+  <div class="container-bg"></div>
+  <div class="detail">
+    <div class="header">
+      <a class="back-arrow" routerLinkActive="active" [routerLink]="['../']">
+        <svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </a>
+      <div mat-card-avatar [style.background]="'#c7b7dd'">{{testResultInfo.name| name2avatar}}</div>
+      <div class="header-text">
+        <div class="detail-name">{{testResultInfo.name}}</div>
+        <div>{{testResultInfo.detail}}</div>
+      </div>
+    </div>
+    <mat-card class="">
+      <!--<mat-card-header>-->
+      <!--<mat-card-title>需求name</mat-card-title>-->
+      <!--<mat-card-subtitle>日期</mat-card-subtitle>-->
+      <!--<div mat-card-avatar [style.background]="'#8847dc'">{{"需求name"| name2avatar}}</div>-->
+      <!--</mat-card-header>-->
+      <div class="dialog-content">
+        <form action="">
+          <div class="detail-content">
+            <mat-form-field>
+              <input matInput placeholder="测试结果名称" [(ngModel)]="testResultInfo.name" name="name" readonly>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="测试结果描述" [(ngModel)]="testResultInfo.detail" name="detail" readonly>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="测试案例" [(ngModel)]="testResultInfo.caseName" name="caseName" readonly>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="实际输出结果" [(ngModel)]="testResultInfo.output" name="output" readonly>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select placeholder="测试结果状态" [(ngModel)]="testResultInfo.status" name="status"  [disabled]="true">
+                <mat-option value="tofix">待修复</mat-option>
+                <mat-option value="tocheck">待审核</mat-option>
+                <mat-option value="close">通过测试</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select placeholder="优先级" [(ngModel)]="testResultInfo.level" name="level"  [disabled]="true">
+                <mat-option value="low">低</mat-option>
+                <mat-option value="normal">中</mat-option>
+                <mat-option value="high">高</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="testResultInfo.status!=='close'">
+              <mat-select placeholder="严重程度" [(ngModel)]="testResultInfo.priority" name="priority"  [disabled]="true">
+                <mat-option value="low">低</mat-option>
+                <mat-option value="normal">中</mat-option>
+                <mat-option value="high">高</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div class="detail-footer">
+            <button mat-button (click)="cancel()">关闭</button>
+          </div>
+        </form>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+

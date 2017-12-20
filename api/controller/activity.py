@@ -1,8 +1,5 @@
 # -*- coding: utf-8 -*-
-'''活动管理接口
-
-@author: Wang Jianhui
-'''
+'''活动管理接口'''
 
 from flask import request
 from model.db import database, Activity, ActivityMember, Demand, ActivityBase, ProjectMember, User
@@ -54,8 +51,7 @@ def activity_add():
             for member_id in data['memberId']:
                 role = ProjectMember.get(
                     ProjectMember.projectId == data['projectId'],
-                    ProjectMember.memberId == member_id
-                ).role
+                    ProjectMember.memberId == member_id).role
                 ActivityMember.create(**{
                     'activityId': activity_id,
                     'memberId': member_id,
@@ -76,8 +72,7 @@ def activity_update():
             for member_id in data.pop('del_memberId'):
                 ActivityMember.delete().where(
                     (ActivityMember.activityId == activity_id) &
-                    (ActivityMember.memberId == member_id)
-                ).execute()
+                    (ActivityMember.memberId == member_id)).execute()
         if 'memberId' in data:
             if not 'status' in data or not data['status']:
                 data['status'] = 'dev-ing'
@@ -87,9 +82,7 @@ def activity_update():
                     memberId=member_id,
                     role=ProjectMember.get(
                         (ProjectMember.projectId == data['projectId'])
-                        and (ProjectMember.memberId == member_id)
-                    ).role
-                )
+                        and (ProjectMember.memberId == member_id)).role)
         if 'done_demand' in data:
             demand_activity_done(activity_id, data.pop('done_demand'))
         if 'demand' in data:
@@ -101,54 +94,27 @@ def activity_update():
 
 
 @fresh_jwt_required
-def activity_list():
-    '''项目活动列表'''
-
-    return {
-        # "data": list(Activity.find().where(
-        #     Activity.projectId == request.args.get('projectId')
-        # ))
-    }
-
-
-@fresh_jwt_required
-def demand_search():
-    '''模糊查询项目需求
-        GET /api/demand?title=aaa&projectId=1
-    '''
-    return {
-        "data": list(Demand.find().where(
-            Demand.projectId == request.args.get('projectId'),
-            Demand.title % ('%' + request.args.get('title') + '%')
-        ))
-    }
-
-
-@fresh_jwt_required
-def project_user(project_id):
-    '''查询项目成员
-        GET /api/project/<int:project_id>/users
-    '''
-    return {
-        "data": list(ProjectMember.find(ProjectMember.role, User).join(User).where(
-            ProjectMember.projectId == project_id
-        ))
-    }
-
-
-@fresh_jwt_required
 def activity_detail(activity_id):
     '''查询活动详情
         GET /api/activity/<int:activity_id>
     '''
     activity = Activity.findOne(Activity.id == activity_id)
     activity['member'] = list(
-        ActivityMember.find(
-            ActivityMember.role, User.username, User.email
-        ).join(User)
-        .where(ActivityMember.activityId == activity_id)
-    )
+        ActivityMember.find(ActivityMember.role, User.username,
+                            User.email, User.id).join(User)
+        .where(ActivityMember.activityId == activity_id))
     activity['demand'] = list(
-        Demand.find().where(Demand.activityId == activity_id)
-    )
+        Demand.find().where(Demand.activityId == activity_id))
     return activity
+
+
+@fresh_jwt_required
+def project_user(project_id):
+    '''查询项目成员'''
+    return {
+        "data":
+        list(
+            ProjectMember.find(
+                ProjectMember.role,
+                User).join(User).where(ProjectMember.projectId == project_id))
+    }

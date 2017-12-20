@@ -85,3 +85,7 @@ def project_test_result(release_id):
     else:
         return json.dumps({"msg": "No permission!"}), 403
     return res
+
+@fresh_jwt_required
+def project_test_set(project_id):
+    pass

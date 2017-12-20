@@ -15,8 +15,6 @@ import {
   MatProgressSpinnerModule, MatChipsModule, MatGridListModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule,
   MatProgressBarModule, MatToolbarModule, MatTooltipModule
 } from '@angular/material';
-import {ReleaseManageComponent} from "./release-manage/release-manage.component";
-
 
 @NgModule({
   imports: [
@@ -56,7 +54,6 @@ import {ReleaseManageComponent} from "./release-manage/release-manage.component"
   ],
   declarations: [
     Pages,
-    ReleaseManageComponent
   ],
   entryComponents: [
 

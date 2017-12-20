@@ -18,7 +18,8 @@ def create_demand(demand):
         defaults={
             'detail': demand['detail'],
             'level': demand['level'],
-            'projectId': demand['projectId']
+            'projectId': demand['projectId'],
+            'releaseId': demand['releaseId']
         })
 
 
@@ -41,6 +42,10 @@ def update_demands(demand):
 
 def find_one_demand_by_title(title):
     return Demand.getOne(Demand.title == title)
+
+
+def find_demand_title_by_id(id):
+    return Demand.getOne(Demand.id == id).title
 
 
 def find_demand_list_match_str(title):

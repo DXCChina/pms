@@ -92,6 +92,7 @@ import {PositionSwitchPipe} from "./pipes/positionSwitch/positionSwitch.pipe";
 import {ChipListComponent} from "./components/chip-list/chip-lsit.component";
 import {PmPeoplemanageComponent} from "./components/pm-peoplemanage/pm-peoplemanage.component";
 import {CommonDeleteDialog} from "./components/deleteDialog/deleteDialog.component";
+import {HorizontalTimelineComponent} from "./components/horizontal-timeline/horizontal-timeline.component";
 
 const NGA_COMPONENTS = [
   BaAmChart,
@@ -131,7 +132,8 @@ const NGA_COMPONENTS = [
   ListCardComponent,
   PmPeoplemanageComponent,
   CommonDeleteDialog,
-  PmsSidebar
+  PmsSidebar,
+  HorizontalTimelineComponent
 ];
 
 const NGA_DIRECTIVES = [

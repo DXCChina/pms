@@ -15,18 +15,6 @@ export const ASSOCIATION_MENU = [
         },
       },
       {
-        path: 'activity',
-        data: {
-          menu: {
-            title: '项目管理',
-            icon: 'ion-navicon-round',
-            selected: false,
-            expanded: false,
-            order: 100,
-          }
-        },
-      },
-      {
         path: 'demand',
         data: {
           menu: {
@@ -51,7 +39,7 @@ export const ASSOCIATION_MENU = [
         },
       },
       {
-        path: 'test',
+        path: 'testCase',
         data: {
           menu: {
             title: '测试管理',

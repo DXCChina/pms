@@ -1,0 +1,67 @@
+<div class="detail-view-container">
+  <div class="container-bg"></div>
+  <div class="detail">
+    <div class="header">
+      <a class="back-arrow" routerLinkActive="active" [routerLink]="['../']">
+        <svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </a>
+      <div mat-card-avatar [style.background]="'#c7b7dd'">{{demandInfo.title | name2avatar}}</div>
+      <div class="header-text">
+        <div class="detail-name">{{demandInfo.title ? demandInfo.title : "新建需求"}}</div>
+        <div>{{demandInfo.detail ? demandInfo.detail : "需求描述"}}</div>
+      </div>
+    </div>
+    <mat-card class="">
+      <!--<mat-card-header>-->
+        <!--<mat-card-title>需求name</mat-card-title>-->
+        <!--<mat-card-subtitle>日期</mat-card-subtitle>-->
+        <!--<div mat-card-avatar [style.background]="'#8847dc'">{{"需求name"| name2avatar}}</div>-->
+      <!--</mat-card-header>-->
+      <mat-card-content>
+        <div class="dialog-content">
+          <form action="" [formGroup]="demandForm" (ngSubmit)="onSubmit(demandForm)">
+            <div class="demand-detail-content">
+              <mat-form-field>
+                <input matInput placeholder="需求名称" [formControl]="title" [(ngModel)]="demandInfo.title" name="title">
+                <mat-error >{{formErrors.title}}</mat-error>
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput placeholder="需求描述" [formControl]="detail" [(ngModel)]="demandInfo.detail" name="detail">
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput placeholder="任务指定(创建需求时不可指定任务)" [formControl]="assignTask" readonly>
+                <input matInput *ngIf="mode=='update'" placeholder="任务指定(编辑需求时不可指定任务)" [formControl]="assignTask" [(ngModel)]="demandInfo.activityTittle" name="activityTittle" readonly>
+              </mat-form-field>
+
+              <mat-form-field>
+                <mat-select placeholder="优先级" [formControl]="level" [(ngModel)]="demandInfo.level" name="level">
+                  <mat-option value="low">低</mat-option>
+                  <mat-option value="normal" aria-selected="true">中</mat-option>
+                  <mat-option value="high">高</mat-option>
+                </mat-select>
+                <mat-error>{{formErrors.level}}</mat-error>
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput placeholder="创建时间(创建时间不可设置)" [formControl]="createAt" [(ngModel)]="demandInfo.createAt" name="createAt" readonly>
+              </mat-form-field>
+            </div>
+
+            <div class="detail-footer">
+              <button mat-button (click)="cancel()">取消</button>
+              <button mat-button type="submit" [disabled]="!demandForm?.valid">{{mode == 'new' ?  '提交' : '修改'}}</button>
+            </div>
+          </form>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
+
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+
