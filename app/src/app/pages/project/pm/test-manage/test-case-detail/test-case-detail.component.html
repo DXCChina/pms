@@ -8,10 +8,10 @@
           <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
         </svg>
       </a>
-      <div mat-card-avatar [style.background]="'#c7b7dd'">{{"測試name"| name2avatar}}</div>
+      <div mat-card-avatar [style.background]="'#c7b7dd'">{{testCaseInfo.name| name2avatar}}</div>
       <div class="header-text">
-        <div class="detail-name">測試name</div>
-        <div>日期</div>
+        <div class="detail-name">{{testCaseInfo.name ? testCaseInfo.name : "新建活動"}}</div>
+        <div>{{testCaseInfo.detail ? testCaseInfo.detail : "新建活動"}}</div>
       </div>
     </div>
     <mat-card class="">
