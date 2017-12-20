@@ -1,4 +1,4 @@
-<div class="table-view-container">
+<div class="detail-view-container">
   <div class="container-bg"></div>
   <div class="detail">
     <div class="header">
@@ -10,7 +10,7 @@
       </a>
       <div mat-card-avatar [style.background]="'#c7b7dd'">{{"需求name"| name2avatar}}</div>
       <div class="header-text">
-        <div class="demand-name">需求name</div>
+        <div class="detail-name">需求name</div>
         <div>日期</div>
       </div>
     </div>
@@ -52,7 +52,7 @@
               </mat-form-field>
             </div>
 
-            <div class="demand-detail-footer">
+            <div class="detail-footer">
               <button mat-button (click)="cancel()">取消</button>
               <button mat-button type="submit" [disabled]="!demandForm?.valid">{{mode == 'new' ?  '提交' : '修改'}}</button>
             </div>

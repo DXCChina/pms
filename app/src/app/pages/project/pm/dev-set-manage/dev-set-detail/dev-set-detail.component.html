@@ -1,0 +1,181 @@
+<div class="detail-view-container">
+  <div class="container-bg"></div>
+  <div class="detail">
+    <div class="header">
+      <a class="back-arrow" routerLinkActive="active" [routerLink]="['../']">
+        <svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </a>
+      <div mat-card-avatar [style.background]="'#c7b7dd'">{{"活动name"| name2avatar}}</div>
+      <div class="header-text">
+        <div class="detail-name">活动name</div>
+        <div>日期</div>
+      </div>
+    </div>
+    <mat-card class="">
+      <div class="dialog-content">
+        <form [formGroup]="taskForm" (ngSubmit)="onSubmit(taskForm)">
+          <div class="mat-container">
+            <mat-form-field>
+              <input matInput placeholder="名称" [formControl]="title" [(ngModel)]="taskInfo.title">
+              <mat-error >{{formErrors.title}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <input matInput placeholder="描述" [formControl]="detail" [(ngModel)]="taskInfo.detail">
+            </mat-form-field>
+
+            <div class="row">
+              <div class="col-4">
+                <mat-form-field>
+                  <input matInput [formControl]="startDate" [matDatepicker]="startPicker" placeholder="预计开始" [(ngModel)]="taskInfo.startDate">
+                  <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #startPicker></mat-datepicker>
+                  <mat-error >{{formErrors.startDate}}</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-4">
+                <mat-form-field>
+                  <input matInput [formControl]="endDate" [matDatepicker]="endPicker" placeholder="截止日期" [(ngModel)]="taskInfo.endDate">
+                  <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                  <mat-datepicker #endPicker></mat-datepicker>
+                  <mat-error >{{formErrors.endDate}}</mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="col-4" style="width:30%">
+                <mat-form-field>
+                  <input matInput placeholder="花费时间" [formControl]="cost" [(ngModel)]="taskInfo.cost">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <div>
+              执行人(测试和开发仅限选一人)
+            </div>
+            <div style="margin-top: 10px">
+              <mat-card>
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <mat-form-field>
+                      <mat-select placeholder="指派人员" [formControl]="selectUsers" [value]="selectUserList"  multiple (focus)="getSelectUsers()">
+                        <!--<mat-select-trigger>-->
+                        <!--{{selectUsers.value ? selectUsers.value[0] : ''}}-->
+                        <!--<span *ngIf="selectUsers.value?.length > 1" class="example-additional-selection">-->
+                        <!--(+{{selectUsers.value.length - 1}} others)-->
+                        <!--</span>-->
+                        <!--</mat-select-trigger>-->
+                        <mat-optgroup *ngFor="let members of userLists" [label]="members.role"
+                                      [disabled]="members.disabled">
+                          <mat-option *ngFor="let member of members.members" [value]="member">
+                            {{member?.name}}
+                          </mat-option>
+                        </mat-optgroup>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12">
+                    <div class="participant">
+                      <div *ngIf="!selectUserList || selectUserList?.length === 0">未指定人员</div>
+                      <chip-list [chipList]="selectUserList" (removeChip)="removeUser($event)"></chip-list>
+                    </div>
+                  </div>
+                </div>
+              </mat-card>
+            </div>
+          </div>
+
+          <hr>
+
+          <div>
+            <span>包含需求</span>
+            <div class="demand-progress-bar">
+              <span>{{demandListCompletedInTask?.length}}/{{demandListInTask.length}}</span>
+              <mat-progress-bar mode="determinate" value="{{progressValue}}"></mat-progress-bar>
+            </div>
+            <div class="demand-in-task">
+              <div *ngFor="let demand of demandListInTask">
+                <mat-checkbox (change)="toggleDemandStatus(demand, $event)" [checked]="demand?.status" disabled></mat-checkbox>
+                <mat-form-field>
+                  <input matInput value="{{demand?.title}}">
+                </mat-form-field>
+                <button class="delete-icon" mat-icon-button (click)="deleteDemandInTask(demand)">
+                  <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <hr>
+
+          <div>
+            <span>未指派的需求</span>
+            <div class="demand-search">
+              <mat-form-field>
+                <input matInput placeholder="搜索需求" [formControl]="search" [(ngModel)]="searchDemand"
+                       (keyup)="searchDemandList()" name="searchDemand">
+                <button mat-button *ngIf="searchDemand" matSuffix mat-icon-button aria-label="Clear" (click)="clear()">
+                  <svg fill="#757575" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                      d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                    <path d="M0 0h24v24H0z" fill="none"/>
+                  </svg>
+                </button>
+              </mat-form-field>
+            </div>
+            <div class="demand-list-not-assigned">
+              <!--<div *ngFor="let demand of demandListNotAssigned">-->
+              <!--<mat-form-field>-->
+              <!--<input matInput value="{{demand?.title}}" disabled>-->
+              <!--</mat-form-field>-->
+              <!--<button mat-icon-button (click)="addDemandToTask(demand)">+</button>-->
+              <!--</div>-->
+
+              <mat-accordion>
+                <div *ngFor="let demand of demandListNotAssigned" class="">
+                  <mat-expansion-panel>
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>
+                        {{demand?.title}}
+                      </mat-panel-title>
+                      <button mat-icon-button (click)="addDemandToTask(demand)" class="add-demand">
+                        <span matTooltip="添加需求到活动中">+</span></button>
+                    </mat-expansion-panel-header>
+
+                    <mat-form-field>
+                      <input matInput placeholder="需求名称" [value]="demand?.title" readonly>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <input matInput placeholder="需求描述" [value]="demand?.detail" readonly>
+                    </mat-form-field>
+
+                    <mat-form-field>
+                      <input matInput placeholder="需求优先级" [value]="demand?.level" readonly>
+                    </mat-form-field>
+                  </mat-expansion-panel>
+                </div>
+              </mat-accordion>
+            </div>
+          </div>
+
+          <div class="detail-footer">
+            <button mat-button (click)="cancel()">取消</button>
+            <button mat-button type="submit" [disabled]="!taskForm?.valid">{{mode === 'new' ? '提交' : '修改'}}</button>
+          </div>
+        </form>
+      </div>
+    </mat-card>
+  </div>
+</div>
+
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+

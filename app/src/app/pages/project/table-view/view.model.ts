@@ -15,7 +15,7 @@ export const ViewModel = {
         },
         detailUrl: 'demand'
     },
-    activity: {
+    devset: {
         title: '活动',
         columns: [
             { name: '名称', prop: 'name' },

@@ -10,6 +10,7 @@ import {TestSetManageComponent} from "./test-set-manage/test-set-manage.componen
 import {BugManageComponent} from "./bug-manage/bug-manage.component";
 import {TableViewComponent} from "../table-view/table-view.component";
 import {DemandDetailComponent} from "./demand-manage/demand-detail/demand-detail.component";
+import {DevSetDetailComponent} from "./dev-set-manage/dev-set-detail/dev-set-detail.component";
 
 export const routes: Routes = [
   {
@@ -33,7 +34,7 @@ export const routes: Routes = [
           {
             path: '',
             component: TableViewComponent,
-            data:{type:'demand'}
+            data: {type: 'demand'}
           },
           {
             path: ':id',
@@ -43,13 +44,29 @@ export const routes: Routes = [
             path: 'new',
             component: DemandDetailComponent,
           },
-          {path:'', redirectTo:'', pathMatch:'full'}
+          {path: '', redirectTo: '', pathMatch: 'full'}
         ],
         data: {isShowNav: true, isShowSidebar: true}
       },
       {
         path: 'devset',
         component: DevSetManageComponent,
+        children: [
+          {
+            path: '',
+            component: TableViewComponent,
+            data: {type: 'devset'}
+          },
+          {
+            path: ':id',
+            component: DevSetDetailComponent,
+          },
+          {
+            path: 'new',
+            component: DevSetDetailComponent,
+          },
+          {path: '', redirectTo: '', pathMatch: 'full'}
+        ],
         data: {isShowNav: true, isShowSidebar: true}
       },
       {
