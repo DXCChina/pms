@@ -39,7 +39,7 @@ export const ASSOCIATION_MENU = [
         },
       },
       {
-        path: 'test',
+        path: 'testCase',
         data: {
           menu: {
             title: '测试管理',

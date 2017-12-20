@@ -8,6 +8,11 @@ import {DevSetManageComponent} from "./dev-set-manage/dev-set-manage.component";
 import {TestManageComponent} from "./test-manage/test-manage.component";
 import {TestSetManageComponent} from "./test-set-manage/test-set-manage.component";
 import {BugManageComponent} from "./bug-manage/bug-manage.component";
+import {TableViewComponent} from "../table-view/table-view.component";
+import {DemandDetailComponent} from "./demand-manage/demand-detail/demand-detail.component";
+import {DevSetDetailComponent} from "./dev-set-manage/dev-set-detail/dev-set-detail.component";
+import {TestCaseDetailComponent} from "./test-manage/test-case-detail/test-case-detail.component";
+import {BugDetailComponent} from "./bug-manage/bug-detail/bug-detail.component";
 
 export const routes: Routes = [
   {
@@ -17,37 +22,101 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         component: PmDashboardComponent,
-        data:{isShowNav:true, isShowSidebar:true}
+        data: {isShowNav: true, isShowSidebar: true}
       },
       {
         path: 'activity',
         component: PmActivityComponent,
-        data:{isShowNav:true, isShowSidebar:true}
+        data: {isShowNav: true, isShowSidebar: true}
       },
       {
         path: 'demand',
         component: DemandManageComponent,
-        data:{isShowNav:true, isShowSidebar:true}
+        children: [
+          {
+            path: '',
+            component: TableViewComponent,
+            data: {type: 'demand'}
+          },
+          {
+            path: ':id',
+            component: DemandDetailComponent,
+          },
+          {
+            path: 'new',
+            component: DemandDetailComponent,
+          },
+          {path: '', redirectTo: '', pathMatch: 'full'}
+        ],
+        data: {isShowNav: true, isShowSidebar: true}
       },
       {
         path: 'devset',
-        component:DevSetManageComponent,
-        data:{isShowNav:true, isShowSidebar:true}
+        component: DevSetManageComponent,
+        children: [
+          {
+            path: '',
+            component: TableViewComponent,
+            data: {type: 'devset'}
+          },
+          {
+            path: ':id',
+            component: DevSetDetailComponent,
+          },
+          {
+            path: 'new',
+            component: DevSetDetailComponent,
+          },
+          {path: '', redirectTo: '', pathMatch: 'full'}
+        ],
+        data: {isShowNav: true, isShowSidebar: true}
       },
       {
-        path: 'test',
-        component:TestManageComponent,
-        data:{isShowNav:true, isShowSidebar:true}
+        path: 'testCase',
+        component: TestManageComponent,
+        children: [
+          {
+            path: '',
+            component: TableViewComponent,
+            data: {type: 'testCase'}
+          },
+          {
+            path: ':id',
+            component: TestCaseDetailComponent,
+          },
+          {
+            path: 'new',
+            component: TestCaseDetailComponent,
+          },
+          {path: '', redirectTo: '', pathMatch: 'full'}
+        ],
+        data: {isShowNav: true, isShowSidebar: true}
       },
       {
         path: 'testset',
-        component:TestSetManageComponent,
-        data:{isShowNav:true, isShowSidebar:true}
+        component: TestSetManageComponent,
+        data: {isShowNav: true, isShowSidebar: true}
       },
       {
         path: 'bug',
-        component:BugManageComponent,
-        data:{isShowNav:true, isShowSidebar:true}
+        component: BugManageComponent,
+        children: [
+          {
+            path: '',
+            component: TableViewComponent,
+            data: {type: 'bug'}
+          },
+          {
+            path: ':id',
+            component: BugDetailComponent,
+          },
+          {
+            path: 'new',
+            component: BugDetailComponent,
+          },
+          {path: '', redirectTo: '', pathMatch: 'full'}
+        ],
+        data: {isShowNav: true, isShowSidebar: true}
       },
       {
         path: '',
