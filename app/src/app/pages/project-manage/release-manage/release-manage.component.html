@@ -19,18 +19,18 @@
 
         </mat-expansion-panel-header>
 
-       <div class="create-release-wrap">
+       <div class="create-release-wrap" [formGroup]="form">
           <mat-form-field class="create-release-item">
-            <input matInput placeholder="Title">
+            <input matInput formControlName="title" [(ngModel)]="title" placeholder="名称">
           </mat-form-field>
 
           <mat-form-field class="create-release-item">
-            <textarea matInput placeholder="Description"></textarea>
+            <textarea matInput formControlName="content" [(ngModel)]="content" placeholder="描述"></textarea>
           </mat-form-field>
         </div>
 
         <mat-action-row>
-          <button mat-button color="primary" (click)="isExpanded = !isExpanded">创建</button>
+          <button mat-button color="primary" [disabled]="!form.valid" (click)="create(form.value)">创建</button>
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
@@ -38,7 +38,7 @@
 
   <mat-card class="release-card">
     <horizontal-timeline
-      [timelineElements]="timeline"
+      [timelineElements]="timeLine"
       [showContent]="true"
       (selected)="goToDashboard($event)">
 
