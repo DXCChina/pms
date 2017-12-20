@@ -139,9 +139,11 @@ class User(UserBase):
 class Release(MySQLModel):
     '''版本'''
     id = db_autoId()
-    name = db_char()
-    detail = TextField(null=True)
+    caption = db_char()
+    title = db_char()
+    content = TextField(null=True)
     projectId = db_id()
+    date = db_autoDate()
 
     class Meta:
         db_table = 'release'

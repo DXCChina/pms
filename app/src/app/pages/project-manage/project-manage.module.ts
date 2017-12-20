@@ -6,7 +6,7 @@ import {ReleaseManageComponent} from "./release-manage/release-manage.component"
 import { ProjectViewComponent } from './project-view/project-view.component';
 import {
   MatChipsModule, MatCardModule, MatSelectModule, MatDatepickerModule, MatButtonModule,
-  MatFormFieldModule, MatInputModule, MatNativeDateModule
+  MatFormFieldModule, MatInputModule, MatNativeDateModule, MatExpansionModule, MatIconModule
 } from "@angular/material";
 import {ReactiveFormsModule, FormsModule} from "@angular/forms";
 import {NgaModule} from "../../theme/nga.module";
@@ -25,6 +25,8 @@ import {NgaModule} from "../../theme/nga.module";
     MatInputModule,
     MatNativeDateModule,
     MatFormFieldModule,
+    MatExpansionModule,
+    MatIconModule
   ],
   declarations: [
     ProjectManageComponent,
