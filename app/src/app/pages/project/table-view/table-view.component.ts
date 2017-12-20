@@ -19,6 +19,8 @@ export class TableViewComponent {
 
   viewType;
 
+  role;
+
   rows = [];
 
   temp = [];
@@ -33,9 +35,11 @@ export class TableViewComponent {
 
     this.releaseId = sessionStorage.getItem('releaseId');
 
+    this.role = sessionStorage.getItem('userRoleInProject');
+
     this.route.params.subscribe((param) => this.viewType = param['type']);
 
-    if (!this.releaseId && !this.viewType) {
+    if (!this.releaseId || !this.role || !this.viewType || !this.viewModel[this.viewType]) {
       this.router.navigate(['/pages/release']);
     } else {
       this.columns = this.viewModel[this.viewType].columns;
@@ -48,6 +52,10 @@ export class TableViewComponent {
     this.service
       .getViewData(this.releaseId, this.viewModel[this.viewType].detailUrl)
       .then(res => {
+        if (res.message) {
+          this.router.navigate(['/pages/release']);
+        }
+
         res.map(date => {
           date.name = date.title ? date.title : date.name;
         });

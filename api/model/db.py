@@ -236,16 +236,17 @@ class TestSet(MySQLModel):
     detail = TextField(null=True)
     projectId = db_id()
     releaseId = db_id()
+    memberId = ForeignKeyField(User, related_name='testSet')
 
     class Meta:
         db_table = 'test_set'
 
 
-class TestSetMember(MySQLModel):
-    '''测试集成员关系'''
-    id = db_autoId()
-    testSetId = ForeignKeyField(TestSet, related_name='member')
-    memberId = ForeignKeyField(User, related_name='testSet')
+# class TestSetMember(MySQLModel):
+#     '''测试集成员关系'''
+#     id = db_autoId()
+#     testSetId = ForeignKeyField(TestSet, related_name='member')
+#     memberId = ForeignKeyField(User, related_name='testSet')
 
 
 class TestCase(MySQLModel):
