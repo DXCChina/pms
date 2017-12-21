@@ -139,9 +139,11 @@ class User(UserBase):
 class Release(MySQLModel):
     '''版本'''
     id = db_autoId()
-    name = db_char()
-    detail = TextField(null=True)
+    caption = db_char()
+    title = db_char()
+    content = TextField(null=True)
     projectId = db_id()
+    date = db_autoDate()
 
     class Meta:
         db_table = 'release'
@@ -236,16 +238,17 @@ class TestSet(MySQLModel):
     detail = TextField(null=True)
     projectId = db_id()
     releaseId = db_id()
+    memberId = ForeignKeyField(User, related_name='testSet')
 
     class Meta:
         db_table = 'test_set'
 
 
-class TestSetMember(MySQLModel):
-    '''测试集成员关系'''
-    id = db_autoId()
-    testSetId = ForeignKeyField(TestSet, related_name='member')
-    memberId = ForeignKeyField(User, related_name='testSet')
+# class TestSetMember(MySQLModel):
+#     '''测试集成员关系'''
+#     id = db_autoId()
+#     testSetId = ForeignKeyField(TestSet, related_name='member')
+#     memberId = ForeignKeyField(User, related_name='testSet')
 
 
 class TestCase(MySQLModel):

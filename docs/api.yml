@@ -143,6 +143,11 @@ paths:
     get:
       summary: 获取项目Release
       operationId: controller.release.release_list
+      parameters:
+        - name: projectId
+          in: query
+          required: true
+          type: integer
       responses:
         200:
           description: ok
