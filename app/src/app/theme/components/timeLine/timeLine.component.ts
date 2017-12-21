@@ -1,4 +1,4 @@
-import {Component} from "@angular/core";
+import {Component, EventEmitter, Input, Output} from "@angular/core";
 
 @Component({
   selector: 'time-line',
@@ -6,5 +6,14 @@ import {Component} from "@angular/core";
   styleUrls: ['timeLine.component.scss']
 })
 export class TimeLineComponent {
+  @Input() timeLine: any[];
+  @Output() select: EventEmitter<any> = new EventEmitter<any>();
 
+  constructor() {
+    this.timeLine = [];
+  }
+
+  checked(item: any) {
+    this.select.emit(item);
+  }
 }

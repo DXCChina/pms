@@ -1,27 +1,13 @@
 <div class="time-line-wrap">
-  <div class="time-line-item">
+  <div class="time-line-item" *ngFor="let item of timeLine">
     <div class="line-item-date">
-      <h3>Dec 14th, 2017</h3>
+      <h3>{{item.date | date:format}}</h3>
     </div>
     <div class="line-item-content">
       <div class="item-content-wrap">
-        <h3>Title</h3>
+        <h3 (click)="checked(item)">{{item.title}}</h3>
         <ul>
-          <li>1sdddddddddd</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-    <div class="time-line-item">
-    <div class="line-item-date">
-      <h3>Dec 14th, 2017</h3>
-    </div>
-    <div class="line-item-content">
-      <div class="item-content-wrap">
-        <h3>Title</h3>
-        <ul>
-          <li>1sdddddddddd</li>
+          <li *ngFor="let content of item.content.split('\n')">{{content}}</li>
         </ul>
       </div>
     </div>

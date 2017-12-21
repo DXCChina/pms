@@ -9,7 +9,6 @@ def release_list():
     '''获取项目Release'''
     result = Release.select(
         Release.title,
-        Release.caption,
         Release.content,
         Release.date
     ).where(Release.projectId == request.args['projectId'])
@@ -27,10 +26,8 @@ def release_add():
         Release.create(
             title=request.json['title'],
             content=request.json['content'],
-            caption=request.json['caption'],
             projectId=request.json['projectId']
         )
         search = Release.select().where(Release.title == request.json['title'])
-        print(list(search.dicts()))
         result = {'message': 'ok', 'data': list(search.dicts())}
     return result

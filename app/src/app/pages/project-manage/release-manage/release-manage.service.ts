@@ -11,9 +11,9 @@ export class ReleaseManageService {
     this.getReleaseListUrl = '/api/release';
   }
 
-  createRelease(title: string, content: string, caption: any): Promise<any> {
+  createRelease(title: string, content: string): Promise<any> {
     const projectId = sessionStorage.getItem('projectId');
-    const body = {title, content, caption, projectId};
+    const body = {title, content, projectId};
     return this.http.post(this.createReleaseUrl, body)
       .toPromise()
       .then(this.Global.extractData)

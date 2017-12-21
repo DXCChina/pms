@@ -37,13 +37,11 @@
   </div>
 
   <mat-card class="release-card">
-    <time-line></time-line>
-    <!--<horizontal-timeline-->
-      <!--[timelineElements]="timeLine"-->
-      <!--[showContent]="true"-->
-      <!--(selected)="goToDashboard($event)">-->
+    <time-line
+      [timeLine]="timeLine"
+      (select)="goToDashboard($event)">
 
-    <!--</horizontal-timeline>-->
+    </time-line>
   </mat-card>
 
 </div>
