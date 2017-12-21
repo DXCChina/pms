@@ -29,6 +29,22 @@ def release_add():
     return result
 
 @fresh_jwt_required
+def release_put():
+    '''更新Release'''
+    print(request.json)
+    confirm = Release.select().where(Release.title == request.json['title'])
+    if len(list(confirm.dicts())) > 0:
+        result = {'message': '名称重复', 'data': []}
+    else:
+        Release.update(
+            title=request.json['title'],
+            content=request.json['content'],
+        ).where(Release.id == request.json['id']).execute()
+        search = Release.select().where(Release.title == request.json['id'])
+        result = {'message': 'ok', 'data': list(search.dicts())}
+    return result
+
+@fresh_jwt_required
 def release_delete(release_id):
     '''删除Release'''
 

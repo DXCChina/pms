@@ -157,6 +157,12 @@ paths:
       responses:
         200:
           description: ok
+    put:
+      summary: 修改Release
+      operationId: controller.release.release_put
+      responses:
+        200:
+          description: ok
 
   /release/{release_id}:
     delete:

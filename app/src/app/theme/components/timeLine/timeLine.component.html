@@ -12,8 +12,8 @@
             <button mat-icon-button [matMenuTriggerFor]="menu">
               <mat-icon>more_vert</mat-icon>
             </button>
-            <mat-menu #menu="matMenu" (click)="edited(item)">
-              <button mat-menu-item>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="edited(item)">
                 <mat-icon>
                   <img class="icon-img" src="../../../../assets/img/ic_mode_edit_black_24px.svg" alt="">
                 </mat-icon>

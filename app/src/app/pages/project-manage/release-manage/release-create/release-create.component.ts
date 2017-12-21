@@ -14,8 +14,8 @@ export class ReleaseCreateComponent {
   title: string;
   constructor(private service: ReleaseManageService, public dialogRef: MatDialogRef<ReleaseCreateComponent> ,
               @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.content = '';
-    this.title = '';
+    this.title = data? data.title : '';
+    this.content = data? data.content : '';
     this.form = new FormGroup({
          title: new FormControl('', [Validators.required]),
          content: new FormControl('', [Validators.required])
@@ -23,15 +23,25 @@ export class ReleaseCreateComponent {
   }
 
   onSubmit(form: any) {
-     this.service.createRelease(form.title, form.content)
-      .then(res => {
-        if (res.message === 'ok') {
-          this.dialogRef.close(true)
-        }
-      }, err => console.log(err));
+    if (this.data) {
+       this.service.updateRelease(form.title, form.content, this.data.id)
+        .then(res => {
+          if (res.message === 'ok') {
+            this.dialogRef.close(true)
+          }
+        }, err => console.log(err))
+    } else {
+       this.service.createRelease(form.title, form.content)
+        .then(res => {
+          if (res.message === 'ok') {
+            this.dialogRef.close(true)
+          }
+        }, err => console.log(err));
+    }
   }
 
   closeDialog() {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
+    return false;
   }
 }

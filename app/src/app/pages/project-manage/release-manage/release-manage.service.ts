@@ -6,10 +6,12 @@ import {GlobalState} from "../../../global.state";
 export class ReleaseManageService {
   createReleaseUrl: string;
   getReleaseListUrl: string;
+  updateReleaseUrl: string;
   deleteReleaseUrl: string;
   constructor(private http: Http, private Global: GlobalState) {
     this.createReleaseUrl = '/api/release';
     this.getReleaseListUrl = '/api/release';
+    this.updateReleaseUrl = '/api/release';
     this.deleteReleaseUrl = '/api/release/';
   }
 
@@ -25,6 +27,14 @@ export class ReleaseManageService {
   getReleaseList(): Promise<any> {
     const params = {'projectId': sessionStorage.getItem('projectId')};
     return this.http.get(this.getReleaseListUrl, {params})
+      .toPromise()
+      .then(this.Global.extractData)
+      .catch(this.Global.handleError);
+  }
+
+  updateRelease(title: string, content: string, id: number): Promise<any> {
+    const body = {title, content, id};
+    return this.http.put(this.updateReleaseUrl, body)
       .toPromise()
       .then(this.Global.extractData)
       .catch(this.Global.handleError);

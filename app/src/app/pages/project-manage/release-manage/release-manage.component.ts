@@ -37,9 +37,27 @@ export class ReleaseManageComponent implements OnInit {
       .then(res => {
         if (res.message === 'ok') {
           this.getReleaseList();
-          console.log('Delete Successful!')
+          console.log('Delete Successful!');
         }
       }, err => console.log(err))
+  }
+
+  updateDialog(item: any) {
+    let dialog = this.dialogRef.open(ReleaseCreateComponent, {
+      height: '320px',
+      width: '600px',
+      data: {
+        title: item.title,
+        content: item.content,
+        id: item.id
+      }
+    });
+
+    dialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.getReleaseList()
+      }
+    });
   }
 
   openDialog() {

@@ -18,6 +18,7 @@
     <time-line
       [timeLine]="timeLine"
       (select)="goToDashboard($event)"
+      (edit)="updateDialog($event)"
       (delete)="deleteDialog($event)">
 
     </time-line>
