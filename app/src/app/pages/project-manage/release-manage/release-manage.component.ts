@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ReleaseManageService} from "./release-manage.service";
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-release-manage',
@@ -46,6 +45,7 @@ export class ReleaseManageComponent implements OnInit {
         if (res.message === 'ok') {
           this.title = '';
           this.content = '';
+          this.getReleaseList();
         }
       }, err => console.log(err));
   }
