@@ -25,21 +25,21 @@
           <form action="" [formGroup]="demandForm" (ngSubmit)="onSubmit(demandForm)">
             <div class="demand-detail-content">
               <mat-form-field>
-                <input matInput placeholder="需求名称" [formControl]="title" [(ngModel)]="demandInfo.title" name="title">
+                <input matInput placeholder="需求名称" [formControl]="title" [(ngModel)]="demandInfo.title" name="title" [readonly]="!isOperate">
                 <mat-error >{{formErrors.title}}</mat-error>
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="需求描述" [formControl]="detail" [(ngModel)]="demandInfo.detail" name="detail">
+                <textarea matInput placeholder="需求描述" [formControl]="detail" [(ngModel)]="demandInfo.detail" name="detail" [readonly]="!isOperate">
+                </textarea>
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="任务指定(创建需求时不可指定任务)" [formControl]="assignTask" readonly>
-                <input matInput *ngIf="mode=='update'" placeholder="任务指定(编辑需求时不可指定任务)" [formControl]="assignTask" [(ngModel)]="demandInfo.activityTittle" name="activityTittle" readonly>
+                <input matInput  placeholder="任务指定(编辑需求时不可指定任务)" [formControl]="assignTask" [(ngModel)]="demandInfo.activityTittle" name="activityTittle" readonly>
               </mat-form-field>
 
               <mat-form-field>
-                <mat-select placeholder="优先级" [formControl]="level" [(ngModel)]="demandInfo.level" name="level">
+                <mat-select placeholder="优先级" [formControl]="level" [(ngModel)]="demandInfo.level" name="level" [disabled]="!isOperate">
                   <mat-option value="low">低</mat-option>
                   <mat-option value="normal" aria-selected="true">中</mat-option>
                   <mat-option value="high">高</mat-option>
@@ -52,9 +52,13 @@
               </mat-form-field>
             </div>
 
-            <div class="detail-footer">
+            <div class="detail-footer" *ngIf="isOperate">
               <button mat-button (click)="cancel()">取消</button>
               <button mat-button type="submit" [disabled]="!demandForm?.valid">{{mode == 'new' ?  '提交' : '修改'}}</button>
+            </div>
+
+            <div class="detail-footer" *ngIf="!isOperate">
+              <button mat-button (click)="cancel()">返回</button>
             </div>
           </form>
         </div>

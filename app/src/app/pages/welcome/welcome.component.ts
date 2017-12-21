@@ -83,7 +83,6 @@ export class WelcomeComponent implements OnInit {
     //     sessionStorage.setItem("userRoleInProject", this.userRoleInProject);
     //   });
     this.userRoleInProject = project.role;
-    console.log("this.userRoleInProject", this.userRoleInProject);
     this.router.navigate([`/pages/${this.userRoleInProject}/release`]);
     sessionStorage.setItem("userRoleInProject", project.role);
     sessionStorage.setItem("projectId", projectId);
