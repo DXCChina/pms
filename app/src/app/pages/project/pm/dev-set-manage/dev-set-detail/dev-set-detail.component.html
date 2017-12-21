@@ -8,7 +8,7 @@
           <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
         </svg>
       </a>
-      <div mat-card-avatar [style.background]="'#c7b7dd'">{{taskInfo.title|name2avatar}}</div>
+      <!--<div mat-card-avatar [style.background]="'#c7b7dd'">{{taskInfo.title|name2avatar}}</div>-->
       <div class="header-text">
         <div class="detail-name">{{taskInfo.title ? taskInfo.title : "新建活動"}}</div>
         <div>{{taskInfo.detail ? taskInfo.detail : "活動描述"}}</div>
@@ -19,19 +19,19 @@
         <form [formGroup]="taskForm" (ngSubmit)="onSubmit(taskForm)">
           <div class="mat-container">
             <mat-form-field>
-              <input matInput placeholder="名称" [formControl]="title" [(ngModel)]="taskInfo.title">
+              <input matInput placeholder="名称" [formControl]="title" [(ngModel)]="taskInfo.title" [readonly]="!isOperate">
               <mat-error >{{formErrors.title}}</mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput placeholder="描述" [formControl]="detail" [(ngModel)]="taskInfo.detail">
+              <input matInput placeholder="描述" [formControl]="detail" [(ngModel)]="taskInfo.detail" [readonly]="!isOperate">
             </mat-form-field>
 
             <div class="row">
               <div class="col-4">
                 <mat-form-field>
-                  <input matInput [formControl]="startDate" [matDatepicker]="startPicker" placeholder="预计开始" [(ngModel)]="taskInfo.startDate">
-                  <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                  <input matInput [formControl]="startDate" [matDatepicker]="startPicker" placeholder="预计开始" [(ngModel)]="taskInfo.startDate" [readonly]="!isOperate">
+                  <mat-datepicker-toggle matSuffix [for]="startPicker" [disabled]="!isOperate"></mat-datepicker-toggle>
                   <mat-datepicker #startPicker></mat-datepicker>
                   <mat-error >{{formErrors.startDate}}</mat-error>
                 </mat-form-field>
@@ -39,8 +39,8 @@
 
               <div class="col-4">
                 <mat-form-field>
-                  <input matInput [formControl]="endDate" [matDatepicker]="endPicker" placeholder="截止日期" [(ngModel)]="taskInfo.endDate">
-                  <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                  <input matInput [formControl]="endDate" [matDatepicker]="endPicker" placeholder="截止日期" [(ngModel)]="taskInfo.endDate" [readonly]="!isOperate">
+                  <mat-datepicker-toggle matSuffix [for]="endPicker" [disabled]="!isOperate"></mat-datepicker-toggle>
                   <mat-datepicker #endPicker></mat-datepicker>
                   <mat-error >{{formErrors.endDate}}</mat-error>
                 </mat-form-field>
@@ -48,7 +48,7 @@
 
               <div class="col-4" style="width:30%">
                 <mat-form-field>
-                  <input matInput placeholder="花费时间" [formControl]="cost" [(ngModel)]="taskInfo.cost">
+                  <input matInput placeholder="花费时间" [formControl]="cost" [(ngModel)]="taskInfo.cost" [readonly]="!isOperate">
                 </mat-form-field>
               </div>
             </div>
@@ -82,7 +82,7 @@
                   <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="participant">
                       <div *ngIf="!selectUserList || selectUserList?.length === 0">未指定人员</div>
-                      <chip-list [chipList]="selectUserList" (removeChip)="removeUser($event)"></chip-list>
+                      <chip-list [chipList]="selectUserList" [mode]="role" (removeChip)="removeUser($event)"></chip-list>
                     </div>
                   </div>
                 </div>
@@ -100,11 +100,11 @@
             </div>
             <div class="demand-in-task">
               <div *ngFor="let demand of demandListInTask">
-                <mat-checkbox (change)="toggleDemandStatus(demand, $event)" [checked]="demand?.status" disabled></mat-checkbox>
+                <mat-checkbox (change)="toggleDemandStatus(demand, $event)" [checked]="demand?.status" [disabled]="isOperate"></mat-checkbox>
                 <mat-form-field>
                   <input matInput value="{{demand?.title}}">
                 </mat-form-field>
-                <button class="delete-icon" mat-icon-button (click)="deleteDemandInTask(demand)">
+                <button class="delete-icon" mat-icon-button (click)="deleteDemandInTask(demand)" *ngIf="isOperate">
                   <svg fill="#000000" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                     <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
                     <path d="M0 0h24v24H0z" fill="none"/>
@@ -116,7 +116,7 @@
 
           <hr>
 
-          <div>
+          <div *ngIf="isOperate">
             <span>未指派的需求</span>
             <div class="demand-search">
               <mat-form-field>

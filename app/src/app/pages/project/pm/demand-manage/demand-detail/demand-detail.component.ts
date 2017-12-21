@@ -20,6 +20,7 @@ export class DemandDetailComponent implements OnInit {
   level: AbstractControl;
   createAt: AbstractControl;
   demandForm: FormGroup;
+  isOperate:boolean = false;
 
   formErrors = {
     'title': '',
@@ -61,6 +62,8 @@ export class DemandDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isOperate = sessionStorage.getItem('userRoleInProject') == 'pm';
+
     if (this.mode != 'new') {
       this.route.params.subscribe(param => {
         if (param['id']) {

@@ -72,6 +72,7 @@ export class TestCaseDetailComponent implements OnInit {
     if (this.mode != 'new') {
       this.route.params.subscribe(param => {
         if (param['id']) {
+          this.caseId = param['id'];
           this.reviewDetail(param['id']);
         }
       });
@@ -83,6 +84,7 @@ export class TestCaseDetailComponent implements OnInit {
       .then(res => {
         console.log("case:", res);
         this.testCaseInfo = res.data;
+        this.testCaseParams['demandId'] = res.data.demandId;
       })
   }
 

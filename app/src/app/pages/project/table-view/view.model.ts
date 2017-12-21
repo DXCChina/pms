@@ -16,7 +16,7 @@ export const ViewModel = {
         },
         url: 'demand'
     },
-    decSet: {
+    devSet: {
         title: '活动',
         normalCol: ['名称', '状态', '预计花费（小时）'],
         columns: [

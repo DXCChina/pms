@@ -21,44 +21,49 @@
       <!--<div mat-card-avatar [style.background]="'#8847dc'">{{"需求name"| name2avatar}}</div>-->
       <!--</mat-card-header>-->
       <div class="dialog-content">
-        <form action="">
+        <form action="" [formGroup]="testResultForm" (ngSubmit)="onSubmit(testResultForm)">
           <div class="detail-content">
             <mat-form-field>
-              <input matInput placeholder="测试结果名称" [(ngModel)]="testResultInfo.name" name="name" readonly>
+              <input matInput placeholder="测试结果名称" [formControl]="name" [(ngModel)]="testResultInfo.name" name="name">
+              <mat-error>{{formErrors.name}}</mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput placeholder="测试结果描述" [(ngModel)]="testResultInfo.detail" name="detail" readonly>
+              <input matInput placeholder="测试结果描述" [formControl]="detail" [(ngModel)]="testResultInfo.detail" name="detail">
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput placeholder="测试案例" [(ngModel)]="testResultInfo.caseName" name="caseName" readonly>
+              <input type='number' matInput *ngIf="mode=='new'" placeholder="测试案例" [formControl]="caseId">
+              <input matInput *ngIf="mode!='new'" placeholder="测试案例" [formControl]="caseId" [(ngModel)]="testResultInfo.caseId" name="caseId" readonly>
+              <mat-error>{{formErrors.caseId}}</mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <input matInput placeholder="实际输出结果" [(ngModel)]="testResultInfo.output" name="output" readonly>
+              <input matInput placeholder="案例输出结果" [formControl]="output" [(ngModel)]="testResultInfo.output" name="output">
+              <mat-error>{{formErrors.output}}</mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <mat-select placeholder="测试结果状态" [(ngModel)]="testResultInfo.status" name="status"  [disabled]="true">
-                <mat-option value="tofix">待修复</mat-option>
+              <mat-select placeholder="测试结果状态" [formControl]="status" [(ngModel)]="testResultInfo.status" name="status">
+                <mat-option value="tofix" aria-selected="true">待修复</mat-option>
                 <mat-option value="tocheck">待审核</mat-option>
                 <mat-option value="close">通过测试</mat-option>
               </mat-select>
+              <mat-error>{{formErrors.status}}</mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <mat-select placeholder="优先级" [(ngModel)]="testResultInfo.level" name="level"  [disabled]="true">
+              <mat-select placeholder="优先级" [formControl]="level" [(ngModel)]="testResultInfo.level" name="level">
                 <mat-option value="low">低</mat-option>
-                <mat-option value="normal">中</mat-option>
+                <mat-option value="normal" aria-selected="true">中</mat-option>
                 <mat-option value="high">高</mat-option>
               </mat-select>
             </mat-form-field>
 
             <mat-form-field *ngIf="testResultInfo.status!=='close'">
-              <mat-select placeholder="严重程度" [(ngModel)]="testResultInfo.priority" name="priority"  [disabled]="true">
+              <mat-select placeholder="严重程度" [formControl]="priority" [(ngModel)]="testResultInfo.priority" name="priority">
                 <mat-option value="low">低</mat-option>
-                <mat-option value="normal">中</mat-option>
+                <mat-option value="normal" aria-selected="true">中</mat-option>
                 <mat-option value="high">高</mat-option>
               </mat-select>
             </mat-form-field>
@@ -66,6 +71,7 @@
 
           <div class="detail-footer">
             <button mat-button (click)="cancel()">关闭</button>
+            <button mat-button type="submit" [disabled]="!testResultForm?.valid">{{'mode'=='new'?'新建':'提交'}}</button>
           </div>
         </form>
       </div>

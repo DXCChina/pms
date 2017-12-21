@@ -1,6 +1,6 @@
 export const ASSOCIATION_MENU = [
   {
-    path: 'pm',
+    path: '',
     children: [
       {
         path: 'dashboard',
