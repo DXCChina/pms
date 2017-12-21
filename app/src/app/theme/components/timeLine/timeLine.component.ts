@@ -8,12 +8,22 @@ import {Component, EventEmitter, Input, Output} from "@angular/core";
 export class TimeLineComponent {
   @Input() timeLine: any[];
   @Output() select: EventEmitter<any> = new EventEmitter<any>();
+  @Output() edit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() delete: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() {
     this.timeLine = [];
   }
 
-  checked(item: any) {
+  selected(item: any) {
     this.select.emit(item);
+  }
+
+  edited(item: any) {
+    this.edit.emit(item);
+  }
+
+  deleted(item: any) {
+    this.delete.emit(item);
   }
 }

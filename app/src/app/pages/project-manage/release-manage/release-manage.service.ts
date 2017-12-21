@@ -6,9 +6,11 @@ import {GlobalState} from "../../../global.state";
 export class ReleaseManageService {
   createReleaseUrl: string;
   getReleaseListUrl: string;
+  deleteReleaseUrl: string;
   constructor(private http: Http, private Global: GlobalState) {
     this.createReleaseUrl = '/api/release';
     this.getReleaseListUrl = '/api/release';
+    this.deleteReleaseUrl = '/api/release/';
   }
 
   createRelease(title: string, content: string): Promise<any> {
@@ -26,5 +28,13 @@ export class ReleaseManageService {
       .toPromise()
       .then(this.Global.extractData)
       .catch(this.Global.handleError);
+  }
+
+  deleteRelease(id: number): Promise<any> {
+    const url = this.deleteReleaseUrl + id;
+    return this.http.delete(url)
+      .toPromise()
+      .then(this.Global.extractData)
+      .catch(this.Global.handleError)
   }
 }

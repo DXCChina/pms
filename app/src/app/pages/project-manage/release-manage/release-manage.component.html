@@ -17,7 +17,8 @@
   <div class="release-card">
     <time-line
       [timeLine]="timeLine"
-      (select)="goToDashboard($event)">
+      (select)="goToDashboard($event)"
+      (delete)="deleteDialog($event)">
 
     </time-line>
   </div>

@@ -3,6 +3,7 @@ import {Router} from "@angular/router";
 import {ReleaseManageService} from "./release-manage.service";
 import {MatDialog} from "@angular/material";
 import {ReleaseCreateComponent} from "./release-create/release-create.component";
+import {CommonDeleteDialog} from "../../../theme/components/deleteDialog/deleteDialog.component";
 
 @Component({
   selector: 'app-release-manage',
@@ -12,6 +13,7 @@ import {ReleaseCreateComponent} from "./release-create/release-create.component"
 export class ReleaseManageComponent implements OnInit {
 
   timeLine: any[];
+  release: any;
   constructor(private router: Router, private service: ReleaseManageService, private dialogRef: MatDialog) {
     this.timeLine = [];
 
@@ -30,8 +32,14 @@ export class ReleaseManageComponent implements OnInit {
       }, err => console.log(err));
   }
 
-  create(form: any) {
-
+  deleteRelease(release: any) {
+    this.service.deleteRelease(release.id)
+      .then(res => {
+        if (res.message === 'ok') {
+          this.getReleaseList();
+          console.log('Delete Successful!')
+        }
+      }, err => console.log(err))
   }
 
   openDialog() {
@@ -43,6 +51,21 @@ export class ReleaseManageComponent implements OnInit {
     dialog.afterClosed().subscribe(result => {
       if (result) {
         this.getReleaseList();
+      }
+    });
+  }
+
+  deleteDialog(item: any) {
+    console.log(item);
+     let dialog = this.dialogRef.open(CommonDeleteDialog, {
+       height: '220px',
+        width: '400px',
+        data: 'Release'
+    });
+
+    dialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.deleteRelease(item);
       }
     });
   }
