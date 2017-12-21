@@ -1,0 +1,20 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+  <div class="common-dialog-warp">
+    <div class="common-dialog-title">
+      <h3>New Release</h3>
+    </div>
+    <div class="common-dialog-content">
+      <mat-form-field class="create-release-item">
+        <input matInput formControlName="title" [(ngModel)]="title" placeholder="名称" autocomplete="false">
+      </mat-form-field>
+
+      <mat-form-field class="create-release-item">
+        <textarea matInput formControlName="content" [(ngModel)]="content" placeholder="描述" autocomplete="false"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="common-dialog-action">
+      <button mat-button (click)="closeDialog()">取消</button>
+      <button mat-button type="submit" [disabled]="!form.valid">确定</button>
+    </div>
+  </div>
+</form>

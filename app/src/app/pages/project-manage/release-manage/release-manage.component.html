@@ -2,44 +2,11 @@
 
   <div class="release-card-title">
     <h1>Release Timeline</h1>
-    <!--<mat-accordion>-->
-      <!--<mat-expansion-panel hideToggle="true" [expanded]="isExpanded">-->
-        <!--<mat-expansion-panel-header (click)="setExpanded()">-->
-          <!--<mat-panel-title style="font-weight: 600; line-height: 24px">-->
-            <!--Release Timeline-->
-          <!--</mat-panel-title>-->
-          <!--<mat-panel-description>-->
-
-          <!--</mat-panel-description>-->
-          <!--<mat-icon>-->
-            <!--<svg fill="#757575" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">-->
-              <!--<path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>-->
-              <!--<path d="M0 0h24v24H0z" fill="none"/>-->
-            <!--</svg>-->
-          <!--</mat-icon>-->
-
-        <!--</mat-expansion-panel-header>-->
-
-       <!--<div class="create-release-wrap" [formGroup]="form">-->
-          <!--<mat-form-field class="create-release-item">-->
-            <!--<input matInput formControlName="title" [(ngModel)]="title" placeholder="名称">-->
-          <!--</mat-form-field>-->
-
-          <!--<mat-form-field class="create-release-item">-->
-            <!--<textarea matInput formControlName="content" [(ngModel)]="content" placeholder="描述"></textarea>-->
-          <!--</mat-form-field>-->
-        <!--</div>-->
-
-        <!--<mat-action-row>-->
-          <!--<button mat-button color="primary" [disabled]="!form.valid" (click)="create(form.value)">创建</button>-->
-        <!--</mat-action-row>-->
-      <!--</mat-expansion-panel>-->
-    <!--</mat-accordion>-->
   </div>
 
   <div class="release-content">
-    <h3>{{timeLine[0]?.date | date:format}} --- {{timeLine[timeLine.length-1]?.date | date:format}}</h3>
-    <button mat-raised-button>
+    <h3>{{timeLine[timeLine.length-1]?.date | date:format}} --- {{timeLine[0]?.date | date:format}} </h3>
+    <button mat-raised-button (click)="openDialog()">
       <svg fill="#757575" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
         <path d="M0 0h24v24H0z" fill="none"/>

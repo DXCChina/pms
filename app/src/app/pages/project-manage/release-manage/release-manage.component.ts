@@ -1,29 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {ReleaseManageService} from "./release-manage.service";
+import {MatDialog} from "@angular/material";
+import {ReleaseCreateComponent} from "./release-create/release-create.component";
 
 @Component({
   selector: 'app-release-manage',
   templateUrl: './release-manage.component.html',
-  styleUrls: ['./release-manage.component.css'],
-  providers: [ReleaseManageService]
+  styleUrls: ['./release-manage.component.css']
 })
 export class ReleaseManageComponent implements OnInit {
 
-  form: FormGroup;
   timeLine: any[];
-  content: string;
-  title: string;
-  constructor(private router: Router, private service: ReleaseManageService) {
-
-    this.content = '';
-    this.title = '';
+  constructor(private router: Router, private service: ReleaseManageService, private dialogRef: MatDialog) {
     this.timeLine = [];
-    this.form = new FormGroup({
-      title: new FormControl('', [Validators.required]),
-      content: new FormControl('', [Validators.required])
-    });
+
   }
 
   ngOnInit() {
@@ -40,14 +31,20 @@ export class ReleaseManageComponent implements OnInit {
   }
 
   create(form: any) {
-    this.service.createRelease(form.title, form.content) //, moment().format("MMM DD")
-      .then(res => {
-        if (res.message === 'ok') {
-          this.title = '';
-          this.content = '';
-          this.getReleaseList();
-        }
-      }, err => console.log(err));
+
+  }
+
+  openDialog() {
+    let dialog = this.dialogRef.open(ReleaseCreateComponent, {
+      height: '320px',
+      width: '600px',
+    });
+
+    dialog.afterClosed().subscribe(result => {
+      if (result) {
+        this.getReleaseList();
+      }
+    });
   }
 
   goToDashboard(){

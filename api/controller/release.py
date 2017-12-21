@@ -11,7 +11,7 @@ def release_list():
         Release.title,
         Release.content,
         Release.date
-    ).where(Release.projectId == request.args['projectId'])
+    ).where(Release.projectId == request.args['projectId']).order_by(Release.date.desc())
     return {'message': 'ok', 'data': list(result.dicts())}
 
 
