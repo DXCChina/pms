@@ -88,8 +88,9 @@ export class ReleaseManageComponent implements OnInit {
     });
   }
 
-  goToDashboard(){
+  goToDashboard(item: any){
     this.router.navigate([`/pages/project/${window.sessionStorage.getItem('userRoleInProject')}/dashboard`]);
+    sessionStorage.setItem('releaseId', item.id);
   }
 
 }
