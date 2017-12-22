@@ -29,8 +29,10 @@ def create_test_result(test_result):
         status=test_result['status'],
         devId=dev_id,
         level=test_result['level'],
-        priority=test_result['priority']
-    )
+        priority=test_result['priority'],
+        releaseId=test_result['releaseId'],
+        ownerId=test_result['ownerId'],
+        testSetId=test_result['testSetId'])
 
 
 def update_test_results(test_result):
@@ -41,8 +43,8 @@ def update_test_results(test_result):
         output=test_result['output'],
         status=test_result['status'],
         level=test_result['level'],
-        priority=test_result['priority']
-    ).where(TestResult.id == test_result['id']).execute()
+        priority=test_result['priority']).where(
+            TestResult.id == test_result['id']).execute()
     return test_result_detail(test_result['id'])
 
 

@@ -20,6 +20,7 @@ export class BugDetailComponent implements OnInit {
   name: AbstractControl;
   detail: AbstractControl;
   caseId: AbstractControl;
+  testSetId: AbstractControl;
   output: AbstractControl;
   status: AbstractControl;
   level: AbstractControl;
@@ -31,6 +32,7 @@ export class BugDetailComponent implements OnInit {
     'name': '',
     'detail': '',
     'caseId': '',
+    'testSetId': '',
     'output': '',
     'status': '',
     'level': '',
@@ -44,6 +46,9 @@ export class BugDetailComponent implements OnInit {
     'detail': {},
     'caseId': {
       'required': '请选择测试结果相关案例'
+    },
+    'testSetId': {
+      'required': '请选择测试结果相关测试集'
     },
     'output': {
       'required': '请输入测试结果输出'
@@ -103,6 +108,7 @@ export class BugDetailComponent implements OnInit {
       'name': [this.testResultInfo.name, Validators.compose([Validators.required])],
       'detail': [this.testResultInfo.detail, Validators.compose([])],
       'caseId': [this.testResultInfo.caseId, Validators.compose([Validators.required])],
+      'testSetId': [this.testResultInfo.testSetId, Validators.compose([Validators.required])],
       'output': [this.testResultInfo.output, Validators.compose([Validators.required])],
       'status': [this.testResultInfo.status, Validators.compose([Validators.required])],
       'level': [this.testResultInfo.level, Validators.compose([])],
@@ -112,6 +118,7 @@ export class BugDetailComponent implements OnInit {
     this.name = this.testResultForm.controls['name'];
     this.detail = this.testResultForm.controls['detail'];
     this.caseId = this.testResultForm.controls['caseId'];
+    this.testSetId = this.testResultForm.controls['testSetId'];
     this.output = this.testResultForm.controls['output'];
     this.status = this.testResultForm.controls['status'];
     this.level = this.testResultForm.controls['level'];
