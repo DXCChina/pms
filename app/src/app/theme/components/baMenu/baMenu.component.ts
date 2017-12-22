@@ -56,13 +56,15 @@ export class BaMenu {
   }
 
   public ngOnInit(): void {
-    if (this.userType === 'pm') {
-      this.menuRoutes = ASSOCIATION_MENU;
-    } else if (this.userType === 'dev') {
-      this.menuRoutes = COMPANY_MENU;
-    } else if (this.userType === 'test') {
-      this.menuRoutes = USER_MENU;
-    }
+    // if (this.userType === 'pm') {
+    //   this.menuRoutes = ASSOCIATION_MENU;
+    // } else if (this.userType === 'dev') {
+    //   this.menuRoutes = COMPANY_MENU;
+    // } else if (this.userType === 'test') {
+    //   this.menuRoutes = USER_MENU;
+    // }
+
+    this.menuRoutes = ASSOCIATION_MENU;
 
     this.menuItems = this._service.convertRoutesToMenus(this.menuRoutes);
   }
