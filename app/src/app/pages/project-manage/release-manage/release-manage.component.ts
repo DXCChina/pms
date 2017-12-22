@@ -75,7 +75,6 @@ export class ReleaseManageComponent implements OnInit {
   }
 
   deleteDialog(item: any) {
-    console.log(item);
      let dialog = this.dialogRef.open(CommonDeleteDialog, {
        height: '220px',
         width: '400px',
