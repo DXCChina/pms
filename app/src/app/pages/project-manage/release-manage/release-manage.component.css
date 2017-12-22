@@ -1,16 +1,17 @@
 .release-wrap {
   height: 100%;
   width: 100%;
-  background: #fafafa;
-  overflow: hidden;
+  /*background: #fafafa;*/
 }
 
 .release-card {
   max-width: 1200px;
-  margin: 30px auto;
+  margin: 0 auto;
+  padding-top: 20px;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-start;
+  border-top: 1px solid rgba(0, 0, 0, .12);
 }
 
 .release-card-title {
@@ -21,6 +22,21 @@
   padding: 10px 0;
   display: flex;
   flex-flow: column nowrap;
+}
+
+.release-content {
+  max-width: 1165px;
+  box-sizing: border-box;
+  margin: 10px auto;
+  padding: 10px 0;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  color: #58595b;
+}
+
+.release-content h3 {
+  margin-left: 100px;
 }
 
 button:focus {
