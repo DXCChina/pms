@@ -221,6 +221,52 @@ paths:
           description: ok
 
 # testSet
+  /testSet:
+    get:
+      summary: 查询测试结果
+      operationId: controller.testSet.search_test_set
+      parameters:
+        - name: testSetId
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+    post:
+      summary: 创建项目测试结果
+      operationId: controller.testSet.add_test_set
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: testSet
+          in: body
+          description: 测试结果初始信息
+          required: true
+          schema:
+            $ref: '#/definitions/TestSetInit'
+      responses:
+        200:
+          description: 测试结果创建成功
+    put:
+      summary: 更新项目测试结果
+      operationId: controller.testSet.update_test_set
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - name: testSet
+          in: body
+          description: 更新测试结果信息
+          required: true
+          schema:
+            $ref: '#/definitions/TestSetUpdate'
+      responses:
+        200:
+          description: 测试结果更新成功
 
 
 # case
@@ -492,6 +538,51 @@ definitions:
         type: string
     required:
     - title
+  TestSetInit:
+    type: object
+    properties:
+      name:
+        type: string
+      detail:
+        type: string
+      releaseId:
+        type: integer
+      memberId:
+        type: integer
+      testCase:
+        type: array
+        items:
+          type: integer
+    required:
+    - name
+    - detail
+    - releaseId
+    - memberId
+    - testCase
+  TestSetUpdate:
+    type: object
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+      detail:
+        type: string
+      releaseId:
+        type: integer
+      memberId:
+        type: integer
+      testCase:
+        type: array
+        items:
+          type: integer
+    required:
+    - id
+    - name
+    - detail
+    - releaseId
+    - memberId
+    - testCase
   TestResultInit:
     type: object
     properties:
