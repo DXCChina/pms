@@ -6,14 +6,18 @@ import {GlobalState} from "../../../global.state";
 export class ReleaseManageService {
   createReleaseUrl: string;
   getReleaseListUrl: string;
+  updateReleaseUrl: string;
+  deleteReleaseUrl: string;
   constructor(private http: Http, private Global: GlobalState) {
     this.createReleaseUrl = '/api/release';
     this.getReleaseListUrl = '/api/release';
+    this.updateReleaseUrl = '/api/release';
+    this.deleteReleaseUrl = '/api/release/';
   }
 
-  createRelease(title: string, content: string, caption: any): Promise<any> {
+  createRelease(title: string, content: string): Promise<any> {
     const projectId = sessionStorage.getItem('projectId');
-    const body = {title, content, caption, projectId};
+    const body = {title, content, projectId};
     return this.http.post(this.createReleaseUrl, body)
       .toPromise()
       .then(this.Global.extractData)
@@ -26,5 +30,21 @@ export class ReleaseManageService {
       .toPromise()
       .then(this.Global.extractData)
       .catch(this.Global.handleError);
+  }
+
+  updateRelease(title: string, content: string, id: number): Promise<any> {
+    const body = {title, content, id};
+    return this.http.put(this.updateReleaseUrl, body)
+      .toPromise()
+      .then(this.Global.extractData)
+      .catch(this.Global.handleError);
+  }
+
+  deleteRelease(id: number): Promise<any> {
+    const url = this.deleteReleaseUrl + id;
+    return this.http.delete(url)
+      .toPromise()
+      .then(this.Global.extractData)
+      .catch(this.Global.handleError)
   }
 }
