@@ -152,7 +152,7 @@ class Project(MySQLModel):
     id = db_autoId()
     name = FixedCharField(unique=True, max_length=50)
     detail = TextField(null=True)
-    currentRelease = ForeignKeyField(Release)
+    currentRelease = ForeignKeyField(Release,null=True)
     ownerId = db_id()
     status = db_option(default='active', comment='active(默认)/done/delete')
     createAt = db_autoDate()
@@ -236,16 +236,19 @@ class TestSet(MySQLModel):
     detail = TextField(null=True)
     projectId = db_id()
     releaseId = db_id()
+    memberId = ForeignKeyField(User, related_name='testSet')
 
     class Meta:
         db_table = 'test_set'
 
 
-class TestSetMember(MySQLModel):
-    '''测试集成员关系'''
-    id = db_autoId()
-    testSetId = ForeignKeyField(TestSet, related_name='member')
-    memberId = ForeignKeyField(User, related_name='testSet')
+# class TestSetMember(MySQLModel):
+#     '''测试集成员关系'''
+#     id = db_autoId()
+#     testSetId = ForeignKeyField(TestSet, related_name='member')
+#     memberId = ForeignKeyField(User, related_name='testSet')
+#     class Meta:
+#         db_table = 'test_set_member'
 
 
 class TestCase(MySQLModel):
