@@ -22,6 +22,12 @@ import { DevSetManageComponent } from './dev-set-manage/dev-set-manage.component
 import { TestManageComponent } from './test-manage/test-manage.component';
 import { TestSetManageComponent } from './test-set-manage/test-set-manage.component';
 import { BugManageComponent } from './bug-manage/bug-manage.component';
+import { DemandDetailComponent } from './demand-manage/demand-detail/demand-detail.component';
+import { TableViewComponent } from '../table-view/table-view.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { DevSetDetailComponent } from './dev-set-manage/dev-set-detail/dev-set-detail.component';
+import { TestCaseDetailComponent } from './test-manage/test-case-detail/test-case-detail.component';
+import { BugDetailComponent } from './bug-manage/bug-detail/bug-detail.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +42,12 @@ import { BugManageComponent } from './bug-manage/bug-manage.component';
     DevSetManageComponent,
     TestManageComponent,
     TestSetManageComponent,
-    BugManageComponent
+    BugManageComponent,
+    DemandDetailComponent,
+    TableViewComponent,
+    DevSetDetailComponent,
+    TestCaseDetailComponent,
+    BugDetailComponent
   ],
   imports: [
     CommonModule,
@@ -68,15 +79,15 @@ import { BugManageComponent } from './bug-manage/bug-manage.component';
     MatProgressBarModule,
     MatToolbarModule,
     MatFormFieldModule,
-    ToasterModule
+    ToasterModule,
+    NgxDatatableModule
   ],
-  providers: [
-
-  ],
+  providers: [],
   entryComponents: [
     TaskDetailDialogComponent,
     DemandDetailDialogComponent,
     TestResultDetailComponent
   ]
 })
-export class PmModule { }
+export class PmModule {
+}

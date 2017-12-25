@@ -91,7 +91,9 @@ def demand_update():
 
     if not request.json:
         abort(400)
-    if demand.find_one_demand_by_title(request.json["title"]):
+    if demand.find_demand_title_by_id(request.json['id'])==request.json["title"]:
+        pass
+    elif demand.find_one_demand_by_title(request.json["title"]):
         return jsonify({'msg': '该需求已存在'})
     try:
         data = demand.update_demands(request.json)

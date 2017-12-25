@@ -10,6 +10,68 @@
   border-bottom: 1px solid #eeeeee;
 }
 
-//.cdk-overlay-pane{
-//  top: 122.0486px !important;
-//}
+//detail 組件的樣式
+.detail-view-container {
+  position: relative;
+  height: calc(100vh - 66px);
+  overflow: auto;
+  .container-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background-color: #8847dc;
+    z-index: 1;
+  }
+
+  .mat-card-avatar {
+    line-height: 40px;
+    text-align: center;
+    color: #fff;
+    background: #ccc;
+    font-size: 24px;
+  }
+
+  .detail {
+    position: relative;
+    z-index: 2;
+    padding: 0 32px;
+    .header {
+      flex-direction: row;
+      box-sizing: border-box;
+      display: flex;
+      max-height: 100%;
+      place-content: center flex-start;
+      align-items: center;
+      height: 136px;
+      min-height: 136px;
+      .back-arrow {
+        margin-right: 22px;
+      }
+    }
+    .header-text {
+      margin: 0 8px;
+      color: #ffffff;
+      .detail-name {
+        font-size: 20px;
+        margin-bottom: 12px;
+      }
+    }
+    .mat-card-avatar {
+      float: left;
+      margin-right: 5px;
+    }
+  }
+
+  .detail-header {
+    background: #8847dc;
+    color: #fefefe;
+    padding: 0 24px;
+  }
+
+  .detail-footer{
+    margin-top: 27px;
+    text-align: center;
+  }
+}

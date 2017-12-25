@@ -4,30 +4,41 @@
 @author: Wang Qianxiang
 '''
 
-from .db import (Demand, Activity, TestCase, TestResult, Project, ProjectMember, User, ActivityMember)
+from .db import (User, Project, ProjectMember, Release, Demand, Activity, ActivityMember, TestCase, TestSet, Case_Set, TestResult)
 
 
-def find_owner(p_id):
+def find_owner_by_release(r_id):
     '''查询项目拥有者'''
-    return Project.get(Project.id == p_id).ownerId
+    return list(Release.select(Project.ownerId).join(
+            Project,
+            on = (Release.projectId == Project.id)
+        ).where(Release.id == r_id).dicts())[0]['ownerId']
 
 
-def find_role(p_id, m_id):
+def find_role_by_release(r_id, m_id):
     '''查询项目成员权限'''
-    return ProjectMember.get((ProjectMember.projectId == p_id) & (ProjectMember.memberId == m_id))
+    role = list(ProjectMember.select().join(
+            Release,
+            on = (ProjectMember.projectId == Release.projectId)
+        ).where((Release.id == r_id) and (ProjectMember.memberId == m_id)).dicts())
+    if role:
+        return role[0]['role']
+    else:
+        return ''
 
 
-def find_demand(p_id, m_id):
-    '''按M_id查询相关项目需求'''
-    return list(Demand.select()
-        .where((Demand.projectId == p_id) & (Demand.ownerId == m_id))
-        .dicts())
+# def find_demand(r_id, m_id):
+#     '''按M_id查询相关需求'''
+#     return list(Demand.select(Demand, Activity.title.alias('activity'))
+#         .join(Activity, on = (Demand.activityId == Activity.id))
+#         .where((Demand.releaseId == r_id) & (Activity.ownerId == m_id))
+#         .dicts())
 
 
-def find_activity(p_id, m_id):
-    '''按M_id查询相关项目活动'''
+def find_activity(r_id, m_id):
+    '''按M_id查询相关活动'''
     activity = Activity.find().join(ActivityMember).where(
-        (Activity.projectId == p_id) and (ActivityMember.memberId == m_id))
+        (Activity.releaseId == r_id) and (ActivityMember.memberId == m_id))
     for act in activity:
         act['member'] = list(
             ActivityMember.find(ActivityMember.role, User.username, User.email,
@@ -38,59 +49,87 @@ def find_activity(p_id, m_id):
     return list(activity)
 
 
-def find_test_case(p_id, m_id):
-    '''按M_id查询相关项目测试案例'''
+def find_test_case(r_id, m_id):
+    '''按M_id查询相关测试案例'''
     return list(
-        TestCase.select()
-        .where((TestCase.projectId == p_id) & (TestCase.ownerId == m_id))
+        TestCase.select(TestCase, Demand.title.alias('demand'), User.username.alias('owner'))
+        .join(Demand, on = (TestCase.demandId == Demand.id))
+        .join(User, on = (TestCase.ownerId == User.id))
+        .where((TestCase.releaseId == r_id) & (TestCase.ownerId == m_id))
         .dicts())
 
 
-def find_test_result_for_dev(p_id, m_id):
-    '''按M_id查询开发相关项目测试结果'''
+def find_test_set(r_id, m_id):
+    '''按M_id查询相关测试集'''
+    testSet = TestSet.find(
+            TestSet,
+            User.username.alias('member')
+        ).join(User).where((TestSet.releaseId == r_id) and (TestSet.memberId == m_id))
+    for ts in testSet:
+        ts['testCase'] = list(
+            TestCase.find()
+                .join(Case_Set, on = (TestCase.id == Case_Set.caseId))
+                .where(Case_Set.setId == ts['id'])
+        )
+    return list(testSet)
+
+
+def find_test_result_for_dev(r_id, m_id):
+    '''按M_id查询开发相关测试结果'''
+    devUser = User.alias()
     return list(TestResult.select(
             TestResult,
-            TestCase.id.alias('caseId'),
-            TestCase.name.alias('caseName'),
-            Demand.title.alias('demandName'),
+            TestResult.caseId.alias('testCaseId'),
+            TestCase.name.alias('testCase'),
+            TestSet.name.alias('testSet'),
+            Demand.title.alias('demand'),
             TestCase.input,
             TestCase.expect,
-            User.username.alias('ownerName'))
+            User.username.alias('owner'),
+            devUser.username.alias('dev'))
         .join(TestCase, on = (TestResult.caseId == TestCase.id))
+        .join(TestSet, on = (TestResult.testSetId == TestSet.id))
         .join(User, on = (TestCase.ownerId == User.id))
+        .join(devUser, on = (TestResult.devId == devUser.id))
         .join(Demand, on = (TestCase.demandId == Demand.id))
-        .where((TestCase.projectId == p_id) & (TestResult.devId == m_id))
+        .where((TestCase.releaseId == r_id) & (TestResult.devId == m_id))
         .dicts())
 
 
-def find_test_result_for_test(p_id, m_id):
-    '''按M_id查询测试相关项目测试结果'''
+def find_test_result_for_test(r_id, m_id):
+    '''按M_id查询测试相关测试结果'''
+    devUser = User.alias()
     return list(TestResult.select(
             TestResult,
-            TestCase.id.alias('caseId'),
-            TestCase.name.alias('caseName'),
-            Demand.title.alias('demandName'),
+            TestResult.caseId.alias('testCaseId'),
+            TestCase.name.alias('testCase'),
+            TestSet.name.alias('testSet'),
+            Demand.title.alias('demand'),
             TestCase.input,
             TestCase.expect,
-            User.username.alias('ownerName'))
+            User.username.alias('owner'),
+            devUser.username.alias('dev'))
         .join(TestCase, on = (TestResult.caseId == TestCase.id))
+        .join(TestSet, on = (TestResult.testSetId == TestSet.id))
         .join(User, on = (TestCase.ownerId == User.id))
+        .join(devUser, on = (TestResult.devId == devUser.id))
         .join(Demand, on = (TestCase.demandId == Demand.id))
-        .where((TestCase.projectId == p_id) & (TestCase.ownerId == m_id))
+        .where((TestCase.releaseId == r_id) & (TestCase.ownerId == m_id))
         .dicts())
 
 
-def find_all_demand(p_id):
-    '''按P_id查询全部项目需求'''
-    return list(Demand.select()
-        .where(Demand.projectId == p_id)
+def find_all_demand(r_id):
+    '''按r_id查询全部项目需求'''
+    return list(Demand.select(Demand, Activity.title.alias('activity'))
+        .join(Activity, on = (Demand.activityId == Activity.id))
+        .where(Demand.releaseId == r_id)
         .dicts())
 
 
-def find_all_activity(p_id):
-    '''按P_id查询全部项目活动'''
+def find_all_activity(r_id):
+    '''按r_id查询全部项目活动'''
 
-    activity = Activity.find().where(Activity.projectId == p_id)
+    activity = Activity.find().where(Activity.releaseId == r_id)
     for act in activity:
         act['member'] = list(
             ActivityMember.find(
@@ -104,18 +143,46 @@ def find_all_activity(p_id):
     return list(activity)
 
 
-def find_all_test_result(p_id):
-    '''按P_id查询全部项目测试结果'''
+def find_all_test_case(r_id):
+    '''按r_id查询全部测试案例'''
+    return list(
+        TestCase.select(TestCase, Demand.title.alias('demand'), User.username.alias('owner'))
+        .join(Demand, on = (TestCase.demandId == Demand.id))
+        .join(User, on = (TestCase.ownerId == User.id))
+        .where(TestCase.releaseId == r_id)
+        .dicts())
+
+
+def find_all_test_set(r_id):
+    '''按r_id查询全部测试集'''
+    testSet = TestSet.find(
+            TestSet,
+            User.username.alias('member')
+        ).join(User).where(TestSet.releaseId == r_id)
+    for ts in testSet:
+        ts['testCase'] = list(TestCase.find()
+            .join(Case_Set, on = (TestCase.id == Case_Set.caseId))
+            .where(Case_Set.setId == ts['id']))
+    return list(testSet)
+
+
+def find_all_test_result(r_id):
+    '''按r_id查询全部项目测试结果'''
+    devUser = User.alias()
     return list(TestResult.select(
             TestResult,
-            TestCase.id.alias('caseId'),
-            TestCase.name.alias('caseName'),
-            Demand.title.alias('demandName'),
+            TestResult.caseId.alias('testCaseId'),
+            TestCase.name.alias('testCase'),
+            TestSet.name.alias('testSet'),
+            Demand.title.alias('demand'),
             TestCase.input,
             TestCase.expect,
-            User.username.alias('ownerName'))
+            User.username.alias('owner'),
+            devUser.username.alias('dev'))
         .join(TestCase, on = (TestResult.caseId == TestCase.id))
+        .join(TestSet, on = (TestResult.testSetId == TestSet.id))
         .join(User, on = (TestCase.ownerId == User.id))
+        .join(devUser, on = (TestResult.devId == devUser.id))
         .join(Demand, on = (TestCase.demandId == Demand.id))
-        .where(TestCase.projectId == p_id)
+        .where(TestCase.releaseId == r_id)
         .dicts())

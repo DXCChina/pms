@@ -101,7 +101,7 @@ def activity_detail(activity_id):
     activity = Activity.findOne(Activity.id == activity_id)
     activity['member'] = list(
         ActivityMember.find(ActivityMember.role, User.username,
-                            User.email).join(User)
+                            User.email, User.id).join(User)
         .where(ActivityMember.activityId == activity_id))
     activity['demand'] = list(
         Demand.find().where(Demand.activityId == activity_id))

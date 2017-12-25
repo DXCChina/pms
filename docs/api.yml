@@ -143,12 +143,36 @@ paths:
     get:
       summary: 获取项目Release
       operationId: controller.release.release_list
+      parameters:
+        - name: projectId
+          in: query
+          required: true
+          type: integer
       responses:
         200:
           description: ok
     post:
       summary: 创建Release
       operationId: controller.release.release_add
+      responses:
+        200:
+          description: ok
+    put:
+      summary: 修改Release
+      operationId: controller.release.release_put
+      responses:
+        200:
+          description: ok
+
+  /release/{release_id}:
+    delete:
+      summary: 删除Release
+      operationId: controller.release.release_delete
+      parameters:
+        - name: release_id
+          in: path
+          required: true
+          type: integer
       responses:
         200:
           description: ok

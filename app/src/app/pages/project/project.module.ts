@@ -55,8 +55,7 @@ import { TableViewComponent } from './table-view/table-view.component';
     MatToolbarModule
   ],
   declarations: [
-    ProjectComponent,
-    TableViewComponent
+    ProjectComponent
   ],
   entryComponents: [
 
