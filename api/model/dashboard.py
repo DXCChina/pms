@@ -27,22 +27,23 @@ def find_role_by_release(r_id, m_id):
         return ''
 
 
-# def find_demand(r_id, m_id):
-#     '''按M_id查询相关需求'''
-#     return list(Demand.select(Demand, Activity.title.alias('activity'))
-#         .join(Activity, on = (Demand.activityId == Activity.id))
-#         .where((Demand.releaseId == r_id) & (Activity.ownerId == m_id))
-#         .dicts())
+def find_demand(r_id, m_id):
+    '''按M_id查询相关需求'''
+    return list(Demand.select(Demand, Activity.title.alias('activity'))
+        .join(Activity, on = (Demand.activityId == Activity.id))
+        .join(ActivityMember, on = (Demand.activityId == ActivityMember.activityId))
+        .where((Demand.releaseId == r_id) & (ActivityMember.memberId == m_id))
+        .dicts())
 
 
 def find_activity(r_id, m_id):
     '''按M_id查询相关活动'''
-    activity = Activity.find().join(ActivityMember).where(
+    activity = Activity.find().join(ActivityMember, on = (Activity.id == ActivityMember.activityId)).where(
         (Activity.releaseId == r_id) and (ActivityMember.memberId == m_id))
     for act in activity:
         act['member'] = list(
             ActivityMember.find(ActivityMember.role, User.username, User.email,
-                                User.id).join(User)
+                                User.id).join(User, on = (ActivityMember.memberId == User.id))
             .where(ActivityMember.activityId == act['id']))
         act['demand'] = list(
             Demand.find().where(Demand.activityId == act['id']))
@@ -64,7 +65,7 @@ def find_test_set(r_id, m_id):
     testSet = TestSet.find(
             TestSet,
             User.username.alias('member')
-        ).join(User).where((TestSet.releaseId == r_id) and (TestSet.memberId == m_id))
+        ).join(User, on = (TestSet.memberId == User.id)).where((TestSet.releaseId == r_id) and (TestSet.memberId == m_id))
     for ts in testSet:
         ts['testCase'] = list(
             TestCase.find()
@@ -134,7 +135,7 @@ def find_all_activity(r_id):
         act['member'] = list(
             ActivityMember.find(
                 ActivityMember.role, User.username, User.email, User.id
-            ).join(User)
+            ).join(User, on = (ActivityMember.memberId == User.id))
             .where(ActivityMember.activityId == act['id'])
         )
         act['demand'] = list(
@@ -158,7 +159,7 @@ def find_all_test_set(r_id):
     testSet = TestSet.find(
             TestSet,
             User.username.alias('member')
-        ).join(User).where(TestSet.releaseId == r_id)
+        ).join(User, on = (TestSet.memberId == User.id)).where(TestSet.releaseId == r_id)
     for ts in testSet:
         ts['testCase'] = list(TestCase.find()
             .join(Case_Set, on = (TestCase.id == Case_Set.caseId))

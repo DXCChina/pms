@@ -29,6 +29,9 @@ def add_test_set():
     '''
     data = request.json
 
+    if testSet.find_test_set_by_name(data['name']):
+        return jsonify({"msg": '测试集名称重复！'}), 400
+
     return jsonify({
         'msg': 'ok',
         'data': testSet.create_test_set(data)

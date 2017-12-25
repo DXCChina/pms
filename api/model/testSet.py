@@ -66,3 +66,8 @@ def test_set_detail(set_id):
 def find_test_set_by_id(test_set_id):
     '''按test_set_id查询测试集'''
     return TestSet.getOne(TestSet.id == test_set_id)
+
+
+def find_test_set_by_name(test_set_name):
+    '''按test_set_id查询测试集'''
+    return TestSet.getOne(TestSet.name == test_set_name)
