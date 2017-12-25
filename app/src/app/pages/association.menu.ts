@@ -19,7 +19,7 @@ export const ASSOCIATION_MENU = [
         data: {
           menu: {
             title: '需求管理',
-            icon: 'ion-navicon-round',
+            icon: 'ion-pull-request',
             selected: false,
             expanded: false,
             order: 100,
@@ -31,7 +31,7 @@ export const ASSOCIATION_MENU = [
         data: {
           menu: {
             title: '开发活动',
-            icon: 'ion-navicon-round',
+            icon: 'ion-gear-b',
             selected: false,
             expanded: false,
             order: 100,
@@ -43,7 +43,7 @@ export const ASSOCIATION_MENU = [
         data: {
           menu: {
             title: '测试管理',
-            icon: 'ion-navicon-round',
+            icon: 'ion-briefcase',
             selected: false,
             expanded: false,
             order: 100,
@@ -55,7 +55,7 @@ export const ASSOCIATION_MENU = [
         data: {
           menu: {
             title: '测试实验室',
-            icon: 'ion-navicon-round',
+            icon: 'ion-ios-grid-view-outline',
             selected: false,
             expanded: false,
             order: 100,
@@ -67,7 +67,7 @@ export const ASSOCIATION_MENU = [
         data: {
           menu: {
             title: '缺陷管理',
-            icon: 'ion-navicon-round',
+            icon: 'ion-bug',
             selected: false,
             expanded: false,
             order: 100,

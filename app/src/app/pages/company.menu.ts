@@ -1,6 +1,6 @@
 export const COMPANY_MENU = [
   {
-    path: 'dev',
+    path: '',
     children: [
       {
         path: 'dashboard',
@@ -15,11 +15,35 @@ export const COMPANY_MENU = [
         },
       },
       {
-        path: 'activity',
+        path: 'demand',
         data: {
           menu: {
-            title: '项目管理',
-            icon: 'ion-navicon-round',
+            title: '需求管理',
+            icon: 'ion-pull-request',
+            selected: false,
+            expanded: false,
+            order: 100,
+          }
+        },
+      },
+      {
+        path: 'devSet',
+        data: {
+          menu: {
+            title: '开发活动',
+            icon: 'ion-gear-b',
+            selected: false,
+            expanded: false,
+            order: 100,
+          }
+        },
+      },
+      {
+        path: 'bug',
+        data: {
+          menu: {
+            title: '缺陷管理',
+            icon: 'ion-bug',
             selected: false,
             expanded: false,
             order: 100,
@@ -28,5 +52,4 @@ export const COMPANY_MENU = [
       }
     ]
   }
-
 ];

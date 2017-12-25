@@ -18,6 +18,7 @@ export class BaWelTop {
   public isShowSidebar: boolean = false;
   public userRoleInProject: string = '';
   public projectName: string = '';
+  public currentRole: string = '';
 
   constructor(private _state: GlobalState, private _service: BaWelTopService,
               private router: Router, private activatedRoute: ActivatedRoute) {
@@ -51,11 +52,20 @@ export class BaWelTop {
           this.showLevel2Menu = false;
         }
 
-        if(event && event.isShowSidebar === true){
+        if (event && event.isShowSidebar === true) {
           this.isShowSidebar = true;
-        }else {
+        } else {
           this.isShowSidebar = false;
         }
+
+        if (this.userRoleInProject == 'pm') {
+          this.currentRole = '项目经理';
+        } else if (this.userRoleInProject == 'dev') {
+          this.currentRole = '开发人员';
+        } else if (this.userRoleInProject == 'test') {
+          this.currentRole = '测试人员';
+        }
+
       });
   }
 
