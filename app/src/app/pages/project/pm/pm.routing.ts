@@ -12,6 +12,7 @@ import { TableViewComponent } from '../table-view/table-view.component';
 import { DemandDetailComponent } from './demand-manage/demand-detail/demand-detail.component';
 import { DevSetDetailComponent } from './dev-set-manage/dev-set-detail/dev-set-detail.component';
 import { TestCaseDetailComponent } from './test-manage/test-case-detail/test-case-detail.component';
+import { TestSetDetailComponent } from './test-set-manage/test-set-detail/test-set-detail.component';
 import { BugDetailComponent } from './bug-manage/bug-detail/bug-detail.component';
 
 export const routes: Routes = [
@@ -103,11 +104,11 @@ export const routes: Routes = [
           },
           {
             path: ':id',
-            component: TestCaseDetailComponent,
+            component: TestSetDetailComponent,
           },
           {
             path: 'new',
-            component: TestCaseDetailComponent,
+            component: TestSetDetailComponent,
           },
           { path: '', redirectTo: '', pathMatch: 'full' }
         ],
