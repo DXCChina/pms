@@ -95,14 +95,14 @@ export class TableViewComponent {
 
   addItem() {
     // console.log('add', this.viewType);
-    this.router.navigate([`/pages/project/${window.sessionStorage.getItem('userRoleInProject')}/${this.viewType}/new`],
+    this.router.navigate([`/pages/project/${this.viewType}/new`],
       { queryParams: { type: 'new' } });
   }
 
   ViewDetail(event) {
     if (event.type === 'click') {
       // console.log('Activate Event', event);
-      this.router.navigate([`/pages/project/${window.sessionStorage.getItem('userRoleInProject')}/${this.viewType}/${event.row.id}`]);
+      this.router.navigate([`/pages/project/${this.viewType}/${event.row.id}`]);
     }
   }
 

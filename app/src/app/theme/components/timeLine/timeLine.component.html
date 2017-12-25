@@ -1,0 +1,37 @@
+<div class="time-line-wrap">
+  <div class="time-line-item" *ngFor="let item of timeLine; let i = index">
+    <div class="line-item-date">
+      <h3>{{item.date | date:format}}</h3>
+
+    </div>
+    <div class="line-item-content">
+      <div class="item-content-wrap" [ngClass]="{'grey-width': (i % 2) !== 0}">
+        <div class="content-wrap-control">
+          <p (click)="selected(item)">{{item.title}}</p>
+          <div>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="edited(item)">
+                <mat-icon>
+                  <img class="icon-img" src="../../../../assets/img/ic_mode_edit_black_24px.svg" alt="">
+                </mat-icon>
+                <span>EDIT</span>
+              </button>
+              <button mat-menu-item (click)="deleted(item)">
+                <mat-icon>
+                  <img class="icon-img" src="../../../../assets/img/ic_delete_black_24px.svg" alt="">
+                </mat-icon>
+                <span>DELETE</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+        <ul>
+          <li *ngFor="let content of item.content.split('\n')">{{content}}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -74,10 +74,14 @@ export class DevSetDetailComponent implements OnInit {
     showCloseButton: true
   });
 
+  isOperate:boolean = false;
+  role: string = '';
+
   constructor(public fb: FormBuilder, private _service: PmTaskDetailService, private toasterService: ToasterService,
               private eventManager: JhiEventManager, private router:Router, private route:ActivatedRoute) {
     this.projectId = Number(sessionStorage.getItem('projectId'));
     this.releaseId = Number(sessionStorage.getItem('releaseId'));
+    this.role = sessionStorage.getItem('userRoleInProject');
 
     this.userLists = [
       {
@@ -97,6 +101,8 @@ export class DevSetDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isOperate = this.role == 'pm';
+
     this.form = new FormGroup({
       search: new FormControl('')
     });

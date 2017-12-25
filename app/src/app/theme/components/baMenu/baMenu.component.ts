@@ -4,9 +4,9 @@ import {Subscription} from 'rxjs/Rx';
 
 import {GlobalState} from '../../../global.state';
 
-import { ASSOCIATION_MENU } from 'app/pages/association.menu';
-import { COMPANY_MENU } from 'app/pages/company.menu';
-import { USER_MENU } from 'app/pages/user.menu';
+import {ASSOCIATION_MENU} from 'app/pages/association.menu';
+import {COMPANY_MENU} from 'app/pages/company.menu';
+import {USER_MENU} from 'app/pages/user.menu';
 import {BaMenuService} from "./baMenu.service";
 
 @Component({
@@ -18,21 +18,21 @@ import {BaMenuService} from "./baMenu.service";
 })
 export class BaMenu {
 
-  @Input() menuRoutes:any = [];
-  @Input() sidebarCollapsed:boolean = false;
-  @Input() menuHeight:number;
+  @Input() menuRoutes: any = [];
+  @Input() sidebarCollapsed: boolean = false;
+  @Input() menuHeight: number;
 
   @Output() expandMenu = new EventEmitter<any>();
 
-  public menuItems:any[];
-  public showHoverElem:boolean;
-  public hoverElemHeight:number;
-  public hoverElemTop:number;
-  protected _onRouteChange:Subscription;
-  public outOfArea:number = -200;
+  public menuItems: any[];
+  public showHoverElem: boolean;
+  public hoverElemHeight: number;
+  public hoverElemTop: number;
+  protected _onRouteChange: Subscription;
+  public outOfArea: number = -200;
   protected userType: string;
 
-  constructor(private _router:Router, private _service:BaMenuService, private _state:GlobalState) {
+  constructor(private _router: Router, private _service: BaMenuService, private _state: GlobalState) {
     this._onRouteChange = this._router.events.subscribe((event) => {
 
       if (event instanceof NavigationEnd) {
@@ -56,29 +56,27 @@ export class BaMenu {
   }
 
   public ngOnInit(): void {
-    if (this.userType === 'pm') {
-      this.menuRoutes = ASSOCIATION_MENU;
-    } else if (this.userType === 'dev') {
+    if (this.userType === 'dev') {
       this.menuRoutes = COMPANY_MENU;
-    } else if (this.userType === 'test') {
-      this.menuRoutes = USER_MENU;
+    } else {
+      this.menuRoutes = ASSOCIATION_MENU;
     }
 
     this.menuItems = this._service.convertRoutesToMenus(this.menuRoutes);
   }
 
-  public ngOnDestroy():void {
+  public ngOnDestroy(): void {
     this._onRouteChange.unsubscribe();
   }
 
-  public hoverItem($event):void {
+  public hoverItem($event): void {
     this.showHoverElem = true;
     this.hoverElemHeight = $event.currentTarget.clientHeight;
     // TODO: get rid of magic 66 constant
     this.hoverElemTop = $event.currentTarget.getBoundingClientRect().top - 66;
   }
 
-  public toggleSubMenu($event):boolean {
+  public toggleSubMenu($event): boolean {
     var submenu = jQuery($event.currentTarget).next();
 
     if (this.sidebarCollapsed) {

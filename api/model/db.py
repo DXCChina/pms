@@ -139,7 +139,6 @@ class User(UserBase):
 class Release(MySQLModel):
     '''版本'''
     id = db_autoId()
-    caption = db_char()
     title = db_char()
     content = TextField(null=True)
     projectId = db_id()
@@ -154,7 +153,7 @@ class Project(MySQLModel):
     id = db_autoId()
     name = FixedCharField(unique=True, max_length=50)
     detail = TextField(null=True)
-    currentRelease = ForeignKeyField(Release)
+    currentRelease = ForeignKeyField(Release,null=True)
     ownerId = db_id()
     status = db_option(default='active', comment='active(默认)/done/delete')
     createAt = db_autoDate()
@@ -256,6 +255,8 @@ class TestSet(TestSetBase):
 #     id = db_autoId()
 #     testSetId = ForeignKeyField(TestSet, related_name='member')
 #     memberId = ForeignKeyField(User, related_name='testSet')
+#     class Meta:
+#         db_table = 'test_set_member'
 
 
 class TestCase(MySQLModel):

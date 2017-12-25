@@ -5,6 +5,7 @@
 '''
 
 from .db import (User, Project, ProjectMember, Release, Demand, Activity, ActivityMember, TestCase, TestSet, Case_Set, TestResult)
+from playhouse.shortcuts import JOIN
 
 
 def find_owner_by_release(r_id):
@@ -122,7 +123,7 @@ def find_test_result_for_test(r_id, m_id):
 def find_all_demand(r_id):
     '''按r_id查询全部项目需求'''
     return list(Demand.select(Demand, Activity.title.alias('activity'))
-        .join(Activity, on = (Demand.activityId == Activity.id))
+        .join(Activity, JOIN.LEFT_OUTER, on = (Demand.activityId == Activity.id))
         .where(Demand.releaseId == r_id)
         .dicts())
 

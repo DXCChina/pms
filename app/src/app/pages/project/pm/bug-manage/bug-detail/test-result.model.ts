@@ -3,6 +3,7 @@ export class TestResult {
   name: string;
   detail: string;
   caseId: number;
+  testSetId:number;
   caseName: string;
   devId: number;
   devName: string;

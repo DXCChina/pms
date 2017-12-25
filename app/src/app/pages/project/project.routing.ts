@@ -13,17 +13,17 @@ export const routes: Routes = [
       //   component: TableViewComponent
       // },
       {
-        path: 'pm',
+        path: '',
         loadChildren: 'app/pages/project/pm/pm.module#PmModule'
       },
-      {
-        path: 'dev',
-        loadChildren: 'app/pages/project/dev/dev.module#DevModule'
-      },
-      {
-        path: 'test',
-        loadChildren: 'app/pages/project/test/test.module#TestModule'
-      }
+      // {
+      //   path: 'dev',
+      //   loadChildren: 'app/pages/project/dev/dev.module#DevModule'
+      // },
+      // {
+      //   path: 'test',
+      //   loadChildren: 'app/pages/project/test/test.module#TestModule'
+      // }
     ]
   }
 ];
