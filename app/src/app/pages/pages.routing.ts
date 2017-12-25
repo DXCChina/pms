@@ -20,7 +20,7 @@ export const routes: Routes = [
         loadChildren: "app/pages/project/project.module#ProjectModule",
       },
       {
-        path: ':userType/release',
+        path: 'release',
         loadChildren: "app/pages/project-manage/project-manage.module#ProjectManageModule",
         data:{isShowNav:true}
       },
