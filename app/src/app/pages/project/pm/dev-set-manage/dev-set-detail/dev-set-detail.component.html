@@ -16,7 +16,7 @@
     </div>
     <mat-card class="">
       <div class="dialog-content">
-        <form [formGroup]="taskForm" (ngSubmit)="onSubmit(taskForm)">
+        <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
           <div class="mat-container">
             <mat-form-field>
               <input matInput placeholder="名称" [formControl]="title" [(ngModel)]="taskInfo.title" [readonly]="!isOperate">

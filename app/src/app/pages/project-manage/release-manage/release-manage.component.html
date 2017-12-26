@@ -5,7 +5,7 @@
   </div>
 
   <div class="release-content">
-    <h3>{{timeLine[timeLine.length-1]?.date | date:format}} --- {{timeLine[0]?.date | date:format}} </h3>
+    <h3>{{timeLine[timeLine.length-1]?.date | date}} --- {{timeLine[0]?.date | date}} </h3>
     <button mat-raised-button (click)="openDialog()">
       <svg fill="#757575" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
         <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/>
