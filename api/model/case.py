@@ -3,7 +3,7 @@
 
 @author: Gao Le
 '''
-from .db import TestCase, Demand
+from .db import TestCase, Demand, User
 from .role import identity
 
 
@@ -16,6 +16,7 @@ def create_case(case):
         defaults={
             'detail': case['detail'],
             'type': case['type'],
+            'status': case['status'],
             'demandId': case['demandId'],
             'input': case['input'],
             'expect': case['expect'],
@@ -28,9 +29,7 @@ def create_case(case):
 def case_detail(id):
     '''获取测试用例详情'''
 
-    return TestCase.sfind(TestCase, Demand.title.alias('demandTittle')).join(
-        Demand,
-        on=(TestCase.demandId == Demand.id)).where(TestCase.id == id).get()
+    return TestCase.sfind(TestCase, Demand.title.alias('demandTittle'),User.username.alias('ownername')).join(Demand, on=(TestCase.demandId == Demand.id)).join(User, on=(TestCase.ownerId == User.id)).where(TestCase.id == id).get()
 
 
 # @identity.check_permission("update", 'demand')
@@ -39,6 +38,7 @@ def case_update(case):
         name=case['name'],
         detail=case['detail'],
         type=case['type'],
+        status=case['status'],
         input=case['input'],
         expect=case['expect'],
         demandId=case['demandId']).where(TestCase.id == case['id']).execute()

@@ -10,8 +10,8 @@
       </a>
       <div mat-card-avatar [style.background]="'#c7b7dd'">{{testCaseInfo.name| name2avatar}}</div>
       <div class="header-text">
-        <div class="detail-name">{{testCaseInfo.name ? testCaseInfo.name : "新建活動"}}</div>
-        <div>{{testCaseInfo.detail ? testCaseInfo.detail : "新建活動"}}</div>
+        <div class="detail-name">{{testCaseInfo.name ? testCaseInfo.name : "新建用例"}}</div>
+        <div>{{testCaseInfo.detail ? testCaseInfo.detail : "新建用例"}}</div>
       </div>
     </div>
     <mat-card class="">
@@ -45,15 +45,23 @@
               <mat-error>{{formErrors.type}}</mat-error>
             </mat-form-field>
 
-            <common-search
-              [ngStyle]="{width: '100%', marginTop: '12px'}"
-              [placeHolder]="'相关需求'"
-              [field]="'title'"
-              [searchList]="searchDemandList"
-              [value]="testCaseInfo.demandTittle"
-              (search)="emitSearch($event)"
-              (select)="select($event)">
-            </common-search>
+            <mat-form-field>
+              <mat-select placeholder="用例状态" [formControl]="status" [(ngModel)]="testCaseInfo.status" name="status">
+                <mat-option value="新建" selected>新建</mat-option>
+                <mat-option value="已评审">已评审</mat-option>
+                <mat-option value="作废">作废</mat-option>
+              </mat-select>
+              <mat-error>{{formErrors.status}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select placeholder="关联需求" [formControl]="searchDemand" (focus)="select()" #selectDemand>
+                <mat-form-field style="width: 100%; padding: 0 16px;">
+                  <input matInput type="text" formControlName="search" #search  [(ngModel)]="value" placeholder="搜索需求">
+                </mat-form-field>
+                <mat-option *ngFor="let demand of searchDemandList" [value]="demand">{{demand?.title}}</mat-option>
+              </mat-select>
+            </mat-form-field>
 
             <mat-form-field>
               <input matInput placeholder="实际输入" [formControl]="input" [(ngModel)]="testCaseInfo.input" name="input">
@@ -63,6 +71,10 @@
             <mat-form-field>
               <input matInput placeholder="期望输入" [formControl]="expect" [(ngModel)]="testCaseInfo.expect" name="expect">
               <mat-error>{{formErrors.expect}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="mode != 'new'">
+              <input matInput placeholder="创建者 (不可手动更改)" [formControl]="ownername" [(ngModel)]="testCaseInfo.ownername" name="detail" readonly>
             </mat-form-field>
           </div>
 

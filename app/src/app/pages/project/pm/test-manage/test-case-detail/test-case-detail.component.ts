@@ -1,10 +1,11 @@
-import {Component, OnInit, Inject} from '@angular/core';
-import {AbstractControl, FormGroup, FormBuilder, Validators} from "@angular/forms";
+import {Component, OnInit, Inject, ElementRef, AfterViewInit, ViewChild} from '@angular/core';
+import {AbstractControl, FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
 import {ToasterConfig, ToasterService} from "angular2-toaster";
 import {TestCase} from "./test-case.model";
 import {CaseDetailModalService} from "./case-detail-modal.service";
 import {JhiEventManager} from "ng-jhipster";
 import {Router, ActivatedRoute} from "@angular/router";
+import {Observable, Subscription} from "rxjs";
 
 @Component({
   selector: 'app-test-case-detail',
@@ -12,13 +13,18 @@ import {Router, ActivatedRoute} from "@angular/router";
   styleUrls: ['./test-case-detail.component.scss'],
   providers: [CaseDetailModalService]
 })
-export class TestCaseDetailComponent implements OnInit {
+export class TestCaseDetailComponent implements OnInit, AfterViewInit {
+  @ViewChild('search') searchInput: ElementRef;
+  @ViewChild('selectDemand') selectDemand: ElementRef;
 
   name: AbstractControl;
   detail: AbstractControl;
   type: AbstractControl;
+  status: AbstractControl;
   input: AbstractControl;
   expect: AbstractControl;
+  ownername: AbstractControl;
+  search: AbstractControl;
   testCaseForm: FormGroup;
   testCaseInfo: TestCase = new TestCase();
   testCaseParams: any = {};
@@ -27,6 +33,7 @@ export class TestCaseDetailComponent implements OnInit {
     'name': '',
     'detail': '',
     'type': '',
+    'status': '',
     'dependentDemand': '',
     'input': '',
     'expect': ''
@@ -41,6 +48,9 @@ export class TestCaseDetailComponent implements OnInit {
     },
     'type': {
       'required': '请输入用例类型'
+    },
+    'status': {
+      'required': '请输入用例状态'
     }
   };
 
@@ -55,6 +65,10 @@ export class TestCaseDetailComponent implements OnInit {
 
   searchDemandList: any[] = [];
   caseId: string = '';
+  value: string = '';
+  searchObservable: Subscription;
+  display:boolean = false;
+  searchDemand = new FormControl();
 
   constructor(public fb: FormBuilder, private toasterService: ToasterService, private _service: CaseDetailModalService,
               private eventManager: JhiEventManager, private router:Router, private route:ActivatedRoute) {
@@ -77,12 +91,21 @@ export class TestCaseDetailComponent implements OnInit {
         }
       });
     }
+    this.findDemand(this.value);
+  }
+
+  ngAfterViewInit(){
+    this.searchObservable = Observable.fromEvent(this.searchInput.nativeElement, 'keyup')
+      .map( (e: any) =>  e.target.value )
+      .debounceTime(100)
+      .subscribe((search: any) => {
+        this.findDemand(search);
+      });
   }
 
   reviewDetail(id) {
     this._service.reviewDetail(id)
       .then(res => {
-        console.log("case:", res);
         this.testCaseInfo = res.data;
         this.testCaseParams['demandId'] = res.data.demandId;
       })
@@ -93,15 +116,21 @@ export class TestCaseDetailComponent implements OnInit {
       'name': [this.testCaseInfo.name, Validators.compose([Validators.required, Validators.minLength(4)])],
       'detail': [this.testCaseInfo.detail, Validators.compose([])],
       'type': [this.testCaseInfo.type, Validators.compose([])],
+      'status': [this.testCaseInfo.status, Validators.compose([])],
       'input': [this.testCaseInfo.input, Validators.compose([])],
-      'expect': [this.testCaseInfo.expect, Validators.compose([])]
+      'expect': [this.testCaseInfo.expect, Validators.compose([])],
+      'ownername': [this.testCaseInfo.ownername, Validators.compose([])],
+      'search': ['', Validators.compose([])]
     });
 
     this.name = this.testCaseForm.controls['name'];
     this.detail = this.testCaseForm.controls['detail'];
     this.type = this.testCaseForm.controls['type'];
+    this.status = this.testCaseForm.controls['status'];
     this.input = this.testCaseForm.controls['input'];
     this.expect = this.testCaseForm.controls['expect'];
+    this.ownername = this.testCaseForm.controls['ownername'];
+    this.search = this.testCaseForm.controls['search'];
 
     this.testCaseForm.valueChanges.subscribe(data => this.onValueChanged(data));
   }
@@ -154,16 +183,19 @@ export class TestCaseDetailComponent implements OnInit {
     }
   }
 
-  emitSearch(str) {
-    this.searchDemandList = [];
-    this._service.searchDemandList(str, this.projectId)
+  findDemand(value) {
+    this.display = true;
+    this._service.searchDemandList(value, this.projectId)
       .then(res => {
         this.searchDemandList = res.data;
       });
   }
 
-  select(demand) {
-    this.testCaseParams['demandId'] = demand.id;
+  select() {
+    if(!this.selectDemand['empty']){
+      let searchDemand = this.searchDemand.value;
+      this.testCaseParams['demandId'] = searchDemand&&searchDemand.id;
+    }
   }
 
   cancel(){
