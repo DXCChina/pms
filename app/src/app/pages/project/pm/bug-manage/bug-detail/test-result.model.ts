@@ -3,7 +3,7 @@ export class TestResult {
   name: string;
   detail: string;
   caseId: number;
-  testSetId:number;
+  setId: number;
   caseName: string;
   devId: number;
   devName: string;

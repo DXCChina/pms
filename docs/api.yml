@@ -286,7 +286,34 @@ paths:
       responses:
         200:
           description: 测试结果更新成功
-
+  /testSet/searchCase:
+    get:
+      summary: 模糊查询测试案例
+      operationId: controller.testSet.search_case_list
+      parameters:
+        - name: title
+          in: query
+          required: true
+          type: string
+        - name: releaseId
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+  /testSet/searchMember:
+    get:
+      summary: 模糊查询测试案例
+      operationId: controller.testSet.search_test_member
+      parameters:
+        - name: projectId
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
 
 # case
   /project/case:
@@ -610,6 +637,8 @@ definitions:
       detail:
         type: string
       caseId:
+        type: integer
+      setId:
         type: integer
       output:
         type: string
