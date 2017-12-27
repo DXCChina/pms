@@ -18,8 +18,8 @@ def project_demand(release_id):
     '''
     if dashboard.find_owner_by_release(release_id) == get_jwt_identity():
         res = dashboard.find_all_demand(release_id)
-    # elif dashboard.find_role_by_release(release_id, get_jwt_identity()) != '':
-    #     res = dashboard.find_demand(release_id, get_jwt_identity())
+    elif dashboard.find_role_by_release(release_id, get_jwt_identity()) != '':
+        res = dashboard.find_demand(release_id, get_jwt_identity())
     else:
         return json.dumps({"msg": "No permission!"}), 403
     return res

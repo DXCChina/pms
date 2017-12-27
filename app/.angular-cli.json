@@ -28,6 +28,9 @@
         "../node_modules/handsontable/dist/handsontable.full.css",
         "../node_modules/ng2-slim-loading-bar/style.css",
         "../node_modules/angular2-toaster/toaster.css",
+        "../node_modules/froala-editor/css/froala_editor.pkgd.min.css",
+        "../node_modules/froala-editor/css/froala_style.min.css",
+        "../node_modules/font-awesome/css/font-awesome.css",
         "app/theme/theme.scss",
         "styles.scss",
         "app/theme/sass/_material-overrides.scss",
@@ -35,6 +38,7 @@
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.js",
+        "../node_modules/froala-editor/js/froala_editor.pkgd.min.js",
         "../node_modules/easy-pie-chart/dist/jquery.easypiechart.js",
         "../node_modules/jquery-slimscroll/jquery.slimscroll.js",
         "../node_modules/handsontable/dist/handsontable.full.js",
@@ -73,6 +77,10 @@
   },
   "defaults": {
     "styleExt": "css",
-    "component": {}
+    "component": {
+    }
+  },
+  "warnings": {
+    "typescriptMismatch": false
   }
 }
