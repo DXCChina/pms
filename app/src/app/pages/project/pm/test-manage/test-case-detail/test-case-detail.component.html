@@ -21,7 +21,7 @@
       <!--<div mat-card-avatar [style.background]="'#8847dc'">{{"需求name"| name2avatar}}</div>-->
       <!--</mat-card-header>-->
       <div class="dialog-content">
-        <form action="" [formGroup]="testCaseForm" (ngSubmit)="onSubmit(testCaseForm)">
+        <form action="" [formGroup]="testCaseForm" (ngSubmit)="onSubmit()">
           <div class="detail-content">
             <mat-form-field>
               <input matInput placeholder="用例名称" [formControl]="name" [(ngModel)]="testCaseInfo.name" name="name">

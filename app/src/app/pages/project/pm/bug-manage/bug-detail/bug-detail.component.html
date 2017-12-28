@@ -19,7 +19,7 @@
     </div>
     <mat-card>
       <div class="dialog-content">
-        <form action="" [formGroup]="testResultForm" (ngSubmit)="onSubmit(testResultForm)">
+        <form action="" [formGroup]="testResultForm" (ngSubmit)="onSubmit()">
           <div class="detail-content">
             <mat-form-field>
               <input matInput placeholder="测试结果名称" [formControl]="name" [(ngModel)]="testResultInfo.name" name="name">
@@ -83,7 +83,7 @@
 
           <div class="detail-footer">
             <button mat-button (click)="cancel()">关闭</button>
-            <button mat-button type="submit" [disabled]="!testResultForm?.valid">{{'mode'=='new'?'新建':'提交'}}</button>
+            <button mat-button type="submit" [disabled]="!testResultForm?.valid">{{mode=='new'?'新建':'提交'}}</button>
           </div>
         </form>
       </div>
