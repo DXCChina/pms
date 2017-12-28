@@ -20,8 +20,8 @@ import { TestResult } from './test-result.model';
 export class BugDetailComponent implements OnInit {
   name: AbstractControl;
   detail: AbstractControl;
-  caseId: AbstractControl;
   setId: AbstractControl;
+  caseId: AbstractControl;
   output: AbstractControl;
   status: AbstractControl;
   level: AbstractControl;
@@ -45,8 +45,12 @@ export class BugDetailComponent implements OnInit {
       'required': '请输入测试结果名称'
     },
     'detail': {},
-    'caseId': {},
-    'setId': {},
+    'setId': {
+      'required': '请选择相关测试集'
+    },
+    'caseId': {
+      'required': '请选择相关测试案例'
+    },
     'output': {
       'required': '请输入测试结果输出'
     },
@@ -67,6 +71,9 @@ export class BugDetailComponent implements OnInit {
   });
 
   testResultInfo: TestResult = new TestResult();
+
+  searchSetList: any[] = [];
+  searchCaseList: any[] = [];
 
   constructor(public fb: FormBuilder,
     private _service: TestResultService,
@@ -90,6 +97,7 @@ export class BugDetailComponent implements OnInit {
         }
       });
     }
+    this.findTestSet();
     this.buildForm();
   }
 
@@ -97,15 +105,39 @@ export class BugDetailComponent implements OnInit {
     this._service.reviewTestResult(testResultId)
       .then(res => {
         this.testResultInfo = res.data;
+        this.findTestCase(this.testResultInfo.setId);
       });
+  }
+
+  findTestSet() {
+    this._service.searchTestSet(this.releaseId)
+        .then(res => {
+          if (res.msg === 'ok') {
+            this.searchSetList = res.data;
+          }
+        });
+  }
+
+  findTestCase(setId) {
+    this._service.searchTestCase(setId, this.releaseId)
+        .then(res => {
+          if (res.msg === 'ok') {
+            this.searchCaseList = res.data;
+          }
+        });
+  }
+
+  changeTestSet(setId) {
+    this.findTestCase(setId);
+    this.testResultInfo.caseId = NaN;
   }
 
   buildForm() {
     this.testResultForm = this.fb.group({
       'name': [this.testResultInfo.name, Validators.compose([Validators.required])],
       'detail': [this.testResultInfo.detail, Validators.compose([])],
-      'caseId': [this.testResultInfo.caseId, Validators.compose([Validators.required])],
       'setId': [this.testResultInfo.setId, Validators.compose([Validators.required])],
+      'caseId': [this.testResultInfo.caseId, Validators.compose([Validators.required])],
       'output': [this.testResultInfo.output, Validators.compose([Validators.required])],
       'status': [this.testResultInfo.status, Validators.compose([Validators.required])],
       'level': [this.testResultInfo.level, Validators.compose([])],
@@ -114,8 +146,8 @@ export class BugDetailComponent implements OnInit {
 
     this.name = this.testResultForm.controls['name'];
     this.detail = this.testResultForm.controls['detail'];
-    this.caseId = this.testResultForm.controls['caseId'];
     this.setId = this.testResultForm.controls['setId'];
+    this.caseId = this.testResultForm.controls['caseId'];
     this.output = this.testResultForm.controls['output'];
     this.status = this.testResultForm.controls['status'];
     this.level = this.testResultForm.controls['level'];

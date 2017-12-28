@@ -80,7 +80,7 @@ def find_test_set_by_name(test_set_name):
 
 
 def search_case_list(title, r_id):
-    '''模糊查询需求'''
+    '''模糊查询测试案例'''
     return TestCase.sfind().where(
         (TestCase.releaseId == r_id) and (TestCase.name.contains(title))
     ).dicts()
