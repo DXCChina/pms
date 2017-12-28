@@ -35,13 +35,11 @@
             <mat-form-field>
               <input type='number' matInput *ngIf="mode=='new'" placeholder="测试案例" [formControl]="caseId">
               <input matInput *ngIf="mode!='new'" placeholder="测试案例" [formControl]="caseId" [(ngModel)]="testResultInfo.caseId" name="caseId" readonly>
-              <mat-error>{{formErrors.caseId}}</mat-error>
             </mat-form-field>
 
             <mat-form-field>
-              <input type='number' matInput *ngIf="mode=='new'" placeholder="测试集" [formControl]="testSetId">
-              <input matInput *ngIf="mode!='new'" placeholder="测试集" [formControl]="testSetId" [(ngModel)]="testResultInfo.testSetId" name="testSetId" readonly>
-              <mat-error>{{formErrors.testSetId}}</mat-error>
+              <input type='number' matInput *ngIf="mode=='new'" placeholder="测试集" [formControl]="setId">
+              <input matInput *ngIf="mode!='new'" placeholder="测试集" [formControl]="setId" [(ngModel)]="testResultInfo.setId" name="setId" readonly>
             </mat-form-field>
 
             <mat-form-field>

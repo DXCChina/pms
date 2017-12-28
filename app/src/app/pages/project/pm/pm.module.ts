@@ -8,7 +8,7 @@ import {
   MatButtonModule, MatCommonModule, MatDialogModule, MatSelectModule, MatInputModule,
   MatTabsModule, MatCardModule, MatExpansionModule, MatCheckboxModule, MatSliderModule, MatListModule,
   MatProgressSpinnerModule, MatChipsModule, MatGridListModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule,
-  MatProgressBarModule, MatToolbarModule, MatTooltipModule, MatFormFieldModule
+  MatProgressBarModule, MatToolbarModule, MatTooltipModule, MatFormFieldModule, MatAutocompleteModule
 } from '@angular/material';
 import { ToasterModule } from 'angular2-toaster';
 import { PmComponent } from './pm.component';
@@ -76,6 +76,7 @@ import { BugDetailComponent } from './bug-manage/bug-detail/bug-detail.component
     MatProgressBarModule,
     MatToolbarModule,
     MatFormFieldModule,
+    MatAutocompleteModule,
     ToasterModule,
     NgxDatatableModule
   ],

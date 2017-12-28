@@ -4,7 +4,7 @@
 @author: Wang Qianxiang
 '''
 
-from .db import Demand, ActivityMember, TestCase, TestResult, User
+from .db import Demand, ActivityMember, TestCase, TestSet, TestResult, User
 
 
 def create_test_result(test_result):
@@ -32,7 +32,7 @@ def create_test_result(test_result):
         priority=test_result['priority'],
         releaseId=test_result['releaseId'],
         ownerId=test_result['ownerId'],
-        testSetId=test_result['testSetId'])
+        testSetId=test_result['setId'])
 
 
 def update_test_results(test_result):
@@ -52,11 +52,16 @@ def test_result_detail(r_id):
     '''获取测试结果详情'''
     return TestResult.sfind(
         TestResult,
+        TestResult.testSetId.alias('setId'),
         TestCase.name.alias('caseName'),
+        TestSet.name.alias('setName'),
         User.username.alias('devName')
     ).join(
         TestCase,
         on=(TestResult.caseId == TestCase.id)
+    ).join(
+        TestSet,
+        on=(TestResult.testSetId == TestSet.id)
     ).join(
         User,
         on=(TestResult.devId == User.id)
@@ -68,6 +73,7 @@ def find_test_result_by_id(test_result_id):
     return TestResult.getOne(TestResult.id == test_result_id)
 
 
-def find_test_result_by_case(case_id):
-    '''按case_id查询测试结果'''
-    return TestResult.getOne(TestResult.caseId == case_id)
+def find_test_result_by_case(case_id, set_id):
+    '''按case_id和set_id查询测试结果'''
+    print(case_id, set_id)
+    return TestResult.getOne((TestResult.caseId == case_id) and (TestResult.testSetId == set_id))
