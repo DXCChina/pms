@@ -40,13 +40,13 @@
     tslib "^1.7.1"
 
 "@angular/cli@^1.3.2":
-  version "1.6.1"
-  resolved "http://registry.npm.taobao.org/@angular/cli/download/@angular/cli-1.6.1.tgz#6797995be1965bfc2e26234c728c9968cf7f3bdb"
+  version "1.6.2"
+  resolved "http://registry.npm.taobao.org/@angular/cli/download/@angular/cli-1.6.2.tgz#cb684e8c1d898d084d9709217c694d35311ec69b"
   dependencies:
     "@angular-devkit/build-optimizer" "~0.0.36"
     "@angular-devkit/schematics" "~0.0.42"
     "@ngtools/json-schema" "1.1.0"
-    "@ngtools/webpack" "1.9.1"
+    "@ngtools/webpack" "1.9.2"
     "@schematics/angular" "~0.1.11"
     autoprefixer "^6.5.3"
     chalk "~2.2.0"
@@ -183,9 +183,9 @@
   version "1.1.0"
   resolved "http://registry.npm.taobao.org/@ngtools/json-schema/download/@ngtools/json-schema-1.1.0.tgz#c3a0c544d62392acc2813a42c8a0dc6f58f86922"
 
-"@ngtools/webpack@1.9.1":
-  version "1.9.1"
-  resolved "http://registry.npm.taobao.org/@ngtools/webpack/download/@ngtools/webpack-1.9.1.tgz#c09db646432723f8f912412144313d4830b2eb4d"
+"@ngtools/webpack@1.9.2":
+  version "1.9.2"
+  resolved "http://registry.npm.taobao.org/@ngtools/webpack/download/@ngtools/webpack-1.9.2.tgz#e83eef65b904f1985018e53052e204f2ef5cb584"
   dependencies:
     chalk "~2.2.0"
     enhanced-resolve "^3.1.0"
@@ -254,25 +254,21 @@
   version "2.0.41"
   resolved "http://registry.npm.taobao.org/@types/jquery/download/@types/jquery-2.0.41.tgz#b87ba051011f99edbe586d8f97282e7786e01a6d"
 
-"@types/jquery@^2.0.40":
-  version "2.0.48"
-  resolved "http://registry.npm.taobao.org/@types/jquery/download/@types/jquery-2.0.48.tgz#3e90d8cde2d29015e5583017f7830cb3975b2eef"
-
 "@types/lodash@4.14.61":
   version "4.14.61"
   resolved "http://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.61.tgz#0518c10805b1f9d21f98f82b1311ac2a6ec75892"
 
 "@types/node@*":
-  version "8.5.1"
-  resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-8.5.1.tgz#4ec3020bcdfe2abffeef9ba3fbf26fca097514b5"
+  version "8.5.2"
+  resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-8.5.2.tgz#83b8103fa9a2c2e83d78f701a9aa7c9539739aa5"
 
 "@types/node@6.0.69":
   version "6.0.69"
   resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-6.0.69.tgz#82d955985fcad2b95a72fcf5f8ea630d772535a7"
 
 "@types/node@^6.0.46":
-  version "6.0.94"
-  resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-6.0.94.tgz#70e509b07ed9f961c8f6f4a73a61d922be5029a7"
+  version "6.0.95"
+  resolved "http://registry.npm.taobao.org/@types/node/download/@types/node-6.0.95.tgz#0d027612a77c55b84497ff90a4a7d597e5ac0fab"
 
 "@types/q@^0.0.32":
   version "0.0.32"
@@ -412,13 +408,6 @@ amdefine@>=0.0.4:
 "ammap3@github:amcharts/ammap3":
   version "3.21.12"
   resolved "https://codeload.github.com/amcharts/ammap3/tar.gz/bf52a4b05e20d7b7f7fc40c0433dab67add77198"
-
-angular-froala-wysiwyg@^2.7.3:
-  version "2.7.3"
-  resolved "http://registry.npm.taobao.org/angular-froala-wysiwyg/download/angular-froala-wysiwyg-2.7.3.tgz#afaad05328a3c0e077025d3d34593a68fc37a92f"
-  dependencies:
-    "@types/jquery" "^2.0.40"
-    froala-editor "^2.7.3"
 
 angular-tree-component@^4.1.0:
   version "4.1.0"
@@ -1100,8 +1089,8 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000187, caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000783"
-  resolved "http://registry.npm.taobao.org/caniuse-db/download/caniuse-db-1.0.30000783.tgz#16b30d47266a4f515cc69ae0316b670c9603cdbe"
+  version "1.0.30000784"
+  resolved "http://registry.npm.taobao.org/caniuse-db/download/caniuse-db-1.0.30000784.tgz#1be95012d9489c7719074f81aee57dbdffe6361b"
 
 caseless@~0.11.0:
   version "0.11.0"
@@ -1310,8 +1299,8 @@ codelyzer@3.0.1:
     sprintf-js "^1.0.3"
 
 codemirror@^5.22.2, codemirror@^5.28.0:
-  version "5.32.0"
-  resolved "http://registry.npm.taobao.org/codemirror/download/codemirror-5.32.0.tgz#cb6ff5d8ef36d0b10f031130e2d9ebeee92c902e"
+  version "5.33.0"
+  resolved "http://registry.npm.taobao.org/codemirror/download/codemirror-5.33.0.tgz#462ad9a6fe8d38b541a9536a3997e1ef93b40c6a"
 
 coffee-script@~1.10.0:
   version "1.10.0"
@@ -1428,8 +1417,8 @@ commander@~2.6.0:
   resolved "http://registry.npm.taobao.org/commander/download/commander-2.6.0.tgz#9df7e52fb2a0cb0fb89058ee80c3104225f37e1d"
 
 common-tags@^1.3.1:
-  version "1.5.1"
-  resolved "http://registry.npm.taobao.org/common-tags/download/common-tags-1.5.1.tgz#e2e39931a013cd02253defeed89a1ad615a27f07"
+  version "1.6.0"
+  resolved "http://registry.npm.taobao.org/common-tags/download/common-tags-1.6.0.tgz#788e4bcc582f16993e5b2c92f76b1ccb80731537"
   dependencies:
     babel-runtime "^6.26.0"
 
@@ -1539,15 +1528,15 @@ content-type@~1.0.4:
   resolved "http://registry.npm.taobao.org/content-type/download/content-type-1.0.4.tgz#e138cc75e040c727b1966fe5e5f8c9aee256fe3b"
 
 conventional-changelog-angular@^1.3.3:
-  version "1.5.3"
-  resolved "http://registry.npm.taobao.org/conventional-changelog-angular/download/conventional-changelog-angular-1.5.3.tgz#ff0dd01d740e35bfdbc3f02dfea13cf0d96f0b82"
+  version "1.6.0"
+  resolved "http://registry.npm.taobao.org/conventional-changelog-angular/download/conventional-changelog-angular-1.6.0.tgz#0a26a071f2c9fcfcf2b86ba0cfbf6e6301b75bfa"
   dependencies:
     compare-func "^1.3.1"
     q "^1.4.1"
 
 conventional-changelog-core@^1.8.0:
-  version "1.9.4"
-  resolved "http://registry.npm.taobao.org/conventional-changelog-core/download/conventional-changelog-core-1.9.4.tgz#a541e5354f91072f8583b19e34abb9f6e461c367"
+  version "1.9.5"
+  resolved "http://registry.npm.taobao.org/conventional-changelog-core/download/conventional-changelog-core-1.9.5.tgz#5db7566dad7c0cb75daf47fbb2976f7bf9928c1d"
   dependencies:
     conventional-changelog-writer "^2.0.3"
     conventional-commits-parser "^2.1.0"
@@ -1621,8 +1610,8 @@ copy-concurrently@^1.0.0:
     run-queue "^1.0.0"
 
 copy-webpack-plugin@^4.1.1:
-  version "4.3.0"
-  resolved "http://registry.npm.taobao.org/copy-webpack-plugin/download/copy-webpack-plugin-4.3.0.tgz#cfdf4d131c78d66917a1bb863f86630497aacf42"
+  version "4.3.1"
+  resolved "http://registry.npm.taobao.org/copy-webpack-plugin/download/copy-webpack-plugin-4.3.1.tgz#19ba6370bf6f8e263cbd66185a2b79f2321a9302"
   dependencies:
     cacache "^10.0.1"
     find-cache-dir "^1.0.0"
@@ -2431,9 +2420,15 @@ ejs@^2.5.7:
   version "2.5.7"
   resolved "http://registry.npm.taobao.org/ejs/download/ejs-2.5.7.tgz#cc872c168880ae3c7189762fd5ffc00896c9518a"
 
+electron-releases@^2.1.0:
+  version "2.1.0"
+  resolved "http://registry.npm.taobao.org/electron-releases/download/electron-releases-2.1.0.tgz#c5614bf811f176ce3c836e368a0625782341fd4e"
+
 electron-to-chromium@^1.2.7:
-  version "1.3.28"
-  resolved "http://registry.npm.taobao.org/electron-to-chromium/download/electron-to-chromium-1.3.28.tgz#8dd4e6458086644e9f9f0a1cf32e2a1f9dffd9ee"
+  version "1.3.30"
+  resolved "http://registry.npm.taobao.org/electron-to-chromium/download/electron-to-chromium-1.3.30.tgz#9666f532a64586651fc56a72513692e820d06a80"
+  dependencies:
+    electron-releases "^2.1.0"
 
 elliptic@^6.0.0:
   version "6.4.0"
@@ -2950,7 +2945,7 @@ flush-write-stream@^1.0.0:
     inherits "^2.0.1"
     readable-stream "^2.0.4"
 
-font-awesome@4.7.0, font-awesome@>=4.4.0:
+font-awesome@4.7.0:
   version "4.7.0"
   resolved "http://registry.npm.taobao.org/font-awesome/download/font-awesome-4.7.0.tgz#8fa8cf0411a1a31afd07b06d2902bb9fc815a133"
 
@@ -3013,13 +3008,6 @@ forwarded@~0.1.2:
 fresh@0.5.2:
   version "0.5.2"
   resolved "http://registry.npm.taobao.org/fresh/download/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
-
-froala-editor@^2.7.3:
-  version "2.7.3"
-  resolved "http://registry.npm.taobao.org/froala-editor/download/froala-editor-2.7.3.tgz#c17e1c7d70f736aff9b19b19361420a35022e5b3"
-  dependencies:
-    font-awesome ">=4.4.0"
-    jquery ">=1.11.0"
 
 from2@^2.1.0:
   version "2.3.0"
@@ -3537,8 +3525,8 @@ html-entities@^1.2.0:
   resolved "http://registry.npm.taobao.org/html-entities/download/html-entities-1.2.1.tgz#0df29351f0721163515dfb9e5543e5f6eed5162f"
 
 html-minifier@^3.2.3:
-  version "3.5.7"
-  resolved "http://registry.npm.taobao.org/html-minifier/download/html-minifier-3.5.7.tgz#511e69bb5a8e7677d1012ebe03819aa02ca06208"
+  version "3.5.8"
+  resolved "http://registry.npm.taobao.org/html-minifier/download/html-minifier-3.5.8.tgz#5ccdb1f73a0d654e6090147511f6e6b2ee312700"
   dependencies:
     camel-case "3.0.x"
     clean-css "4.1.x"
@@ -3547,7 +3535,7 @@ html-minifier@^3.2.3:
     ncname "1.0.x"
     param-case "2.1.x"
     relateurl "0.2.x"
-    uglify-js "3.2.x"
+    uglify-js "3.3.x"
 
 html-tags@^1.1.1:
   version "1.2.0"
@@ -3862,8 +3850,8 @@ is-glob@^4.0.0:
     is-extglob "^2.1.1"
 
 is-my-json-valid@^2.12.4:
-  version "2.16.1"
-  resolved "http://registry.npm.taobao.org/is-my-json-valid/download/is-my-json-valid-2.16.1.tgz#5a846777e2c2620d1e69104e5d3a03b1f6088f11"
+  version "2.17.1"
+  resolved "http://registry.npm.taobao.org/is-my-json-valid/download/is-my-json-valid-2.17.1.tgz#3da98914a70a22f0a8563ef1511a246c6fc55471"
   dependencies:
     generate-function "^2.0.0"
     generate-object-property "^1.1.0"
@@ -4135,7 +4123,7 @@ jquery-slimscroll@1.3.8:
   dependencies:
     jquery ">= 1.7"
 
-"jquery@2 - 3", jquery@3.2.1, "jquery@>= 1.7", jquery@>=1.11.0, jquery@>=1.9.1:
+"jquery@2 - 3", jquery@3.2.1, "jquery@>= 1.7", jquery@>=1.9.1:
   version "3.2.1"
   resolved "http://registry.npm.taobao.org/jquery/download/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
 
@@ -4811,8 +4799,8 @@ map-stream@~0.1.0:
   resolved "http://registry.npm.taobao.org/map-stream/download/map-stream-0.1.0.tgz#e56aa94c4c8055a16404a0674b78f215f7c8e194"
 
 marked@~0.3.5:
-  version "0.3.7"
-  resolved "http://registry.npm.taobao.org/marked/download/marked-0.3.7.tgz#80ef3bbf1bd00d1c9cfebe42ba1b8c85da258d0d"
+  version "0.3.9"
+  resolved "http://registry.npm.taobao.org/marked/download/marked-0.3.9.tgz#54ce6a57e720c3ac6098374ec625fcbcc97ff290"
 
 math-expression-evaluator@^1.2.14:
   version "1.2.17"
@@ -5015,8 +5003,8 @@ modify-values@^1.0.0:
   resolved "http://registry.npm.taobao.org/modify-values/download/modify-values-1.0.0.tgz#e2b6cdeb9ce19f99317a53722f3dbf5df5eaaab2"
 
 moment@2.x, moment@>=2.14.0, moment@^2.13.0, moment@^2.9.0:
-  version "2.20.0"
-  resolved "http://registry.npm.taobao.org/moment/download/moment-2.20.0.tgz#53396358994dd3a551e966a66af715ecb6c30ad0"
+  version "2.20.1"
+  resolved "http://registry.npm.taobao.org/moment/download/moment-2.20.1.tgz#d6eb1a46cbcc14a2b2f9434112c1ff8907f313fd"
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -6907,8 +6895,8 @@ rw@1:
   resolved "http://registry.npm.taobao.org/rw/download/rw-1.3.3.tgz#3f862dfa91ab766b14885ef4d01124bfda074fb4"
 
 rxjs@^5.4.2, rxjs@^5.5.2:
-  version "5.5.5"
-  resolved "http://registry.npm.taobao.org/rxjs/download/rxjs-5.5.5.tgz#e164f11d38eaf29f56f08c3447f74ff02dd84e97"
+  version "5.5.6"
+  resolved "http://registry.npm.taobao.org/rxjs/download/rxjs-5.5.6.tgz#e31fb96d6fd2ff1fd84bcea8ae9c02d007179c02"
   dependencies:
     symbol-observable "1.0.1"
 
@@ -7954,9 +7942,9 @@ uglify-es@^3.2.1:
     commander "~2.12.1"
     source-map "~0.6.1"
 
-uglify-js@3.2.x:
-  version "3.2.2"
-  resolved "http://registry.npm.taobao.org/uglify-js/download/uglify-js-3.2.2.tgz#870e4b34ed733d179284f9998efd3293f7fd73f6"
+uglify-js@3.3.x:
+  version "3.3.1"
+  resolved "http://registry.npm.taobao.org/uglify-js/download/uglify-js-3.3.1.tgz#bed6f6a2e2b3f1a73dfe000f04d47ee540dd080b"
   dependencies:
     commander "~2.12.1"
     source-map "~0.6.1"

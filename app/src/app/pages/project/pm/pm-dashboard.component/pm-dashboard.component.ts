@@ -4,8 +4,6 @@ import { Router } from '@angular/router';
 import { ListMetrics, ItemMetrics } from './card-data.Entity';
 import { DashboardService } from './dashboard.service';
 import { MatDialog } from '@angular/material';
-import { TaskDetailDialogComponent } from '../task-detail-dialog/task-detail-dialog.component';
-import { DemandDetailDialogComponent } from '../demand-detail-dialog/demand-detail-dialog.component';
 import { TestResultDetailComponent } from '../test-result-detail-dialog/test-result-detail-dialog.component';
 import { Subscription } from 'rxjs';
 import { JhiEventManager } from 'ng-jhipster';
@@ -216,63 +214,22 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
   }
 
   addDemand() {
-    const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
-      width: '750px',
-      data: { mode: 'create' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    this.router.navigate([`/pages/project/demand/new`]);
   }
 
   showDemandDetail(data) {
-    console.log(data);
-
-    const dialogRef = this.dialog.open(DemandDetailDialogComponent, {
-      width: '750px',
-      data: { mode: 'update', info: data }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    this.router.navigate([`/pages/project/demand/${data.id}`]);
   }
 
   addTask() {
-    const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
-      width: '750px',
-      data: { mode: 'create' }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    this.router.navigate([`/pages/project/devSet/new`]);
   }
 
   showTaskDetail(data) {
-    console.log(data);
-
-    const dialogRef = this.dialog.open(TaskDetailDialogComponent, {
-      width: '750px',
-      data: { mode: 'update', taskInfo: data }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    this.router.navigate([`/pages/project/devSet/${data.id}`]);
   }
 
   showTestResultDetail(data) {
-    console.log(data);
-
-    const dialogRef = this.dialog.open(TestResultDetailComponent, {
-      width: '750px',
-      data: { mode: 'update', info: data }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-    });
+    this.router.navigate([`/pages/project/bug/${data.id}`]);
   }
 }

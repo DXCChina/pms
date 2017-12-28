@@ -48,6 +48,11 @@
           flex-flow: row nowrap;
           justify-content: space-between;
           align-items: center;
+
+          p {
+            width: 100%;
+            font-size: 22px;
+          }
         }
 
         p {

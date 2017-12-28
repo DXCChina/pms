@@ -22,7 +22,7 @@
       <!--</mat-card-header>-->
       <mat-card-content>
         <div class="dialog-content">
-          <form action="" [formGroup]="demandForm" (ngSubmit)="onSubmit(demandForm)">
+          <form action="" [formGroup]="demandForm" (ngSubmit)="onSubmit()">
             <div class="demand-detail-content">
               <mat-form-field>
                 <input matInput placeholder="需求名称" [formControl]="title" [(ngModel)]="demandInfo.title" name="title" [readonly]="!isOperate">
