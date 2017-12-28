@@ -4,7 +4,7 @@
 @author: Wang Qianxiang
 '''
 
-from .db import Demand, ActivityMember, TestCase, TestSet, TestResult, User
+from .db import Demand, ActivityMember, TestCase, TestSet, Case_Set, TestResult, User
 
 
 def create_test_result(test_result):
@@ -24,6 +24,7 @@ def create_test_result(test_result):
     return TestResult.get_or_create(
         name=test_result['name'],
         detail=test_result['detail'],
+        testSetId=test_result['setId'],
         caseId=test_result['caseId'],
         output=test_result['output'],
         status=test_result['status'],
@@ -31,8 +32,7 @@ def create_test_result(test_result):
         level=test_result['level'],
         priority=test_result['priority'],
         releaseId=test_result['releaseId'],
-        ownerId=test_result['ownerId'],
-        testSetId=test_result['setId'])
+        ownerId=test_result['ownerId'])
 
 
 def update_test_results(test_result):
@@ -40,6 +40,8 @@ def update_test_results(test_result):
     TestResult.update(
         name=test_result['name'],
         detail=test_result['detail'],
+        testSetId=test_result['setId'],
+        caseId=test_result['caseId'],
         output=test_result['output'],
         status=test_result['status'],
         level=test_result['level'],
@@ -77,3 +79,17 @@ def find_test_result_by_case(case_id, set_id):
     '''按case_id和set_id查询测试结果'''
     print(case_id, set_id)
     return TestResult.getOne((TestResult.caseId == case_id) and (TestResult.testSetId == set_id))
+
+
+def search_set_list(r_id):
+    '''查询测试集'''
+    return TestSet.sfind().where(TestSet.releaseId == r_id).dicts()
+
+def search_case_list(s_id, r_id):
+    '''查询测试集相关测试案例'''
+    return TestCase.sfind().join(
+        Case_Set,
+        on=(TestCase.id == Case_Set.caseId)
+    ).where(
+        (TestCase.releaseId == r_id) and (Case_Set.setId == s_id)
+    ).dicts()

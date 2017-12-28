@@ -73,7 +73,7 @@ def search_case_list():
 
 @fresh_jwt_required
 def search_test_member():
-    '''模糊查询测试案例
+    '''模糊查询测试成员
 
     GET /api/testSet/searchMember
     '''

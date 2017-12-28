@@ -389,6 +389,34 @@ paths:
       responses:
         200:
           description: 测试结果更新成功
+  /testResult/searchSet:
+    get:
+      summary: 模糊查询测试集
+      operationId: controller.testResult.search_set_list
+      parameters:
+        - name: releaseId
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
+  /testResult/searchCase:
+    get:
+      summary: 模糊查询测试案例
+      operationId: controller.testResult.search_case_list
+      parameters:
+        - name: setId
+          in: query
+          required: true
+          type: integer
+        - name: releaseId
+          in: query
+          required: true
+          type: integer
+      responses:
+        200:
+          description: ok
 
 # demand
   /project/demand/{title}:
@@ -636,9 +664,9 @@ definitions:
         type: string
       detail:
         type: string
-      caseId:
-        type: integer
       setId:
+        type: integer
+      caseId:
         type: integer
       output:
         type: string
@@ -651,6 +679,7 @@ definitions:
     required:
     - name
     - detail
+    - setId
     - caseId
     - output
     - status
@@ -665,6 +694,10 @@ definitions:
         type: string
       detail:
         type: string
+      setId:
+        type: integer
+      caseId:
+        type: integer
       output:
         type: string
       status:
@@ -677,6 +710,8 @@ definitions:
     - id
     - name
     - detail
+    - setId
+    - caseId
     - output
     - status
     - level
