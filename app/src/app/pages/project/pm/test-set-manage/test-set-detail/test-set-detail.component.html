@@ -31,10 +31,10 @@
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select placeholder="指派给" [formControl]="memberId" required>
+            <mat-select placeholder="指派给" [formControl]="memberId" [(ngModel)]="testSetInfo.memberId" required>
               <mat-option>未选择</mat-option>
               <mat-option *ngFor="let m of testMemberList" [value]="m.id">
-                {{m.username}}
+                {{m.username}} - {{m.email}}
               </mat-option>
             </mat-select>
             <mat-hint>{{memberId.value?.email}}</mat-hint>
@@ -43,17 +43,14 @@
           
           <h5>所含测试案例</h5>
 
-          <div class="search-container">
-            <mat-form-field>
-              <input type="text" matInput placeholder="点此搜索案例" [formControl]="searchControl" [matAutocomplete]="auto">
-              <mat-autocomplete #auto="matAutocomplete">
-                <mat-option *ngFor="let case of searchCaseList" [value]="case.name" (click)="addCase(case)">
-                  {{ case.name }}
-                </mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-            <!-- <button mat-button>添加</button> -->
-          </div>
+          <mat-form-field>
+            <input type="text" matInput placeholder="点此搜索案例" [formControl]="searchControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let case of filteredCases | async" [value]="case.name" (click)="addCase(case)">
+                {{ case.name}} - {{case.type}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
           
           <mat-accordion>
             <mat-expansion-panel *ngFor="let caseItem of testCaseList">

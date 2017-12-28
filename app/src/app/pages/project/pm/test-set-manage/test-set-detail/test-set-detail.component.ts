@@ -7,6 +7,10 @@ import { MatChipInputEvent } from '@angular/material';
 import { ToasterService, ToasterConfig } from 'angular2-toaster';
 import { JhiEventManager } from 'ng-jhipster';
 
+import {Observable} from 'rxjs/Observable';
+import {startWith} from 'rxjs/operators/startWith';
+import {map} from 'rxjs/operators/map';
+
 import { TestSetService } from './test-set-detail.service';
 import { TestSet } from './test-set-detail.model';
 
@@ -20,7 +24,7 @@ import { TestSet } from './test-set-detail.model';
 export class TestSetDetailComponent implements OnInit {
   name: AbstractControl;
   detail: AbstractControl;
-  case: AbstractControl;
+  // case: AbstractControl;
   memberId: AbstractControl;
 
   testSetForm: FormGroup;
@@ -28,7 +32,7 @@ export class TestSetDetailComponent implements OnInit {
   formErrors = {
     'name': '',
     'detail': '',
-    'case': '',
+    // 'case': '',
     'memberId': ''
   };
 
@@ -37,9 +41,9 @@ export class TestSetDetailComponent implements OnInit {
       'required': '请输入测试集名称'
     },
     'detail': {},
-    'case': {
-      'required': '请选择测试集相关案例'
-    },
+    // 'case': {
+    //   'required': '请选择测试集相关案例'
+    // },
     'memberId': {
       'required': '请选择测试集相关人员'
     }
@@ -63,6 +67,7 @@ export class TestSetDetailComponent implements OnInit {
   queryOfCase = '';
 
   searchControl: FormControl;
+  filteredCases: Observable<any[]>;
 
   constructor(
     private _service: TestSetService,
@@ -81,10 +86,19 @@ export class TestSetDetailComponent implements OnInit {
       });
 
     this.searchControl = new FormControl();
+    this.filteredCases = this.searchControl.valueChanges
+      .pipe(
+        startWith(this.queryOfCase),
+        map(Case => Case ? this.filterCases(Case) : this.searchCaseList.slice())
+      );
+  }
+
+  filterCases(name: string) {
+    return this.searchCaseList.filter(Case =>
+      Case.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
 
   ngOnInit() {
-    this.findTestMember();
     if (this.mode !== 'new') {
       this.route.params.subscribe(param => {
         if (param['id']) {
@@ -92,7 +106,8 @@ export class TestSetDetailComponent implements OnInit {
         }
       });
     }
-    this.searchCase();
+    this.findTestMember();
+    this.findTestCase();
     this.buildForm();
   }
 
@@ -108,7 +123,7 @@ export class TestSetDetailComponent implements OnInit {
       });
   }
 
-  searchCase() {
+  findTestCase() {
     this._service.searchTestCase('', this.releaseId)
         .then(res => {
           if (res.msg === 'ok') {
@@ -175,7 +190,7 @@ export class TestSetDetailComponent implements OnInit {
       }
     });
     if (!HAVE_ID) { this.testCaseList.push(caseObj); }
-    // this.searchControl = '';
+    this.queryOfCase = '';
   }
 
   deleteCase(id) {
