@@ -15,7 +15,6 @@ import {Observable, Subscription} from "rxjs";
 })
 export class TestCaseDetailComponent implements OnInit, AfterViewInit {
   @ViewChild('search') searchInput: ElementRef;
-  @ViewChild('selectDemand') selectDemand: ElementRef;
 
   name: AbstractControl;
   detail: AbstractControl;
@@ -67,11 +66,13 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
   caseId: string = '';
   value: string = '';
   searchObservable: Subscription;
-  display:boolean = false;
-  searchDemand = new FormControl();
+  display: boolean = false;
+
+  options: any;
+  selectEle: any;
 
   constructor(public fb: FormBuilder, private toasterService: ToasterService, private _service: CaseDetailModalService,
-              private eventManager: JhiEventManager, private router:Router, private route:ActivatedRoute) {
+              private eventManager: JhiEventManager, private router: Router, private route: ActivatedRoute) {
     this.projectId = sessionStorage.getItem('projectId');
     this.releaseId = sessionStorage.getItem('releaseId');
 
@@ -79,6 +80,10 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
       .subscribe(params => {
         this.mode = params.type;
       })
+
+    this.options = {
+      imageUploadURL: '/api/upload'
+    };
   }
 
   ngOnInit() {
@@ -94,9 +99,9 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
     this.findDemand(this.value);
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.searchObservable = Observable.fromEvent(this.searchInput.nativeElement, 'keyup')
-      .map( (e: any) =>  e.target.value )
+      .map((e: any) => e.target.value)
       .debounceTime(100)
       .subscribe((search: any) => {
         this.findDemand(search);
@@ -155,7 +160,7 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
   }
 
   onSubmit() {
-    this.testCaseParams = Object.assign({projectId:this.projectId, releaseId:this.releaseId},this.testCaseParams);
+    this.testCaseParams = Object.assign({projectId: this.projectId, releaseId: this.releaseId}, this.testCaseParams);
     this.testCaseParams = Object.assign(this.testCaseParams, this.testCaseForm.value);
     if (this.mode === 'new') {
       this._service.newCase(this.testCaseParams)
@@ -163,7 +168,7 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
           if (res.msg === 'ok') {
             this.toasterService.pop('ok', '新建测试用例成功');
             this.eventManager.broadcast({name: 'TestCaseListModification', content: 'OK'});
-            this.router.navigate(['../'], {relativeTo:this.route});
+            this.router.navigate(['../'], {relativeTo: this.route});
           } else {
             this.toasterService.pop('error', res.msg);
           }
@@ -175,7 +180,7 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
           if (res.msg === 'ok') {
             this.toasterService.pop('ok', '测试用例修改成功');
             this.eventManager.broadcast({name: 'TestCaseListModification', content: 'OK'});
-            this.router.navigate(['../'], {relativeTo:this.route});
+            this.router.navigate(['../'], {relativeTo: this.route});
           } else {
             this.toasterService.pop('error', res.msg);
           }
@@ -191,15 +196,12 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
       });
   }
 
-  select() {
-    if(!this.selectDemand['empty']){
-      let searchDemand = this.searchDemand.value;
-      this.testCaseParams['demandId'] = searchDemand&&searchDemand.id;
-    }
+  select(demand) {
+    this.testCaseParams['demandId'] = demand.id;
   }
 
-  cancel(){
-    this.router.navigate(['../'], {relativeTo:this.route});
+  cancel() {
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 
 }
