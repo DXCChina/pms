@@ -16,7 +16,6 @@ export class TestSetService {
   }
 
   reviewTestSet(id: number): Promise<any> {
-
     return this.http.get(`${this.testSetUrl}?testSetId=${id}`)
       .toPromise()
       .then(this._global.extractData)
@@ -25,6 +24,20 @@ export class TestSetService {
 
   updateTestSet(testSetInfo: any): Promise<any> {
     return this.http.put(this.testSetUrl, JSON.stringify(testSetInfo), this._global.options)
+      .toPromise()
+      .then(this._global.extractData)
+      .catch(this._global.handleError);
+  }
+
+  searchTestMember(projectId: number): Promise<any> {
+    return this.http.get(`${this.testSetUrl}/searchMember?projectId=${projectId}`)
+      .toPromise()
+      .then(this._global.extractData)
+      .catch(this._global.handleError);
+  }
+
+  searchTestCase(title: string, releaseId: number): Promise<any> {
+    return this.http.get(`${this.testSetUrl}/searchCase?title=${title}&releaseId=${releaseId}`)
       .toPromise()
       .then(this._global.extractData)
       .catch(this._global.handleError);

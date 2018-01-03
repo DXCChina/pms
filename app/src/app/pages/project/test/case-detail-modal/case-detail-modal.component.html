@@ -41,12 +41,12 @@
       </common-search>
 
       <mat-form-field>
-        <input matInput placeholder="实际输入" [formControl]="input" [(ngModel)]="testCaseInfo.input" name="input">
+        <input matInput placeholder="输入" [formControl]="input" [(ngModel)]="testCaseInfo.input" name="input">
         <mat-error>{{formErrors.input}}</mat-error>
       </mat-form-field>
 
       <mat-form-field>
-        <input matInput placeholder="期望输入" [formControl]="expect" [(ngModel)]="testCaseInfo.expect" name="expect">
+        <input matInput placeholder="期望输出" [formControl]="expect" [(ngModel)]="testCaseInfo.expect" name="expect">
         <mat-error>{{formErrors.expect}}</mat-error>
       </mat-form-field>
     </div>
