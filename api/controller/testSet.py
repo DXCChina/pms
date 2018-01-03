@@ -3,7 +3,6 @@
 
 from flask import jsonify, request
 from flask_jwt_extended import (fresh_jwt_required)
-from playhouse.shortcuts import model_to_dict
 
 from model import testSet
 
@@ -16,7 +15,7 @@ def search_test_set():
     '''
     return jsonify({
         'msg': 'ok',
-        'data': testSet.test_set_detail(request.args.get('testSetId'))
+        'data': testSet.review_test_set(request.args.get('testSetId'))
     }), 200
 
 
@@ -54,3 +53,32 @@ def update_test_set():
         'msg': 'ok',
         'data': testSet.update_test_set(data)
     }), 200
+
+
+@fresh_jwt_required
+def search_case_list():
+    '''模糊查询测试案例
+
+    GET /api/testSet/searchCase
+    '''
+
+    return jsonify({
+        'msg': 'ok',
+        'data': list(testSet.search_case_list(
+            request.args.get('title'),
+            request.args.get('releaseId')
+        ))
+    })
+
+
+@fresh_jwt_required
+def search_test_member():
+    '''模糊查询测试成员
+
+    GET /api/testSet/searchMember
+    '''
+
+    return jsonify({
+        'msg': 'ok',
+        'data': list(testSet.find_test_set_member(request.args.get('releaseId')))
+    })

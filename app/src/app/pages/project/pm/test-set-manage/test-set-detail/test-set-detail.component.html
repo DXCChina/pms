@@ -8,38 +8,71 @@
           <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
         </svg>
       </a>
-      <div mat-card-avatar [style.background]="'#c7b7dd'">{{testSetInfo.name| name2avatar}}</div>
-      <div class="header-text">
+      <div mat-card-avatar *ngIf="mode!='new'" [style.background]="'#c7b7dd'">{{testSetInfo.name | name2avatar}}</div>
+      <div class="header-text" *ngIf="mode!='new'">
         <div class="detail-name">{{testSetInfo.name}}</div>
         <div>{{testSetInfo.detail}}</div>
       </div>
+      <div class="header-text" *ngIf="mode=='new'">
+        <div class="detail-name">新建测试集</div>
+      </div>
     </div>
     <mat-card>
-      <div class="dialog-content">
-        <form action="">
-          <div class="detail-content">
-            <mat-form-field>
-              <input matInput placeholder="测试集名称" [(ngModel)]="testSetInfo.name" name="name" readonly>
-            </mat-form-field>
-  
-            <mat-form-field>
-              <input matInput placeholder="测试集描述" [(ngModel)]="testSetInfo.detail" name="detail" readonly>
-            </mat-form-field>
-  
-            <mat-form-field>
-              <input matInput placeholder="所含测试案例"  name="case" readonly>
-            </mat-form-field>
-  
-            <mat-form-field>
-              <input matInput placeholder="指派给" [(ngModel)]="testSetInfo.member" name="member" readonly>
-            </mat-form-field>
-          </div>
-  
-          <div class="detail-footer">
-            <button mat-button (click)="cancel()">关闭</button>
-          </div>
-        </form>
-      </div>
+      <form action="" [formGroup]="testSetForm" (ngSubmit)="onSubmit()">
+        <div class="detail-content">
+          <h5>基本信息</h5>
+          <mat-form-field>
+            <input matInput placeholder="测试集名称" [formControl]="name" [(ngModel)]="testSetInfo.name" name="name">
+            <mat-error>{{formErrors.name}}</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="测试集描述" [formControl]="detail" [(ngModel)]="testSetInfo.detail" name="detail">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="指派给" [formControl]="memberId" [(ngModel)]="testSetInfo.memberId" required>
+              <mat-option>未选择</mat-option>
+              <mat-option *ngFor="let m of testMemberList" [value]="m.id">
+                {{m.username}} - {{m.email}}
+              </mat-option>
+            </mat-select>
+            <!-- <mat-hint>{{memberId.value?.email}}</mat-hint> -->
+            <mat-error>{{formErrors.memberId}}</mat-error>
+          </mat-form-field>
+          
+          <h5>所含测试案例</h5>
+
+          <mat-form-field>
+            <input type="text" matInput placeholder="点此搜索案例" [formControl]="searchControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngFor="let case of filteredCases | async" [value]="case.name" (click)="addCase(case)">
+                {{ case.name}} - {{case.type}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let caseItem of testCaseList">
+              <mat-expansion-panel-header>
+                <mat-panel-title>{{ caseItem.name }}</mat-panel-title>
+                <mat-panel-description>{{ caseItem.type }}</mat-panel-description>
+              </mat-expansion-panel-header>
+              {{ caseItem.detail }}
+              <mat-action-row>
+                <button mat-button (click)="viewCaseDetail(caseItem.id)">查看详情</button>
+                <button mat-button (click)="deleteCase(caseItem.id)">移除案例</button>
+              </mat-action-row>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <mat-error *ngIf="testCaseList.length==0">请添加相关测试案例</mat-error>
+        </div>
+
+        <div class="detail-footer">
+          <button mat-button (click)="cancel()">关闭</button>
+          <button mat-button type="submit" [disabled]="testCaseList.length==0&&!testSetForm?.valid">{{mode==='new'?'新建':'修改'}}</button>
+        </div>
+      </form>
     </mat-card>
   </div>
 </div>
