@@ -11,35 +11,34 @@
       <div mat-card-avatar [style.background]="'#c7b7dd'">{{demandInfo.title | name2avatar}}</div>
       <div class="header-text">
         <div class="detail-name">{{demandInfo.title ? demandInfo.title : "新建需求"}}</div>
-        <div>{{demandInfo.detail ? demandInfo.detail : "需求描述"}}</div>
+        <div>{{demandInfo.detail ? (demandInfo.detail | delHtmlTag) : "需求描述"}}</div>
       </div>
     </div>
     <mat-card class="">
-      <!--<mat-card-header>-->
-        <!--<mat-card-title>需求name</mat-card-title>-->
-        <!--<mat-card-subtitle>日期</mat-card-subtitle>-->
-        <!--<div mat-card-avatar [style.background]="'#8847dc'">{{"需求name"| name2avatar}}</div>-->
-      <!--</mat-card-header>-->
       <mat-card-content>
         <div class="dialog-content">
-          <form action="" [formGroup]="demandForm" (ngSubmit)="onSubmit()">
+          <form action="" [formGroup]="demandForm" (ngSubmit)="onSubmit('one')">
             <div class="demand-detail-content">
               <mat-form-field>
-                <input matInput placeholder="需求名称" [formControl]="title" [(ngModel)]="demandInfo.title" name="title" [readonly]="!isOperate">
-                <mat-error >{{formErrors.title}}</mat-error>
+                <input matInput placeholder="需求名称" [formControl]="title" [(ngModel)]="demandInfo.title" name="title"
+                       [readonly]="!isOperate">
+                <mat-error>{{formErrors.title}}</mat-error>
+              </mat-form-field>
+
+              <div class="editor">
+                <span>需求描述</span>
+                <textarea [froalaEditor]="options" [formControl]="detail" [(ngModel)]="demandInfo.detail">
+            </textarea>
+              </div>
+
+              <mat-form-field>
+                <input matInput placeholder="任务指定(编辑需求时不可指定任务)" [formControl]="assignTask"
+                       [(ngModel)]="demandInfo.activityTittle" name="activityTittle" readonly>
               </mat-form-field>
 
               <mat-form-field>
-                <textarea matInput placeholder="需求描述" [formControl]="detail" [(ngModel)]="demandInfo.detail" name="detail" [readonly]="!isOperate">
-                </textarea>
-              </mat-form-field>
-
-              <mat-form-field>
-                <input matInput  placeholder="任务指定(编辑需求时不可指定任务)" [formControl]="assignTask" [(ngModel)]="demandInfo.activityTittle" name="activityTittle" readonly>
-              </mat-form-field>
-
-              <mat-form-field>
-                <mat-select placeholder="优先级" [formControl]="level" [(ngModel)]="demandInfo.level" name="level" [disabled]="!isOperate">
+                <mat-select placeholder="优先级" [formControl]="level" [(ngModel)]="demandInfo.level" name="level"
+                            [disabled]="!isOperate">
                   <mat-option value="low">低</mat-option>
                   <mat-option value="normal" aria-selected="true">中</mat-option>
                   <mat-option value="high">高</mat-option>
@@ -48,13 +47,17 @@
               </mat-form-field>
 
               <mat-form-field>
-                <input matInput placeholder="创建时间(创建时间不可设置)" [formControl]="createAt" [(ngModel)]="demandInfo.createAt" name="createAt" readonly>
+                <input matInput placeholder="创建时间(创建时间不可设置)" [formControl]="createAt" [(ngModel)]="demandInfo.createAt"
+                       name="createAt" readonly>
               </mat-form-field>
             </div>
 
             <div class="detail-footer" *ngIf="isOperate">
               <button mat-button (click)="cancel()">取消</button>
-              <button mat-button type="submit" [disabled]="!demandForm?.valid">{{mode == 'new' ?  '提交' : '修改'}}</button>
+              <button mat-button type="submit" [disabled]="!demandForm?.valid">{{mode == 'new' ? '新建' : '修改'}}</button>
+              <button mat-button *ngIf="mode=='new'" type="button" [disabled]="!demandForm?.valid"
+                      (click)="onSubmit('again')">再次新建
+              </button>
             </div>
 
             <div class="detail-footer" *ngIf="!isOperate">

@@ -46,7 +46,8 @@ import {
   BaAppPicturePipe,
   BaKameleonPicturePipe,
   BaProfilePicturePipe,
-  Name2AvatarPipe
+  Name2AvatarPipe,
+  DelHtmlTagPipe
 } from './pipes';
 
 import {
@@ -150,7 +151,8 @@ const NGA_PIPES = [
   BaKameleonPicturePipe,
   BaProfilePicturePipe,
   PositionSwitchPipe,
-  Name2AvatarPipe
+  Name2AvatarPipe,
+  DelHtmlTagPipe
 ];
 
 const NGA_SERVICES = [

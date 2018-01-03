@@ -23,6 +23,7 @@ class TestCaseSchema(Schema):
     name = fields.String(required=True)
     detail = fields.String(required=True)
     type = fields.String(required=True)
+    status = fields.String(required=True)
     demandId = fields.Integer(required=True)
     input = fields.String(required=True)
     expect = fields.String(required=True)
