@@ -13,3 +13,10 @@ $custom-theme: mat-light-theme($custom-primary, $custom-accent);
 .mat-dialog-container{
   overflow-y: hidden !important;
 }
+
+.editor{
+  padding-bottom: 17.5px;
+  span{
+    color: rgba(0, 0, 0, 0.54);
+  }
+}

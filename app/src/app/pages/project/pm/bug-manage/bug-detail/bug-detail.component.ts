@@ -7,7 +7,7 @@ import {JhiEventManager} from 'ng-jhipster';
 import {TestResultService} from './test-result-detail-dialog.service';
 import {TestResult} from './test-result.model';
 import {parse} from 'querystring';
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute, Router, NavigationEnd} from "@angular/router";
 
 @Component({
   selector: 'app-bug-detail',
@@ -71,6 +71,10 @@ export class BugDetailComponent implements OnInit {
 
   testResultInfo: TestResult = new TestResult();
 
+  options: any = {
+    imageUploadURL: '/api/upload'
+  };
+
   constructor(public fb: FormBuilder,
               private _service: TestResultService,
               private toasterService: ToasterService,
@@ -79,21 +83,33 @@ export class BugDetailComponent implements OnInit {
     this.projectId = parseInt(sessionStorage.getItem('projectId'), 10);
     this.releaseId = parseInt(sessionStorage.getItem('releaseId'), 10);
 
-    this.route.queryParams.filter(params => params.type)
-      .subscribe(params => {
-        this.mode = params.type;
-      })
+    this.route.url.subscribe(url => {
+      this.mode = url[0].path
+    });
+
+    // Determines if a route should be reused
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+
+    this.router.events.subscribe((evt) => {
+      if (evt instanceof NavigationEnd) {
+        // trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+
+        if (this.mode != 'new') {
+          this.route.params.subscribe(param => {
+            if (param['id']) {
+              this.reviewDetail(param['id']);
+            }
+          });
+        }
+        this.buildForm();
+      }
+    });
   }
 
   ngOnInit() {
-    if (this.mode != 'new') {
-      this.route.params.subscribe(param => {
-        if (param['id']) {
-          this.reviewDetail(param['id']);
-        }
-      });
-    }
-    this.buildForm();
   }
 
   reviewDetail(testResultId) {
@@ -149,34 +165,49 @@ export class BugDetailComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    let testResultInfo = Object.assign(this.testResultForm.value, {releaseId:this.releaseId, projectId:this.projectId});
+  onSubmit(type) {
+    let testResultInfo = Object.assign(this.testResultForm.value, {
+      releaseId: this.releaseId,
+      projectId: this.projectId
+    });
     testResultInfo.level = testResultInfo.level || 'normal';
     testResultInfo.priority = testResultInfo.priority || 'normal';
     if (this.mode === 'new') {
-      this._service.newTestResult(testResultInfo)
-        .then(res => {
-          if (res.msg === 'ok') {
-            this.eventManager.broadcast({name: 'TestResultModification', content: 'OK'});
-            this.toasterService.pop('ok', '新建测试结果成功');
-            this.router.navigate(['../'], {relativeTo: this.route});
-          } else {
-            this.toasterService.pop('error', res.msg);
-          }
-        });
+      this.newTestResult(testResultInfo, type);
     } else {
       testResultInfo = Object.assign(testResultInfo, {id: this.testResultInfo.id});
-      this._service.updateTestResult(testResultInfo)
-        .then(res => {
-          if (res.msg === 'ok') {
-            this.eventManager.broadcast({name: 'TestResultModification', content: 'OK'});
-            this.toasterService.pop('ok', '测试结果修改成功');
-            this.router.navigate(['../'], {relativeTo: this.route});
-          } else {
-            this.toasterService.pop('error', res.msg);
-          }
-        });
+      this.updateTestResult(testResultInfo);
     }
+  }
+
+  newTestResult(testResultInfo, type) {
+    this._service.newTestResult(testResultInfo)
+      .then(res => {
+        if (res.msg === 'ok') {
+          this.eventManager.broadcast({name: 'TestResultModification', content: 'OK'});
+          this.toasterService.pop('ok', '新建测试结果成功');
+          if (type == 'one') {
+            this.router.navigate(['../'], {relativeTo: this.route});
+          } else if (type == 'again') {
+            this.router.navigate(['../new'], {relativeTo: this.route});
+          }
+        } else {
+          this.toasterService.pop('error', res.msg);
+        }
+      });
+  }
+
+  updateTestResult(testResultInfo) {
+    this._service.updateTestResult(testResultInfo)
+      .then(res => {
+        if (res.msg === 'ok') {
+          this.eventManager.broadcast({name: 'TestResultModification', content: 'OK'});
+          this.toasterService.pop('ok', '测试结果修改成功');
+          this.router.navigate(['../'], {relativeTo: this.route});
+        } else {
+          this.toasterService.pop('error', res.msg);
+        }
+      });
   }
 
   cancel() {

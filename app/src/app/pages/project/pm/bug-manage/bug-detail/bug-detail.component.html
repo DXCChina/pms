@@ -10,27 +10,24 @@
       </a>
       <div mat-card-avatar [style.background]="'#c7b7dd'">{{testResultInfo.name| name2avatar}}</div>
       <div class="header-text">
-        <div class="detail-name">{{testResultInfo.name}}</div>
-        <div>{{testResultInfo.detail}}</div>
+        <div class="detail-name">{{testResultInfo.name?testResultInfo.name:'新建缺陷'}}</div>
+        <div>{{testResultInfo.detail?(testResultInfo.detail|delHtmlTag):'缺陷描述'}}</div>
       </div>
     </div>
     <mat-card class="">
-      <!--<mat-card-header>-->
-      <!--<mat-card-title>需求name</mat-card-title>-->
-      <!--<mat-card-subtitle>日期</mat-card-subtitle>-->
-      <!--<div mat-card-avatar [style.background]="'#8847dc'">{{"需求name"| name2avatar}}</div>-->
-      <!--</mat-card-header>-->
       <div class="dialog-content">
-        <form action="" [formGroup]="testResultForm" (ngSubmit)="onSubmit()">
+        <form action="" [formGroup]="testResultForm" (ngSubmit)="onSubmit('one')">
           <div class="detail-content">
             <mat-form-field>
               <input matInput placeholder="测试结果名称" [formControl]="name" [(ngModel)]="testResultInfo.name" name="name">
               <mat-error>{{formErrors.name}}</mat-error>
             </mat-form-field>
 
-            <mat-form-field>
-              <input matInput placeholder="测试结果描述" [formControl]="detail" [(ngModel)]="testResultInfo.detail" name="detail">
-            </mat-form-field>
+            <div class="editor">
+              <span>需求描述</span>
+              <textarea [froalaEditor]="options" [formControl]="detail" [(ngModel)]="testResultInfo.detail">
+            </textarea>
+            </div>
 
             <mat-form-field>
               <input type='number' matInput *ngIf="mode=='new'" placeholder="测试案例" [formControl]="caseId">
@@ -78,6 +75,7 @@
           <div class="detail-footer">
             <button mat-button (click)="cancel()">关闭</button>
             <button mat-button type="submit" [disabled]="!testResultForm?.valid">{{mode=='new'?'新建':'提交'}}</button>
+            <button mat-button type="button" *ngIf="mode == 'new'" [disabled]="!testResultForm?.valid" (click)="onSubmit('again')">再次新建</button>
           </div>
         </form>
       </div>
