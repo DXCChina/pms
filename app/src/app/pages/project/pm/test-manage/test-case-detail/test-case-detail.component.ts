@@ -1,10 +1,10 @@
-import {Component, OnInit, Inject, ElementRef, AfterViewInit, ViewChild} from '@angular/core';
-import {AbstractControl, FormGroup, FormBuilder, Validators, FormControl} from "@angular/forms";
+import {Component, OnInit, ElementRef, AfterViewInit, ViewChild} from '@angular/core';
+import {AbstractControl, FormGroup, FormBuilder, Validators} from "@angular/forms";
 import {ToasterConfig, ToasterService} from "angular2-toaster";
 import {TestCase} from "./test-case.model";
 import {CaseDetailModalService} from "./case-detail-modal.service";
 import {JhiEventManager} from "ng-jhipster";
-import {Router, ActivatedRoute} from "@angular/router";
+import {Router, ActivatedRoute, NavigationEnd} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
 
 @Component({
@@ -68,35 +68,43 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
   searchObservable: Subscription;
   display: boolean = false;
 
-  options: any;
-  selectEle: any;
+  options: any = {
+    imageUploadURL: '/api/upload'
+  };
 
   constructor(public fb: FormBuilder, private toasterService: ToasterService, private _service: CaseDetailModalService,
               private eventManager: JhiEventManager, private router: Router, private route: ActivatedRoute) {
     this.projectId = sessionStorage.getItem('projectId');
     this.releaseId = sessionStorage.getItem('releaseId');
 
-    this.route.queryParams.filter(params => params.type)
-      .subscribe(params => {
-        this.mode = params.type;
-      })
+    this.route.url.subscribe(url => {
+      this.mode = url[0].path
+    });
 
-    this.options = {
-      imageUploadURL: '/api/upload'
+    // Determines if a route should be reused
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
     };
+
+    this.router.events.subscribe((evt) => {
+      if (evt instanceof NavigationEnd) {
+        // trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+        this.buildForm();
+        if (this.mode != 'new') {
+          this.route.params.subscribe(param => {
+            if (param['id']) {
+              this.caseId = param['id'];
+              this.reviewDetail(param['id']);
+            }
+          });
+        }
+        this.findDemand(this.value);
+      }
+    });
   }
 
   ngOnInit() {
-    this.buildForm();
-    if (this.mode != 'new') {
-      this.route.params.subscribe(param => {
-        if (param['id']) {
-          this.caseId = param['id'];
-          this.reviewDetail(param['id']);
-        }
-      });
-    }
-    this.findDemand(this.value);
   }
 
   ngAfterViewInit() {
@@ -159,33 +167,45 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  onSubmit() {
+  onSubmit(type) {
     this.testCaseParams = Object.assign({projectId: this.projectId, releaseId: this.releaseId}, this.testCaseParams);
     this.testCaseParams = Object.assign(this.testCaseParams, this.testCaseForm.value);
     if (this.mode === 'new') {
-      this._service.newCase(this.testCaseParams)
-        .then(res => {
-          if (res.msg === 'ok') {
-            this.toasterService.pop('ok', '新建测试用例成功');
-            this.eventManager.broadcast({name: 'TestCaseListModification', content: 'OK'});
-            this.router.navigate(['../'], {relativeTo: this.route});
-          } else {
-            this.toasterService.pop('error', res.msg);
-          }
-        });
+      this.newCase(this.testCaseParams, type);
     } else {
       this.testCaseParams = Object.assign({id: this.caseId}, this.testCaseParams);
-      this._service.updateCase(this.testCaseParams)
-        .then(res => {
-          if (res.msg === 'ok') {
-            this.toasterService.pop('ok', '测试用例修改成功');
-            this.eventManager.broadcast({name: 'TestCaseListModification', content: 'OK'});
-            this.router.navigate(['../'], {relativeTo: this.route});
-          } else {
-            this.toasterService.pop('error', res.msg);
-          }
-        });
+      this.updateCase(this.testCaseParams);
     }
+  }
+
+  newCase(testCaseParams, type){
+    this._service.newCase(testCaseParams)
+      .then(res => {
+        if (res.msg === 'ok') {
+          this.toasterService.pop('ok', '新建测试用例成功');
+          this.eventManager.broadcast({name: 'TestCaseListModification', content: 'OK'});
+          if (type === 'one') {
+            this.router.navigate(['../'], {relativeTo: this.route});
+          } else if(type === 'again'){
+            this.router.navigate(['../new'], {relativeTo: this.route});
+          }
+        } else {
+          this.toasterService.pop('error', res.msg);
+        }
+      });
+  }
+
+  updateCase(testCaseParams){
+    this._service.updateCase(testCaseParams)
+      .then(res => {
+        if (res.msg === 'ok') {
+          this.toasterService.pop('ok', '测试用例修改成功');
+          this.eventManager.broadcast({name: 'TestCaseListModification', content: 'OK'});
+          this.router.navigate(['../'], {relativeTo: this.route});
+        } else {
+          this.toasterService.pop('error', res.msg);
+        }
+      });
   }
 
   findDemand(value) {
@@ -203,6 +223,5 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
   cancel() {
     this.router.navigate(['../'], {relativeTo: this.route});
   }
-
 }
 
