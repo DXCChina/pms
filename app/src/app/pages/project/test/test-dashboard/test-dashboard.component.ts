@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ListMetrics, ItemMetrics } from '../../pm/pm-dashboard.component/card-data.Entity';
-import { DashboardService } from '../../pm/pm-dashboard.component/dashboard.service';
+import { ListMetrics, ItemMetrics } from '../../pm/dashboard-view.component/card-data.Entity';
+import { DashboardViewService } from '../../pm/dashboard-view.component/dashboard-view.service';
 import { MatDialog } from '@angular/material';
 import { CaseDetailModalComponent } from '../case-detail-modal/case-detail-modal.component';
 import { Subscription } from 'rxjs';
@@ -25,7 +25,7 @@ export class TestDashboardComponent implements OnInit {
   private eventActivitySubscriber: Subscription;
   private eventTestResultSubscriber: Subscription;
 
-  constructor(private router: Router, private service: DashboardService, private dialog: MatDialog, private eventManager: JhiEventManager) { }
+  constructor(private router: Router, private service: DashboardViewService, private dialog: MatDialog, private eventManager: JhiEventManager) { }
 
   // 项目ID
   projectId: string;

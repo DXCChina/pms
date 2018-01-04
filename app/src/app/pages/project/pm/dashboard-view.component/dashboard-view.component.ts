@@ -1,38 +1,36 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ListMetrics, ItemMetrics } from './card-data.Entity';
-import { DashboardService } from './dashboard.service';
-import { MatDialog } from '@angular/material';
-import { TestResultDetailComponent } from '../test-result-detail-dialog/test-result-detail-dialog.component';
-import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
-import { Subscribable } from 'rxjs/Observable';
+import { RoleModel } from './role.model';
+import { DashboardViewService } from './dashboard-view.service';
 
 @Component({
-  selector: 'app-pm-dashboard',
-  templateUrl: './pm-dashboard.component.html',
-  styleUrls: ['./pm-dashboard.component.scss']
+  selector: 'app-dashboard-view',
+  templateUrl: './dashboard-view.component.html',
+  styleUrls: ['./dashboard-view.component.scss']
 })
 
-export class PmDashboardComponent implements OnInit, OnDestroy {
+export class DashboardViewComponent implements OnInit {
   public demandData: any[] = [];
   public activityData: any[] = [];
+  public testCaseData: any[] = [];
+  public testSetData: any[] = [];
   public testResultData: any[] = [];
 
-  private eventSubscriber: Subscription;
-  private eventActivitySubscriber: Subscription;
-  private eventTestResultSubscriber: Subscription;
+  private releaseId: string;
+  private role: string;
 
-  constructor(private router: Router, private service: DashboardService, private dialog: MatDialog, private eventManager: JhiEventManager) {
-  }
-
-  // 项目ID
-  projectId: string;
+  constructor(
+    private router: Router,
+    private service: DashboardViewService
+  ) {}
 
   ngOnInit() {
-    this.projectId = sessionStorage.getItem('projectId');
-    if (!this.projectId) {
+    this.releaseId = sessionStorage.getItem('releaseId');
+    this.role = sessionStorage.getItem('userRoleInProject');
+
+    if (!this.releaseId || !this.role) {
       this.router.navigate(['/welcome']);
     } else {
       this.initData();
@@ -44,14 +42,10 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
     this.getProjectDemand();
     this.getProjectActivity();
     this.getProjectTestResult();
-
-    this.registerChangeInDemand();
-    this.registerChangeInActivity();
-    this.registerChangeInTestResult();
   }
 
   getProjectDemand() {
-    this.service.getProjectDemand(this.projectId)
+    this.service.getViewData(this.releaseId, 'demand')
       .then(res => {
         this.demandData = [];
         this.demandData.push(
@@ -94,7 +88,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
   }
 
   getProjectActivity() {
-    this.service.getProjectActivity(this.projectId)
+    this.service.getViewData(this.releaseId, 'activity')
       .then(res => {
 
         this.activityData = [];
@@ -138,7 +132,7 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
   }
 
   getProjectTestResult() {
-    this.service.getProjectTestResult(this.projectId)
+    this.service.getViewData(this.releaseId, 'testResult')
       .then(res => {
 
         this.testResultData.push(
@@ -181,36 +175,6 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
         );
 
       }).catch(err => console.log(err));
-  }
-
-  registerChangeInDemand() {
-    this.eventSubscriber = this.eventManager.subscribe(
-      'DemandListModification',
-      () => this.getProjectDemand()
-    );
-  }
-
-  registerChangeInActivity() {
-    this.eventActivitySubscriber = this.eventManager.subscribe(
-      'ActivityListModification',
-      () => {
-        this.getProjectActivity();
-        this.getProjectDemand();
-      }
-    );
-  }
-
-  registerChangeInTestResult() {
-    this.eventTestResultSubscriber = this.eventManager.subscribe(
-      'TestResultListModification',
-      () => this.getProjectTestResult()
-    );
-  }
-
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
-    this.eventManager.destroy(this.eventActivitySubscriber);
-    this.eventManager.destroy(this.eventTestResultSubscriber);
   }
 
   addDemand() {

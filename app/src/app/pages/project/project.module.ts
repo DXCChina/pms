@@ -14,7 +14,7 @@ import {
 import { NgaModule } from '../../theme/nga.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { routing } from './project.routing';
-import { DashboardService } from './pm/pm-dashboard.component/dashboard.service';
+import { DashboardViewService } from './pm/dashboard-view.component/dashboard-view.service';
 import { Detail_memberService } from '../detail_member.service';
 import { ProjectComponent } from './project.component';
 import { TableViewComponent } from './table-view/table-view.component';
@@ -61,7 +61,7 @@ import { TableViewComponent } from './table-view/table-view.component';
 
   ],
   providers: [
-    DashboardService,
+    DashboardViewService,
     Detail_memberService
   ]
 })
