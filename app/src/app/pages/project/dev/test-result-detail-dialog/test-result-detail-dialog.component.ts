@@ -1,11 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ToasterService, ToasterConfig } from 'angular2-toaster';
-import { JhiEventManager } from 'ng-jhipster';
 
 import { TestResultService } from './test-result-detail-dialog.service';
 import { TestResult } from './test-result.model';
-import { parse } from 'querystring';
 
 @Component({
   selector: 'app-test-result-detail-dialog',
@@ -27,7 +25,6 @@ export class TestResultDetailComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private _service: TestResultService,
     private toasterService: ToasterService,
-    private eventManager: JhiEventManager
   ) { }
 
   ngOnInit() {
@@ -47,7 +44,6 @@ export class TestResultDetailComponent implements OnInit {
     this._service.updateTestResult(this.testResultInfo)
       .then(res => {
         if (res.msg === 'ok') {
-          this.eventManager.broadcast({ name: 'TestResultModification', content: 'OK' });
           this.toasterService.pop('ok', '测试结果提交成功');
           this.dialogRef.close();
         } else {

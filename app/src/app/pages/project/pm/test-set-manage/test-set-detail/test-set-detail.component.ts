@@ -2,10 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Validators, AbstractControl, FormGroup, FormControl, FormBuilder } from '@angular/forms';
 
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { MatChipInputEvent } from '@angular/material';
 import { ToasterService, ToasterConfig } from 'angular2-toaster';
-import { JhiEventManager } from 'ng-jhipster';
 
 import {Observable} from 'rxjs/Observable';
 import {startWith} from 'rxjs/operators/startWith';
@@ -73,7 +70,6 @@ export class TestSetDetailComponent implements OnInit {
     private _service: TestSetService,
     public fb: FormBuilder,
     private toasterService: ToasterService,
-    private eventManager: JhiEventManager,
     private route: ActivatedRoute,
     private router: Router
   ) {
@@ -214,7 +210,6 @@ export class TestSetDetailComponent implements OnInit {
       this._service.newTestSet(testSetInfo)
         .then(res => {
           if (res.msg === 'ok') {
-            this.eventManager.broadcast({ name: 'TestSetModification', content: 'OK' });
             this.toasterService.pop('ok', '新建测试集成功');
             this.router.navigate(['../'], { relativeTo: this.route });
           } else {
@@ -226,7 +221,6 @@ export class TestSetDetailComponent implements OnInit {
       this._service.updateTestSet(testSetInfo)
         .then(res => {
           if (res.msg === 'ok') {
-            this.eventManager.broadcast({ name: 'TestSetModification', content: 'OK' });
             this.toasterService.pop('ok', '测试集修改成功');
             this.router.navigate(['../'], { relativeTo: this.route });
           } else {

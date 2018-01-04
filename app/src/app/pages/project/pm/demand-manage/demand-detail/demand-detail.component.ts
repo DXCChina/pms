@@ -3,7 +3,6 @@ import {ToasterService, ToasterConfig} from "angular2-toaster";
 import {PmDemandDetailService} from "./demand-detail-dialog.service";
 import {FormBuilder, Validators, AbstractControl, FormGroup} from "@angular/forms";
 import {Demand} from "./demand.model";
-import {JhiEventManager} from "ng-jhipster";
 import {ActivatedRoute, Router, NavigationEnd} from "@angular/router";
 
 @Component({
@@ -55,7 +54,7 @@ export class DemandDetailComponent implements OnInit {
   };
 
   constructor(public fb: FormBuilder, private _service: PmDemandDetailService, private toasterService: ToasterService,
-              private eventManager: JhiEventManager, private route: ActivatedRoute, private router:Router) {
+              private route: ActivatedRoute, private router:Router) {
     this.projectId = sessionStorage.getItem('projectId');
     this.releaseId = sessionStorage.getItem('releaseId');
 
@@ -152,7 +151,6 @@ export class DemandDetailComponent implements OnInit {
     this._service.newDemand(demandInfo)
       .then(res => {
         if (res.msg === 'ok') {
-          this.eventManager.broadcast({name: 'DemandListModification', content: 'OK'});
           this.toasterService.pop('ok', '新建需求成功');
           if(type == 'one'){
             this.router.navigate(['../'], {relativeTo: this.route});
@@ -169,7 +167,6 @@ export class DemandDetailComponent implements OnInit {
     this._service.updateDemand(demandInfo)
       .then(res => {
         if (res.msg === 'ok') {
-          this.eventManager.broadcast({name: 'DemandListModification', content: 'OK'});
           this.toasterService.pop('ok', '需求修改成功');
           this.router.navigate(['../'], {relativeTo: this.route});
         } else {

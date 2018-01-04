@@ -3,7 +3,6 @@ import {AbstractControl, FormGroup, FormBuilder, Validators} from "@angular/form
 import {ToasterConfig, ToasterService} from "angular2-toaster";
 import {TestCase} from "./test-case.model";
 import {CaseDetailModalService} from "./case-detail-modal.service";
-import {JhiEventManager} from "ng-jhipster";
 import {Router, ActivatedRoute, NavigationEnd} from "@angular/router";
 import {Observable, Subscription} from "rxjs";
 
@@ -73,7 +72,7 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
   };
 
   constructor(public fb: FormBuilder, private toasterService: ToasterService, private _service: CaseDetailModalService,
-              private eventManager: JhiEventManager, private router: Router, private route: ActivatedRoute) {
+               private router: Router, private route: ActivatedRoute) {
     this.projectId = sessionStorage.getItem('projectId');
     this.releaseId = sessionStorage.getItem('releaseId');
 
@@ -183,7 +182,6 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
       .then(res => {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '新建测试用例成功');
-          this.eventManager.broadcast({name: 'TestCaseListModification', content: 'OK'});
           if (type === 'one') {
             this.router.navigate(['../'], {relativeTo: this.route});
           } else if(type === 'again'){
@@ -200,7 +198,6 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
       .then(res => {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '测试用例修改成功');
-          this.eventManager.broadcast({name: 'TestCaseListModification', content: 'OK'});
           this.router.navigate(['../'], {relativeTo: this.route});
         } else {
           this.toasterService.pop('error', res.msg);

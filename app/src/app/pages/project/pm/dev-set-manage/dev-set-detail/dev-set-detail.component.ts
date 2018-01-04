@@ -4,7 +4,6 @@ import {FormControl, AbstractControl, FormGroup, Validators, FormBuilder} from "
 import {PmTaskDetailService} from "./task-detail-dialog.service";
 import {ToasterService, ToasterConfig} from "angular2-toaster";
 import {TaskInfo} from "./task.model";
-import {JhiEventManager} from "ng-jhipster";
 import {Router, ActivatedRoute, NavigationEnd} from "@angular/router";
 
 @Component({
@@ -82,7 +81,7 @@ export class DevSetDetailComponent implements OnInit {
   };
 
   constructor(public fb: FormBuilder, private _service: PmTaskDetailService, private toasterService: ToasterService,
-              private eventManager: JhiEventManager, private router: Router, private route: ActivatedRoute) {
+              private router: Router, private route: ActivatedRoute) {
     this.projectId = Number(sessionStorage.getItem('projectId'));
     this.releaseId = Number(sessionStorage.getItem('releaseId'));
     this.role = sessionStorage.getItem('userRoleInProject');
@@ -267,7 +266,6 @@ export class DevSetDetailComponent implements OnInit {
       .then(res => {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '活动新建成功');
-          this.eventManager.broadcast({name: 'ActivityListModification', content: 'OK'});
           if(type === 'one'){
             this.router.navigate(['../'], {relativeTo: this.route});
           }else if(type === 'again'){
@@ -284,7 +282,6 @@ export class DevSetDetailComponent implements OnInit {
       .then(res => {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '活动修改成功');
-          this.eventManager.broadcast({name: 'ActivityListModification', content: 'OK'});
           this.router.navigate(['../'], {relativeTo: this.route});
         } else {
           this.toasterService.pop('error', res.msg);

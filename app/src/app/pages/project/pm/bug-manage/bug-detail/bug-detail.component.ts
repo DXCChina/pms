@@ -1,9 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router , NavigationEnd} from '@angular/router';
 import { Validators, AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
 
 import { ToasterService, ToasterConfig } from 'angular2-toaster';
-import { JhiEventManager } from 'ng-jhipster';
 
 import {TestResultService} from './test-result-detail-dialog.service';
 import {TestResult} from './test-result.model';
@@ -80,7 +79,6 @@ export class BugDetailComponent implements OnInit {
   constructor(public fb: FormBuilder,
     private _service: TestResultService,
     private toasterService: ToasterService,
-    private eventManager: JhiEventManager,
     private route: ActivatedRoute, private router: Router) {
     this.projectId = parseInt(sessionStorage.getItem('projectId'), 10);
     this.releaseId = parseInt(sessionStorage.getItem('releaseId'), 10);
@@ -208,7 +206,6 @@ export class BugDetailComponent implements OnInit {
     this._service.newTestResult(testResultInfo)
       .then(res => {
         if (res.msg === 'ok') {
-          this.eventManager.broadcast({name: 'TestResultModification', content: 'OK'});
           this.toasterService.pop('ok', '新建测试结果成功');
           if (type == 'one') {
             this.router.navigate(['../'], {relativeTo: this.route});
@@ -225,7 +222,6 @@ export class BugDetailComponent implements OnInit {
     this._service.updateTestResult(testResultInfo)
       .then(res => {
         if (res.msg === 'ok') {
-          this.eventManager.broadcast({name: 'TestResultModification', content: 'OK'});
           this.toasterService.pop('ok', '测试结果修改成功');
           this.router.navigate(['../'], {relativeTo: this.route});
         } else {
