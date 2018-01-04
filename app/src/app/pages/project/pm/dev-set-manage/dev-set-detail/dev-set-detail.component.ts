@@ -1,4 +1,4 @@
-import {Component, Inject, ViewChild, Input, OnInit} from "@angular/core";
+import {Component, ViewChild, OnInit} from "@angular/core";
 import {MatMenuTrigger} from "@angular/material";
 import {FormControl, AbstractControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
 import {PmTaskDetailService} from "./task-detail-dialog.service";
@@ -220,7 +220,6 @@ export class DevSetDetailComponent implements OnInit {
   reviewDetail(id) {
     this._service.reviewDetail(id)
       .then(res => {
-        console.log('activity info:', res);
         this.taskInfo = res;
 
         this.delMemberList = this.selectUserList = this.taskInfo.member.map(ele => {
@@ -343,6 +342,22 @@ export class DevSetDetailComponent implements OnInit {
     this.demandListInTask.splice(index, 1);
     this.demandListNotAssigned.push(demand);
     this.progressValue = this.demandListCompletedInTask.length / this.demandListInTask.length * 100;
+  }
+
+  getWorkdays(){
+    let startDate = +new Date(this.startDate.value);
+    let endDate = +new Date(this.endDate.value);
+    let diffDays = (endDate- startDate)/(1000*60*60*24) + 1;
+    let remainDay = diffDays % 7;
+    let weeks = Math.floor(diffDays / 7);
+    let weekends = 2 * weeks;
+    let weekDay = new Date(this.startDate.value).getDay();
+    for(var i = 0;i < remainDay;i++){//循环处理余下的天数有多少个周六或者周日（最多出现一个周六或者一个周日）
+      if(((weekDay + i)==6)||((weekDay + i)==0)||((weekDay + i)==7)){
+        weekends = weekends + 1;
+      }
+    }
+    this.taskInfo.cost = (diffDays-weekends ? diffDays - weekends : 0)+"";
   }
 }
 
