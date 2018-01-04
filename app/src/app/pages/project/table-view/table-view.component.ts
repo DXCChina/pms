@@ -94,9 +94,7 @@ export class TableViewComponent {
   }
 
   addItem() {
-    // console.log('add', this.viewType);
-    this.router.navigate([`/pages/project/${this.viewType}/new`],
-      { queryParams: { type: 'new' } });
+    this.router.navigate([`/pages/project/${this.viewType}/new`]);
   }
 
   ViewDetail(event) {

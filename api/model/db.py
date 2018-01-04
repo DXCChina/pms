@@ -271,6 +271,7 @@ class TestCase(MySQLModel):
     type = db_char(length=10, null=True)
     input = db_char()
     expect = db_char()
+    status = db_char()
 
     class Meta:
         db_table = 'test_case'

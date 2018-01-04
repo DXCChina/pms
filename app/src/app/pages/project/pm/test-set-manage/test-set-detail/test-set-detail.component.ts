@@ -80,10 +80,9 @@ export class TestSetDetailComponent implements OnInit {
     this.projectId = parseInt(sessionStorage.getItem('projectId'), 10);
     this.releaseId = parseInt(sessionStorage.getItem('releaseId'), 10);
 
-    this.route.queryParams.filter(params => params.type)
-      .subscribe(params => {
-        this.mode = params.type;
-      });
+    this.route.url.subscribe(url => {
+      this.mode = url[0].path
+    });
 
     this.searchControl = new FormControl();
     this.filteredCases = this.searchControl.valueChanges

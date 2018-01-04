@@ -11,21 +11,27 @@
       <!--<div mat-card-avatar [style.background]="'#c7b7dd'">{{taskInfo.title|name2avatar}}</div>-->
       <div class="header-text">
         <div class="detail-name">{{taskInfo.title ? taskInfo.title : "新建活動"}}</div>
-        <div>{{taskInfo.detail ? taskInfo.detail : "活動描述"}}</div>
+        <div>{{taskInfo.detail ? (taskInfo.detail | delHtmlTag) : "活動描述"}}</div>
       </div>
     </div>
     <mat-card class="">
       <div class="dialog-content">
-        <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="taskForm" (ngSubmit)="onSubmit('one')">
           <div class="mat-container">
             <mat-form-field>
-              <input matInput placeholder="名称" [formControl]="title" [(ngModel)]="taskInfo.title" [readonly]="!isOperate">
+              <input matInput placeholder="名称" [formControl]="title" [(ngModel)]="taskInfo.title" >
               <mat-error >{{formErrors.title}}</mat-error>
             </mat-form-field>
 
-            <mat-form-field>
-              <input matInput placeholder="描述" [formControl]="detail" [(ngModel)]="taskInfo.detail" [readonly]="!isOperate">
-            </mat-form-field>
+            <!--<mat-form-field>-->
+              <!--<input matInput placeholder="描述" [formControl]="detail" [(ngModel)]="taskInfo.detail" [readonly]="!isOperate">-->
+            <!--</mat-form-field>-->
+
+            <div class="editor">
+              <span>描述</span>
+              <textarea [froalaEditor]="options" [formControl]="detail" [(ngModel)]="taskInfo.detail">
+            </textarea>
+            </div>
 
             <div class="row">
               <div class="col-4">
@@ -169,7 +175,8 @@
 
           <div class="detail-footer">
             <button mat-button (click)="cancel()">取消</button>
-            <button mat-button type="submit" [disabled]="!taskForm?.valid">{{mode === 'new' ? '提交' : '修改'}}</button>
+            <button mat-button type="submit" [disabled]="!taskForm?.valid">{{mode === 'new' ? '新建' : '修改'}}</button>
+            <button mat-button type="button" (click)="onSubmit('again')" [disabled]="!taskForm?.valid">再次新建</button>
           </div>
         </form>
       </div>
