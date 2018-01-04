@@ -10,8 +10,8 @@
       </a>
       <div mat-card-avatar *ngIf="mode!='new'" [style.background]="'#c7b7dd'">{{testSetInfo.name | name2avatar}}</div>
       <div class="header-text" *ngIf="mode!='new'">
-        <div class="detail-name">{{testSetInfo.name}}</div>
-        <div>{{testSetInfo.detail}}</div>
+        <div class="detail-name">{{testSetInfo.name?testSetInfo.name:''}}</div>
+        <div>{{testSetInfo.detail?(testSetInfo.detail | delHtmlTag):''}}</div>
       </div>
       <div class="header-text" *ngIf="mode=='new'">
         <div class="detail-name">新建测试集</div>
@@ -26,9 +26,10 @@
             <mat-error>{{formErrors.name}}</mat-error>
           </mat-form-field>
 
-          <mat-form-field>
-            <input matInput placeholder="测试集描述" [formControl]="detail" [(ngModel)]="testSetInfo.detail" name="detail">
-          </mat-form-field>
+          <div class="editor">
+            <span>测试集描述</span>
+            <textarea [froalaEditor]="options" [formControl]="detail" [(ngModel)]="testSetInfo.detail" name="detail"></textarea>
+          </div>
 
           <mat-form-field>
             <mat-select placeholder="指派给" [formControl]="memberId" [(ngModel)]="testSetInfo.memberId" required>
@@ -58,7 +59,7 @@
                 <mat-panel-title>{{ caseItem.name }}</mat-panel-title>
                 <mat-panel-description>{{ caseItem.type }}</mat-panel-description>
               </mat-expansion-panel-header>
-              {{ caseItem.detail }}
+              <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(caseItem.detail)" class="fr-view" style="max-height: 150px;overflow: auto;"></div>
               <mat-action-row>
                 <button mat-button (click)="viewCaseDetail(caseItem.id)">查看详情</button>
                 <button mat-button (click)="deleteCase(caseItem.id)">移除案例</button>
@@ -77,5 +78,5 @@
   </div>
 </div>
 
-<!-- <toaster-container [toasterconfig]="toasterconfig"></toaster-container> -->
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>
 

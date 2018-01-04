@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Validators, AbstractControl, FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { MatChipInputEvent } from '@angular/material';
@@ -69,13 +70,18 @@ export class TestSetDetailComponent implements OnInit {
   searchControl: FormControl;
   filteredCases: Observable<any[]>;
 
+  options: any = {
+    imageUploadURL: '/api/upload'
+  };
+
   constructor(
     private _service: TestSetService,
     public fb: FormBuilder,
     private toasterService: ToasterService,
     private eventManager: JhiEventManager,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private sanitizer: DomSanitizer
   ) {
     this.projectId = parseInt(sessionStorage.getItem('projectId'), 10);
     this.releaseId = parseInt(sessionStorage.getItem('releaseId'), 10);
