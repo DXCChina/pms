@@ -7,7 +7,6 @@ import { AppTranslationModule } from '../app.translation.module';
 
 import { Pages } from './pages.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgJhipsterModule } from 'ng-jhipster';
 
 import {
   MatButtonModule, MatCommonModule, MatDialogModule, MatSelectModule, MatInputModule,
@@ -24,10 +23,6 @@ import {
     routing,
     BrowserAnimationsModule,
     MatButtonModule,
-    NgJhipsterModule.forRoot({
-      // set below to true to make alerts look like toast
-      alertAsToast: false,
-    }),
 
     MatCommonModule,
     MatDialogModule,
