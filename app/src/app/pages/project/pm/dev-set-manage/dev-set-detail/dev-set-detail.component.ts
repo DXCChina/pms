@@ -101,40 +101,27 @@ export class DevSetDetailComponent implements OnInit {
     this.route.url.subscribe(url => {
       this.mode = url[0].path
     });
-
-    // Determines if a route should be reused
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    };
-
-    this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd) {
-        // trick the Router into believing it's last link wasn't previously loaded
-        this.router.navigated = false;
-
-        this.isOperate = this.role == 'pm';
-
-        this.form = new FormGroup({
-          search: new FormControl('')
-        });
-        this.search = this.form.controls['search'];
-
-        if (this.mode != 'new') {
-          // this.taskInfo = this.data.taskInfo;
-          this.route.params.subscribe(param => {
-            if (param['id']) {
-              this.reviewDetail(param['id']);
-            }
-          });
-        }
-        this.buildForm();
-        this.findMemberInProject();
-        this.findDemandListNotAssigned();
-      }
-    });
   }
 
   ngOnInit() {
+    this.isOperate = this.role == 'pm';
+
+    this.form = new FormGroup({
+      search: new FormControl('')
+    });
+    this.search = this.form.controls['search'];
+
+    if (this.mode != 'new') {
+      // this.taskInfo = this.data.taskInfo;
+      this.route.params.subscribe(param => {
+        if (param['id']) {
+          this.reviewDetail(param['id']);
+        }
+      });
+    }
+    this.buildForm();
+    this.findMemberInProject();
+    this.findDemandListNotAssigned();
   }
 
   buildForm() {
