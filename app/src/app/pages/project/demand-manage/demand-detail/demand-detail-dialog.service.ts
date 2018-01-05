@@ -2,7 +2,7 @@
  * Created by gaole on 2017/11/23.
  */
 import { Injectable } from '@angular/core';
-import { GlobalState } from '../../../../../global.state';
+import { GlobalState } from '../../../../global.state';
 import { Http } from '@angular/http';
 
 @Injectable()

@@ -1,9 +1,9 @@
 /**
  * Created by gaole on 2017/11/30.
  */
-import {Injectable} from '@angular/core';
-import {GlobalState} from '../../../../../global.state';
-import {Http} from '@angular/http';
+import { Injectable } from '@angular/core';
+import { GlobalState } from '../../../../global.state';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class PmTaskDetailService {
@@ -16,11 +16,10 @@ export class PmTaskDetailService {
   }
 
   findMemberInProject(id) {
-    let membersInProjectUrl = `${this.membersInProjectUrl}/${id}/user`;
-    return this.http.get(membersInProjectUrl)
+    return this.http.get(`${this.membersInProjectUrl}/${id}/user`)
       .toPromise()
       .then(this._global.extractData)
-      .catch(this._global.handleError)
+      .catch(this._global.handleError);
   }
 
   getProjectDemand(pId: number): Promise<any> {
@@ -34,17 +33,17 @@ export class PmTaskDetailService {
     return this.http.post(this.newActivityUrl, JSON.stringify(taskInfo), this._global.options)
       .toPromise()
       .then(this._global.extractData)
-      .catch(this._global.handleError)
+      .catch(this._global.handleError);
   }
 
   updateTask(taskInfo) {
     return this.http.put(this.newActivityUrl, JSON.stringify(taskInfo), this._global.options)
       .toPromise()
       .then(this._global.extractData)
-      .catch(this._global.handleError)
+      .catch(this._global.handleError);
   }
 
-  reviewDetail(taskId){
+  reviewDetail(taskId) {
     return this.http.get(`${this.newActivityUrl}/${taskId}`)
       .toPromise()
       .then(this._global.extractData)
