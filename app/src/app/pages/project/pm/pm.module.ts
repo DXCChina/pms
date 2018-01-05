@@ -8,7 +8,7 @@ import {
   MatButtonModule, MatCommonModule, MatDialogModule, MatSelectModule, MatInputModule,
   MatTabsModule, MatCardModule, MatExpansionModule, MatCheckboxModule, MatSliderModule, MatListModule,
   MatProgressSpinnerModule, MatChipsModule, MatGridListModule, MatDatepickerModule, MatNativeDateModule, MatMenuModule,
-  MatProgressBarModule, MatToolbarModule, MatTooltipModule, MatFormFieldModule
+  MatProgressBarModule, MatToolbarModule, MatTooltipModule, MatFormFieldModule, MatAutocompleteModule
 } from '@angular/material';
 import { ToasterModule } from 'angular2-toaster';
 import { PmComponent } from './pm.component';
@@ -27,6 +27,7 @@ import { DevSetDetailComponent } from './dev-set-manage/dev-set-detail/dev-set-d
 import { TestCaseDetailComponent } from './test-manage/test-case-detail/test-case-detail.component';
 import { TestSetDetailComponent } from './test-set-manage/test-set-detail/test-set-detail.component';
 import { BugDetailComponent } from './bug-manage/bug-detail/bug-detail.component';
+import {FroalaEditorModule, FroalaViewModule} from "angular-froala-wysiwyg";
 
 @NgModule({
   declarations: [
@@ -76,8 +77,11 @@ import { BugDetailComponent } from './bug-manage/bug-detail/bug-detail.component
     MatProgressBarModule,
     MatToolbarModule,
     MatFormFieldModule,
+    MatAutocompleteModule,
     ToasterModule,
-    NgxDatatableModule
+    NgxDatatableModule,
+    FroalaEditorModule,
+    FroalaViewModule
   ],
   providers: [],
   entryComponents: [

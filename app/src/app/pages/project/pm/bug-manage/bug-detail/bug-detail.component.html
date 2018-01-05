@@ -10,38 +10,43 @@
       </a>
       <div mat-card-avatar [style.background]="'#c7b7dd'">{{testResultInfo.name| name2avatar}}</div>
       <div class="header-text">
-        <div class="detail-name">{{testResultInfo.name}}</div>
-        <div>{{testResultInfo.detail}}</div>
+        <div class="detail-name">{{testResultInfo.name?testResultInfo.name:'新建缺陷'}}</div>
+        <div>{{testResultInfo.detail?(testResultInfo.detail|delHtmlTag):'缺陷描述'}}</div>
       </div>
     </div>
     <mat-card class="">
-      <!--<mat-card-header>-->
-      <!--<mat-card-title>需求name</mat-card-title>-->
-      <!--<mat-card-subtitle>日期</mat-card-subtitle>-->
-      <!--<div mat-card-avatar [style.background]="'#8847dc'">{{"需求name"| name2avatar}}</div>-->
-      <!--</mat-card-header>-->
       <div class="dialog-content">
-        <form action="" [formGroup]="testResultForm" (ngSubmit)="onSubmit()">
+        <form action="" [formGroup]="testResultForm" (ngSubmit)="onSubmit('one')">
           <div class="detail-content">
             <mat-form-field>
               <input matInput placeholder="测试结果名称" [formControl]="name" [(ngModel)]="testResultInfo.name" name="name">
               <mat-error>{{formErrors.name}}</mat-error>
             </mat-form-field>
 
-            <mat-form-field>
-              <input matInput placeholder="测试结果描述" [formControl]="detail" [(ngModel)]="testResultInfo.detail" name="detail">
-            </mat-form-field>
+            <div class="editor">
+              <span>需求描述</span>
+              <textarea [froalaEditor]="options" [formControl]="detail" [(ngModel)]="testResultInfo.detail">
+            </textarea>
+            </div>
 
             <mat-form-field>
-              <input type='number' matInput *ngIf="mode=='new'" placeholder="测试案例" [formControl]="caseId">
-              <input matInput *ngIf="mode!='new'" placeholder="测试案例" [formControl]="caseId" [(ngModel)]="testResultInfo.caseId" name="caseId" readonly>
+              <mat-select placeholder="测试集" [formControl]="setId" [(ngModel)]="testResultInfo.setId" name="setId">
+                <mat-option>未选择</mat-option>
+                <mat-option *ngFor="let ts of searchSetList" [value]="ts.id" (click)="changeTestSet(ts.id)">
+                  {{ts.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error>{{formErrors.setId}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="testResultInfo.setId">
+              <mat-select placeholder="测试案例" [formControl]="caseId" [(ngModel)]="testResultInfo.caseId" name="caseId">
+                <mat-option>未选择</mat-option>
+                <mat-option *ngFor="let tc of searchCaseList" [value]="tc.id">
+                  {{tc.name}} - {{tc.type}}
+                </mat-option>
+              </mat-select>
               <mat-error>{{formErrors.caseId}}</mat-error>
-            </mat-form-field>
-
-            <mat-form-field>
-              <input type='number' matInput *ngIf="mode=='new'" placeholder="测试集" [formControl]="testSetId">
-              <input matInput *ngIf="mode!='new'" placeholder="测试集" [formControl]="testSetId" [(ngModel)]="testResultInfo.testSetId" name="testSetId" readonly>
-              <mat-error>{{formErrors.testSetId}}</mat-error>
             </mat-form-field>
 
             <mat-form-field>
@@ -78,6 +83,7 @@
           <div class="detail-footer">
             <button mat-button (click)="cancel()">关闭</button>
             <button mat-button type="submit" [disabled]="!testResultForm?.valid">{{mode=='new'?'新建':'提交'}}</button>
+            <button mat-button type="button" *ngIf="mode == 'new'" [disabled]="!testResultForm?.valid" (click)="onSubmit('again')">再次新建</button>
           </div>
         </form>
       </div>

@@ -5,7 +5,7 @@ import {PmTaskDetailService} from "./task-detail-dialog.service";
 import {ToasterService, ToasterConfig} from "angular2-toaster";
 import {TaskInfo} from "./task.model";
 import {JhiEventManager} from "ng-jhipster";
-import {Router, ActivatedRoute} from "@angular/router";
+import {Router, ActivatedRoute, NavigationEnd} from "@angular/router";
 
 @Component({
   selector: 'app-dev-set-detail',
@@ -74,11 +74,15 @@ export class DevSetDetailComponent implements OnInit {
     showCloseButton: true
   });
 
-  isOperate:boolean = false;
+  isOperate: boolean = false;
   role: string = '';
 
+  options: any = {
+    imageUploadURL: '/api/upload'
+  };
+
   constructor(public fb: FormBuilder, private _service: PmTaskDetailService, private toasterService: ToasterService,
-              private eventManager: JhiEventManager, private router:Router, private route:ActivatedRoute) {
+              private eventManager: JhiEventManager, private router: Router, private route: ActivatedRoute) {
     this.projectId = Number(sessionStorage.getItem('projectId'));
     this.releaseId = Number(sessionStorage.getItem('releaseId'));
     this.role = sessionStorage.getItem('userRoleInProject');
@@ -94,31 +98,43 @@ export class DevSetDetailComponent implements OnInit {
       }
     ];
 
-    this.route.queryParams.filter(params => params.type)
-      .subscribe(params => {
-        this.mode = params.type;
-      })
+    this.route.url.subscribe(url => {
+      this.mode = url[0].path
+    });
+
+    // Determines if a route should be reused
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+
+    this.router.events.subscribe((evt) => {
+      if (evt instanceof NavigationEnd) {
+        // trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+
+        this.isOperate = this.role == 'pm';
+
+        this.form = new FormGroup({
+          search: new FormControl('')
+        });
+        this.search = this.form.controls['search'];
+
+        if (this.mode != 'new') {
+          // this.taskInfo = this.data.taskInfo;
+          this.route.params.subscribe(param => {
+            if (param['id']) {
+              this.reviewDetail(param['id']);
+            }
+          });
+        }
+        this.buildForm();
+        this.findMemberInProject();
+        this.findDemandListNotAssigned();
+      }
+    });
   }
 
   ngOnInit() {
-    this.isOperate = this.role == 'pm';
-
-    this.form = new FormGroup({
-      search: new FormControl('')
-    });
-    this.search = this.form.controls['search'];
-
-    if (this.mode != 'new') {
-      // this.taskInfo = this.data.taskInfo;
-      this.route.params.subscribe(param => {
-        if (param['id']) {
-          this.reviewDetail(param['id']);
-        }
-      });
-    }
-    this.buildForm();
-    this.findMemberInProject();
-    this.findDemandListNotAssigned();
   }
 
   buildForm() {
@@ -201,9 +217,9 @@ export class DevSetDetailComponent implements OnInit {
       })
   }
 
-  reviewDetail(id){
+  reviewDetail(id) {
     this._service.reviewDetail(id)
-      .then(res=>{
+      .then(res => {
         console.log('activity info:', res);
         this.taskInfo = res;
 
@@ -222,7 +238,7 @@ export class DevSetDetailComponent implements OnInit {
     this.searchDemand = '';
   }
 
-  onSubmit() {
+  onSubmit(type) {
     let memberId = this.selectUserList.map(user => user.id);
     let demand = this.demandListInTask.map(demand => demand.id);
     // let projectId = Number(this.projectId);
@@ -230,21 +246,12 @@ export class DevSetDetailComponent implements OnInit {
     this.taskInfoParams = Object.assign({
       memberId: memberId,
       projectId: this.projectId,
-      releaseId:this.releaseId,
+      releaseId: this.releaseId,
       demand: demand,
-      progress:this.progressValue || 0
+      progress: this.progressValue || 0
     }, this.taskForm.value);
     if (this.mode === 'new') {
-      this._service.newTask(this.taskInfoParams)
-        .then(res => {
-          if (res.msg === 'ok') {
-            this.toasterService.pop('ok', '活动新建成功');
-            this.eventManager.broadcast({name: 'ActivityListModification', content: 'OK'});
-            this.router.navigate(['../'], {relativeTo: this.route});
-          } else {
-            this.toasterService.pop('error', res.msg);
-          }
-        })
+      this.newTask(this.taskInfoParams, type);
     } else {
       let delDemandId = this.getDelId(this.demandListInTask, this.delDemandList);
       let delMemberId = this.getDelId(this.selectUserList, this.delMemberList);
@@ -252,20 +259,41 @@ export class DevSetDetailComponent implements OnInit {
       this.taskInfoParams = Object.assign(
         {activityId: this.taskInfo.id, del_memberId: delMemberId, del_demand: delDemandId, done_demand: doneDemandId},
         this.taskInfoParams);
-      this._service.updateTask(this.taskInfoParams)
-        .then(res => {
-          if (res.msg === 'ok') {
-            this.toasterService.pop('ok', '活动修改成功');
-            this.eventManager.broadcast({name: 'ActivityListModification', content: 'OK'});
-            this.router.navigate(['../'], {relativeTo: this.route});
-          } else {
-            this.toasterService.pop('error', res.msg);
-          }
-        })
+      this.updateTask(this.taskInfoParams);
     }
   }
 
-  cancel(){
+  newTask(taskInfoParams, type){
+    this._service.newTask(taskInfoParams)
+      .then(res => {
+        if (res.msg === 'ok') {
+          this.toasterService.pop('ok', '活动新建成功');
+          this.eventManager.broadcast({name: 'ActivityListModification', content: 'OK'});
+          if(type === 'one'){
+            this.router.navigate(['../'], {relativeTo: this.route});
+          }else if(type === 'again'){
+            this.router.navigate(['../new'], {relativeTo: this.route});
+          }
+        } else {
+          this.toasterService.pop('error', res.msg);
+        }
+      })
+  }
+
+  updateTask(taskInfoParams){
+    this._service.updateTask(taskInfoParams)
+      .then(res => {
+        if (res.msg === 'ok') {
+          this.toasterService.pop('ok', '活动修改成功');
+          this.eventManager.broadcast({name: 'ActivityListModification', content: 'OK'});
+          this.router.navigate(['../'], {relativeTo: this.route});
+        } else {
+          this.toasterService.pop('error', res.msg);
+        }
+      })
+  }
+
+  cancel() {
     this.router.navigate(['../'], {relativeTo: this.route});
   }
 

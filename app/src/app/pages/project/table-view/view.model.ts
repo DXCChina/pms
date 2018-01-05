@@ -70,7 +70,7 @@ export const ViewModel = {
     },
     bug: {
         title: 'BUG',
-        normalCol: ['名称', '对应任务', '对应案例', '对应测试集', '创建人', '开发人员', '当前状态', '输入', '预期输出', '实际输入', '优先级', '严重程度'],
+        normalCol: ['名称', '对应任务', '对应案例', '对应测试集', '创建人', '开发人员', '当前状态', '输入', '预期输出', '实际输出', '优先级', '严重程度'],
         columns: [
             { name: '名称', prop: 'name' },
             { name: '对应任务', prop: 'demand' },
@@ -81,7 +81,7 @@ export const ViewModel = {
             { name: '当前状态', prop: 'status' },
             { name: '输入', prop: 'input' },
             { name: '预期输出', prop: 'expect' },
-            { name: '实际输入', prop: 'output' },
+            { name: '实际输出', prop: 'output' },
             { name: '优先级', prop: 'level' },
             { name: '严重程度', prop: 'priority' },
         ],

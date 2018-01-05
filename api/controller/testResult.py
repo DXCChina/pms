@@ -18,10 +18,8 @@ def search_test_result():
     GET /api/test_result
     '''
     return jsonify({
-        'msg':
-        'ok',
-        'data':
-        testResult.test_result_detail(request.args.get('testResultId'))
+        'msg': 'ok',
+        'data': testResult.test_result_detail(request.args.get('testResultId'))
     }), 200
 
 
@@ -35,14 +33,13 @@ def add_test_result():
     data = request.json
     data['ownerId'] = get_jwt_identity()
 
-    if testResult.find_test_result_by_case(data['caseId']):
-        return jsonify({"msg": '该案例已有测试结果！'}), 400
+    if data['caseId'] != '' and data['setId'] != '':
+        if testResult.find_test_result_by_case(data['caseId'], data['setId']):
+            return jsonify({"msg": '该测试集下的案例已有测试结果！'}), 400
 
     return jsonify({
-        'msg':
-        'ok',
-        'data':
-        model_to_dict(testResult.create_test_result(data)[0])
+        'msg': 'ok',
+        'data': model_to_dict(testResult.create_test_result(data)[0])
     }), 201
 
 
@@ -63,3 +60,34 @@ def update_test_result():
         'msg': 'ok',
         'data': testResult.update_test_results(data)
     }), 200
+
+
+@fresh_jwt_required
+def search_set_list():
+    '''查询测试集
+
+    GET /api/testResult/searchSet
+    '''
+
+    return jsonify({
+        'msg': 'ok',
+        'data': list(testResult.search_set_list(
+            request.args.get('releaseId')
+        ))
+    })
+
+
+@fresh_jwt_required
+def search_case_list():
+    '''查询测试集相关测试案例
+
+    GET /api/testResult/searchCase
+    '''
+
+    return jsonify({
+        'msg': 'ok',
+        'data': list(testResult.search_case_list(
+            request.args.get('setId'),
+            request.args.get('releaseId')
+        ))
+    })

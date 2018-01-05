@@ -1,13 +1,12 @@
-import {Component, OnInit, Inject} from '@angular/core';
-import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-import {Validators, AbstractControl, FormGroup, FormBuilder} from '@angular/forms';
-import {ToasterService, ToasterConfig} from 'angular2-toaster';
-import {JhiEventManager} from 'ng-jhipster';
+import { Component, OnInit, Inject } from '@angular/core';
+import { ActivatedRoute, Router , NavigationEnd} from '@angular/router';
+import { Validators, AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
+
+import { ToasterService, ToasterConfig } from 'angular2-toaster';
+import { JhiEventManager } from 'ng-jhipster';
 
 import {TestResultService} from './test-result-detail-dialog.service';
 import {TestResult} from './test-result.model';
-import {parse} from 'querystring';
-import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-bug-detail',
@@ -19,8 +18,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class BugDetailComponent implements OnInit {
   name: AbstractControl;
   detail: AbstractControl;
+  setId: AbstractControl;
   caseId: AbstractControl;
-  testSetId: AbstractControl;
   output: AbstractControl;
   status: AbstractControl;
   level: AbstractControl;
@@ -32,7 +31,7 @@ export class BugDetailComponent implements OnInit {
     'name': '',
     'detail': '',
     'caseId': '',
-    'testSetId': '',
+    'setId': '',
     'output': '',
     'status': '',
     'level': '',
@@ -44,11 +43,11 @@ export class BugDetailComponent implements OnInit {
       'required': '请输入测试结果名称'
     },
     'detail': {},
-    'caseId': {
-      'required': '请选择测试结果相关案例'
+    'setId': {
+      'required': '请选择相关测试集'
     },
-    'testSetId': {
-      'required': '请选择测试结果相关测试集'
+    'caseId': {
+      'required': '请选择相关测试案例'
     },
     'output': {
       'required': '请输入测试结果输出'
@@ -71,44 +70,88 @@ export class BugDetailComponent implements OnInit {
 
   testResultInfo: TestResult = new TestResult();
 
+  options: any = {
+    imageUploadURL: '/api/upload'
+  };
+
+  searchSetList: any[] = [];
+  searchCaseList: any[] = [];
+
   constructor(public fb: FormBuilder,
-              private _service: TestResultService,
-              private toasterService: ToasterService,
-              private eventManager: JhiEventManager,
-              private route: ActivatedRoute, private router: Router) {
+    private _service: TestResultService,
+    private toasterService: ToasterService,
+    private eventManager: JhiEventManager,
+    private route: ActivatedRoute, private router: Router) {
     this.projectId = parseInt(sessionStorage.getItem('projectId'), 10);
     this.releaseId = parseInt(sessionStorage.getItem('releaseId'), 10);
 
-    this.route.queryParams.filter(params => params.type)
-      .subscribe(params => {
-        this.mode = params.type;
-      })
+    this.route.url.subscribe(url => {
+      this.mode = url[0].path
+    });
+
+    // Determines if a route should be reused
+    this.router.routeReuseStrategy.shouldReuseRoute = function () {
+      return false;
+    };
+
+    this.router.events.subscribe((evt) => {
+      if (evt instanceof NavigationEnd) {
+        // trick the Router into believing it's last link wasn't previously loaded
+        this.router.navigated = false;
+
+        if (this.mode != 'new') {
+          this.route.params.subscribe(param => {
+            if (param['id']) {
+              this.reviewDetail(param['id']);
+            }
+          });
+        }
+        this.findTestSet();
+        this.buildForm();
+      }
+    });
   }
 
   ngOnInit() {
-    if (this.mode != 'new') {
-      this.route.params.subscribe(param => {
-        if (param['id']) {
-          this.reviewDetail(param['id']);
-        }
-      });
-    }
-    this.buildForm();
   }
 
   reviewDetail(testResultId) {
     this._service.reviewTestResult(testResultId)
       .then(res => {
         this.testResultInfo = res.data;
+        this.findTestCase(this.testResultInfo.setId);
       });
+  }
+
+  findTestSet() {
+    this._service.searchTestSet(this.releaseId)
+        .then(res => {
+          if (res.msg === 'ok') {
+            this.searchSetList = res.data;
+          }
+        });
+  }
+
+  findTestCase(setId) {
+    this._service.searchTestCase(setId, this.releaseId)
+        .then(res => {
+          if (res.msg === 'ok') {
+            this.searchCaseList = res.data;
+          }
+        });
+  }
+
+  changeTestSet(setId) {
+    this.findTestCase(setId);
+    this.testResultInfo.caseId = NaN;
   }
 
   buildForm() {
     this.testResultForm = this.fb.group({
       'name': [this.testResultInfo.name, Validators.compose([Validators.required])],
       'detail': [this.testResultInfo.detail, Validators.compose([])],
+      'setId': [this.testResultInfo.setId, Validators.compose([Validators.required])],
       'caseId': [this.testResultInfo.caseId, Validators.compose([Validators.required])],
-      'testSetId': [this.testResultInfo.testSetId, Validators.compose([Validators.required])],
       'output': [this.testResultInfo.output, Validators.compose([Validators.required])],
       'status': [this.testResultInfo.status, Validators.compose([Validators.required])],
       'level': [this.testResultInfo.level, Validators.compose([])],
@@ -117,8 +160,8 @@ export class BugDetailComponent implements OnInit {
 
     this.name = this.testResultForm.controls['name'];
     this.detail = this.testResultForm.controls['detail'];
+    this.setId = this.testResultForm.controls['setId'];
     this.caseId = this.testResultForm.controls['caseId'];
-    this.testSetId = this.testResultForm.controls['testSetId'];
     this.output = this.testResultForm.controls['output'];
     this.status = this.testResultForm.controls['status'];
     this.level = this.testResultForm.controls['level'];
@@ -149,38 +192,50 @@ export class BugDetailComponent implements OnInit {
     }
   }
 
-  onSubmit() {
-    let testResultInfo = Object.assign(this.testResultForm.value, {releaseId:this.releaseId, projectId:this.projectId});
+  onSubmit(type) {
+    let testResultInfo = Object.assign(this.testResultForm.value, { releaseId: this.releaseId, projectId: this.projectId });
     testResultInfo.level = testResultInfo.level || 'normal';
     testResultInfo.priority = testResultInfo.priority || 'normal';
     if (this.mode === 'new') {
-      this._service.newTestResult(testResultInfo)
-        .then(res => {
-          if (res.msg === 'ok') {
-            this.eventManager.broadcast({name: 'TestResultModification', content: 'OK'});
-            this.toasterService.pop('ok', '新建测试结果成功');
-            this.router.navigate(['../'], {relativeTo: this.route});
-          } else {
-            this.toasterService.pop('error', res.msg);
-          }
-        });
+      this.newTestResult(testResultInfo, type);
     } else {
       testResultInfo = Object.assign(testResultInfo, {id: this.testResultInfo.id});
-      this._service.updateTestResult(testResultInfo)
-        .then(res => {
-          if (res.msg === 'ok') {
-            this.eventManager.broadcast({name: 'TestResultModification', content: 'OK'});
-            this.toasterService.pop('ok', '测试结果修改成功');
-            this.router.navigate(['../'], {relativeTo: this.route});
-          } else {
-            this.toasterService.pop('error', res.msg);
-          }
-        });
+      this.updateTestResult(testResultInfo);
     }
   }
 
+  newTestResult(testResultInfo, type) {
+    this._service.newTestResult(testResultInfo)
+      .then(res => {
+        if (res.msg === 'ok') {
+          this.eventManager.broadcast({name: 'TestResultModification', content: 'OK'});
+          this.toasterService.pop('ok', '新建测试结果成功');
+          if (type == 'one') {
+            this.router.navigate(['../'], {relativeTo: this.route});
+          } else if (type == 'again') {
+            this.router.navigate(['../new'], {relativeTo: this.route});
+          }
+        } else {
+          this.toasterService.pop('error', res.msg);
+        }
+      });
+  }
+
+  updateTestResult(testResultInfo) {
+    this._service.updateTestResult(testResultInfo)
+      .then(res => {
+        if (res.msg === 'ok') {
+          this.eventManager.broadcast({name: 'TestResultModification', content: 'OK'});
+          this.toasterService.pop('ok', '测试结果修改成功');
+          this.router.navigate(['../'], {relativeTo: this.route});
+        } else {
+          this.toasterService.pop('error', res.msg);
+        }
+      });
+  }
+
   cancel() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
 }
