@@ -269,8 +269,8 @@ class TestCase(MySQLModel):
     releaseId = ForeignKeyField(Release, related_name='testCase')
     ownerId = ForeignKeyField(User, related_name='testCase')
     type = db_char(length=10, null=True)
-    input = db_char()
-    expect = db_char()
+    input = TextField()
+    expect = TextField()
     status = db_char()
 
     class Meta:
@@ -296,7 +296,7 @@ class TestResult(MySQLModel):
     ownerId = ForeignKeyField(User, related_name='testResult')
     releaseId = ForeignKeyField(Release, related_name='testResult')
     caseId = ForeignKeyField(TestCase, related_name='testResult')
-    output = db_char()
+    output = TextField()
     status = db_option(default='close', comment='tofix,tocheck,close(默认)')
     level = db_option('normal', '优先级:low(低)/high(高)/normal(中,默认)')
     devId = ForeignKeyField(User, related_name='devResult')
