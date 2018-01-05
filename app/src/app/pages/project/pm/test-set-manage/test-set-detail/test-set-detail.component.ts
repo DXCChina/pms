@@ -89,28 +89,6 @@ export class TestSetDetailComponent implements OnInit {
         startWith(this.queryOfCase),
         map(Case => Case ? this.filterCases(Case) : this.searchCaseList.slice())
       );
-
-    // Determines if a route should be reused
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    };
-
-    this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd) {
-        // trick the Router into believing it's last link wasn't previously loaded
-        this.router.navigated = false;
-        if (this.mode !== 'new') {
-          this.route.params.subscribe(param => {
-            if (param['id']) {
-              this.reviewDetail(param['id']);
-            }
-          });
-        }
-        this.findTestMember();
-        this.findTestCase();
-        this.buildForm();
-      }
-    });
   }
 
   filterCases(name: string) {
@@ -119,6 +97,16 @@ export class TestSetDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (this.mode !== 'new') {
+      this.route.params.subscribe(param => {
+        if (param['id']) {
+          this.reviewDetail(param['id']);
+        }
+      });
+    }
+    this.findTestMember();
+    this.findTestCase();
+    this.buildForm();
   }
 
   reviewDetail(testSetId) {

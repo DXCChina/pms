@@ -87,31 +87,18 @@ export class BugDetailComponent implements OnInit {
     this.route.url.subscribe(url => {
       this.mode = url[0].path
     });
-
-    // Determines if a route should be reused
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    };
-
-    this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd) {
-        // trick the Router into believing it's last link wasn't previously loaded
-        this.router.navigated = false;
-
-        if (this.mode != 'new') {
-          this.route.params.subscribe(param => {
-            if (param['id']) {
-              this.reviewDetail(param['id']);
-            }
-          });
-        }
-        this.findTestSet();
-        this.buildForm();
-      }
-    });
   }
 
   ngOnInit() {
+    if (this.mode != 'new') {
+      this.route.params.subscribe(param => {
+        if (param['id']) {
+          this.reviewDetail(param['id']);
+        }
+      });
+    }
+    this.findTestSet();
+    this.buildForm();
   }
 
   reviewDetail(testResultId) {
