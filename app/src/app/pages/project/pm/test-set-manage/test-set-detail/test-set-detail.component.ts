@@ -1,5 +1,5 @@
 import {Component, OnInit, Inject} from '@angular/core';
-import {ActivatedRoute, Router, NavigationEnd} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {Validators, AbstractControl, FormGroup, FormControl, FormBuilder} from '@angular/forms';
 
 import {ToasterService, ToasterConfig} from 'angular2-toaster';
@@ -71,11 +71,13 @@ export class TestSetDetailComponent implements OnInit {
     toolbarButtons: ['bold', 'italic', 'underline', 'align', 'fontSize', 'color', 'indent', 'outdent', 'formatOL', 'formatUL']
   };
 
-  constructor(private _service: TestSetService,
-              public fb: FormBuilder,
-              private toasterService: ToasterService,
-              private route: ActivatedRoute,
-              private router: Router) {
+  constructor(
+    private _service: TestSetService,
+    public fb: FormBuilder,
+    private toasterService: ToasterService,
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {
     this.projectId = parseInt(sessionStorage.getItem('projectId'), 10);
     this.releaseId = parseInt(sessionStorage.getItem('releaseId'), 10);
 
@@ -224,9 +226,9 @@ export class TestSetDetailComponent implements OnInit {
       .then(res => {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '新建测试集成功');
-          if (type == 'one') {
+          if (type === 'one') {
             this.router.navigate(['../'], {relativeTo: this.route});
-          } else if (type == 'again') {
+          } else if (type === 'again') {
             this.router.navigate(['../new'], {relativeTo: this.route});
           }
         } else {

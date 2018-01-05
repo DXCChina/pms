@@ -65,11 +65,11 @@
                 // margin-top: 8px;
                 // .mat-chip-list {
                 //     position: relative;
-                //     .mat-chip.item-time {
-                //         position: absolute;
-                //         right: 0;
-                //     }
                 // }
+                .item-time {
+                    text-align: right;
+                    color: #333333;
+                }
             }
         }
     }
