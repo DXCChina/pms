@@ -19,9 +19,7 @@ export class PmDemandDetailService {
   }
 
   reviewDemandDetail(id:string):Promise<any>{
-    let demandDetailUrl = `${this.demandUrl}/${id}`;
-
-    return this.http.get(demandDetailUrl)
+    return this.http.get(`${this.demandDetailUrl}/${id}`)
       .toPromise()
       .then(this._global.extractData)
       .catch(this._global.handleError);

@@ -12,7 +12,7 @@ import {
 } from '@angular/material';
 import { ToasterModule } from 'angular2-toaster';
 import { PmComponent } from './pm.component';
-import { PmDashboardComponent } from './pm-dashboard.component/pm-dashboard.component';
+import { DashboardViewComponent } from './dashboard-view.component/dashboard-view.component';
 import { PmActivityComponent } from './pm-activity.component/pm-activity.component';
 import { TestResultDetailComponent } from './test-result-detail-dialog/test-result-detail-dialog.component';
 import { DemandManageComponent } from './demand-manage/demand-manage.component';
@@ -32,7 +32,7 @@ import {FroalaEditorModule, FroalaViewModule} from "angular-froala-wysiwyg";
 @NgModule({
   declarations: [
     PmComponent,
-    PmDashboardComponent,
+    DashboardViewComponent,
     PmActivityComponent,
     TestResultDetailComponent,
     DemandManageComponent,

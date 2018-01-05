@@ -104,9 +104,9 @@
                 <!-- Row Detail Template -->
                 <ngx-datatable-row-detail [rowHeight]="150" (toggle)="onDetailToggle($event)">
                     <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
-                        <div style="padding: 8px 16px;">
+                        <div style="padding: 8px 16px;height: 100%;overflow: auto;">
                             <h3><strong>{{ row.name }}</strong></h3>
-                            <p>{{ row.detail }}</p>
+                            <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(row.detail)" class="fr-view"></div>
                         </div>
                     </ng-template>
                 </ngx-datatable-row-detail>

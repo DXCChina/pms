@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer } from '@angular/platform-browser';
 import { TableViewService } from './table-view.service';
 import { ViewModel } from './view.model';
-import { MockData } from './mock-data';
 
 @Component({
   selector: 'app-table-view',
@@ -31,7 +31,7 @@ export class TableViewComponent {
 
   @ViewChild('table') tableEl: any;
 
-  constructor(private route: ActivatedRoute, private router: Router, private service: TableViewService) {
+  constructor(private route: ActivatedRoute, private router: Router, private service: TableViewService, private sanitizer: DomSanitizer) {
 
     this.releaseId = sessionStorage.getItem('releaseId');
 
