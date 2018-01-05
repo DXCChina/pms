@@ -11,21 +11,21 @@ export class PmDemandDetailService {
 
   constructor(private _global: GlobalState, private http: Http) { }
 
-  newDemand(demandInfo:any): Promise<any> {
+  newDemand(demandInfo: any): Promise<any> {
     return this.http.post(this.demandUrl, JSON.stringify(demandInfo), this._global.options)
       .toPromise()
       .then(this._global.extractData)
       .catch(this._global.handleError);
   }
 
-  reviewDemandDetail(id:string):Promise<any>{
-    return this.http.get(`${this.demandDetailUrl}/${id}`)
+  reviewDemandDetail(id: string): Promise<any> {
+    return this.http.get(`${this.demandUrl}/${id}`)
       .toPromise()
       .then(this._global.extractData)
       .catch(this._global.handleError);
   }
 
-  updateDemand(demandInfo:any):Promise<any>{
+  updateDemand(demandInfo: any): Promise<any> {
     return this.http.put(this.demandUrl, JSON.stringify(demandInfo), this._global.options)
       .toPromise()
       .then(this._global.extractData)

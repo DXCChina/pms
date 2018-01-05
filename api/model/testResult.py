@@ -75,10 +75,9 @@ def find_test_result_by_id(test_result_id):
     return TestResult.getOne(TestResult.id == test_result_id)
 
 
-def find_test_result_by_case(case_id, set_id):
+def find_test_result_by_name(name):
     '''按case_id和set_id查询测试结果'''
-    print(case_id, set_id)
-    return TestResult.getOne((TestResult.caseId == case_id) and (TestResult.testSetId == set_id))
+    return TestResult.getOne(TestResult.name == name)
 
 
 def search_set_list(r_id):

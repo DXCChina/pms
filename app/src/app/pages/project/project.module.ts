@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { NgJhipsterModule } from 'ng-jhipster';
 
 import {
   MatButtonModule, MatCommonModule, MatDialogModule, MatSelectModule, MatInputModule,
@@ -25,10 +24,6 @@ import { TableViewComponent } from './table-view/table-view.component';
     routing,
     MatButtonModule,
     NgxDatatableModule,
-    NgJhipsterModule.forRoot({
-      // set below to true to make alerts look like toast
-      alertAsToast: false,
-    }),
 
     MatCommonModule,
     MatDialogModule,
