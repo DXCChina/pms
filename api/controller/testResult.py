@@ -33,9 +33,8 @@ def add_test_result():
     data = request.json
     data['ownerId'] = get_jwt_identity()
 
-    if data['caseId'] != '' and data['setId'] != '':
-        if testResult.find_test_result_by_case(data['caseId'], data['setId']):
-            return jsonify({"msg": '该测试集下的案例已有测试结果！'}), 400
+    if testResult.find_test_result_by_name(data['name']):
+        return jsonify({"msg": '测试结果名称重复！'}), 400
 
     return jsonify({
         'msg': 'ok',

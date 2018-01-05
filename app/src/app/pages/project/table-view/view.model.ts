@@ -18,14 +18,14 @@ export const ViewModel = {
     },
     devSet: {
         title: '活动',
-        normalCol: ['名称', '状态', '预计花费（小时）'],
+        normalCol: ['名称', '状态', '预计花费（天）'],
         columns: [
             { name: '名称', prop: 'name' },
             { name: '状态', prop: 'status' },
             { name: '成员', prop: 'member' },
             { name: '进度', prop: 'progress' },
             { name: '起止时间', prop: '' },
-            { name: '预计花费（小时）', prop: 'cost' },
+            { name: '预计花费（天）', prop: 'cost' },
             { name: '创建时间', prop: 'createAt' }
         ],
         roleOfNew: {
