@@ -42,7 +42,7 @@ export const ASSOCIATION_MENU = [
         path: 'testCase',
         data: {
           menu: {
-            title: '用例管理',
+            title: '案例管理',
             icon: 'ion-briefcase',
             selected: false,
             expanded: false,
