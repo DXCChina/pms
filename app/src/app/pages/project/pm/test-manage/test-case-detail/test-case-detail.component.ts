@@ -80,31 +80,19 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
     this.route.url.subscribe(url => {
       this.mode = url[0].path
     });
-
-    // Determines if a route should be reused
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    };
-
-    this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd) {
-        // trick the Router into believing it's last link wasn't previously loaded
-        this.router.navigated = false;
-        this.buildForm();
-        if (this.mode != 'new') {
-          this.route.params.subscribe(param => {
-            if (param['id']) {
-              this.caseId = param['id'];
-              this.reviewDetail(param['id']);
-            }
-          });
-        }
-        this.findDemand(this.value);
-      }
-    });
   }
 
   ngOnInit() {
+    this.buildForm();
+    if (this.mode != 'new') {
+      this.route.params.subscribe(param => {
+        if (param['id']) {
+          this.caseId = param['id'];
+          this.reviewDetail(param['id']);
+        }
+      });
+    }
+    this.findDemand(this.value);
   }
 
   ngAfterViewInit() {

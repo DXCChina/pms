@@ -3,7 +3,7 @@ import {ToasterService, ToasterConfig} from "angular2-toaster";
 import {PmDemandDetailService} from "./demand-detail-dialog.service";
 import {FormBuilder, Validators, AbstractControl, FormGroup} from "@angular/forms";
 import {Demand} from "./demand.model";
-import {ActivatedRoute, Router, NavigationEnd} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-demand-detail',
@@ -19,8 +19,7 @@ export class DemandDetailComponent implements OnInit {
   level: AbstractControl;
   createAt: AbstractControl;
   demandForm: FormGroup;
-  isOperate:boolean = false;
-
+  isOperate: boolean = false;
   formErrors = {
     'title': '',
     'detail': '',
@@ -55,39 +54,27 @@ export class DemandDetailComponent implements OnInit {
   };
 
   constructor(public fb: FormBuilder, private _service: PmDemandDetailService, private toasterService: ToasterService,
-              private route: ActivatedRoute, private router:Router) {
+              private route: ActivatedRoute, private router: Router) {
     this.projectId = sessionStorage.getItem('projectId');
     this.releaseId = sessionStorage.getItem('releaseId');
 
     this.route.url.subscribe(url => {
       this.mode = url[0].path
     });
-
-    // Determines if a route should be reused
-    this.router.routeReuseStrategy.shouldReuseRoute = function () {
-      return false;
-    };
-
-    this.router.events.subscribe((evt) => {
-      if (evt instanceof NavigationEnd) {
-        // trick the Router into believing it's last link wasn't previously loaded
-        this.router.navigated = false;
-
-        this.isOperate = sessionStorage.getItem('userRoleInProject') == 'pm';
-
-        if (this.mode != 'new') {
-          this.route.params.subscribe(param => {
-            if (param['id']) {
-              this.reviewDetail(param['id']);
-            }
-          });
-        }
-        this.buildForm();
-      }
-    });
   }
 
   ngOnInit() {
+    this.isOperate = sessionStorage.getItem('userRoleInProject') == 'pm';
+
+    if (this.mode != 'new') {
+      this.route.params.subscribe(param => {
+        if (param['id']) {
+          this.reviewDetail(param['id']);
+        }
+      });
+    }
+
+    this.buildForm();
   }
 
   reviewDetail(demandId) {
@@ -139,7 +126,7 @@ export class DemandDetailComponent implements OnInit {
   }
 
   onSubmit(type) {
-    let demandInfo = Object.assign(this.demandForm.value, {projectId: this.projectId, releaseId:this.releaseId});
+    let demandInfo = Object.assign(this.demandForm.value, {projectId: this.projectId, releaseId: this.releaseId});
     if (this.mode === 'new') {
       this.newDemand(demandInfo, type);
     } else {
@@ -148,14 +135,14 @@ export class DemandDetailComponent implements OnInit {
     }
   }
 
-  newDemand(demandInfo,type){
+  newDemand(demandInfo, type) {
     this._service.newDemand(demandInfo)
       .then(res => {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '新建需求成功');
-          if(type == 'one'){
+          if (type == 'one') {
             this.router.navigate(['../'], {relativeTo: this.route});
-          }else if(type == 'again'){
+          } else if (type == 'again') {
             this.router.navigate(['../new'], {relativeTo: this.route});
           }
         } else {
@@ -164,7 +151,7 @@ export class DemandDetailComponent implements OnInit {
       });
   }
 
-  updateDemand(demandInfo){
+  updateDemand(demandInfo) {
     this._service.updateDemand(demandInfo)
       .then(res => {
         if (res.msg === 'ok') {
@@ -176,7 +163,7 @@ export class DemandDetailComponent implements OnInit {
       });
   }
 
-  cancel(){
-    this.router.navigate(['../'], {relativeTo:this.route});
+  cancel() {
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 }
