@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ListMetrics, ItemMetrics } from './card-data.Entity';
+import { ListMetrics, ItemMetrics } from './card-data.entity';
 import { RoleModel } from './role.model';
 import { DashboardViewService } from './dashboard-view.service';
 
