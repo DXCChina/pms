@@ -66,6 +66,11 @@ export class TestSetDetailComponent implements OnInit {
   searchControl: FormControl;
   filteredCases: Observable<any[]>;
 
+  options: any = {
+    imageUploadURL: '/api/upload',
+    toolbarButtons: ['bold', 'italic', 'underline', 'align', 'fontSize', 'color', 'indent', 'outdent', 'formatOL', 'formatUL']
+  };
+
   constructor(private _service: TestSetService,
               public fb: FormBuilder,
               private toasterService: ToasterService,

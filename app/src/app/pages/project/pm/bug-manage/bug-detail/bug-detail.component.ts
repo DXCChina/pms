@@ -70,7 +70,8 @@ export class BugDetailComponent implements OnInit {
   testResultInfo: TestResult = new TestResult();
 
   options: any = {
-    imageUploadURL: '/api/upload'
+    imageUploadURL: '/api/upload',
+    toolbarButtons: ['bold', 'italic', 'underline', 'align', 'fontSize', 'color', 'indent', 'outdent', 'formatOL', 'formatUL']
   };
 
   searchSetList: any[] = [];

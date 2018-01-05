@@ -50,7 +50,8 @@ export class DemandDetailComponent implements OnInit {
   demandInfo: Demand = new Demand();
 
   options: any = {
-    imageUploadURL: '/api/upload'
+    imageUploadURL: '/api/upload',
+    toolbarButtons: ['bold', 'italic', 'underline', 'align', 'fontSize', 'color', 'indent', 'outdent', 'formatOL', 'formatUL']
   };
 
   constructor(public fb: FormBuilder, private _service: PmDemandDetailService, private toasterService: ToasterService,

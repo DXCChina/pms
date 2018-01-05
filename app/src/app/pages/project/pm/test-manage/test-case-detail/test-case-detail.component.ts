@@ -68,7 +68,8 @@ export class TestCaseDetailComponent implements OnInit, AfterViewInit {
   display: boolean = false;
 
   options: any = {
-    imageUploadURL: '/api/upload'
+    imageUploadURL: '/api/upload',
+    toolbarButtons: ['bold', 'italic', 'underline', 'align', 'fontSize', 'color', 'indent', 'outdent', 'formatOL', 'formatUL']
   };
 
   constructor(public fb: FormBuilder, private toasterService: ToasterService, private _service: CaseDetailModalService,

@@ -11,7 +11,7 @@
       <div mat-card-avatar *ngIf="mode!='new'" [style.background]="'#c7b7dd'">{{testSetInfo.name | name2avatar}}</div>
       <div class="header-text" *ngIf="mode!='new'">
         <div class="detail-name">{{testSetInfo.name}}</div>
-        <div>{{testSetInfo.detail}}</div>
+        <div>{{testSetInfo.detail | delHtmlTag}}</div>
       </div>
       <div class="header-text" *ngIf="mode=='new'">
         <div class="detail-name">新建测试集</div>
@@ -26,9 +26,14 @@
             <mat-error>{{formErrors.name}}</mat-error>
           </mat-form-field>
 
-          <mat-form-field>
-            <input matInput placeholder="测试集描述" [formControl]="detail" [(ngModel)]="testSetInfo.detail" name="detail">
-          </mat-form-field>
+          <!--<mat-form-field>-->
+            <!--<input matInput placeholder="测试集描述" [formControl]="detail" [(ngModel)]="testSetInfo.detail" name="detail">-->
+          <!--</mat-form-field>-->
+          <div class="editor">
+            <span>测试集描述</span>
+            <textarea [froalaEditor]="options" [formControl]="detail" [(ngModel)]="testSetInfo.detail">
+            </textarea>
+          </div>
 
           <mat-form-field>
             <mat-select placeholder="指派给" [formControl]="memberId" [(ngModel)]="testSetInfo.memberId" required>

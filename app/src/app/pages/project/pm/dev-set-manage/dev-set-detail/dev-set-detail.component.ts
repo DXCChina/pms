@@ -77,7 +77,8 @@ export class DevSetDetailComponent implements OnInit {
   role: string = '';
 
   options: any = {
-    imageUploadURL: '/api/upload'
+    imageUploadURL: '/api/upload',
+    toolbarButtons: ['bold', 'italic', 'underline', 'align', 'fontSize', 'color', 'indent', 'outdent', 'formatOL', 'formatUL']
   };
 
   constructor(public fb: FormBuilder, private _service: PmTaskDetailService, private toasterService: ToasterService,
