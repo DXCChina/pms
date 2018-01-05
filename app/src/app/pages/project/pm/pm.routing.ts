@@ -1,7 +1,7 @@
 import { RouterModule, Routes } from '@angular/router';
 import { PmComponent } from './pm.component';
 import { ModuleWithProviders } from '@angular/core';
-import { PmDashboardComponent } from './pm-dashboard.component/pm-dashboard.component';
+import { DashboardViewComponent } from './dashboard-view.component/dashboard-view.component';
 import { PmActivityComponent } from './pm-activity.component/pm-activity.component';
 import { DemandManageComponent } from './demand-manage/demand-manage.component';
 import { DevSetManageComponent } from './dev-set-manage/dev-set-manage.component';
@@ -22,7 +22,7 @@ export const routes: Routes = [
     children: [
       {
         path: 'dashboard',
-        component: PmDashboardComponent,
+        component: DashboardViewComponent,
         data: { isShowNav: true, isShowSidebar: true }
       },
       {
