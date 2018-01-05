@@ -1,10 +1,9 @@
 <div class="card-container">
-    <app-list-card *ngIf="demandData.length" [data]="demandData" [canAdd]='true' (addItem)="addDemand()" (showDetail)="showDetail('Demand', $event)"></app-list-card>
-    <app-list-card *ngIf="activityData.length" [data]="activityData" [canAdd]='true' (addItem)="addTask()" (showDetail)="showDetail('Task', $event)"></app-list-card>
-    <app-list-card *ngIf="testCaseData.length" [data]="testCaseData" [canAdd]='true' (addItem)="addtestCase()" (showDetail)="showDetail('TestCase', $event)"></app-list-card>
-    <app-list-card *ngIf="testSetData.length" [data]="testSetData" [canAdd]='true' (addItem)="addtestSet()" (showDetail)="showDetail('TestSet', $event)"></app-list-card>
-    <app-list-card *ngIf="testResultData.length" [data]="testResultData" [canAdd]='true' (addItem)="addtestResult()" (showDetail)="showDetail('TestResult', $event)"></app-list-card>
     <app-list-card
-    *ngFor="let type of ['demand', 'activity', 'testCase', 'testSet', 'testResult']"
-    *ngIf="RoleModel[type]." [data]="testResultData" [canAdd]='true' (addItem)="addtestResult()" (showDetail)="showDetail('TestResult', $event)"></app-list-card>
+    *ngFor="let type of RoleModel[role]"
+    [canAdd]='type.canAdd'
+    [data]="this[type.name+'Data']"
+    (addItem)="addItem(type.name)"
+    (showDetail)="showDetail(type.name, $event)"
+    ></app-list-card>
 </div>

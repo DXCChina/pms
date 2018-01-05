@@ -2,26 +2,25 @@ export class ItemMetrics {
 
   itemObj: any;
   itemName: string;
-  itemTime: string;
   itemfrom: string;
-  itemTodo: string;
-  itemLevel: string;
+  itemStatus: string;
+  itemTag: string[];
+  itemTime: string;
 
   constructor(
     itemObj: any,
     itemName: string,
-    itemTime: string,
     itemfrom: string,
-    itemTodo: string,
-    itemLevel: string) {
-
+    itemStatus: string,
+    itemTag: string[],
+    itemTime: string
+  ) {
     this.itemObj = itemObj;
     this.itemName = itemName;
-    this.itemTime = itemTime;
     this.itemfrom = itemfrom;
-    this.itemTodo = itemTodo;
-    this.itemLevel = itemLevel;
-
+    this.itemStatus = itemStatus;
+    this.itemTag = itemTag;
+    this.itemTime = itemTime;
   }
 
 }

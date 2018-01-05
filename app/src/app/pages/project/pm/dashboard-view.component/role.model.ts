@@ -1,23 +1,57 @@
 export const RoleModel = {
-    demand: {
-        view: ['pm', 'dev'],
-        add: ['pm'],
-    },
-    devSet: {
-        view: ['pm', 'dev', 'test'],
-        add: ['pm'],
-    },
-    testCase: {
-        view: ['pm', 'test'],
-        add: ['test'],
-    },
-    testSet: {
-        view: ['pm', 'test'],
-        add: ['pm'],
-    },
-    BUG: {
-        view: ['pm', 'dev', 'test'],
-        add: ['test'],
-    },
+    pm: [
+        {
+            name: 'demand',
+            canAdd: true,
+        },
+        {
+            name: 'devSet',
+            canAdd: true,
+        },
+        {
+            name: 'testCase',
+            canAdd: false,
+        },
+        {
+            name: 'testSet',
+            canAdd: true,
+        },
+        {
+            name: 'bug',
+            canAdd: false,
+        }
+    ],
+    test: [
+        {
+            name: 'devSet',
+            canAdd: false,
+        },
+        {
+            name: 'testCase',
+            canAdd: true,
+        },
+        {
+            name: 'testSet',
+            canAdd: false,
+        },
+        {
+            name: 'bug',
+            canAdd: true,
+        }
+    ],
+    dev: [
+        {
+            name: 'demand',
+            canAdd: false,
+        },
+        {
+            name: 'devSet',
+            canAdd: false,
+        },
+        {
+            name: 'bug',
+            canAdd: false,
+        }
+    ]
 };
 

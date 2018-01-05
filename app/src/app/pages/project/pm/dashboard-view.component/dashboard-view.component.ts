@@ -13,18 +13,19 @@ import { DashboardViewService } from './dashboard-view.service';
 
 export class DashboardViewComponent implements OnInit {
   public demandData: any[] = [];
-  public activityData: any[] = [];
+  public devSetData: any[] = [];
   public testCaseData: any[] = [];
   public testSetData: any[] = [];
-  public testResultData: any[] = [];
+  public bugData: any[] = [];
 
   private releaseId: string;
   private role: string;
+  public RoleModel = RoleModel;
 
   constructor(
     private router: Router,
     private service: DashboardViewService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.releaseId = sessionStorage.getItem('releaseId');
@@ -37,163 +38,99 @@ export class DashboardViewComponent implements OnInit {
     }
   }
 
-  // 初始化数据 调用三个接口
+  // 初始化数据
   initData() {
-    this.getProjectDemand();
-    this.getProjectActivity();
-    this.getProjectTestResult();
+    this.RoleModel[this.role].forEach(type => {
+      this[type.name]();
+    });
   }
 
-  getProjectDemand() {
+  demand() {
     this.service.getViewData(this.releaseId, 'demand')
       .then(res => {
         this.demandData = [];
-        this.demandData.push(
-          new ListMetrics(
-            '待处理需求',
-            res
-              .filter(i => {
-                return !i.activityId;
-              })
-              .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', i.level);
-              })
-          )
-        );
 
         this.demandData.push(
           new ListMetrics(
-            '已分配需求',
-            res
-              .filter(i => {
-                return i.activityId;
-              })
-              .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', i.level);
-              })
-          )
-        );
-
-        this.demandData.push(
-          new ListMetrics(
-            '全部需求',
-            res
-              .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', i.level);
-              })
+            '需求',
+            res.map(i => new ItemMetrics(i, i.title, i.activity, i.status ? '已完成' : '未完成', [i.level], i.createAt))
           )
         );
 
       }).catch(err => console.log(err));
   }
 
-  getProjectActivity() {
+  devSet() {
     this.service.getViewData(this.releaseId, 'activity')
       .then(res => {
+        this.devSetData = [];
 
-        this.activityData = [];
-        this.activityData.push(
+        this.devSetData.push(
           new ListMetrics(
-            '进行中活动',
-            res
-              .filter(i => {
-                return i.status === 'dev-ing';
-              })
-              .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', '');
-              })
-          )
-        );
-
-        this.activityData.push(
-          new ListMetrics(
-            '待测试活动',
-            res
-              .filter(i => {
-                return i.status === 'needtest';
-              })
-              .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', '');
-              })
-          )
-        );
-
-        this.activityData.push(
-          new ListMetrics(
-            '全部活动',
-            res
-              .map(i => {
-                return new ItemMetrics(i, i.title, i.createAt, i.detail, '', '');
-              })
+            '活动',
+            res.map(i => new ItemMetrics(i, i.title, '', i.status, [], i.createAt))
           )
         );
 
       }).catch(err => console.log(err));
   }
 
-  getProjectTestResult() {
+  testCase() {
+    this.service.getViewData(this.releaseId, 'testCase')
+      .then(res => {
+        this.testCaseData = [];
+
+        this.testCaseData.push(
+          new ListMetrics(
+            '测试案例',
+            res.map(i => new ItemMetrics(i, i.name, i.owner, i.status, [i.type], ''))
+          )
+        );
+
+      }).catch(err => console.log(err));
+  }
+
+  testSet() {
+    this.service.getViewData(this.releaseId, 'testSet')
+      .then(res => {
+        this.testSetData = [];
+
+        this.testSetData.push(
+          new ListMetrics(
+            '测试集',
+            res.map(i => new ItemMetrics(i, i.name, i.member, '', i.testCase.map(el => el.name), ''))
+          )
+        );
+
+      }).catch(err => console.log(err));
+  }
+
+  bug() {
     this.service.getViewData(this.releaseId, 'testResult')
       .then(res => {
+        this.bugData = [];
 
-        this.testResultData.push(
+        this.bugData.push(
           new ListMetrics(
-            '待修复测试结果',
-            res
-              .filter(i => {
-                return i.status === 'tofix';
-              })
-              .map(i => {
-                return new ItemMetrics(i, i.name, '', i.detail, '', i.level);
-              })
-          )
-        );
-
-        this.testResultData.push(
-          new ListMetrics(
-            '待审核测试结果',
-            res
-              .filter(i => {
-                return i.status === 'tocheck';
-              })
-              .map(i => {
-                return new ItemMetrics(i, i.name, '', i.detail, '', i.level);
-              })
-          )
-        );
-
-        this.testResultData.push(
-          new ListMetrics(
-            '已通过测试结果',
-            res
-              .filter(i => {
-                return i.status === 'close';
-              })
-              .map(i => {
-                return new ItemMetrics(i, i.name, '', i.detail, '', i.level);
-              })
+            '缺陷',
+            res.map(i => new ItemMetrics(
+              i, i.name, i.owner,
+              i.status === 'tofix' ? '待修复' : '已修复',
+              ['来自：' + i.testCase + ' - ' + i.testSet + ' - ' + i.demand],
+              ''
+            ))
           )
         );
 
       }).catch(err => console.log(err));
   }
 
-  addDemand() {
-    this.router.navigate([`/pages/project/demand/new`]);
+  addItem(type) {
+    this.router.navigate([`/pages/project/${type}/new`]);
   }
 
-  showDemandDetail(data) {
-    this.router.navigate([`/pages/project/demand/${data.id}`]);
+  showDetail(type, data) {
+    this.router.navigate([`/pages/project/${type}/${data.id}`]);
   }
 
-  addTask() {
-    this.router.navigate([`/pages/project/devSet/new`]);
-  }
-
-  showTaskDetail(data) {
-    this.router.navigate([`/pages/project/devSet/${data.id}`]);
-  }
-
-  showTestResultDetail(data) {
-    this.router.navigate([`/pages/project/bug/${data.id}`]);
-  }
 }
