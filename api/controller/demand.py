@@ -78,7 +78,7 @@ def demand_add():
 def demand_info(demand_id):
     '''获取需求详情
 
-    GET /api/project/demand/detail/<int:demand_id>
+    GET /api/project/demand/<int:demand_id>
     '''
     return jsonify({'msg': 'ok', 'data': demand.demand_detail(demand_id)})
 
@@ -86,7 +86,7 @@ def demand_info(demand_id):
 def demand_update():
     '''更新需求信息
 
-    PUT /api/project/demand/update
+    PUT /api/project/demand
     '''
 
     if not request.json:

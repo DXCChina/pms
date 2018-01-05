@@ -11,14 +11,14 @@
       <div mat-card-avatar *ngIf="mode!='new'" [style.background]="'#c7b7dd'">{{testSetInfo.name | name2avatar}}</div>
       <div class="header-text" *ngIf="mode!='new'">
         <div class="detail-name">{{testSetInfo.name}}</div>
-        <div>{{testSetInfo.detail}}</div>
+        <div>{{testSetInfo.detail | delHtmlTag}}</div>
       </div>
       <div class="header-text" *ngIf="mode=='new'">
         <div class="detail-name">新建测试集</div>
       </div>
     </div>
     <mat-card>
-      <form action="" [formGroup]="testSetForm" (ngSubmit)="onSubmit()">
+      <form action="" [formGroup]="testSetForm" (ngSubmit)="onSubmit('one')">
         <div class="detail-content">
           <h5>基本信息</h5>
           <mat-form-field>
@@ -26,9 +26,14 @@
             <mat-error>{{formErrors.name}}</mat-error>
           </mat-form-field>
 
-          <mat-form-field>
-            <input matInput placeholder="测试集描述" [formControl]="detail" [(ngModel)]="testSetInfo.detail" name="detail">
-          </mat-form-field>
+          <!--<mat-form-field>-->
+            <!--<input matInput placeholder="测试集描述" [formControl]="detail" [(ngModel)]="testSetInfo.detail" name="detail">-->
+          <!--</mat-form-field>-->
+          <div class="editor">
+            <span>测试集描述</span>
+            <textarea [froalaEditor]="options" [formControl]="detail" [(ngModel)]="testSetInfo.detail">
+            </textarea>
+          </div>
 
           <mat-form-field>
             <mat-select placeholder="指派给" [formControl]="memberId" [(ngModel)]="testSetInfo.memberId" required>
@@ -40,7 +45,7 @@
             <!-- <mat-hint>{{memberId.value?.email}}</mat-hint> -->
             <mat-error>{{formErrors.memberId}}</mat-error>
           </mat-form-field>
-          
+
           <h5>所含测试案例</h5>
 
           <mat-form-field>
@@ -51,7 +56,7 @@
               </mat-option>
             </mat-autocomplete>
           </mat-form-field>
-          
+
           <mat-accordion>
             <mat-expansion-panel *ngFor="let caseItem of testCaseList">
               <mat-expansion-panel-header>
@@ -71,11 +76,12 @@
         <div class="detail-footer">
           <button mat-button (click)="cancel()">关闭</button>
           <button mat-button type="submit" [disabled]="testCaseList.length==0&&!testSetForm?.valid">{{mode==='new'?'新建':'修改'}}</button>
+          <button mat-button type="button" *ngIf="mode == 'new'" [disabled]="testCaseList.length==0&&!testSetForm?.valid" (click)="onSubmit('again')">再次新建</button>
         </div>
       </form>
     </mat-card>
   </div>
 </div>
 
-<!-- <toaster-container [toasterconfig]="toasterconfig"></toaster-container> -->
+ <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
 
