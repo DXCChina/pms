@@ -199,17 +199,9 @@
   version "6.0.1"
   resolved "http://registry.npm.taobao.org/@ngx-translate/core/download/@ngx-translate/core-6.0.1.tgz#7c7a80077feb994fc815b67a72065af04d394efe"
 
-"@ngx-translate/core@7.0.0":
-  version "7.0.0"
-  resolved "http://registry.npm.taobao.org/@ngx-translate/core/download/@ngx-translate/core-7.0.0.tgz#5b6f63bd4042164d44cd85f68703af96e9392e7d"
-
 "@ngx-translate/http-loader@0.0.3":
   version "0.0.3"
   resolved "http://registry.npm.taobao.org/@ngx-translate/http-loader/download/@ngx-translate/http-loader-0.0.3.tgz#8346c8d2d6f630254601029668f17abe2afe8a9b"
-
-"@ngx-translate/http-loader@0.1.0":
-  version "0.1.0"
-  resolved "http://registry.npm.taobao.org/@ngx-translate/http-loader/download/@ngx-translate/http-loader-0.1.0.tgz#6029325561d7868fe325a419de2770e98ff1502e"
 
 "@schematics/angular@~0.1.11":
   version "0.1.11"
@@ -5063,13 +5055,6 @@ negotiator@0.6.1:
 ng-http-interceptor@^3.1.2:
   version "3.1.2"
   resolved "http://registry.npm.taobao.org/ng-http-interceptor/download/ng-http-interceptor-3.1.2.tgz#d9611dd7c3583aa49315692ee402a3fcc41efe4a"
-
-ng-jhipster@0.2.7:
-  version "0.2.7"
-  resolved "http://registry.npm.taobao.org/ng-jhipster/download/ng-jhipster-0.2.7.tgz#ddf56233a8f78d80539d00b878f581d29452902e"
-  dependencies:
-    "@ngx-translate/core" "7.0.0"
-    "@ngx-translate/http-loader" "0.1.0"
 
 ng2-ckeditor@1.1.6:
   version "1.1.6"

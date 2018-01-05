@@ -1,0 +1,9 @@
+<div class="card-container">
+    <app-list-card
+    *ngFor="let type of RoleModel[role]"
+    [canAdd]='type.canAdd'
+    [data]="this[type.name+'Data']"
+    (addItem)="addItem(type.name)"
+    (showDetail)="showDetail(type.name, $event)"
+    ></app-list-card>
+</div>
