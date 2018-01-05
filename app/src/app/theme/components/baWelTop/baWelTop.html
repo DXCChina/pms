@@ -4,7 +4,7 @@
   <div class="juzuo system-name">
     <a *ngIf="isShowSidebar==true" (click)="toggleMenu()" class="collapse-menu-link ion-navicon"></a>
     <a routerLink="welcome" class="al-logo clearfix">QACenter DXC </a>
-    <span  *ngIf="showLevel2Menu==true&&projectName">{{projectName}}</span>
+    <span  *ngIf="showLevel2Menu==true&&projectName" class="project-name">{{projectName}}</span>
   </div>
 
   <div class="level_2_menu juzuo" *ngIf="showLevel2Menu==true">

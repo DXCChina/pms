@@ -1,13 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ListMetrics, ItemMetrics } from './card-data.Entity';
 import { DashboardService } from './dashboard.service';
-import { MatDialog } from '@angular/material';
-import { TestResultDetailComponent } from '../test-result-detail-dialog/test-result-detail-dialog.component';
-import { Subscription } from 'rxjs';
-import { JhiEventManager } from 'ng-jhipster';
-import { Subscribable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-pm-dashboard',
@@ -15,16 +10,12 @@ import { Subscribable } from 'rxjs/Observable';
   styleUrls: ['./pm-dashboard.component.scss']
 })
 
-export class PmDashboardComponent implements OnInit, OnDestroy {
+export class PmDashboardComponent implements OnInit {
   public demandData: any[] = [];
   public activityData: any[] = [];
   public testResultData: any[] = [];
 
-  private eventSubscriber: Subscription;
-  private eventActivitySubscriber: Subscription;
-  private eventTestResultSubscriber: Subscription;
-
-  constructor(private router: Router, private service: DashboardService, private dialog: MatDialog, private eventManager: JhiEventManager) {
+  constructor(private router: Router, private service: DashboardService) {
   }
 
   // 项目ID
@@ -44,10 +35,6 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
     this.getProjectDemand();
     this.getProjectActivity();
     this.getProjectTestResult();
-
-    this.registerChangeInDemand();
-    this.registerChangeInActivity();
-    this.registerChangeInTestResult();
   }
 
   getProjectDemand() {
@@ -181,36 +168,6 @@ export class PmDashboardComponent implements OnInit, OnDestroy {
         );
 
       }).catch(err => console.log(err));
-  }
-
-  registerChangeInDemand() {
-    this.eventSubscriber = this.eventManager.subscribe(
-      'DemandListModification',
-      () => this.getProjectDemand()
-    );
-  }
-
-  registerChangeInActivity() {
-    this.eventActivitySubscriber = this.eventManager.subscribe(
-      'ActivityListModification',
-      () => {
-        this.getProjectActivity();
-        this.getProjectDemand();
-      }
-    );
-  }
-
-  registerChangeInTestResult() {
-    this.eventTestResultSubscriber = this.eventManager.subscribe(
-      'TestResultListModification',
-      () => this.getProjectTestResult()
-    );
-  }
-
-  ngOnDestroy() {
-    this.eventManager.destroy(this.eventSubscriber);
-    this.eventManager.destroy(this.eventActivitySubscriber);
-    this.eventManager.destroy(this.eventTestResultSubscriber);
   }
 
   addDemand() {

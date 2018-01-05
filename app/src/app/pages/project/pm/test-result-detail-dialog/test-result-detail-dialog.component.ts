@@ -1,12 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { Validators, AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
-import { ToasterService, ToasterConfig } from 'angular2-toaster';
-import { JhiEventManager } from 'ng-jhipster';
 
 import { TestResultService } from './test-result-detail-dialog.service';
 import { TestResult } from './test-result.model';
-import { parse } from 'querystring';
 
 @Component({
   selector: 'app-test-result-detail-dialog',

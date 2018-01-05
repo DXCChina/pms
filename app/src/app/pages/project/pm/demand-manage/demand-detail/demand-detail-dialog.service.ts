@@ -8,8 +8,6 @@ import { Http } from '@angular/http';
 @Injectable()
 export class PmDemandDetailService {
   demandUrl: string = this._global.baseURL + '/api/project/demand';
-  demandDetailUrl: string = this._global.baseURL + '/api/project/demand/detail';
-  demandUpdateUrl: string = this._global.baseURL + '/api/project/demand/update';
 
   constructor(private _global: GlobalState, private http: Http) { }
 
@@ -21,16 +19,16 @@ export class PmDemandDetailService {
   }
 
   reviewDemandDetail(id:string):Promise<any>{
-    this.demandDetailUrl = `${this.demandDetailUrl}/${id}`;
+    let demandDetailUrl = `${this.demandUrl}/${id}`;
 
-    return this.http.get(this.demandDetailUrl)
+    return this.http.get(demandDetailUrl)
       .toPromise()
       .then(this._global.extractData)
       .catch(this._global.handleError);
   }
 
   updateDemand(demandInfo:any):Promise<any>{
-    return this.http.put(this.demandUpdateUrl, JSON.stringify(demandInfo), this._global.options)
+    return this.http.put(this.demandUrl, JSON.stringify(demandInfo), this._global.options)
       .toPromise()
       .then(this._global.extractData)
       .catch(this._global.handleError);

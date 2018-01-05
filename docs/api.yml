@@ -454,7 +454,13 @@ paths:
       responses:
         200:
           description: ok
-  /project/demand/detail/{demand_id}:
+    put:
+      summary: api
+      operationId: controller.demand.demand_update
+      responses:
+        200:
+          description: ok
+  /project/demand/{demand_id}:
     get:
       summary: api
       operationId: controller.demand.demand_info
@@ -463,13 +469,6 @@ paths:
           in: path
           required: true
           type: integer
-      responses:
-        200:
-          description: ok
-  /project/demand/update:
-    put:
-      summary: api
-      operationId: controller.demand.demand_update
       responses:
         200:
           description: ok

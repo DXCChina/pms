@@ -14,13 +14,8 @@ export class ReleaseManageComponent implements OnInit {
 
   timeLine: any[];
   release: any;
-  options: any;
   constructor(private router: Router, private service: ReleaseManageService, private dialogRef: MatDialog) {
     this.timeLine = [];
-
-    this.options = {
-      imageUploadURL: '/api/upload'
-    };
   }
 
   ngOnInit() {
