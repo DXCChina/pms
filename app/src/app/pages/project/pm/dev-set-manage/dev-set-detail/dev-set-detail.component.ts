@@ -1,10 +1,9 @@
-import {Component, Inject, ViewChild, Input, OnInit} from "@angular/core";
+import {Component, ViewChild, OnInit} from "@angular/core";
 import {MatMenuTrigger} from "@angular/material";
 import {FormControl, AbstractControl, FormGroup, Validators, FormBuilder} from "@angular/forms";
 import {PmTaskDetailService} from "./task-detail-dialog.service";
 import {ToasterService, ToasterConfig} from "angular2-toaster";
 import {TaskInfo} from "./task.model";
-import {JhiEventManager} from "ng-jhipster";
 import {Router, ActivatedRoute, NavigationEnd} from "@angular/router";
 
 @Component({
@@ -78,11 +77,12 @@ export class DevSetDetailComponent implements OnInit {
   role: string = '';
 
   options: any = {
-    imageUploadURL: '/api/upload'
+    imageUploadURL: '/api/upload',
+    toolbarButtons: ['bold', 'italic', 'underline', 'align', 'fontSize', 'color', 'indent', 'outdent', 'formatOL', 'formatUL']
   };
 
   constructor(public fb: FormBuilder, private _service: PmTaskDetailService, private toasterService: ToasterService,
-              private eventManager: JhiEventManager, private router: Router, private route: ActivatedRoute) {
+              private router: Router, private route: ActivatedRoute) {
     this.projectId = Number(sessionStorage.getItem('projectId'));
     this.releaseId = Number(sessionStorage.getItem('releaseId'));
     this.role = sessionStorage.getItem('userRoleInProject');
@@ -220,7 +220,6 @@ export class DevSetDetailComponent implements OnInit {
   reviewDetail(id) {
     this._service.reviewDetail(id)
       .then(res => {
-        console.log('activity info:', res);
         this.taskInfo = res;
 
         this.delMemberList = this.selectUserList = this.taskInfo.member.map(ele => {
@@ -268,7 +267,6 @@ export class DevSetDetailComponent implements OnInit {
       .then(res => {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '活动新建成功');
-          this.eventManager.broadcast({name: 'ActivityListModification', content: 'OK'});
           if(type === 'one'){
             this.router.navigate(['../'], {relativeTo: this.route});
           }else if(type === 'again'){
@@ -285,7 +283,6 @@ export class DevSetDetailComponent implements OnInit {
       .then(res => {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '活动修改成功');
-          this.eventManager.broadcast({name: 'ActivityListModification', content: 'OK'});
           this.router.navigate(['../'], {relativeTo: this.route});
         } else {
           this.toasterService.pop('error', res.msg);
@@ -343,6 +340,22 @@ export class DevSetDetailComponent implements OnInit {
     this.demandListInTask.splice(index, 1);
     this.demandListNotAssigned.push(demand);
     this.progressValue = this.demandListCompletedInTask.length / this.demandListInTask.length * 100;
+  }
+
+  getWorkdays(){
+    let startDate = +new Date(this.startDate.value);
+    let endDate = +new Date(this.endDate.value);
+    let diffDays = (endDate- startDate)/(1000*60*60*24) + 1;
+    let remainDay = diffDays % 7;
+    let weeks = Math.floor(diffDays / 7);
+    let weekends = 2 * weeks;
+    let weekDay = new Date(this.startDate.value).getDay();
+    for(var i = 0;i < remainDay;i++){//循环处理余下的天数有多少个周六或者周日（最多出现一个周六或者一个周日）
+      if(((weekDay + i)==6)||((weekDay + i)==0)||((weekDay + i)==7)){
+        weekends = weekends + 1;
+      }
+    }
+    this.taskInfo.cost = (diffDays-weekends ? diffDays - weekends : 0)+"";
   }
 }
 

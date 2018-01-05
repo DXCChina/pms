@@ -28,7 +28,7 @@
   a.al-logo {
     color: $sidebar-text;
     display: block;
-    font-size: 24px;
+    font-size: 28px;
     font-family: $font-family;
     white-space: nowrap;
     float: left;
@@ -38,8 +38,10 @@
   }
   .system-name {
     line-height: 66px;
-    font-size: 24px;
     color: #ffffff;
+    .project-name{
+      font-size: 20px;
+    }
   }
 
   a.resource {
