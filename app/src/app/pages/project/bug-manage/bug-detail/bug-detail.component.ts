@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router , NavigationEnd} from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { Validators, AbstractControl, FormGroup, FormBuilder } from '@angular/forms';
 
 import { ToasterService, ToasterConfig } from 'angular2-toaster';
 
-import {TestResultService} from './test-result-detail-dialog.service';
-import {TestResult} from './test-result.model';
+import { TestResultService } from './bug-detail.service';
+import { TestResult } from './test-result.model';
 
 @Component({
   selector: 'app-bug-detail',
@@ -85,12 +85,12 @@ export class BugDetailComponent implements OnInit {
     this.releaseId = parseInt(sessionStorage.getItem('releaseId'), 10);
 
     this.route.url.subscribe(url => {
-      this.mode = url[0].path
+      this.mode = url[0].path;
     });
   }
 
   ngOnInit() {
-    if (this.mode != 'new') {
+    if (this.mode !== 'new') {
       this.route.params.subscribe(param => {
         if (param['id']) {
           this.reviewDetail(param['id']);
@@ -111,20 +111,20 @@ export class BugDetailComponent implements OnInit {
 
   findTestSet() {
     this._service.searchTestSet(this.releaseId)
-        .then(res => {
-          if (res.msg === 'ok') {
-            this.searchSetList = res.data;
-          }
-        });
+      .then(res => {
+        if (res.msg === 'ok') {
+          this.searchSetList = res.data;
+        }
+      });
   }
 
   findTestCase(setId) {
     this._service.searchTestCase(setId, this.releaseId)
-        .then(res => {
-          if (res.msg === 'ok') {
-            this.searchCaseList = res.data;
-          }
-        });
+      .then(res => {
+        if (res.msg === 'ok') {
+          this.searchCaseList = res.data;
+        }
+      });
   }
 
   changeTestSet(setId) {
@@ -185,7 +185,7 @@ export class BugDetailComponent implements OnInit {
     if (this.mode === 'new') {
       this.newTestResult(testResultInfo, type);
     } else {
-      testResultInfo = Object.assign(testResultInfo, {id: this.testResultInfo.id});
+      testResultInfo = Object.assign(testResultInfo, { id: this.testResultInfo.id });
       this.updateTestResult(testResultInfo);
     }
   }
@@ -195,10 +195,10 @@ export class BugDetailComponent implements OnInit {
       .then(res => {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '新建测试结果成功');
-          if (type == 'one') {
-            this.router.navigate(['../'], {relativeTo: this.route});
-          } else if (type == 'again') {
-            this.router.navigate(['../new'], {relativeTo: this.route});
+          if (type === 'one') {
+            this.router.navigate(['../'], { relativeTo: this.route });
+          } else if (type === 'again') {
+            this.router.navigate(['../new'], { relativeTo: this.route });
           }
         } else {
           this.toasterService.pop('error', res.msg);
@@ -211,7 +211,7 @@ export class BugDetailComponent implements OnInit {
       .then(res => {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '测试结果修改成功');
-          this.router.navigate(['../'], {relativeTo: this.route});
+          this.router.navigate(['../'], { relativeTo: this.route });
         } else {
           this.toasterService.pop('error', res.msg);
         }
