@@ -1,15 +1,16 @@
-import {Component, OnInit, Inject} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Validators, AbstractControl, FormGroup, FormControl, FormBuilder} from '@angular/forms';
+import { Component, OnInit, Inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Validators, AbstractControl, FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { DomSanitizer } from '@angular/platform-browser';
 
-import {ToasterService, ToasterConfig} from 'angular2-toaster';
+import { ToasterService, ToasterConfig } from 'angular2-toaster';
 
-import {Observable} from 'rxjs/Observable';
-import {startWith} from 'rxjs/operators/startWith';
-import {map} from 'rxjs/operators/map';
+import { Observable } from 'rxjs/Observable';
+import { startWith } from 'rxjs/operators/startWith';
+import { map } from 'rxjs/operators/map';
 
-import {TestSetService} from './test-set-detail.service';
-import {TestSet} from './test-set-detail.model';
+import { TestSetService } from './test-set-detail.service';
+import { TestSet } from './test-set-detail.model';
 
 @Component({
   selector: 'app-test-set-detail',
@@ -77,25 +78,26 @@ export class TestSetDetailComponent implements OnInit {
     private toasterService: ToasterService,
     private route: ActivatedRoute,
     private router: Router,
+    private sanitizer: DomSanitizer
   ) {
     this.projectId = parseInt(sessionStorage.getItem('projectId'), 10);
     this.releaseId = parseInt(sessionStorage.getItem('releaseId'), 10);
 
     this.route.url.subscribe(url => {
-      this.mode = url[0].path
+      this.mode = url[0].path;
     });
 
     this.searchControl = new FormControl();
     this.filteredCases = this.searchControl.valueChanges
       .pipe(
-        startWith(this.queryOfCase),
-        map(Case => Case ? this.filterCases(Case) : this.searchCaseList.slice())
+      startWith(this.queryOfCase),
+      map(Case => Case ? this.filterCases(Case) : this.searchCaseList.slice())
       );
   }
 
   filterCases(name: string) {
     return this.searchCaseList.filter(Case =>
-    Case.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
+      Case.name.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
 
   ngOnInit() {
@@ -118,7 +120,7 @@ export class TestSetDetailComponent implements OnInit {
           this.testSetInfo = res.data;
           this.testCaseList = this.testSetInfo.case;
         } else {
-          this.router.navigate(['../'], {relativeTo: this.route});
+          this.router.navigate(['../'], { relativeTo: this.route });
         }
       });
   }
@@ -178,7 +180,7 @@ export class TestSetDetailComponent implements OnInit {
   }
 
   viewCaseDetail(id) {
-    this.router.navigate([`../../testCase/${id}`], {relativeTo: this.route});
+    this.router.navigate([`../../testCase/${id}`], { relativeTo: this.route });
   }
 
   addCase(caseObj) {
@@ -202,7 +204,7 @@ export class TestSetDetailComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   onSubmit(type) {
@@ -216,7 +218,7 @@ export class TestSetDetailComponent implements OnInit {
     if (this.mode === 'new') {
       this.newTestSet(testSetInfo, type);
     } else {
-      testSetInfo = Object.assign(testSetInfo, {id: this.testSetInfo.id});
+      testSetInfo = Object.assign(testSetInfo, { id: this.testSetInfo.id });
       this.updateTestSet(testSetInfo);
     }
   }
@@ -227,9 +229,9 @@ export class TestSetDetailComponent implements OnInit {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '新建测试集成功');
           if (type === 'one') {
-            this.router.navigate(['../'], {relativeTo: this.route});
+            this.router.navigate(['../'], { relativeTo: this.route });
           } else if (type === 'again') {
-            this.router.navigate(['../new'], {relativeTo: this.route});
+            this.router.navigate(['../new'], { relativeTo: this.route });
           }
         } else {
           this.toasterService.pop('error', res.msg);
@@ -242,7 +244,7 @@ export class TestSetDetailComponent implements OnInit {
       .then(res => {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '测试集修改成功');
-          this.router.navigate(['../'], {relativeTo: this.route});
+          this.router.navigate(['../'], { relativeTo: this.route });
         } else {
           this.toasterService.pop('error', res.msg);
         }

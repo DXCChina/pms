@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { ListMetrics, ItemMetrics } from './card-data.Entity';
+import { ListMetrics, ItemMetrics } from './card-data.entity';
 import { RoleModel } from './role.model';
 import { DashboardViewService } from './dashboard-view.service';
 
 @Component({
   selector: 'app-dashboard-view',
   templateUrl: './dashboard-view.component.html',
-  styleUrls: ['./dashboard-view.component.scss']
+  styleUrls: ['./dashboard-view.component.scss'],
+  providers: [DashboardViewService]
 })
 
 export class DashboardViewComponent implements OnInit {
@@ -116,7 +117,7 @@ export class DashboardViewComponent implements OnInit {
             res.map(i => new ItemMetrics(
               i, i.name, i.owner,
               i.status === 'tofix' ? '待修复' : '已修复',
-              ['来自：' + i.testCase + ' - ' + i.testSet + ' - ' + i.demand],
+              ['所属：' + i.testSet + ' > ' + i.testCase],
               ''
             ))
           )
