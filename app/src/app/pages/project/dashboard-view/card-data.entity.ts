@@ -3,6 +3,7 @@ export class ItemMetrics {
   itemObj: any;
   itemName: string;
   itemfrom: string;
+  itemLevel: string;
   itemStatus: string;
   itemTag: string[];
   itemTime: string;
@@ -11,6 +12,7 @@ export class ItemMetrics {
     itemObj: any,
     itemName: string,
     itemfrom: string,
+    itemLevel: string,
     itemStatus: string,
     itemTag: string[],
     itemTime: string
@@ -18,6 +20,7 @@ export class ItemMetrics {
     this.itemObj = itemObj;
     this.itemName = itemName;
     this.itemfrom = itemfrom;
+    this.itemLevel = itemLevel;
     this.itemStatus = itemStatus;
     this.itemTag = itemTag;
     this.itemTime = itemTime;

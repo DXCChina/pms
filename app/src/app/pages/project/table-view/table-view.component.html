@@ -87,6 +87,13 @@
                             <div *ngIf = "col.name=='所含案例'">
                                 <span *ngFor="let testCase of value">{{ testCase.name }}&nbsp;</span>
                             </div>
+
+                            <div *ngIf = "col.name=='当前状态'" [ngSwitch]="value">
+                                <span *ngSwitchCase="'tofix'" style="padding: 3px 6px;border-radius: 2px;background: red;color: #fff;">待修复</span>
+                                <span *ngSwitchCase="'tocheck'" style="padding: 3px 6px;border-radius: 2px;background: orange;color: #fff;">待审核</span>
+                                <span *ngSwitchCase="'close'" style="padding: 3px 6px;border-radius: 2px;background: green;color: #fff;">通过测试</span>
+                                <span *ngSwitchDefault>{{value}}</span>
+                            </div>
                             
                         </div>
 

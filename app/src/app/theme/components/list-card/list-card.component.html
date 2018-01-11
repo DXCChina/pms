@@ -1,7 +1,10 @@
 <mat-card class="list-card" *ngIf="activeData&&data">
     <mat-card-header class="list-card-header">
         <mat-card-title>
-            <button mat-button [matMenuTriggerFor]="menu">{{activeData.listName}}</button>
+            <button mat-button [matMenuTriggerFor]="menu">
+                {{activeData.listName}}
+                <div class="list-card-number" *ngIf="activeData.listData.length !== 0">{{activeData.listData.length}}</div>
+            </button>
             <mat-menu #menu="matMenu">
                 <button mat-menu-item *ngFor="let list of data" (click)="changeCardData(list)">{{list.listName}}</button>
             </mat-menu>
@@ -13,20 +16,25 @@
         <mat-card class="item-card" *ngFor="let item of activeData.listData" (click)="detailEmit(item.itemObj)">
             <mat-card-header class="item-card-header">
                 <div mat-card-avatar [style.background]="item.itemAvatar">{{item.itemName | name2avatar}}</div>
-                <mat-card-title><strong>{{item.itemName}}</strong></mat-card-title>
+                <mat-card-title><strong>
+                    {{item.itemName}}
+                    <span *ngIf="item.itemLevel" [ngSwitch]="item.itemLevel" class="item-card-level">
+                        <span *ngSwitchCase="'low'" [style.background]="'blue'">low</span>
+                        <span *ngSwitchCase="'normal'" [style.background]="'orange'">normal</span>
+                        <span *ngSwitchCase="'high'" [style.background]="'red'">high</span>
+                        <span *ngSwitchDefault [style.background]="'grey'">{{item.itemLevel}}</span>
+                    </span>
+                </strong></mat-card-title>
                 <mat-card-subtitle>{{item.itemfrom}}<span *ngIf="item.itemfrom&&item.itemStatus"> - </span>{{item.itemStatus}}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
-                <mat-chip-list>
-                    <!-- <span *ngIf="item.itemLevel" [ngSwitch]="item.itemLevel">
-                        <mat-chip *ngSwitchCase="low" [style.background]="'#f44336'">low</mat-chip>
-                        <mat-chip *ngSwitchCase="normal" [style.background]="'#2196f3'">normal</mat-chip>
-                        <mat-chip *ngSwitchCase="high" [style.background]="'#8bc34a'">high</mat-chip>
-                        <mat-chip *ngSwitchDefault>{{item.itemLevel}}</mat-chip>
-                    </span> -->
+                <!-- <mat-chip-list>
                     <mat-chip *ngFor="let tag of item.itemTag">{{tag}}</mat-chip>
-                </mat-chip-list>
-                <div *ngIf="item.itemTime" class="item-time">{{item.itemTime | date:"yyyy-MM-dd"}}</div>
+                </mat-chip-list> -->
+                <ul class="item-card-tag">
+                    <li *ngFor="let tag of item.itemTag">{{tag}}</li>
+                </ul>
+                <div *ngIf="item.itemTime" class="item-card-time">创建于: {{item.itemTime | date:"yyyy-MM-dd"}}</div>
             </mat-card-content>
         </mat-card>
     </mat-card-content>
