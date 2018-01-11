@@ -1,100 +1,104 @@
-<div>
-  <div class="detail-view-container">
-    <div class="container-bg"></div>
-    <div class="detail">
-      <div class="header">
-        <a class="back-arrow" routerLinkActive="active" [routerLink]="['../']">
-          <svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M0 0h24v24H0z" fill="none"/>
-            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
-          </svg>
-        </a>
-        <div mat-card-avatar [style.background]="'#c7b7dd'">{{testCaseInfo.name| name2avatar}}</div>
-        <div class="header-text">
-          <div class="detail-name">{{testCaseInfo.name ? testCaseInfo.name : "新建用例"}}</div>
-          <div>{{testCaseInfo.detail ? (testCaseInfo.detail | delHtmlTag) : "新建用例"}}</div>
-        </div>
+<div class="detail-view-container">
+  <div class="container-bg"></div>
+  <div class="detail">
+    <div class="header">
+      <a class="back-arrow" routerLinkActive="active" [routerLink]="['../']">
+        <svg fill="#FFFFFF" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0 0h24v24H0z" fill="none"/>
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </a>
+      <!-- <div mat-card-avatar [style.background]="'#c7b7dd'">{{testCaseInfo.name| name2avatar}}</div> -->
+      <div class="header-text" *ngIf="mode!='new'">
+        <div class="header-name">{{testCaseInfo.name}}</div>
+        <div class="header-detail">{{testCaseInfo.detail | delHtmlTag}}</div>
       </div>
-      <mat-card class="">
-        <div class="dialog-content">
-          <form action="" [formGroup]="testCaseForm" (submit)="onSubmit('one')">
-            <div class="detail-content">
-              <mat-form-field>
-                <input matInput placeholder="用例名称" [formControl]="name" [(ngModel)]="testCaseInfo.name" name="name">
-                <mat-error>{{formErrors.name}}</mat-error>
-              </mat-form-field>
-
-              <div class="editor">
-                <span>用例描述</span>
-                <textarea [froalaEditor]="options" [formControl]="detail" [(ngModel)]="testCaseInfo.detail">
-            </textarea>
-              </div>
-
-              <mat-form-field>
-                <mat-select placeholder="用例类型" [formControl]="type" [(ngModel)]="testCaseInfo.type" name="type">
-                  <mat-option value="功能测试">功能测试</mat-option>
-                  <mat-option value="性能测试">性能测试</mat-option>
-                  <mat-option value="配置相关">配置相关</mat-option>
-                  <mat-option value="安装部署">安装部署</mat-option>
-                  <mat-option value="安全相关">安全相关</mat-option>
-                  <mat-option value="接口测试">接口测试</mat-option>
-                  <mat-option value="其他">其他</mat-option>
-                </mat-select>
-                <mat-error>{{formErrors.type}}</mat-error>
-              </mat-form-field>
-
-              <mat-form-field>
-                <mat-select placeholder="用例状态" [formControl]="status" [(ngModel)]="testCaseInfo.status" name="status">
-                  <mat-option value="新建" selected>新建</mat-option>
-                  <mat-option value="已评审">已评审</mat-option>
-                  <mat-option value="作废">作废</mat-option>
-                </mat-select>
-                <mat-error>{{formErrors.status}}</mat-error>
-              </mat-form-field>
-
-              <mat-form-field>
-                <mat-select placeholder="关联需求" [(value)]="testCaseInfo.demandTittle">
-                  <mat-form-field style="width: 100%; padding: 0 16px;">
-                    <input matInput type="text" formControlName="search" #search [(ngModel)]="value" placeholder="搜索需求">
-                  </mat-form-field>
-                  <mat-option *ngFor="let demand of searchDemandList" [value]="demand.title" (click)="select(demand)">
-                    {{demand?.title}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
-
-              <div class="editor">
-                <span>实际输入</span>
-                <textarea [froalaEditor]="options" [formControl]="input" [(ngModel)]="testCaseInfo.input">
-            </textarea>
-              </div>
-
-              <div class="editor">
-                <span>期望输出</span>
-                <textarea [froalaEditor]="options" [formControl]="expect" [(ngModel)]="testCaseInfo.expect">
-            </textarea>
-              </div>
-
-              <mat-form-field *ngIf="mode != 'new'">
-                <input matInput placeholder="创建者 (不可手动更改)" [formControl]="ownername"
-                       [(ngModel)]="testCaseInfo.ownername" name="detail" readonly>
-              </mat-form-field>
-            </div>
-
-            <div class="detail-footer">
-              <button mat-button (click)="cancel()">取消</button>
-              <button mat-button type="submit" [disabled]="!testCaseForm?.valid">{{mode=='new'?'提交':'修改'}}</button>
-              <button mat-button *ngIf="mode == 'new'" type="button" (click)="onSubmit('again')"
-                      [disabled]="!testCaseForm?.valid">再次创建
-              </button>
-            </div>
-          </form>
-
-        </div>
-      </mat-card>
+      <div class="header-text" *ngIf="mode=='new'">
+        <div class="header-name">新建测试用例</div>
+      </div>
+      <!-- <div class="header-text">
+        <div class="header-name">{{testCaseInfo.title ? testCaseInfo.title : "新建测试用例"}}</div>
+        <div class="header-detail">{{testCaseInfo.detail ? (testCaseInfo.detail | delHtmlTag) : "测试用例描述"}}</div>
+      </div> -->
     </div>
-  </div>
+    <mat-card class="">
+      <div class="dialog-content">
+        <form action="" [formGroup]="testCaseForm" (submit)="onSubmit('one')">
+          <div class="detail-content">
+            <mat-form-field>
+              <input matInput placeholder="用例名称" [formControl]="name" [(ngModel)]="testCaseInfo.name" name="name">
+              <mat-error>{{formErrors.name}}</mat-error>
+            </mat-form-field>
 
-  <toaster-container [toasterconfig]="toasterconfig"></toaster-container>
+            <div class="editor">
+              <span>用例描述</span>
+              <textarea [froalaEditor]="options" [formControl]="detail" [(ngModel)]="testCaseInfo.detail">
+          </textarea>
+            </div>
+
+            <mat-form-field>
+              <mat-select placeholder="用例类型" [formControl]="type" [(ngModel)]="testCaseInfo.type" name="type">
+                <mat-option value="功能测试">功能测试</mat-option>
+                <mat-option value="性能测试">性能测试</mat-option>
+                <mat-option value="配置相关">配置相关</mat-option>
+                <mat-option value="安装部署">安装部署</mat-option>
+                <mat-option value="安全相关">安全相关</mat-option>
+                <mat-option value="接口测试">接口测试</mat-option>
+                <mat-option value="其他">其他</mat-option>
+              </mat-select>
+              <mat-error>{{formErrors.type}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select placeholder="用例状态" [formControl]="status" [(ngModel)]="testCaseInfo.status" name="status">
+                <mat-option value="新建" selected>新建</mat-option>
+                <mat-option value="已评审">已评审</mat-option>
+                <mat-option value="作废">作废</mat-option>
+              </mat-select>
+              <mat-error>{{formErrors.status}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field>
+              <mat-select placeholder="关联需求" [(value)]="testCaseInfo.demandTittle">
+                <mat-form-field style="width: 100%; padding: 0 16px;">
+                  <input matInput type="text" formControlName="search" #search [(ngModel)]="value" placeholder="搜索需求">
+                </mat-form-field>
+                <mat-option *ngFor="let demand of searchDemandList" [value]="demand.title" (click)="select(demand)">
+                  {{demand?.title}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div class="editor">
+              <span>实际输入</span>
+              <textarea [froalaEditor]="options" [formControl]="input" [(ngModel)]="testCaseInfo.input">
+          </textarea>
+            </div>
+
+            <div class="editor">
+              <span>期望输出</span>
+              <textarea [froalaEditor]="options" [formControl]="expect" [(ngModel)]="testCaseInfo.expect">
+          </textarea>
+            </div>
+
+            <mat-form-field *ngIf="mode != 'new'">
+              <input matInput placeholder="创建者 (不可手动更改)" [formControl]="ownername"
+                      [(ngModel)]="testCaseInfo.ownername" name="detail" readonly>
+            </mat-form-field>
+          </div>
+
+          <div class="detail-footer">
+            <button mat-button (click)="cancel()">取消</button>
+            <button mat-button type="submit" [disabled]="!testCaseForm?.valid">{{mode=='new'?'提交':'修改'}}</button>
+            <button mat-button *ngIf="mode == 'new'" type="button" (click)="onSubmit('again')"
+                    [disabled]="!testCaseForm?.valid">再次创建
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </mat-card>
+  </div>
 </div>
 
+<toaster-container [toasterconfig]="toasterconfig"></toaster-container>

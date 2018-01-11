@@ -53,9 +53,15 @@
     .header-text {
       margin: 0 8px;
       color: #ffffff;
-      .detail-name {
+      .header-name {
         font-size: 20px;
-        margin-bottom: 12px;
+      }
+      .header-detail {
+        margin-top: 12px;
+        max-width: 240px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
     .mat-card-avatar {
