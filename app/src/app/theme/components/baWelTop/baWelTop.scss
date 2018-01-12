@@ -62,48 +62,10 @@
   .juzuo {
     float: left;
   }
-  .user-profile {
-    margin-top: 10px;
-  }
 
   .level_2_menu{
     height: 100%;
     display: flex;
-  }
-
-  .al-user-profile {
-    float: right;
-    margin-right: 49px;
-    transition: all .15s ease-in-out;
-    padding: 0;
-    width: 36px;
-    height: 36px;
-    border: 0;
-    opacity: 1;
-    position: relative;
-
-    ul.profile-dropdown:after {
-      bottom: 100%;
-      right: 0;
-      //border: solid transparent;
-      content: " ";
-      height: 0;
-      width: 0;
-      position: absolute;
-      pointer-events: none;
-      border-color: rgba(255, 255, 255, 0);
-      border-bottom-color: #fff;
-      border-width: 10px;
-      margin-right: 28px;
-    }
-    a {
-      display: block;
-    }
-    img {
-      width: 45px;
-      height: 45px;
-      border-radius: 50%;
-    }
   }
 
   a.refresh-data {
@@ -137,26 +99,6 @@
     }
   }
 
-  .al-skin-dropdown {
-    float: right;
-    margin-top: 14px;
-    margin-right: 26px;
-
-    .tpl-skin-panel {
-      max-height: 300px;
-      overflow-y: scroll;
-      overflow-x: hidden;
-    }
-  }
-
-  .icon-palette {
-    display: inline-block;
-    width: 14px;
-    height: 13px;
-    @include bg('theme/palette.png');
-    background-size: cover;
-  }
-
   .nav-item {
     //width: 0px;
     border: 1px solid transparent;
@@ -183,36 +125,14 @@
     border-radius: 5px;
   }
 
-  .user-btn {
-    background: #8847dc;
-    border: 0;
-  }
-
-  .show > .dropdown-menu {
-    display: block;
-  }
-
-  .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: -45px;
-    z-index: 1000;
-    display: none;
-    min-width: 5rem;
-    padding: 0.5rem 0;
-    margin: 0.125rem 0 0;
-    font-size: 1rem;
-    color: #292b2c;
-    text-align: left;
-    list-style: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0.25rem;
-  }
-
-  .dropdown-item {
-    padding: 13px 1.5rem;
+  .user-avatar {
+    float: right;
+    margin: 13px 24px;
+    border-radius: 50%;
+    overflow: hidden;
+    font-size: 20px;
+    color: #333;
+    background: #fff;
   }
 
   @media screen and (max-width: $resS) {
@@ -228,22 +148,5 @@
   }
 
   @media (max-width: $resXXS) {
-    .user-profile {
-      min-width: 136px;
-    }
-    a.refresh-data {
-      margin-right: 10px;
-    }
-    a.collapse-menu-link {
-      margin-left: 10px;
-    }
-
-    .al-skin-dropdown {
-      display: none;
-    }
-  }
-
-  .profile-toggle-link {
-    cursor: pointer;
   }
 }

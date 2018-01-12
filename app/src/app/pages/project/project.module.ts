@@ -12,7 +12,7 @@ import {
 import { NgaModule } from '../../theme/nga.module';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { ToasterModule } from 'angular2-toaster';
-import { FroalaEditorModule, FroalaViewModule } from 'angular-froala-wysiwyg';
+import { QuillModule } from 'ngx-quill';
 
 import { routing } from './project.routing';
 import { ProjectComponent } from './project.component';
@@ -41,8 +41,7 @@ import { BugDetailComponent } from './bug-manage/bug-detail/bug-detail.component
     MatButtonModule,
     NgxDatatableModule,
     ToasterModule,
-    FroalaEditorModule,
-    FroalaViewModule,
+    QuillModule,
 
     MatCommonModule,
     MatDialogModule,

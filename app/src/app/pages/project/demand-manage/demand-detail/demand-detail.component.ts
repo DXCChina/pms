@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ToasterService, ToasterConfig} from "angular2-toaster";
-import {PmDemandDetailService} from "./demand-detail-dialog.service";
-import {FormBuilder, Validators, AbstractControl, FormGroup} from "@angular/forms";
-import {Demand} from "./demand.model";
-import {ActivatedRoute, Router} from "@angular/router";
+import { Component, OnInit } from '@angular/core';
+import { ToasterService, ToasterConfig } from "angular2-toaster";
+import { PmDemandDetailService } from "./demand-detail-dialog.service";
+import { FormBuilder, Validators, AbstractControl, FormGroup } from "@angular/forms";
+import { Demand } from "./demand.model";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: 'app-demand-detail',
@@ -48,13 +48,24 @@ export class DemandDetailComponent implements OnInit {
 
   demandInfo: Demand = new Demand();
 
-  options: any = {
-    imageUploadURL: '/api/upload',
-    toolbarButtons: ['bold', 'italic', 'underline', 'align', 'fontSize', 'color', 'indent', 'outdent', 'formatOL', 'formatUL']
+  modules = {
+    toolbar: [
+      ['bold', 'italic', 'underline', 'strike'],
+      ['blockquote', 'code-block'],
+      [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+      [{ 'indent': '-1' }, { 'indent': '+1' }],
+      [{ 'direction': 'rtl' }],
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+      [{ 'color': [] }, { 'background': [] }],
+      [{ 'font': [] }],
+      [{ 'align': [] }],
+      ['clean'],
+      ['image']
+    ]
   };
 
   constructor(public fb: FormBuilder, private _service: PmDemandDetailService, private toasterService: ToasterService,
-              private route: ActivatedRoute, private router: Router) {
+    private route: ActivatedRoute, private router: Router) {
     this.projectId = sessionStorage.getItem('projectId');
     this.releaseId = sessionStorage.getItem('releaseId');
 
@@ -106,7 +117,7 @@ export class DemandDetailComponent implements OnInit {
       .subscribe(data => this.onValueChanged(data));
   }
 
-  onValueChanged(data ?: any) {
+  onValueChanged(data?: any) {
     if (!this.demandForm) {
       return;
     }
@@ -126,11 +137,11 @@ export class DemandDetailComponent implements OnInit {
   }
 
   onSubmit(type) {
-    let demandInfo = Object.assign(this.demandForm.value, {projectId: this.projectId, releaseId: this.releaseId});
+    let demandInfo = Object.assign(this.demandForm.value, { projectId: this.projectId, releaseId: this.releaseId });
     if (this.mode === 'new') {
       this.newDemand(demandInfo, type);
     } else {
-      demandInfo = Object.assign(demandInfo, {id: this.demandInfo.id});
+      demandInfo = Object.assign(demandInfo, { id: this.demandInfo.id });
       this.updateDemand(demandInfo);
     }
   }
@@ -141,9 +152,9 @@ export class DemandDetailComponent implements OnInit {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '新建需求成功');
           if (type == 'one') {
-            this.router.navigate(['../'], {relativeTo: this.route});
+            this.router.navigate(['../'], { relativeTo: this.route });
           } else if (type == 'again') {
-            this.router.navigate(['../new'], {relativeTo: this.route});
+            this.router.navigate(['../new'], { relativeTo: this.route });
           }
         } else {
           this.toasterService.pop('error', res.msg);
@@ -156,7 +167,7 @@ export class DemandDetailComponent implements OnInit {
       .then(res => {
         if (res.msg === 'ok') {
           this.toasterService.pop('ok', '需求修改成功');
-          this.router.navigate(['../'], {relativeTo: this.route});
+          this.router.navigate(['../'], { relativeTo: this.route });
         } else {
           this.toasterService.pop('error', res.msg);
         }
@@ -164,6 +175,6 @@ export class DemandDetailComponent implements OnInit {
   }
 
   cancel() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

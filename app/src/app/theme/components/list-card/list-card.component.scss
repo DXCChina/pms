@@ -19,9 +19,24 @@
         .mat-card-title {
             line-height: 40px;
             .mat-button {
+                position: relative;
                 margin-left: -8px;
                 font-size: 16px;
                 color: rgba(0,0,0,.54);
+                outline: none !important;
+                .list-card-number {
+                    position: absolute;
+                    top: 8px;
+                    right: 0;
+                    height: 20px;
+                    padding: 0 6.5px;
+                    line-height: 20px;
+                    border-radius: 10px;
+                    transform: translateX(50%);
+                    background: #666;
+                    color: #ccc;
+                    font-size: 12px;
+                }
             }
         }
         .mat-icon-button {
@@ -48,6 +63,9 @@
             margin-bottom: 16px;
             padding: 16px;
             cursor: pointer;
+            &:nth-last-child(1) {
+                margin-bottom: 0px;
+            }
             .mat-card-header.item-card-header {
                 .mat-card-avatar {
                     line-height: 40px;
@@ -55,6 +73,17 @@
                     color: #fff;
                     background: #ccc;
                     font-size: 24px;
+                }
+                .mat-card-title {
+                    .item-card-level {
+                        text-align: bottom;
+                        span {
+                            padding: 1px 4px;
+                            border-radius: 2px;
+                            color: #fff;
+                            font-size: 12px;
+                        }
+                    }
                 }
                 .mat-card-subtitle {
                     // margin-bottom: 0;
@@ -66,7 +95,10 @@
                 // .mat-chip-list {
                 //     position: relative;
                 // }
-                .item-time {
+                .item-card-tag {
+                    margin: 0;
+                }
+                .item-card-time {
                     text-align: right;
                     color: #333333;
                 }
