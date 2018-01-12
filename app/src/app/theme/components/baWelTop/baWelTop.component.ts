@@ -1,8 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 import {GlobalState} from '../../../global.state';
-import {BaWelTopService} from "./baWelTop.service";
-import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
+import {BaWelTopService} from './baWelTop.service';
+import {Router, NavigationEnd, ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'ba-wel-top',
@@ -10,13 +10,14 @@ import {Router, NavigationEnd, ActivatedRoute} from "@angular/router";
   styleUrls: ['baWelTop.scss'],
   providers: [BaWelTopService]
 })
-export class BaWelTop {
+export class BaWelTop implements OnInit {
 
   public isScrolled: boolean = false;
   public isMenuCollapsed: boolean = false;
   public showLevel2Menu: boolean = false;
   public isShowSidebar: boolean = false;
   public userRoleInProject: string = '';
+  public userName: string = '';
   public projectName: string = '';
   public currentRole: string = '';
 
@@ -45,6 +46,7 @@ export class BaWelTop {
       .subscribe((event) => {
         // example: NavigationStart, RoutesRecognized, NavigationEnd
         this.userRoleInProject = window.sessionStorage.getItem('userRoleInProject');
+        this.userName = window.localStorage.getItem('userName');
         this.projectName = window.sessionStorage.getItem('projectName');
         if (event && event.isShowNav === true) {
           this.showLevel2Menu = true;
@@ -58,11 +60,11 @@ export class BaWelTop {
           this.isShowSidebar = false;
         }
 
-        if (this.userRoleInProject == 'pm') {
+        if (this.userRoleInProject === 'pm') {
           this.currentRole = '项目经理';
-        } else if (this.userRoleInProject == 'dev') {
+        } else if (this.userRoleInProject === 'dev') {
           this.currentRole = '开发人员';
-        } else if (this.userRoleInProject == 'test') {
+        } else if (this.userRoleInProject === 'test') {
           this.currentRole = '测试人员';
         }
 

@@ -15,7 +15,6 @@ import { BaMenuService } from '../theme';
   providers: [PagesService]
 })
 export class Pages {
-  public user: any;
   constructor(private router: Router, private service: PagesService) {
   }
 
@@ -24,13 +23,13 @@ export class Pages {
     this.service.user_info()
       .then(res => {
         if (res.id !== '') {
-          this.user = res;
-          localStorage.setItem('userId',res.id)
+          localStorage.setItem('userId', res.id);
+          localStorage.setItem('userName', res.username);
         } else {
           this.router.navigate(['/login']);
         }
       }).catch(err => {
-        console.log(err)
+        console.log(err);
         this.router.navigate(['/login']);
       })
   }

@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
-import { Ng2BootstrapModule } from 'ngx-bootstrap';
 
 /*
  * Platform and Environment providers/directives/pipes
@@ -47,7 +46,6 @@ export type StoreType = {
     FormsModule,
     ReactiveFormsModule,
     NgaModule.forRoot(),
-    Ng2BootstrapModule,
     HttpInterceptorModule.noOverrideHttp(),
     routing,
     PagesModule,

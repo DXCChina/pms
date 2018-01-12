@@ -12,7 +12,6 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {NgaModule} from "../../theme/nga.module";
 import {ReleaseCreateComponent} from "./release-manage/release-create/release-create.component";
 import {ReleaseManageService} from "./release-manage/release-manage.service";
-import {FroalaEditorModule, FroalaViewModule} from "angular-froala-wysiwyg";
 
 @NgModule({
   imports: [
@@ -29,9 +28,7 @@ import {FroalaEditorModule, FroalaViewModule} from "angular-froala-wysiwyg";
     MatNativeDateModule,
     MatFormFieldModule,
     MatExpansionModule,
-    MatIconModule,
-    FroalaEditorModule,
-    FroalaViewModule
+    MatIconModule
   ],
   declarations: [
     ProjectManageComponent,

@@ -1,9 +1,9 @@
 /* You can add global styles to this file, and also import other style files */
 //@import '~@angular/material/prebuilt-themes/indigo-pink.css';
-@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
-@import '~@swimlane/ngx-datatable/release/index.css';
-@import '~@swimlane/ngx-datatable/release/themes/material.css';
-@import '~@swimlane/ngx-datatable/release/assets/icons.css';
+// @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+// @import '~@swimlane/ngx-datatable/release/index.css';
+// @import '~@swimlane/ngx-datatable/release/themes/material.css';
+// @import '~@swimlane/ngx-datatable/release/assets/icons.css';
 
 //add ngx-datatable style
 .datatable-body-row{
@@ -53,9 +53,15 @@
     .header-text {
       margin: 0 8px;
       color: #ffffff;
-      .detail-name {
+      .header-name {
         font-size: 20px;
-        margin-bottom: 12px;
+      }
+      .header-detail {
+        margin-top: 12px;
+        max-width: 240px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
     }
     .mat-card-avatar {
