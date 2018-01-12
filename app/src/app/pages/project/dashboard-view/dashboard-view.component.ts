@@ -20,7 +20,7 @@ export class DashboardViewComponent implements OnInit {
   public bugData: any[] = [];
 
   private releaseId: string;
-  private role: string;
+  public role: string;
   public RoleModel = RoleModel;
 
   constructor(

@@ -10,7 +10,7 @@
       </a>
       <!-- <div mat-card-avatar [style.background]="'#c7b7dd'">{{demandInfo.title|name2avatar}}</div> -->
       <div class="header-text" *ngIf="mode!='new'">
-        <div class="header-name">{{demandInfo.name}}</div>
+        <div class="header-name">{{demandInfo.title}}</div>
         <div class="header-detail">{{demandInfo.detail | delHtmlTag}}</div>
       </div>
       <div class="header-text" *ngIf="mode=='new'">
