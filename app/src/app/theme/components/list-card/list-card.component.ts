@@ -37,7 +37,8 @@ export class ListCardComponent implements OnInit, OnChanges {
   changeCardData(list) {
     this.activeData = list;
     this.activeData.listData.map(item => {
-      item.itemAvatar = this.colorArr[Math.floor(Math.random() * (this.colorArr.length - 1))];
+      // item.itemAvatar = this.colorArr[Math.floor(Math.random() * (this.colorArr.length - 1))];
+      item.itemAvatar = '#aaa';
     });
   }
 
