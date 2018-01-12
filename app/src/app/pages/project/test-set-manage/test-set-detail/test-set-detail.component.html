@@ -1,3 +1,4 @@
+
 <div class="detail-view-container">
   <div class="container-bg"></div>
   <div class="detail">
@@ -32,7 +33,7 @@
 
           <div class="editor">
             <span>测试集描述</span>
-            <textarea [froalaEditor]="options" [formControl]="detail" [(ngModel)]="testSetInfo.detail" name="detail"></textarea>
+            <quill-editor [formControl]="detail" [(ngModel)]="testSetInfo.detail" [modules]="modules"></quill-editor>
           </div>
 
           <mat-form-field>

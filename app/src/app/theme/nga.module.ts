@@ -2,8 +2,6 @@ import { NgModule, ModuleWithProviders } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { NgUploaderModule } from 'ngx-uploader';
-import { AppTranslationModule } from '../app.translation.module';
 
 import {
   BaThemeConfig
@@ -14,10 +12,8 @@ import {
 } from './theme.configProvider';
 
 import {
-  BaAmChart,
   BaBackTop,
   BaCard,
-  BaChartistChart,
   BaCheckbox,
   BaContentTop,
   BaFullCalendar,
@@ -25,11 +21,8 @@ import {
   BaMenu,
   BaMsgCenter,
   BaMultiCheckbox,
-  BaPictureUploader,
   BaSidebar,
-  BaFileUploader,
   BaWelTop,
-  WaSortListComponent,
   ListCardComponent,
   PmsSidebar
 } from './components';
@@ -70,37 +63,30 @@ import {
   MatTooltipModule, MatDialogModule
 } from '@angular/material';
 
-import {WaDataList} from "./components/waDataList/waDataList.component";
-import {WaFilter} from "./components/waFilter/waFilter.component";
-import {WaSort} from "./components/waSort/waSort.component";
-import {WaDataListItemComponent} from "./components/waDataList/waDataListitem/waDataListItem.component";
-import {FileUploadComponent} from "./components/uploadFile/file-upload.component";
-import {WColumnComponent, WDataListComponent} from "./components/w-dataList/w-dataList.component";
-import {WSidebarComponent} from "./components/w-sidebar/w-sidebar.component";
-import {SortableModule, BsDropdownModule} from "ngx-bootstrap";
-import {WaSearchComponent} from "./components/waSearch/wa-search.component";
-import {NgxTreeComponent} from "./components/ngx-tree/ngx-tree.component";
-import {TreeModule} from "angular-tree-component";
-import {ContextMenuModule} from "ngx-contextmenu";
-import {NgxDatatableModule} from "@swimlane/ngx-datatable";
-import {WaDatableComponent} from "./components/wa-datatable/wa-datatable.component";
-import {DeviceManageComponent} from "./components/device_manage/device-manage.component";
-import {DeviceItemComponent} from "./components/device_manage/device-item/device-item.component";
+import {WaDataList} from './components/waDataList/waDataList.component';
+import {WaFilter} from './components/waFilter/waFilter.component';
+import {WaSort} from './components/waSort/waSort.component';
+import {WaDataListItemComponent} from './components/waDataList/waDataListitem/waDataListItem.component';
+import {WColumnComponent, WDataListComponent} from './components/w-dataList/w-dataList.component';
+import {WSidebarComponent} from './components/w-sidebar/w-sidebar.component';
+import {WaSearchComponent} from './components/waSearch/wa-search.component';
+import {NgxDatatableModule} from '@swimlane/ngx-datatable';
+import {WaDatableComponent} from './components/wa-datatable/wa-datatable.component';
+import {DeviceManageComponent} from './components/device_manage/device-manage.component';
+import {DeviceItemComponent} from './components/device_manage/device-item/device-item.component';
 
-import {CommonSearchComponent} from "./components/commonSearch/commonSearch.component";
-import {PositionSwitchPipe} from "./pipes/positionSwitch/positionSwitch.pipe";
+import {CommonSearchComponent} from './components/commonSearch/commonSearch.component';
+import {PositionSwitchPipe} from './pipes/positionSwitch/positionSwitch.pipe';
 
-import {ChipListComponent} from "./components/chip-list/chip-lsit.component";
-import {PmPeoplemanageComponent} from "./components/pm-peoplemanage/pm-peoplemanage.component";
-import {CommonDeleteDialog} from "./components/deleteDialog/deleteDialog.component";
-import {HorizontalTimelineComponent} from "./components/horizontal-timeline/horizontal-timeline.component";
-import {TimeLineComponent} from "./components/timeLine/timeLine.component";
+import {ChipListComponent} from './components/chip-list/chip-lsit.component';
+import {PmPeoplemanageComponent} from './components/pm-peoplemanage/pm-peoplemanage.component';
+import {CommonDeleteDialog} from './components/deleteDialog/deleteDialog.component';
+import {HorizontalTimelineComponent} from './components/horizontal-timeline/horizontal-timeline.component';
+import {TimeLineComponent} from './components/timeLine/timeLine.component';
 
 const NGA_COMPONENTS = [
-  BaAmChart,
   BaBackTop,
   BaCard,
-  BaChartistChart,
   BaCheckbox,
   BaContentTop,
   BaFullCalendar,
@@ -108,23 +94,18 @@ const NGA_COMPONENTS = [
   BaMenu,
   BaMsgCenter,
   BaMultiCheckbox,
-  BaPictureUploader,
   BaSidebar,
-  BaFileUploader,
   BaWelTop,
-  WaSortListComponent,
   WaSearchComponent,
   BaPagination,
   WaDataList,
   WaDataListItemComponent,
   WaFilter,
   WaSort,
-  FileUploadComponent,
 
   WDataListComponent,
   WColumnComponent,
   WSidebarComponent,
-  NgxTreeComponent,
   WaDatableComponent,
   DeviceManageComponent,
   DeviceItemComponent,
@@ -178,10 +159,6 @@ const NGA_VALIDATORS = [
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    AppTranslationModule,
-    NgUploaderModule,
-    SortableModule.forRoot(),
-    BsDropdownModule.forRoot(),
     // Add material design components
     MatButtonModule,
     MatIconModule,
@@ -196,8 +173,6 @@ const NGA_VALIDATORS = [
     MatTabsModule,
     MatCardModule,
     MatChipsModule,
-    TreeModule,
-    ContextMenuModule,
     NgxDatatableModule,
     MatToolbarModule,
   ],

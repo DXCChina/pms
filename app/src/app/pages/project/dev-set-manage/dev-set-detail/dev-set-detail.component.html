@@ -36,8 +36,7 @@
 
             <div class="editor">
               <span>描述</span>
-              <textarea [froalaEditor]="options" [formControl]="detail" [(ngModel)]="taskInfo.detail">
-            </textarea>
+            <quill-editor [formControl]="detail" [(ngModel)]="taskInfo.detail" [modules]="modules"></quill-editor>
             </div>
 
             <div class="row">

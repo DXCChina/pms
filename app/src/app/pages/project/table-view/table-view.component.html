@@ -113,7 +113,7 @@
                     <ng-template let-row="row" let-expanded="expanded" ngx-datatable-row-detail-template>
                         <div style="padding: 8px 16px;height: 100%;overflow: auto;">
                             <h3><strong>{{ row.name }}</strong></h3>
-                            <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(row.detail)" class="fr-view"></div>
+                            <div [innerHTML]="sanitizer.bypassSecurityTrustHtml(row.detail)" class="ql-editor"></div>
                         </div>
                     </ng-template>
                 </ngx-datatable-row-detail>

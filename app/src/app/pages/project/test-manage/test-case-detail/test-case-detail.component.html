@@ -32,9 +32,8 @@
 
             <div class="editor">
               <span>用例描述</span>
-              <textarea [froalaEditor]="options" [formControl]="detail" [(ngModel)]="testCaseInfo.detail">
-          </textarea>
-            </div>
+          <quill-editor [formControl]="detail" [(ngModel)]="testCaseInfo.detail" [modules]="modules"></quill-editor>
+                    </div>
 
             <mat-form-field>
               <mat-select placeholder="用例类型" [formControl]="type" [(ngModel)]="testCaseInfo.type" name="type">
@@ -71,14 +70,12 @@
 
             <div class="editor">
               <span>实际输入</span>
-              <textarea [froalaEditor]="options" [formControl]="input" [(ngModel)]="testCaseInfo.input">
-          </textarea>
+          <quill-editor [formControl]="input" [(ngModel)]="testCaseInfo.input" [modules]="modules"></quill-editor>
             </div>
 
             <div class="editor">
               <span>期望输出</span>
-              <textarea [froalaEditor]="options" [formControl]="expect" [(ngModel)]="testCaseInfo.expect">
-          </textarea>
+             <quill-editor [formControl]="expect" [(ngModel)]="testCaseInfo.expect" [modules]="modules"></quill-editor>
             </div>
 
             <mat-form-field *ngIf="mode != 'new'">

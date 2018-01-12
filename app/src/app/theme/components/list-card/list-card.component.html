@@ -34,7 +34,7 @@
                 <ul class="item-card-tag">
                     <li *ngFor="let tag of item.itemTag">{{tag}}</li>
                 </ul>
-                <div *ngIf="item.itemTime" class="item-card-time">创建于: {{item.itemTime | date:"yyyy-MM-dd"}}</div>
+                <div *ngIf="item.itemTime" class="item-card-time">{{item.itemTime | date:"yyyy.MM.dd"}}</div>
             </mat-card-content>
         </mat-card>
     </mat-card-content>

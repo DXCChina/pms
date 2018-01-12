@@ -34,8 +34,7 @@
 
               <div class="editor">
                 <span>需求描述</span>
-                <textarea [froalaEditor]="options" [formControl]="detail" [(ngModel)]="demandInfo.detail">
-            </textarea>
+            <quill-editor [formControl]="detail" [(ngModel)]="demandInfo.detail" [modules]="modules"></quill-editor>
               </div>
 
               <mat-form-field>

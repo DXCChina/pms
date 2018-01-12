@@ -22,24 +22,16 @@
     </nav>
   </div>
 
-  <div class="user-profile clearfix">
-    <div class="btn-group al-user-profile" dropdown>
-      <button dropdownToggle type="button" class="user-btn dropdown-toggle">
-        <a class="profile-toggle-link dropdown-toggle" id="user-profile-dd" data-toggle="dropdown"
-           aria-expanded="false">
-          <img src="{{ ( 'Nasta' | baProfilePicture ) }}">
-        </a>
-      </button>
-
-      <ul *dropdownMenu class="dropdown-menu profile-dropdown" role="menu" aria-labelledby="user-profile-dd"
-          style="margin:10px 0 0 -37px">
-        <li class="dropdown-item"><a href class="signout" routerLink="/pages/user" routerLinkActive="active"
-                                     (click)="showPersonInfo()"><i
-          class="fa fa-cog"></i>&nbsp;&nbsp;&nbsp;Setting</a></li>
-        <li class="dropdown-item"><a href class="signout" routerLink="/signout" routerLinkActive="active"><i
-          class="fa fa-power-off"></i>&nbsp;&nbsp;&nbsp;Sign out</a></li>
-      </ul>
-    </div>
-  </div>
+  <button mat-icon-button [matMenuTriggerFor]="menu" class="user-avatar">{{userName | name2avatar}}</button>
+  <mat-menu #menu="matMenu">
+    <a mat-menu-item href routerLink="/pages/user" routerLinkActive="active" (click)="showPersonInfo()">
+      <i class="fa fa-cog"></i>&nbsp;
+      <span>Setting</span>
+    </a>
+    <a mat-menu-item href routerLink="/signout" routerLinkActive="active">
+      <i class="fa fa-power-off"></i>&nbsp;
+      <span>Sign out</span>
+    </a>
+  </mat-menu>
 
 </div>
