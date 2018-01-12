@@ -54,7 +54,7 @@ export class DashboardViewComponent implements OnInit {
         this.demandData.push(
           new ListMetrics(
             '需求',
-            res.map(i => new ItemMetrics(i, i.title, i.activity, i.status ? '已完成' : '未完成', [i.level], i.createAt))
+            res.map(i => new ItemMetrics(i, i.title, i.activity, i.level, i.status ? '已完成' : '未完成', [], i.createAt))
           )
         );
 
@@ -69,7 +69,9 @@ export class DashboardViewComponent implements OnInit {
         this.devSetData.push(
           new ListMetrics(
             '活动',
-            res.map(i => new ItemMetrics(i, i.title, '', i.status, [], i.createAt))
+            res.map(i => new ItemMetrics(
+              i, i.title, i.member.map(el => el.username).join(', '), '', i.status, i.demand.map(el => el.title), i.createAt)
+            )
           )
         );
 
@@ -84,7 +86,7 @@ export class DashboardViewComponent implements OnInit {
         this.testCaseData.push(
           new ListMetrics(
             '测试案例',
-            res.map(i => new ItemMetrics(i, i.name, i.owner, i.status, [i.type], ''))
+            res.map(i => new ItemMetrics(i, i.name, i.owner, i.type, i.status, [], ''))
           )
         );
 
@@ -99,7 +101,7 @@ export class DashboardViewComponent implements OnInit {
         this.testSetData.push(
           new ListMetrics(
             '测试集',
-            res.map(i => new ItemMetrics(i, i.name, i.member, '', i.testCase.map(el => el.name), ''))
+            res.map(i => new ItemMetrics(i, i.name, i.member, '', '', i.testCase.map(el => el.name), ''))
           )
         );
 
@@ -115,10 +117,8 @@ export class DashboardViewComponent implements OnInit {
           new ListMetrics(
             '缺陷',
             res.map(i => new ItemMetrics(
-              i, i.name, i.owner,
-              i.status === 'tofix' ? '待修复' : '已修复',
-              ['所属：' + i.testSet + ' > ' + i.testCase],
-              ''
+              i, i.name, i.owner, i.level,
+              i.status === 'tofix' ? '待修复' : '已修复', ['所属：' + i.testSet + ' > ' + i.testCase], ''
             ))
           )
         );
