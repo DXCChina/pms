@@ -2,11 +2,16 @@ set startdir=%cd%
 cd %~dp0app
 set PYTHON_HOME=C:\Python27\;C:\Python27\Scripts;
 set path=%PYTHON_HOME%%path%
-REM call npm i -g @angular/cli yarn cnpm npm&& ^
+call npm i -g @angular/cli yarn cnpm npm
+REM call yarn^
+REM  && call yarn upgrade -L^
+REM  || call cnpm i^
+REM  && call cnpm upgrade -S^
+REM  || call npm i^
+REM  && call npm upgrade -S^
 call yarn^
  || call cnpm i^
  || call npm i^
- && call npm upgrade -S^
  
 
 start /min run
