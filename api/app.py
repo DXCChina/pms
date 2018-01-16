@@ -5,7 +5,7 @@ API入口
 不包含任何业务逻辑
 '''
 from datetime import timedelta
-from os import environ
+from os import environ, getenv
 from flask_jwt_extended import JWTManager
 from model.db import (database, User, Demand, Release, Activity,
                       ActivityMember, Project, ProjectMember, TestCase,
@@ -106,6 +106,6 @@ if __name__ == "__main__":
         safe=True)
 
     application.run(
-        host='PY_IP' in environ and environ['PY_IP'] or "0.0.0.0",
-        port='PY_PORT' in environ and environ['PY_PORT'] or 5000,
+        host=getenv('PY_IP', "0.0.0.0"),
+        port=int(getenv('PY_PORT', '5000')),
         debug=app.config['DEBUG'])

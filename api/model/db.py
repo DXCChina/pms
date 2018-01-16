@@ -5,7 +5,7 @@ python -m pwiz -e mysql -H 122.115.49.94 -u pms pms > api/model/pms.py
 '''
 
 import logging
-from os import environ
+from os import environ, getenv
 from pymysql import cursors, connect
 from playhouse.pool import PooledMySQLDatabase
 from peewee import Model, DoesNotExist, DateTimeField, FixedCharField, IntegerField, TextField, SQL, BooleanField, ForeignKeyField
@@ -17,20 +17,13 @@ logger.setLevel(
 logger.addHandler(logging.StreamHandler())
 
 DB_CONF = {
-    'database':
-    'PY_DB_NAME' in environ and environ['PY_DB_NAME'] or 'pms',
-    'host':
-    'PY_DB_HOST' in environ and environ['PY_DB_HOST'] or 'localhost',
-    'user':
-    'PY_DB_USERNAME' in environ and environ['PY_DB_USERNAME'] or 'pms',
-    'password':
-    'PY_DB_PASSWORD' in environ and environ['PY_DB_PASSWORD'] or 'pms',
-    'charset':
-    'utf8',
-    'max_connections':
-    32,
-    'stale_timeout':
-    300  # 5 minutes.
+    'database': getenv('PY_DB_NAME', 'pms'),
+    'host': getenv('PY_DB_HOST', 'localhost'),
+    'user': getenv('PY_DB_USERNAME', 'pms'),
+    'password': getenv('PY_DB_PASSWORD', 'pms'),
+    'charset': 'utf8',
+    'max_connections': 32,
+    'stale_timeout': 300  # 5 minutes.
 }
 print('\n\n', '数据库配置:', DB_CONF, '\n\n')
 # peewee 实现
@@ -136,6 +129,7 @@ class User(UserBase):
     '''用户表'''
     id = db_autoId()
 
+
 class Release(MySQLModel):
     '''版本'''
     id = db_autoId()
@@ -153,7 +147,7 @@ class Project(MySQLModel):
     id = db_autoId()
     name = FixedCharField(unique=True, max_length=50)
     detail = TextField(null=True)
-    currentRelease = ForeignKeyField(Release,null=True)
+    currentRelease = ForeignKeyField(Release, null=True)
     ownerId = db_id()
     status = db_option(default='active', comment='active(默认)/done/delete')
     createAt = db_autoDate()
