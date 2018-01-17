@@ -18,7 +18,7 @@ def create_test_result(test_result):
         ActivityMember,
         on=(Demand.activityId == ActivityMember.activityId)
     ).where(
-        (TestCase.id == test_result['caseId']) and (ActivityMember.role == "dev")
+        (TestCase.id == test_result['caseId']) & (ActivityMember.role == "dev")
     ).dicts())[0]['devId']
 
     return TestResult.get_or_create(
@@ -90,5 +90,5 @@ def search_case_list(s_id, r_id):
         Case_Set,
         on=(TestCase.id == Case_Set.caseId)
     ).where(
-        (TestCase.releaseId == r_id) and (Case_Set.setId == s_id)
+        (TestCase.releaseId == r_id) & (Case_Set.setId == s_id)
     ).dicts()

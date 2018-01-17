@@ -21,7 +21,7 @@ def find_role_by_release(r_id, m_id):
     role = list(ProjectMember.select().join(
             Release,
             on = (ProjectMember.projectId == Release.projectId)
-        ).where((Release.id == r_id) and (ProjectMember.memberId == m_id)).dicts())
+        ).where((Release.id == r_id) & (ProjectMember.memberId == m_id)).dicts())
     if role:
         return role[0]['role']
     else:
@@ -40,7 +40,7 @@ def find_demand(r_id, m_id):
 def find_activity(r_id, m_id):
     '''按M_id查询相关活动'''
     activity = Activity.find().join(ActivityMember, on = (Activity.id == ActivityMember.activityId)).where(
-        (Activity.releaseId == r_id) and (ActivityMember.memberId == m_id))
+        (Activity.releaseId == r_id) & (ActivityMember.memberId == m_id))
     for act in activity:
         act['member'] = list(
             ActivityMember.find(ActivityMember.role, User.username, User.email,
@@ -66,7 +66,7 @@ def find_test_set(r_id, m_id):
     testSet = TestSet.find(
             TestSet,
             User.username.alias('member')
-        ).join(User, on = (TestSet.memberId == User.id)).where((TestSet.releaseId == r_id) and (TestSet.memberId == m_id))
+        ).join(User, on = (TestSet.memberId == User.id)).where((TestSet.releaseId == r_id) & (TestSet.memberId == m_id))
     for ts in testSet:
         ts['testCase'] = list(
             TestCase.find()
