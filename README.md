@@ -1,4 +1,7 @@
 # 项目管理平台 v0.3
+## [在线体验](http://122.115.49.94) 账号：demo 密码：demodemo
+## [问题反馈](https://github.com/DXCChina/pms/issues/new)
+## 欢迎 Pull request
 ## 架构
 ### 前端(MVC)
 * MVC:[angular v5](https://angular.io/) [angular cn](https://angular.cn/)
