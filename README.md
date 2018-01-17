@@ -15,6 +15,7 @@
 ## [问题反馈](https://github.com/DXCChina/pms/issues/new)
 ## [欢迎 Pull request](https://github.com/DXCChina/pms/pulls)
 ## 架构
+![架构设计](https://github.com/DXCChina/pms/raw/master/docs/%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84.png)
 ### 前端(MVC)
 * MVC:[angular v5](https://angular.io/) [angular cn](https://angular.cn/)
 * UI:[Material](https://material.angular.io/),
