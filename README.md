@@ -1,4 +1,19 @@
 # 项目管理平台 v0.3
+### 新一代、轻量级项目生命周期质量管理平台
+![Coding at the whiteboard - from HBO's Silicon Valley](https://raw.githubusercontent.com/dxcchina/pms/master/docs/业务流程.png)
+   1. 项目管理:
+      项目创建,进度控制,信息更新,成员及角色管理.
+   2. 角色管理:
+      三种角色:项目经理,开发人员,测试人员,分别对接不同的业务.
+   3. 需求管理:
+      项目经理有权创建项目需求,需求体现了项目要实现基本功能点.
+   4. 活动管理:
+      项目经理有权创建项目活动并分配活动给项目成员,活动由若干需求组成,活动是项目进度管理的基本单位.
+   5. 测试管理:
+      测试人员提交测试用例,测试并生成测试报告,开发人员对测试结果中待修复活动进行修复.
+## [在线体验](http://122.115.49.94) 账号：demo 密码：demodemo
+## [问题反馈](https://github.com/DXCChina/pms/issues/new)
+## [欢迎 Pull request](https://github.com/DXCChina/pms/pulls)
 ## 架构
 ### 前端(MVC)
 * MVC:[angular v5](https://angular.io/) [angular cn](https://angular.cn/)
