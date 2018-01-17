@@ -94,7 +94,7 @@ def find_test_result_for_dev(r_id, m_id):
         .join(User, on = (TestCase.ownerId == User.id))
         .join(devUser, on = (TestResult.devId == devUser.id))
         .join(Demand, on = (TestCase.demandId == Demand.id))
-        .where((TestCase.releaseId == r_id) & (TestResult.devId == m_id))
+        .where((TestResult.releaseId == r_id) & (TestResult.devId == m_id))
         .dicts())
 
 
@@ -116,7 +116,7 @@ def find_test_result_for_test(r_id, m_id):
         .join(User, on = (TestCase.ownerId == User.id))
         .join(devUser, on = (TestResult.devId == devUser.id))
         .join(Demand, on = (TestCase.demandId == Demand.id))
-        .where((TestCase.releaseId == r_id) & (TestCase.ownerId == m_id))
+        .where((TestResult.releaseId == r_id) & (TestCase.ownerId == m_id))
         .dicts())
 
 
@@ -186,5 +186,5 @@ def find_all_test_result(r_id):
         .join(User, on = (TestCase.ownerId == User.id))
         .join(devUser, on = (TestResult.devId == devUser.id))
         .join(Demand, on = (TestCase.demandId == Demand.id))
-        .where(TestCase.releaseId == r_id)
+        .where(TestResult.releaseId == r_id)
         .dicts())
