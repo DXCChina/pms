@@ -1,6 +1,6 @@
 # 项目管理平台 v0.3
 ### 新一代、轻量级项目生命周期质量管理平台
-![Coding at the whiteboard - from HBO's Silicon Valley](https://raw.githubusercontent.com/dxcchina/pms/master/docs/业务流程.png)
+![业务流程](https://github.com/DXCChina/pms/raw/master/docs/%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B.png)
    1. 项目管理:
       项目创建,进度控制,信息更新,成员及角色管理.
    2. 角色管理:
