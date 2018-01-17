@@ -82,7 +82,7 @@ def find_test_set_by_name(test_set_name):
 def search_case_list(title, r_id):
     '''模糊查询测试案例'''
     return TestCase.sfind().where(
-        (TestCase.releaseId == r_id) and (TestCase.name.contains(title))
+        (TestCase.releaseId == r_id) & (TestCase.name.contains(title))
     ).dicts()
 
 
@@ -95,4 +95,4 @@ def find_test_set_member(p_id):
         ProjectMember.role
     ).join(
         ProjectMember, on=(User.id == ProjectMember.memberId)
-    ).where((ProjectMember.projectId == p_id) and (ProjectMember.role == 'test')).dicts()
+    ).where((ProjectMember.projectId == p_id) & (ProjectMember.role == 'test')).dicts()

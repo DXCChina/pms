@@ -82,7 +82,7 @@ def activity_update():
                     memberId=member_id,
                     role=ProjectMember.get(
                         (ProjectMember.projectId == data['projectId'])
-                        and (ProjectMember.memberId == member_id)).role)
+                        & (ProjectMember.memberId == member_id)).role)
         if 'done_demand' in data:
             demand_activity_done(activity_id, data.pop('done_demand'))
         if 'demand' in data:

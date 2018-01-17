@@ -50,7 +50,7 @@ def find_users():
 def find_project_users(project_id):
     '''查询项目用户列表 '''
     query = User.select(User.id, User.username, User.email, ProjectMember.role, ProjectMember.projectId)\
-                .join(ProjectMember, on=(User.id == ProjectMember.memberId)).where(User.status == 'active' and ProjectMember.projectId == project_id)
+                .join(ProjectMember, on=(User.id == ProjectMember.memberId)).where((User.status == 'active') & (ProjectMember.projectId == project_id))
     return list(query.dicts())
 
 
