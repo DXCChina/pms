@@ -1,4 +1,5 @@
 # 项目管理平台 v0.3
+![demo](https://github.com/DXCChina/pms/raw/master/docs/demo.png)
 ### 新一代、轻量级项目生命周期质量管理平台
 ![业务流程](https://github.com/DXCChina/pms/raw/master/docs/%E4%B8%9A%E5%8A%A1%E6%B5%81%E7%A8%8B.png)
    1. 项目管理:
